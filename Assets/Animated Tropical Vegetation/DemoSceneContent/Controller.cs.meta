@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 4d660fe3caf00be4e8e07768266b4aaf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176776
+  packageName: Animated Tropical Vegetation
+  packageVersion: 1.05
+  assetPath: Assets/Animated Tropical Vegetation/DemoSceneContent/Controller.cs
+  uploadId: 793422

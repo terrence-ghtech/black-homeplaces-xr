@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 5be435bdab32b554284cc5ffd1e270b6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176776
+  packageName: Animated Tropical Vegetation
+  packageVersion: 1.05
+  assetPath: Assets/Animated Tropical Vegetation/Tools/ObjectPainter.cs
+  uploadId: 793422

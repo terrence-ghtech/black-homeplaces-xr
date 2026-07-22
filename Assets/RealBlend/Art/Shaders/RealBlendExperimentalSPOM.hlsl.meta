@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 676b29a8ef1f4b12bea8e4bf80b05136
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 352952
+  packageName: RealBlend - Mesh Painting & Creation
+  packageVersion: 1.2.1
+  assetPath: Assets/RealBlend/Art/Shaders/RealBlendExperimentalSPOM.hlsl
+  uploadId: 909178

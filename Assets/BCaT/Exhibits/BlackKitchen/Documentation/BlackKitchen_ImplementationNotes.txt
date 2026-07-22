@@ -1,0 +1,5 @@
+Black Kitchen implementation notes
+
+point_cloud_scan_REFERENCE_ONLY_DO_NOT_BUILD.ply is stored under Models/Reference as development reference only.
+It is not referenced by the memory scene, not under Resources, not under StreamingAssets, and not added to Addressables by this builder.
+The scanned GLB is used once in BlackKitchen_MemoryScene and has no full-scan MeshCollider.

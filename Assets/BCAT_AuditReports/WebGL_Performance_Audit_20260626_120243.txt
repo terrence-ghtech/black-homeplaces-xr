@@ -1,0 +1,160 @@
+﻿BCAT WebGL Performance Audit
+Generated: 2026-06-26 12:02:43
+Report Path: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCAT_AuditReports/WebGL_Performance_Audit_20260626_120243.txt
+
+Scene
+Active Scene Name: BH_XR_MainScene
+Active Scene Path: Assets/BH_XR_MainScene.unity
+Root Object Count: 4
+Total GameObject Count: 1526
+
+Terrain
+Terrain Count: 1
+Terrain [0]
+Name: Terrain_main
+Scene Path: _Rendering/Terrain/Terrain_main
+Terrain Size: (200.00, 600.00, 200.00)
+Detail Resolution: 1024
+Detail Resolution Per Patch: 32
+Detail Prototype Count: 8
+Detail Layer [0] Grass_D: 84820
+Detail Layer [1] Grass_A: 0
+Detail Layer [2] GrassDry_A: 1003695
+Detail Layer [3] GrassDry_B: 0
+Detail Layer [4] GrassDry_A: 67963
+Detail Layer [5] Grass_A: 0
+Detail Layer [6] Grass_D: 478218
+Detail Layer [7] Grass_B: 0
+Total Detail Instance Count: 1634696
+Tree Instance Count: 66
+Tree Prototype Count: 2
+Tree Distance: 100
+Detail Distance: 100
+Basemap Distance: 10
+Pixel Error: 5
+Draw Instanced: True
+Tree Colliders Enabled: False
+
+Scene Component Counts
+Renderer Count: 930
+MeshRenderer Count: 845
+SkinnedMeshRenderer Count: 81
+MeshFilter Count: 845
+Approximate Triangle Count From Readable Meshes: 8848944
+Readable Meshes Used For Triangle Count: 627
+Non-Readable Meshes Skipped For Triangle Count: 299
+
+Materials And Shaders
+Material Count: 216
+Unique Shader Count: 10
+Transparent Material Count: 8
+Alpha-Clipped Material Count: 0
+Materials With GPU Instancing Enabled: 5
+Materials With GPU Instancing Disabled: 211
+
+Lighting And FX
+Light Count (Directional): 1
+Light Count (Point): 1
+Total Light Count: 2
+Reflection Probe Count: 0
+Light Probe Group Count: 0
+Particle System Count: 0
+
+Colliders
+Collider Count (BoxCollider): 20
+Collider Count (CharacterController): 2
+Collider Count (MeshCollider): 241
+Collider Count (TerrainCollider): 1
+Total Collider Count: 264
+
+UI And Media
+Canvas Count: 8
+AudioSource Count: 3
+VideoPlayer Count: 1
+
+Missing Scripts
+GameObjects With Missing Scripts: 8
+Total Missing Script Slots: 8
+_SceneContent/ImplementedContributorInstallations/BFM_Chest_OnChair_W_Text/Canvas (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/BFM_Chest_OnChair_W_Text/Canvas/PromptText (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/Black_Parlors/Canvas (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/Black_Parlors/Canvas/PromptText (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/HOMED/Canvas (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/HOMED/Canvas/PromptText (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/BTMMP_Workstation_Assembly/Canvas (missing scripts: 1)
+_SceneContent/ImplementedContributorInstallations/BTMMP_Workstation_Assembly/Canvas/TheBreonnaTaylorMuralPrompt (missing scripts: 1)
+
+URP And Quality
+Current WebGL Quality Tier: Mobile
+Current WebGL Quality Tier Index: 0
+URP Asset Assigned To Active WebGL Quality Tier: Mobile_RPAsset
+URP Asset Path: Assets/Settings/Mobile_RPAsset.asset
+
+WebGL Player Settings
+Color Space: Linear
+MTRendering: False
+GPU Skinning: True
+Graphics Jobs: False
+Strip Engine Code: True
+Incremental GC: True
+WebGL Memory Size (legacy MB): 32
+WebGL Initial Memory Size (MB): 532
+WebGL Maximum Memory Size (MB): 2048
+WebGL Memory Growth Mode: 2
+WebGL Memory Linear Growth Step (MB): 16
+WebGL Memory Geometric Growth Step: 0.2
+WebGL Memory Geometric Growth Cap (MB): 96
+WebGL Data Caching: True
+WebGL Compression Format: 0
+WebGL Decompression Fallback: False
+WebGL Exception Support: 1
+WebGL Debug Symbols: False
+WebGL Threads Support: False
+WebGL Name Files As Hashes: False
+WebGL Show Diagnostics: False
+WebGL Analyze Build Size: False
+WebGL Use Embedded Resources: False
+WebGL Power Preference: 2
+
+Largest Textures In Project
+51.45 MB | Assets/Patio Furniture/Textures/cheaper_sofa_chair_with_pillows__Normal.tif
+50.72 MB | Assets/Patio Furniture/Textures/cheaper_sofa_full__Normal.tif
+35.51 MB | Assets/Patio Furniture/Textures/cheaper_coffee_table__Normal.tif
+34.46 MB | Assets/TerrainSampleAssets/Textures/Terrain/Heather_Normal.tif
+34.44 MB | Assets/TerrainSampleAssets/Textures/Terrain/Pebbles_C_Normal.tif
+34.43 MB | Assets/TerrainSampleAssets/Textures/Terrain/Grass_B_Normal.tif
+34.42 MB | Assets/TerrainSampleAssets/Textures/Terrain/Grass_A_Normal.tif
+34.39 MB | Assets/TerrainSampleAssets/Textures/Terrain/Grass_Moss_Normal.tif
+34.37 MB | Assets/TerrainSampleAssets/Textures/Terrain/Grass_Dry_Normal.tif
+34.37 MB | Assets/TerrainSampleAssets/Textures/Terrain/Soil_Rocks_MaskMap.tif
+34.33 MB | Assets/TerrainSampleAssets/Textures/Terrain/Grass_Soil_Normal.tif
+34.23 MB | Assets/TerrainSampleAssets/Textures/Terrain/Muddy_Normal.tif
+34.17 MB | Assets/TerrainSampleAssets/Textures/Terrain/Pebbles_A_Normal.tif
+34.07 MB | Assets/TerrainSampleAssets/Textures/Terrain/Black_Sand_Normal.tif
+34.02 MB | Assets/TerrainSampleAssets/Textures/Terrain/Soil_Rocks_Normal.tif
+33.87 MB | Assets/TerrainSampleAssets/Textures/Terrain/Grass_Moss_MaskMap.tif
+33.66 MB | Assets/TerrainSampleAssets/Textures/Terrain/Black_Sand_MaskMap.tif
+33.65 MB | Assets/TerrainSampleAssets/Textures/Terrain/Pebbles_B_Normal.tif
+33.62 MB | Assets/TerrainSampleAssets/Textures/Terrain/Sand_Normal.tif
+33.6 MB | Assets/TerrainSampleAssets/Textures/Terrain/Heather_BaseColor.tif
+
+Largest Audio/Video/Model Assets In Project
+95.36 MB | Assets/BCaT_assets/9night/9night-soundscape.wav
+75.14 MB | Assets/StreamingAssets/in_my_sisters_room_xr.mp4
+35.07 MB | Assets/My_Custom/japanese_red_bridge.glb
+35.05 MB | Assets/BCaT_assets/SewingRoom/sewing-sounds.wav
+34.94 MB | Assets/BCaT_assets/SewingRoom/in_my_sisters_room_audio.wav
+28.23 MB | Assets/BCaT_assets/BTMMP_Workstation_Assembly/metal_table_asset.glb
+27.77 MB | Assets/My_Custom/rug.glb
+20.95 MB | Assets/BCaT_assets/SewingRoom/bed.glb
+19.16 MB | Assets/My_Custom/modern_scandinavian_kitchen_island.glb
+16.76 MB | Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb
+15.86 MB | Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb
+12.8 MB | Assets/BCaT_assets/SewingRoom/pillow__quilt.glb
+11.82 MB | Assets/BCaT_assets/9night/drum.glb
+8.04 MB | Assets/BCaT_assets/BTMMP_Workstation_Assembly/generic_tulip_flower.glb
+5.33 MB | Assets/BCaT_assets/BTMMP_Workstation_Assembly/spray_can.glb
+4.17 MB | Assets/BCaT_assets/SewingRoom/old_sewing_box.glb
+3.99 MB | Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb
+3.28 MB | Assets/My_Custom/butterfly_palm.glb
+2.96 MB | Assets/YughuesFreeCobbleMaterials/Preview/sphere.obj

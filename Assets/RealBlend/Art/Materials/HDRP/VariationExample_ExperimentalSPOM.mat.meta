@@ -1,0 +1,15 @@
+﻿fileFormatVersion: 2
+guid: edd7021e4c274c63ae24650ea62fc7fe
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 352952
+  packageName: RealBlend - Mesh Painting & Creation
+  packageVersion: 1.2.1
+  assetPath: Assets/RealBlend/Art/Materials/HDRP/VariationExample_ExperimentalSPOM.mat
+  uploadId: 909178
