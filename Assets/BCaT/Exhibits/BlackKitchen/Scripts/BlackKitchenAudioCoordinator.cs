@@ -62,7 +62,10 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
             return false;
         }
 
-        if (activeNarrativeSource == source && activeNarrativeClip == clip && source.isPlaying)
+        bool sameNarrativeIsPlaying = activeNarrativeSource == source && activeNarrativeClip == clip && source.isPlaying;
+        bool differentNarrativeIsPlaying = activeNarrativeSource != null && activeNarrativeSource.isPlaying && activeNarrativeSource != source;
+
+        if (sameNarrativeIsPlaying)
         {
             if (!restartIfAlreadyPlaying)
             {
@@ -71,15 +74,15 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
             }
         }
 
-        if (activeNarrativeSource != null && activeNarrativeSource.isPlaying && activeNarrativeSource != source)
-        {
-            Debug.Log($"[BlackKitchenAudioCoordinator] Fading active narrative '{ActiveNarrativeName()}' before '{clip.name}'.");
-        }
-
-        if (activeNarrativeSource != null && activeNarrativeSource.isPlaying && narrativeOverlapPolicy == NarrativeOverlapPolicy.PreventSimultaneousStories)
+        if (differentNarrativeIsPlaying && narrativeOverlapPolicy == NarrativeOverlapPolicy.PreventSimultaneousStories)
         {
             Debug.Log($"[BlackKitchenAudioCoordinator] Narrative rejected by policy while '{ActiveNarrativeName()}' is active.");
             return false;
+        }
+
+        if (differentNarrativeIsPlaying)
+        {
+            Debug.Log($"[BlackKitchenAudioCoordinator] Fading active narrative '{ActiveNarrativeName()}' before '{clip.name}'.");
         }
 
         if (narrativeRoutine != null)
@@ -87,6 +90,64 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
 
         narrativeRoutine = StartCoroutine(PlayNarrativeRoutine(source, clip, volume, fadeIn, fadeOut));
         return true;
+    }
+
+    public bool IsNarrativeActive(AudioSource source, AudioClip clip)
+    {
+        return source != null && clip != null && activeNarrativeSource == source && activeNarrativeClip == clip;
+    }
+
+    public bool PlayNarrativeReplacingActive(AudioSource source, AudioClip clip, float volume, float fadeIn, float fadeOut)
+    {
+        if (source == null || clip == null)
+        {
+            Debug.Log("[BlackKitchenAudioCoordinator] Narrative rejected: missing source or clip.");
+            return false;
+        }
+
+        if (activeNarrativeSource == source && activeNarrativeClip == clip && source.isPlaying)
+        {
+            Debug.Log($"[BlackKitchenAudioCoordinator] Narrative rejected: '{clip.name}' is already active.");
+            return false;
+        }
+
+        if (activeNarrativeSource != null && activeNarrativeSource.isPlaying && activeNarrativeSource != source)
+            Debug.Log($"[BlackKitchenAudioCoordinator] Fading active narrative '{ActiveNarrativeName()}' before '{clip.name}'.");
+
+        if (narrativeRoutine != null)
+            StopCoroutine(narrativeRoutine);
+
+        narrativeRoutine = StartCoroutine(PlayNarrativeRoutine(source, clip, volume, fadeIn, fadeOut));
+        return true;
+    }
+
+    public void StopNarrativeImmediate(AudioSource source, AudioClip clip)
+    {
+        if (!IsNarrativeActive(source, clip))
+            return;
+
+        StopActiveNarrativeImmediate();
+    }
+
+    public void StopActiveNarrativeImmediate()
+    {
+        if (narrativeRoutine != null)
+            StopCoroutine(narrativeRoutine);
+
+        AudioSource source = activeNarrativeSource;
+        AudioClip clip = activeNarrativeClip;
+        if (source != null)
+        {
+            source.Stop();
+            source.volume = 0f;
+        }
+
+        if (clip != null)
+            Debug.Log($"[BlackKitchenAudioCoordinator] Narrative stopped: '{clip.name}'.");
+        activeNarrativeSource = null;
+        activeNarrativeClip = null;
+        StartAmbientDucking(false);
+        narrativeRoutine = null;
     }
 
     public Coroutine FadeOutActiveNarrative(float fadeOut)

@@ -3,7 +3,7 @@ using UnityEngine;
 public static class BlackKitchenInteractionGate
 {
     private static int frame = -1;
-    private static MonoBehaviour selected;
+    private static int selectedInstanceId;
     private static float selectedDistance = float.PositiveInfinity;
 
     public static void RegisterCandidate(MonoBehaviour candidate, float distance)
@@ -14,19 +14,19 @@ public static class BlackKitchenInteractionGate
         if (frame != Time.frameCount)
         {
             frame = Time.frameCount;
-            selected = null;
+            selectedInstanceId = 0;
             selectedDistance = float.PositiveInfinity;
         }
 
         if (distance < selectedDistance)
         {
-            selected = candidate;
+            selectedInstanceId = candidate.GetInstanceID();
             selectedDistance = distance;
         }
     }
 
     public static bool IsSelected(MonoBehaviour candidate)
     {
-        return candidate != null && frame == Time.frameCount && selected == candidate;
+        return candidate != null && frame == Time.frameCount && selectedInstanceId == candidate.GetInstanceID();
     }
 }

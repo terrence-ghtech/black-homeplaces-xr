@@ -57,10 +57,6 @@ public class BlackKitchenStoryInteractable : MonoBehaviour
             BlackKitchenInteractionGate.RegisterCandidate(this, interactionDistanceToPlayer);
             StartCoroutine(ActivateIfSelectedForInput());
         }
-        else
-        {
-            Debug.Log($"[BlackKitchenStoryInteractable] Interaction rejected for {name}: not in range or ray target.");
-        }
     }
 
     public void OnXRSelect()

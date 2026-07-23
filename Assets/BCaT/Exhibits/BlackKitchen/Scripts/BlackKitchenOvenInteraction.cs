@@ -70,10 +70,6 @@ public class BlackKitchenOvenInteraction : MonoBehaviour
             BlackKitchenInteractionGate.RegisterCandidate(this, interactionDistanceToPlayer);
             StartCoroutine(ActivateIfSelectedForInput());
         }
-        else
-        {
-            Debug.Log($"[BlackKitchenOvenInteraction] Interaction rejected for {name}: not in range or ray target.");
-        }
     }
 
     public void OnXRSelect()

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,12 +8,10 @@ using UnityEngine.UI;
 
 public class BlackKitchenPortalController : MonoBehaviour
 {
-    private static BlackKitchenPortalController active;
-
     [Header("Scene Transition")]
     [SerializeField] private string memorySceneName = "BlackKitchen_MemoryScene";
+    [SerializeField] private string loadingSceneName = SceneTransitionState.LoadingSceneName;
     [SerializeField] private float fadeOutDuration = 0.7f;
-    [SerializeField] private float fadeInDuration = 0.7f;
     [SerializeField] private CanvasGroup transitionOverlay;
 
     [Header("Player Control")]
@@ -30,9 +27,6 @@ public class BlackKitchenPortalController : MonoBehaviour
         "TeleportationProvider", "ActionBasedController", "StarterAssetsInputs", "FirstPersonController", "PlayerInput"
     };
 
-    [Header("Spawn and Return")]
-    [SerializeField] private Transform returnPoint;
-
     [Header("WebGL Prompts")]
     [SerializeField] private string desktopPrompt = "Press E to Enter Black Kitchen";
     [Header("Quest Prompts")]
@@ -45,28 +39,10 @@ public class BlackKitchenPortalController : MonoBehaviour
     [SerializeField] private Transform interactionRoot;
 
     private readonly List<Behaviour> disabledControls = new();
-    private readonly List<CharacterController> disabledCharacterControllers = new();
-    private readonly List<RigidbodyState> disabledRigidbodies = new();
     private bool transitionActive;
-    private Scene loadedMemoryScene;
-
-    private readonly struct RigidbodyState
-    {
-        public readonly Rigidbody Body;
-        public readonly bool DetectCollisions;
-        public readonly bool UseGravity;
-
-        public RigidbodyState(Rigidbody body)
-        {
-            Body = body;
-            DetectCollisions = body.detectCollisions;
-            UseGravity = body.useGravity;
-        }
-    }
 
     private void Awake()
     {
-        active = this;
         if (transitionOverlay != null)
             transitionOverlay.alpha = 0f;
     }
@@ -85,7 +61,7 @@ public class BlackKitchenPortalController : MonoBehaviour
 
     public void EnterBlackKitchen()
     {
-        if (!transitionActive)
+        if (!transitionActive && !SceneTransitionState.IsTransitionInProgress)
             StartCoroutine(EnterRoutine());
     }
 
@@ -94,62 +70,50 @@ public class BlackKitchenPortalController : MonoBehaviour
         EnterBlackKitchen();
     }
 
-    public static void ReturnFromMemory(AudioSource exitReflectionSource, float exitReflectionFadeDuration)
-    {
-        if (active != null)
-            active.StartCoroutine(active.ExitRoutine(exitReflectionSource, exitReflectionFadeDuration));
-    }
-
     private IEnumerator EnterRoutine()
     {
         transitionActive = true;
         ResolvePlayerReferences();
         SetPlayerControls(false);
-        yield return FadeOverlay(1f, fadeOutDuration);
 
-        AsyncOperation load = SceneManager.LoadSceneAsync(memorySceneName, LoadSceneMode.Additive);
-        while (load != null && !load.isDone)
-            yield return null;
-
-        loadedMemoryScene = SceneManager.GetSceneByName(memorySceneName);
-        if (loadedMemoryScene.IsValid())
-            SceneManager.SetActiveScene(loadedMemoryScene);
-
-        BlackKitchenExperienceController experience = FindFirstObjectByType<BlackKitchenExperienceController>();
-        if (experience != null && experience.SpawnPoint != null)
-            yield return TeleportPlayerSafely(experience.SpawnPoint);
-
-        yield return FadeOverlay(0f, fadeInDuration);
-        SetPlayerControls(true);
-        transitionActive = false;
-    }
-
-    private IEnumerator ExitRoutine(AudioSource exitReflectionSource, float exitReflectionFadeDuration)
-    {
-        if (transitionActive)
-            yield break;
-
-        transitionActive = true;
-        ResolvePlayerReferences();
-        SetPlayerControls(false);
-        yield return FadeOverlay(1f, fadeOutDuration);
-
-        if (returnPoint != null)
-            yield return TeleportPlayerSafely(returnPoint);
-
-        if (loadedMemoryScene.IsValid() && loadedMemoryScene.isLoaded)
+        if (!SceneTransitionState.RequestTransition(memorySceneName, SceneTransitionState.BlackKitchenEntrySpawnId, gameObject.scene.name))
         {
-            AsyncOperation unload = SceneManager.UnloadSceneAsync(loadedMemoryScene);
-            while (unload != null && !unload.isDone)
-                yield return null;
+            Debug.LogWarning($"[BlackKitchenPortalController] Transition request blocked: {SceneTransitionState.LastError}");
+            SetPlayerControls(true);
+            transitionActive = false;
+            yield break;
         }
 
-        if (exitReflectionSource != null && exitReflectionSource.isPlaying && exitReflectionFadeDuration > 0f)
-            StartCoroutine(FadeExitReflection(exitReflectionSource, exitReflectionFadeDuration));
+        yield return FadeOverlay(1f, fadeOutDuration);
 
-        yield return FadeOverlay(0f, fadeInDuration);
-        SetPlayerControls(true);
-        transitionActive = false;
+        AsyncOperation load = null;
+        try
+        {
+            Debug.Log($"[BlackKitchenPortalController] Scene '{gameObject.scene.name}' loading scene load requested: '{loadingSceneName}' via rig '{(playerRoot != null ? playerRoot.name : "unresolved")}'.");
+            load = SceneManager.LoadSceneAsync(loadingSceneName, LoadSceneMode.Single);
+        }
+        catch (System.Exception exception)
+        {
+            string message = $"[BlackKitchenPortalController] Failed to load '{loadingSceneName}' for Black Kitchen transition: {exception.Message}";
+            Debug.LogError(message);
+            SceneTransitionState.CancelTransition(message);
+            SetPlayerControls(true);
+            transitionActive = false;
+            yield break;
+        }
+
+        if (load == null)
+        {
+            string message = $"[BlackKitchenPortalController] Failed to load '{loadingSceneName}' for Black Kitchen transition.";
+            Debug.LogError(message);
+            SceneTransitionState.CancelTransition(message);
+            SetPlayerControls(true);
+            transitionActive = false;
+            yield break;
+        }
+
+        while (!load.isDone)
+            yield return null;
     }
 
     private IEnumerator FadeOverlay(float target, float duration)
@@ -168,34 +132,6 @@ public class BlackKitchenPortalController : MonoBehaviour
 
         transitionOverlay.alpha = target;
         transitionOverlay.blocksRaycasts = target > 0.5f;
-    }
-
-    private static IEnumerator FadeExitReflection(AudioSource source, float duration)
-    {
-        float start = source.volume;
-        for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
-        {
-            if (source == null)
-                yield break;
-
-            source.volume = Mathf.Lerp(start, 0f, elapsed / duration);
-            yield return null;
-        }
-
-        if (source != null)
-            source.Stop();
-    }
-
-    public static void RecoverActivePlayerTo(Transform target)
-    {
-        if (active == null || target == null)
-            return;
-
-        active.ResolvePlayerReferences();
-        active.SetPlayerPhysicsEnabled(false);
-        active.ResetPlayerVerticalMotion();
-        active.TeleportPlayerImmediate(target);
-        active.SetPlayerPhysicsEnabled(true);
     }
 
     private void ResolvePlayerReferences()
@@ -223,121 +159,6 @@ public class BlackKitchenPortalController : MonoBehaviour
 
         if (playerRoot == null && playerCamera != null)
             playerRoot = playerCamera.transform.root;
-    }
-
-    private IEnumerator TeleportPlayerSafely(Transform target)
-    {
-        ResolvePlayerReferences();
-        SetPlayerPhysicsEnabled(false);
-        ResetPlayerVerticalMotion();
-        TeleportPlayerImmediate(target);
-        yield return null;
-        Physics.SyncTransforms();
-        ResetPlayerVerticalMotion();
-        SetPlayerPhysicsEnabled(true);
-    }
-
-    private void TeleportPlayerImmediate(Transform target)
-    {
-        if (playerRoot == null || target == null)
-            return;
-
-        playerRoot.SetPositionAndRotation(target.position, target.rotation);
-        Physics.SyncTransforms();
-        ResetPlayerVerticalMotion();
-    }
-
-    private void SetPlayerPhysicsEnabled(bool enabled)
-    {
-        ResolvePlayerReferences();
-        if (playerRoot == null)
-            return;
-
-        if (!enabled)
-        {
-            disabledCharacterControllers.Clear();
-            foreach (CharacterController characterController in playerRoot.GetComponentsInChildren<CharacterController>(true))
-            {
-                if (!characterController.enabled)
-                    continue;
-
-                characterController.enabled = false;
-                disabledCharacterControllers.Add(characterController);
-            }
-
-            disabledRigidbodies.Clear();
-            foreach (Rigidbody body in playerRoot.GetComponentsInChildren<Rigidbody>(true))
-            {
-                disabledRigidbodies.Add(new RigidbodyState(body));
-                body.linearVelocity = Vector3.zero;
-                body.angularVelocity = Vector3.zero;
-                body.useGravity = false;
-                body.detectCollisions = false;
-            }
-        }
-        else
-        {
-            foreach (RigidbodyState state in disabledRigidbodies)
-            {
-                if (state.Body == null)
-                    continue;
-
-                state.Body.linearVelocity = Vector3.zero;
-                state.Body.angularVelocity = Vector3.zero;
-                state.Body.useGravity = state.UseGravity;
-                state.Body.detectCollisions = state.DetectCollisions;
-            }
-            disabledRigidbodies.Clear();
-
-            foreach (CharacterController characterController in disabledCharacterControllers)
-            {
-                if (characterController != null)
-                    characterController.enabled = true;
-            }
-            disabledCharacterControllers.Clear();
-        }
-    }
-
-    private void ResetPlayerVerticalMotion()
-    {
-        if (playerRoot == null)
-            return;
-
-        foreach (Rigidbody body in playerRoot.GetComponentsInChildren<Rigidbody>(true))
-        {
-            body.linearVelocity = Vector3.zero;
-            body.angularVelocity = Vector3.zero;
-        }
-
-        foreach (Behaviour behaviour in playerRoot.GetComponentsInChildren<Behaviour>(true))
-        {
-            if (behaviour == null)
-                continue;
-
-            MethodInfo resetFallForce = behaviour.GetType().GetMethod("ResetFallForce", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (resetFallForce != null && resetFallForce.GetParameters().Length == 0)
-                resetFallForce.Invoke(behaviour, null);
-
-            ResetVectorField(behaviour, "m_CurrentFallVelocity");
-            ResetVectorField(behaviour, "m_GravityDrivenVelocity");
-            ResetVectorField(behaviour, "m_VerticalVelocity");
-            ResetVectorField(behaviour, "m_InAirVelocity");
-            ResetFloatField(behaviour, "_verticalVelocity");
-        }
-    }
-
-    private static void ResetVectorField(object target, string fieldName)
-    {
-        FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-        if (field != null && field.FieldType == typeof(Vector3))
-            field.SetValue(target, Vector3.zero);
-    }
-
-    private static void ResetFloatField(object target, string fieldName)
-    {
-        FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-        if (field != null && field.FieldType == typeof(float))
-            field.SetValue(target, 0f);
     }
 
     private void SetPlayerControls(bool enabled)
