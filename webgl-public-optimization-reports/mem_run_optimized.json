@@ -1,0 +1,579 @@
+{
+  "pageUrl": "http://127.0.0.1:8090/",
+  "startedAt": "2026-07-23T22:01:22.340Z",
+  "responses": [
+    {
+      "url": "http://127.0.0.1:8090/",
+      "status": 200,
+      "mimeType": "text/html",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/style.css",
+      "status": 200,
+      "mimeType": "text/css",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/unity-logo-dark.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/progress-bar-empty-dark.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/progress-bar-full-dark.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/unity-logo-title-footer.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/fullscreen-button.png",
+      "status": 200,
+      "mimeType": "image/png",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/Build/0a99df81c5232275f6b5e83f6af8d96e.loader.js",
+      "status": 200,
+      "mimeType": "application/javascript",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/Build/799d85f7cf7f67e91269b57a6d7d98d0.framework.js.br",
+      "status": 200,
+      "mimeType": "application/javascript",
+      "contentEncoding": "br"
+    },
+    {
+      "url": "http://127.0.0.1:8090/Build/6d340b6c09054e2a3e51be77bbe433d3.wasm.br",
+      "status": 200,
+      "mimeType": "application/wasm",
+      "contentEncoding": "br"
+    },
+    {
+      "url": "http://127.0.0.1:8090/TemplateData/favicon.ico",
+      "status": 200,
+      "mimeType": "image/x-icon",
+      "contentEncoding": null
+    },
+    {
+      "url": "http://127.0.0.1:8090/Build/d6f92933f0c74baaf47bb834adac9486.data.br",
+      "status": 200,
+      "mimeType": "application/octet-stream",
+      "contentEncoding": "br"
+    }
+  ],
+  "failures": [],
+  "console": [
+    {
+      "type": "log",
+      "text": "[UnityMemory] Configuration Parameters - Can be set up in boot.config\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-bucket-allocator-granularity=16\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-bucket-allocator-bucket-count=8\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-bucket-allocator-block-size=4194304\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-bucket-allocator-block-count=1\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-main-allocator-block-size=16777216\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-thread-allocator-block-size=16777216\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-gfx-main-allocator-block-size=16777216\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-gfx-thread-allocator-block-size=16777216\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-cache-allocator-block-size=4194304\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-typetree-allocator-block-size=2097152\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-profiler-bucket-allocator-granularity=16\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-profiler-bucket-allocator-bucket-count=8\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-profiler-bucket-allocator-block-size=4194304\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-profiler-bucket-allocator-block-count=1\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-profiler-allocator-block-size=16777216\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-profiler-editor-allocator-block-size=1048576\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-temp-allocator-size-main=4194304\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-job-temp-allocator-block-size=2097152\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-job-temp-allocator-block-size-background=1048576\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-job-temp-allocator-reduction-small-platforms=262144\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-allocator-temp-initial-block-size-main=262144\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-allocator-temp-initial-block-size-worker=262144\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-temp-allocator-size-audio-worker=65536\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-temp-allocator-size-cloud-worker=32768\"\n"
+    },
+    {
+      "type": "log",
+      "text": "    \"memorysetup-temp-allocator-size-background-worker=32768\"\n"
+    },
+    {
+      "type": "log",
+      "text": "CodeReloadManager initialized\n"
+    },
+    {
+      "type": "log",
+      "text": "Input System module state changed to: Initialized.\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Initialized fallback backend.\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Id: 0xdecafbad\n"
+    },
+    {
+      "type": "log",
+      "text": "Loading player data from data.unity3d\n"
+    },
+    {
+      "type": "log",
+      "text": "Initialize engine version: 6000.4.5f1 (cc83ebd631f8)\n"
+    },
+    {
+      "type": "log",
+      "text": "[Subsystems] Discovering subsystems at path UnitySubsystems\n"
+    },
+    {
+      "type": "log",
+      "text": "Creating WebGL 2.0 context."
+    },
+    {
+      "type": "log",
+      "text": "Renderer: WebKit WebGL\n"
+    },
+    {
+      "type": "log",
+      "text": "Vendor:   WebKit\n"
+    },
+    {
+      "type": "log",
+      "text": "Version:  OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))\n"
+    },
+    {
+      "type": "log",
+      "text": "GLES:     3\n"
+    },
+    {
+      "type": "log",
+      "text": " EXT_clip_control EXT_color_buffer_float EXT_color_buffer_half_float EXT_conservative_depth EXT_depth_clamp EXT_disjoint_timer_query_webgl2 EXT_float_blend EXT_polygon_offset_clamp EXT_render_snorm EXT_texture_compression_bptc EXT_texture_compression_rgtc EXT_texture_filter_anisotropic EXT_texture_mirror_clamp_to_edge EXT_texture_norm16 KHR_parallel_shader_compile NV_shader_noperspective_interpolation OES_draw_buffers_indexed OES_sample_variables OES_shader_multisample_interpolation OES_texture_"
+    },
+    {
+      "type": "log",
+      "text": "depth GL_EXT_depth_clamp GL_EXT_disjoint_timer_query_webgl2 GL_EXT_float_blend GL_EXT_polygon_offset_clamp GL_EXT_render_snorm GL_EXT_texture_compression_bptc GL_EXT_texture_compression_rgtc GL_EXT_texture_filter_anisotropic GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_KHR_parallel_shader_compile GL_NV_shader_noperspective_interpolation GL_OES_draw_buffers_indexed GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_texture_float_linear GL_WEBGL_blend_func_exten"
+    },
+    {
+      "type": "log.warning",
+      "text": "WebGL: INVALID_ENUM: getInternalformatParameter: invalid internalformat"
+    },
+    {
+      "type": "log.warning",
+      "text": "WebGL: INVALID_ENUM: getInternalformatParameter: invalid internalformat"
+    },
+    {
+      "type": "log.warning",
+      "text": "WebGL: INVALID_ENUM: getInternalformatParameter: invalid internalformat"
+    },
+    {
+      "type": "log.warning",
+      "text": "WebGL: INVALID_ENUM: getInternalformatParameter: invalid internalformat"
+    },
+    {
+      "type": "log.warning",
+      "text": "WebGL: INVALID_ENUM: getInternalformatParameter: invalid internalformat"
+    },
+    {
+      "type": "log.warning",
+      "text": "WebGL: INVALID_ENUM: getInternalformatParameter: invalid internalformat"
+    },
+    {
+      "type": "log",
+      "text": "OPENGL LOG: Creating OpenGL ES 3.0 graphics device ; Context level  <OpenGL ES 3.0> ; Context handle 1\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Selected backend.\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Name: PhysX\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Id: 0xf2b8ea05\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] SDK Version: 4.1.2\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Integration Version: 1.0.0\n"
+    },
+    {
+      "type": "log",
+      "text": "[Physics::Module] Threading Mode: Single-Threaded\n"
+    },
+    {
+      "type": "log",
+      "text": "ERROR: Shader "
+    },
+    {
+      "type": "log",
+      "text": "Hidden/CoreSRP/CoreCopy shader is not supported on this GPU (none of subshaders/fallbacks are suitable)\n"
+    },
+    {
+      "type": "log",
+      "text": "ERROR: Shader "
+    },
+    {
+      "type": "log",
+      "text": "Hidden/VoxelizeShader shader is not supported on this GPU (none of subshaders/fallbacks are suitable)\n"
+    },
+    {
+      "type": "log",
+      "text": "ERROR: Shader "
+    },
+    {
+      "type": "log",
+      "text": "Hidden/Universal Render Pipeline/StencilDitherMaskSeed shader is not supported on this GPU (none of subshaders/fallbacks are suitable)\n"
+    },
+    {
+      "type": "log",
+      "text": "ERROR: Shader "
+    },
+    {
+      "type": "log",
+      "text": "Hidden/Universal/HDRDebugView shader is not supported on this GPU (none of subshaders/fallbacks are suitable)\n"
+    },
+    {
+      "type": "log",
+      "text": "Input System initialize...\n"
+    },
+    {
+      "type": "log",
+      "text": "UnloadTime: 1.000000 ms\n"
+    },
+    {
+      "type": "warning",
+      "text": "Manual synchronization of Unity Application.persistentDataPath via JS_FileSystem_Sync() is deprecated and will be later removed in a future Unity version. The persistent data directory will be automatically synchronized instead on file modification. Pass config.autoSyncPersistentDataPath = true; to configuration in createUnityInstance() to opt in to the new behavior."
+    },
+    {
+      "type": "log",
+      "text": "Trying to get length of sound which is not loaded yet."
+    },
+    {
+      "type": "log",
+      "text": "Trying to get metadata of sound which is not loaded."
+    },
+    {
+      "type": "log",
+      "text": "Trying to get length of sound which is not loaded yet."
+    },
+    {
+      "type": "log",
+      "text": "Trying to get metadata of sound which is not loaded."
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log",
+      "text": "[UnityCache] 'http://127.0.0.1:8090/Build/d6f92933f0c74baaf47bb834adac9486.data.br' successfully downloaded and stored in the browser cache"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:TV_Preview] Video URL: http://127.0.0.1:8090/StreamingAssets/and that is the truth - you know what I'm meaning_720p.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:TV_Preview] Audio: separate AudioSource (TV_Preview)\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Camera_VideoInteraction] Video URL: http://127.0.0.1:8090/StreamingAssets/subjected_to_recognition_720p.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Camera_VideoInteraction] Audio: separate AudioSource (Camera_VideoInteraction)\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:pillow__quilt] Video URL: http://127.0.0.1:8090/StreamingAssets/in_my_sisters_room_xr.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:pillow__quilt] Audio: separate AudioSource (QuiltVideoSpatialAudio)\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Vanity_VideoInteraction] Video URL: http://127.0.0.1:8090/StreamingAssets/you don't know about style my darling_720p.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Vanity_VideoInteraction] Audio: separate AudioSource (Vanity_VideoInteraction)\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Camera_VideoInteraction] Video URL: http://127.0.0.1:8090/StreamingAssets/subjected_to_recognition_720p.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Camera_VideoInteraction] Audio: separate AudioSource (Camera_VideoInteraction)\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Kitchen_VideoInteraction] Video URL: http://127.0.0.1:8090/StreamingAssets/such lovely gravy_720p.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Kitchen_VideoInteraction] Audio: separate AudioSource (Kitchen_VideoInteraction)\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Artifact_VintageCamera] Video URL: http://127.0.0.1:8090/StreamingAssets/Linda_Leaks_CHOF_720p.mp4\n"
+    },
+    {
+      "type": "log",
+      "text": "[MediaVideo:Artifact_VintageCamera] Audio: separate AudioSource (Artifact_VintageCamera)\n"
+    },
+    {
+      "type": "warning",
+      "text": "BoxCollider does not support negative scale or size.\nThe effective box size has been forced positive and is likely to give unexpected collision geometry.\nIf you absolutely need to use negative scaling you can use the convex MeshCollider. Scene hierarchy path \"_SceneContent/Home/FirstFloor/Hallway/Stairs/StairCon/_x0023_POST1111\"\n"
+    },
+    {
+      "type": "warning",
+      "text": "Shader 'Hidden/Universal Render Pipeline/Edge Adaptive Spatial Upsampling' is not supported (in 'Blit FSR Upscaling'). PostProcessing render passes will not execute.\n"
+    },
+    {
+      "type": "warning",
+      "text": "-------- Shader Universal Render Pipeline/Terrain/Lit\n-------- GLSL link error: FRAGMENT shader texture image units count exceeds MAX_TEXTURE_IMAGE_UNITS(16)\n\n\n"
+    },
+    {
+      "type": "log",
+      "text": "Note: Creation of internal variant of shader 'Universal Render Pipeline/Terrain/Lit' failed.\n"
+    },
+    {
+      "type": "warning",
+      "text": "-------- Shader Universal Render Pipeline/Terrain/Lit\n-------- GLSL link error: FRAGMENT shader texture image units count exceeds MAX_TEXTURE_IMAGE_UNITS(16)\n\n\n"
+    },
+    {
+      "type": "log",
+      "text": "Note: Creation of internal variant of shader 'Universal Render Pipeline/Terrain/Lit' failed.\n"
+    },
+    {
+      "type": "warning",
+      "text": "-------- Shader Hidden/Universal Render Pipeline/Terrain/Lit (Add Pass)\n-------- GLSL link error: FRAGMENT shader texture image units count exceeds MAX_TEXTURE_IMAGE_UNITS(16)\n\n\n"
+    },
+    {
+      "type": "log",
+      "text": "Note: Creation of internal variant of shader 'Hidden/Universal Render Pipeline/Terrain/Lit (Add Pass)' failed.\n"
+    },
+    {
+      "type": "warning",
+      "text": "-------- Shader Hidden/Universal Render Pipeline/Terrain/Lit (Add Pass)\n-------- GLSL link error: FRAGMENT shader texture image units count exceeds MAX_TEXTURE_IMAGE_UNITS(16)\n\n\n"
+    },
+    {
+      "type": "log",
+      "text": "Note: Creation of internal variant of shader 'Hidden/Universal Render Pipeline/Terrain/Lit (Add Pass)' failed.\n"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "log.warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    }
+  ],
+  "exceptions": [],
+  "unity": {
+    "loadingBarHidden": true,
+    "canvasPresent": true,
+    "secondsToLoad": 5.036,
+    "progressWidth": "100%"
+  },
+  "outcome": "loaded",
+  "finishedAt": "2026-07-23T22:01:37.413Z",
+  "elapsedSeconds": 15.038
+}

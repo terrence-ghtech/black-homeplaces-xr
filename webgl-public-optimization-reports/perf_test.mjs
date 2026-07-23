@@ -74,9 +74,9 @@ if (throttleMbps > 0) {
   });
 }
 
-async function evalJs(expr) {
+async function evalJs(expr, awaitPromise = false) {
   try {
-    const r = await send("Runtime.evaluate", { expression: expr, returnByValue: true });
+    const r = await send("Runtime.evaluate", { expression: expr, returnByValue: true, awaitPromise });
     return r.result?.value;
   } catch { return undefined; }
 }
@@ -121,7 +121,7 @@ if (result.outcome === "loaded") {
     }
     const start = performance.now();
     requestAnimationFrame(tick);
-  })`);
+  })`, true);
   if (fps) { result.fps = fps.fps; result.frameTimeP95Ms = fps.p95; }
 
   const metrics = await send("Performance.getMetrics");
