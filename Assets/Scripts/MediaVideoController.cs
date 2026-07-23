@@ -65,6 +65,7 @@ public class MediaVideoController : MonoBehaviour
     private bool playWhenPrepared;
     private bool prepareRequested;
     private bool ownsTargetTexture;
+    private GameObject loadingIndicator;
 
     private string LogTag => $"[MediaVideo:{gameObject.name}]";
 
@@ -90,7 +91,10 @@ public class MediaVideoController : MonoBehaviour
         {
             videoPlayer.prepareCompleted -= OnVideoPrepared;
             videoPlayer.errorReceived -= OnVideoError;
+            videoPlayer.loopPointReached -= OnVideoEnded;
         }
+
+        VideoExhibitCoordinator.NotifyClosed(this);
     }
 
     private void OnDisable()
@@ -146,6 +150,9 @@ public class MediaVideoController : MonoBehaviour
         isOpen = true;
         Debug.Log($"{LogTag} OpenPopUp");
 
+        // Close any other open video exhibit so two videos never buffer at once.
+        VideoExhibitCoordinator.NotifyOpened(this, ClosePopUp);
+
         if (promptRoot != null)
             promptRoot.SetActive(false);
 
@@ -172,6 +179,8 @@ public class MediaVideoController : MonoBehaviour
         playWhenPrepared = false;
         Debug.Log($"{LogTag} ClosePopUp");
 
+        VideoExhibitCoordinator.NotifyClosed(this);
+        VideoLoadingIndicator.Hide(ref loadingIndicator);
         ReleaseVideoResources(destroyOwnedTexture: false);
 
         if (separateAudioSource != null)
@@ -197,6 +206,7 @@ public class MediaVideoController : MonoBehaviour
         videoPlayer.playOnAwake = false;
         videoPlayer.prepareCompleted += OnVideoPrepared;
         videoPlayer.errorReceived += OnVideoError;
+        videoPlayer.loopPointReached += OnVideoEnded;
 
         EnsureVideoSource();
     }
@@ -285,7 +295,7 @@ public class MediaVideoController : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(videoUrlOverride))
             return videoUrlOverride;
 
-        return RuntimeMediaPaths.StreamingAssetUrl(videoFileName);
+        return RuntimeMediaPaths.ResolveMediaUrl(videoFileName);
     }
 
     private void BeginVideoPlayback()
@@ -294,6 +304,8 @@ public class MediaVideoController : MonoBehaviour
         {
             playWhenPrepared = true;
             Debug.Log($"{LogTag} Not prepared yet; Prepare() and play when ready (url={videoPlayer.url})");
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "Loading video…");
             if (!prepareRequested)
             {
                 prepareRequested = true;
@@ -332,6 +344,7 @@ public class MediaVideoController : MonoBehaviour
     {
         Debug.Log($"{LogTag} prepareCompleted (duration={preparedPlayer.length:F1}s, size={preparedPlayer.width}x{preparedPlayer.height})");
         prepareRequested = false;
+        VideoLoadingIndicator.Hide(ref loadingIndicator);
 
         if (!isOpen || !playWhenPrepared)
             return;
@@ -348,6 +361,34 @@ public class MediaVideoController : MonoBehaviour
         Debug.LogError($"{LogTag} errorReceived: {message} (url={source.url})");
         prepareRequested = false;
         playWhenPrepared = false;
+
+        if (isOpen)
+        {
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
+            VideoLoadingIndicator.SetMessage(loadingIndicator,
+                "Video unavailable.\nClose and reopen the exhibit to try again.");
+        }
+    }
+
+    private void OnVideoEnded(VideoPlayer endedPlayer)
+    {
+        // Release decoder/buffer resources once playback finishes (non-looping).
+        if (!endedPlayer.isLooping)
+        {
+            Debug.Log($"{LogTag} Playback ended; releasing video resources");
+            endedPlayer.Stop();
+            prepareRequested = false;
+        }
+    }
+
+    private Transform IndicatorParent()
+    {
+        if (videoImage != null)
+            return videoImage.transform.parent;
+        if (popupCanvas != null)
+            return popupCanvas.transform;
+        return popupRoot != null ? popupRoot.transform : null;
     }
 
     private bool IsPlayerLookingAtThisObject()

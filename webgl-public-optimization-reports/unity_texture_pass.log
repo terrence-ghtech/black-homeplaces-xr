@@ -1,0 +1,1152 @@
+Unity Editor version:    6000.4.5f1 (cc83ebd631f8)
+Branch:                  6000.4/staging
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 26.5.2 (Build 25F84)
+Darwin version:          25.5.0
+Architecture:            arm64
+Running under Rosetta:   NO
+Available memory:        16384 MB
+Date:                    2026-07-23T21:04:35Z
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-terrence" at "2026-07-23T21:04:35.935437Z"
+Launching external process: /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Helpers/PackageManager/Server/UnityPackageManager
+
+COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/MacOS/Unity
+-batchmode
+-nographics
+-projectPath
+/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST
+-buildTarget
+WebGL
+-executeMethod
+BCATOptimizationTool.TextureOptimizationPass
+-bcatReportDir
+webgl-public-optimization-reports
+-logFile
+webgl-public-optimization-reports/unity_texture_pass.log
+Successfully changed project path to: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST
+/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Player connection [8384060800]  Target information:
+
+Player connection [8384060800]  * "[IP] 10.0.0.162 [Port] 55504 [Flags] 2 [Guid] 1570743403 [EditorId] 1570743403 [Version] 1048832 [Id] OSXEditor(0,Terrences-MacBook-Air.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+
+Player connection [8384060800]  * "[IP] 10.2.0.2 [Port] 55504 [Flags] 2 [Guid] 1570743403 [EditorId] 1570743403 [Version] 1048832 [Id] OSXEditor(0,Terrences-MacBook-Air.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+
+Player connection [8384060800] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [8384060800] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.1'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-terrence"
+[Licensing::IpcConnector] LicenseClient-terrence channel disconnected successfully.
+[Licensing::IpcConnector] Channel LicenseClient-terrence-6000.4.5 doesn't exist
+Launching external process: /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Helpers/UnityLicensingClient.app/Contents/MacOS/Unity.Licensing.Client
+[Licensing::Module] Successfully launched the LicensingClient (PId: 78218)
+[Package Manager] Connected to IPC stream "Upm-78215" after 0.1 seconds.
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-terrence-6000.4.5" at "2026-07-23T21:04:36.303531Z"
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              e4543c287b2e4a75996e1be347f68ddf
+  Correlation Id:          01a0d851d54b0af8cdc8284a88b14eb2
+  External correlation Id: 8755939611354022949
+  Machine Id:              1bOvOg2fwccX7xgA5fklJMGtjf8=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-terrence-6000.4.5" (connect: 0.17s, validation: 0.02s, handshake: 0.18s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-terrence-6000.4.5-notifications" at "2026-07-23T21:04:36.500184Z"
+[Licensing::Module] Connected to LicensingClient (PId: 78218, launch time: 0.00, total connection time: 0.37s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 20067546315208-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.57s
+[Licensing::Module] Licensing is initialized (took 0.35s).
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Targeting platform: WebGL
+Initialize engine version: 6000.4.5f1 (cc83ebd631f8)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/MonoBleedingEdge/lib/mono/unityjit-macos'
+Mono config path = '/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56215
+CodeReloadManager initialized
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/6000.4.5f1/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: /Applications/Unity/Hub/Editor/6000.4.5f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Registered in 0.002984 seconds.
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.227 seconds
+Domain Reload Profiling: 469ms
+	BeginReloadAssembly (72ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (20ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (28ms)
+	LoadAllAssembliesAndSetupDomain (114ms)
+		LoadAssemblies (56ms)
+		AnalyzeDomain (108ms)
+			TypeCache.Refresh (108ms)
+				TypeCache.ScanAssembly (100ms)
+	FinalizeReload (227ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (27ms)
+			BeforeProcessingInitializeOnLoad (41ms)
+			ProcessInitializeOnLoadAttributes (59ms)
+			ProcessInitializeOnLoadMethodAttributes (61ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 79 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.ai.navigation@2.0.12 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.ai.navigation@734c2c4c5591)
+    com.unity.burst@1.8.29 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.burst@6bb9aca3ef38)
+    com.unity.cinemachine@3.1.6 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.cinemachine@285f38545487)
+    com.unity.collab-proxy@2.12.4 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.collab-proxy@0b1559bcd34e)
+    com.unity.connect.share@4.2.4 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.connect.share@26544eac5181)
+    com.unity.ide.rider@3.0.39 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.ide.rider@4504839d03f7)
+    com.unity.ide.visualstudio@2.0.27 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.ide.visualstudio@dc1ddd4f09b6)
+    com.unity.ide.vscode@1.2.5 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.ide.vscode@82e68656b7bd)
+    com.unity.inputsystem@1.19.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.inputsystem@21a28c3a6c83)
+    com.unity.mathematics@1.3.3 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.mathematics@19a9377c4ffa)
+    com.unity.nuget.mono-cecil@1.11.6 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.package-validation-suite@0.22.0-preview (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.package-validation-suite@536239bd7458)
+    com.unity.probuilder@6.0.9 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.probuilder@1f279ab829b7)
+    com.unity.searcher@4.9.4 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.searcher@d45a78918735)
+    com.unity.splines@2.8.4 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.splines@9b00833aca09)
+    com.unity.test-framework.performance@3.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.test-framework.performance@aa81a99c4a75)
+    com.unity.timeline@1.8.12 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.timeline@8cd8509afae5)
+    com.unity.visualscripting@1.9.11 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.visualscripting@8bed5ad90189)
+    com.unity.xr.interaction.toolkit@3.4.1 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.interaction.toolkit@4612b35e2aac)
+    com.unity.xr.openxr@1.16.1 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.openxr@ef0033a586bf)
+    com.unity.nuget.newtonsoft-json@3.2.2 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.nuget.newtonsoft-json@4dfd81071c64)
+    com.unity.xr.core-utils@2.6.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.core-utils@a8b900321199)
+    com.unity.xr.management@4.5.2 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.management@f589c7ba49ff)
+    com.unity.xr.legacyinputhelpers@3.0.1 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.legacyinputhelpers@3f62d634f63b)
+    com.unity.settings-manager@2.1.1 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.settings-manager@0b8638c5ce86)
+    com.unity.editorcoroutines@1.1.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.editorcoroutines@87a15ed012c2)
+    com.unity.performance.profile-analyzer@1.3.4 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.performance.profile-analyzer@418130329099)
+    com.unity.testtools.codecoverage@1.3.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.testtools.codecoverage@19a841221620)
+  Built-in packages:
+    com.unity.2d.sprite@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.2d.sprite@929df5adbb1f)
+    com.unity.collections@6.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.collections@9c2353fb96f6)
+    com.unity.ext.nunit@2.0.5 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.ext.nunit@d8c07649098d)
+    com.unity.feature.development@1.0.2 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.feature.development@767aadbc6eb7)
+    com.unity.multiplayer.center@1.0.1 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.multiplayer.center@f01f4ba8d00a)
+    com.unity.render-pipelines.core@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.render-pipelines.core@2269be549234)
+    com.unity.render-pipelines.high-definition@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.render-pipelines.high-definition@78906f9b8726)
+    com.unity.render-pipelines.universal@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.render-pipelines.universal@4d008a28541a)
+    com.unity.shadergraph@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.shadergraph@cd28a7c13031)
+    com.unity.test-framework@1.6.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.test-framework@76560ee600cb)
+    com.unity.ugui@2.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.ugui@d8a2716f3013)
+    com.unity.modules.accessibility@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.director)
+    com.unity.modules.hierarchycore@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.hierarchycore)
+    com.unity.modules.imageconversion@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.screencapture)
+    com.unity.modules.subsystems@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.subsystems)
+    com.unity.modules.terrain@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.modules.xr)
+    com.unity.render-pipelines.universal-config@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.render-pipelines.universal-config@0db4263b9e6b)
+    com.unity.visualeffectgraph@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.visualeffectgraph@e00a147af410)
+    com.unity.render-pipelines.high-definition-config@17.4.0 (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.render-pipelines.high-definition-config@f2a20abb2a1c)
+  Embedded packages:
+    org.khronos.unitygltf@file:/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Packages/org.khronos.unitygltf (location: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Packages/org.khronos.unitygltf)
+[Package Manager] com.unity.ide.vscode is deprecated: Visual Studio Code package is not supported anymore. You can continue to use it, but we won't provide any update anymore.
+[Subsystems] Looking for new subsystems at path /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.openxr@ef0033a586bf
+[Subsystems] Novel subsystem found at Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets
+[Subsystems] Discovering subsystems at path /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Library/PackageCache/com.unity.xr.openxr@ef0033a586bf
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@ef0033a586bf/Runtime/UnitySubsystemsManifest.json.
+[Package Manager] Done registering packages in 0.01 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+Duplicate assembly 'log4net.dll' with different versions detected, using 'Packages/com.unity.package-validation-suite/Lib/Editor/log4net.dll, AssemblyName=log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a' and ignoring 'Packages/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll, AssemblyName=log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a'.info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://unix:/tmp/ilpp.sock-c5847fb02bd37bbd46af5c68829afaad
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping - application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping - 200 - application/grpc 14.7835ms
+Starting: /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/BuildPipeline/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2000b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST
+Duplicate assembly 'log4net.dll' with different versions detected, using 'Packages/com.unity.package-validation-suite/Lib/Editor/log4net.dll, AssemblyName=log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a' and ignoring 'Packages/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll, AssemblyName=log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a'.DisplayProgressbar: Compiling Scripts
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors - application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.componentmodel.composition has duplicate hint path. Ignoring "/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/UnityReferenceAssemblies/unity-4.8-api/System.ComponentModel.Composition.dll" in favor of "/Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library/PackageCache/com.unity.burst@6bb9aca3ef38/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Mono.Cecil, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library/PackageCache/com.unity.nuget.mono-cecil@ecb9724e46ff/Mono.Cecil.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors - 200 - application/grpc 14.9149ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly - application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/2000b0aE.dag/Assembly-CSharp-Editor.dll, with 114 defines and 408 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with Library/Bee/artifacts/2000b0aE.dag/Unity.Collections.dll
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/Managed/UnityEngine/UnityEditor.CoreModule.dll
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Resources/Scripting/Managed/UnityEngine/UnityEngine.CoreModule.dll
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil.Rocks, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library/PackageCache/com.unity.burst@6bb9aca3ef38/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly - 200 - application/grpc 227.0765ms
+ExitCode: 0 Duration: 2s27ms
+[1126/1521  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1517/1521  1s] Csc Library/Bee/artifacts/2000b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+Assets/BCaT/Exhibits/BlackKitchen/Editor/BlackKitchenExperienceBuilder.cs(69,55): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(160,94): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(160,32): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(169,113): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(169,41): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(171,115): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(171,42): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets/BCaT/Exhibits/PrivacyLawExhibit/Editor/PrivacyLawExhibitSceneBuilder.cs(342,13): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets/BCaT/Exhibits/BlackKitchen/Editor/BlackKitchenExperienceBuilder.cs(426,9): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+Assets/BCaT_assets/LindaLeaks/Scripts/Editor/LindaLeaksPhase2Builder.cs(511,9): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(255,98): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(255,33): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+[1518/1521  0s] ILPostProcess Library/Bee/artifacts/2000b0aE.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/2000b0aE.dag/Assembly-CSharp-Editor.dll, with 114 defines and 408 references
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1519/1521  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[1520/1521  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (2.01 seconds), 5 items updated, 1521 evaluated
+Assets/BCaT/Exhibits/BlackKitchen/Editor/BlackKitchenExperienceBuilder.cs(69,55): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(160,94): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(160,32): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(169,113): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(169,41): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(171,115): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(171,42): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets/BCaT/Exhibits/PrivacyLawExhibit/Editor/PrivacyLawExhibitSceneBuilder.cs(342,13): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets/BCaT/Exhibits/BlackKitchen/Editor/BlackKitchenExperienceBuilder.cs(426,9): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+Assets/BCaT_assets/LindaLeaks/Scripts/Editor/LindaLeaksPhase2Builder.cs(511,9): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(255,98): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets/Editor/MeshellInteractionDiagnostic.cs(255,33): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+AssetDatabase: script compilation time: 2.403478s
+Total cache size 267745187
+Total cache size after purge 267745187, took 00:00:00.1343665
+Begin MonoManager ReloadAssembly
+Duplicate assembly 'log4net.dll' with different versions detected, using 'Packages/com.unity.package-validation-suite/Lib/Editor/log4net.dll, AssemblyName=log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a' and ignoring 'Packages/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll, AssemblyName=log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a'.Assembly Assembly-CSharp-Editor-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll not valid. Loading of assembly skipped.
+Assembly DocCodeExamples.dll at Library/ScriptAssemblies/DocCodeExamples.dll not valid. Loading of assembly skipped.
+Assembly TestNewCustomAssembly.dll at Library/ScriptAssemblies/TestNewCustomAssembly.dll not valid. Loading of assembly skipped.
+Assembly Unity.2D.Sprite.Package.EditorTests.dll at Library/ScriptAssemblies/Unity.2D.Sprite.Package.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Collections.BurstCompatibilityGen.dll at Library/ScriptAssemblies/Unity.Collections.BurstCompatibilityGen.dll not valid. Loading of assembly skipped.
+Assembly Unity.Collections.DocCodeSamples.dll at Library/ScriptAssemblies/Unity.Collections.DocCodeSamples.dll not valid. Loading of assembly skipped.
+Assembly Unity.Collections.PerformanceTests.dll at Library/ScriptAssemblies/Unity.Collections.PerformanceTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Collections.Tests.dll at Library/ScriptAssemblies/Unity.Collections.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Collections.Tests.Playmode.dll at Library/ScriptAssemblies/Unity.Collections.Tests.Playmode.dll not valid. Loading of assembly skipped.
+Assembly Unity.InputSystem.IntegrationTests.dll at Library/ScriptAssemblies/Unity.InputSystem.IntegrationTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Mathematics.Tests.dll at Library/ScriptAssemblies/Unity.Mathematics.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Editor.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Nuget.Mono-Cecil.dll at Library/ScriptAssemblies/Unity.Nuget.Mono-Cecil.dll not valid. Loading of assembly skipped.
+Assembly Unity.PathTracing.Editor.Tests.dll at Library/ScriptAssemblies/Unity.PathTracing.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.PathTracing.Runtime.Tests.dll at Library/ScriptAssemblies/Unity.PathTracing.Runtime.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Performance.Profile-Analyzer.EditorTests.dll at Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Play.Publisher.Editor.Tests.dll at Library/ScriptAssemblies/Unity.Play.Publisher.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.Core.Editor.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.Core.Runtime.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.HighDefinition.Editor.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.HighDefinition.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.HighDefinition.Runtime.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.HighDefinition.Runtime.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.HighDefinitionConfig.Editor.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.HighDefinitionConfig.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.Universal.Config.Editor.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.Universal.Editor.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.RenderPipelines.Universal.Runtime.Tests.dll at Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Searcher.EditorTests.dll at Library/ScriptAssemblies/Unity.Searcher.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Settings.Tests.dll at Library/ScriptAssemblies/Unity.Settings.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.ShaderGraph.Editor.Tests.dll at Library/ScriptAssemblies/Unity.ShaderGraph.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TestTools.CodeCoverage.Editor.Compatibility.dll at Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.Compatibility.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Editor.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.UnifiedRayTracing.Editor.Tests.dll at Library/ScriptAssemblies/Unity.UnifiedRayTracing.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.VisualEffectGraph.Editor.Tests.dll at Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.VisualEffectGraph.Runtime.Tests.dll at Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.CoreUtils.CodeSamples.Tests.dll at Library/ScriptAssemblies/Unity.XR.CoreUtils.CodeSamples.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.CoreUtils.Editor.Tests.dll at Library/ScriptAssemblies/Unity.XR.CoreUtils.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.CoreUtils.Tests.dll at Library/ScriptAssemblies/Unity.XR.CoreUtils.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Interaction.Toolkit.Editor.Tests.dll at Library/ScriptAssemblies/Unity.XR.Interaction.Toolkit.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Interaction.Toolkit.Tests.dll at Library/ScriptAssemblies/Unity.XR.Interaction.Toolkit.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Management.EditorTests.dll at Library/ScriptAssemblies/Unity.XR.Management.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Management.TestPackage.dll at Library/ScriptAssemblies/Unity.XR.Management.TestPackage.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Management.TestPackage.Editor.dll at Library/ScriptAssemblies/Unity.XR.Management.TestPackage.Editor.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Management.Tests.dll at Library/ScriptAssemblies/Unity.XR.Management.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.Management.Tests.Standalone.dll at Library/ScriptAssemblies/Unity.XR.Management.Tests.Standalone.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.OpenXR.Editor.Tests.dll at Library/ScriptAssemblies/Unity.XR.OpenXR.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.OpenXR.Tests.dll at Library/ScriptAssemblies/Unity.XR.OpenXR.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.OpenXR.Ubuntu.Tests.dll at Library/ScriptAssemblies/Unity.XR.OpenXR.Ubuntu.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.XR.TestSupport.dll at Library/ScriptAssemblies/Unity.XR.TestSupport.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.Common.Tests.dll at Library/ScriptAssemblies/UnityEditor.UI.Common.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.EditorTests.dll at Library/ScriptAssemblies/UnityEditor.UI.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.XR.LegacyInputHelpers.Tests.dll at Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEngine.SpatialTracking.Tests.dll at Library/ScriptAssemblies/UnityEngine.SpatialTracking.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEngine.UI.Tests.dll at Library/ScriptAssemblies/UnityEngine.UI.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEngine.XR.OpenXR.CodeSamples.Editor.Tests.dll at Library/ScriptAssemblies/UnityEngine.XR.OpenXR.CodeSamples.Editor.Tests.dll not valid. Loading of assembly skipped.
+Symbol file LoadedFromMemory is not a mono symbol file
+'Packages/com.unity.cinemachine/Editor/Editors/CinemachineVirtualCameraBaseEditor.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.unity.cinemachine/Editor/Obsolete/CinemachineVirtualCameraBaseEditor.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+Refreshing native plugins compatible for Editor in 11.96 ms, found 9 plugins.
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Duplicate assembly 'log4net.dll' with different versions detected, using 'Packages/com.unity.package-validation-suite/Lib/Editor/log4net.dll, AssemblyName=log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a' and ignoring 'Packages/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll, AssemblyName=log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a'.[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Black Homeplaces: The XR House
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.400 seconds
+Domain Reload Profiling: 3035ms
+	BeginReloadAssembly (91ms)
+		DisableScriptedObjects (8ms)
+		CreateAndSetChildDomain (36ms)
+	RebuildCommonClasses (19ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (84ms)
+	LoadAllAssembliesAndSetupDomain (432ms)
+		LoadAssemblies (238ms)
+		AnalyzeDomain (219ms)
+			TypeCache.Refresh (160ms)
+				TypeCache.ScanAssembly (147ms)
+			BuildScriptInfoCaches (49ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (2401ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (14ms)
+			BeforeProcessingInitializeOnLoad (94ms)
+			ProcessInitializeOnLoadAttributes (1991ms)
+			ProcessInitializeOnLoadMethodAttributes (98ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Start importing Assets/My_Custom/morten-s.glb using Guid(e072d4e1205f443a48408182589adff3) (ScriptedImporter)Launching external process: /Applications/Unity/Hub/Editor/6000.4.5f1/Unity.app/Contents/Helpers/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.02 seconds
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_POST1111, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_POST1111/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_POST1111/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_POST1111/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_TREADcon_ash.jpg1111, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_TREADcon_ash.jpg1111/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_TREADcon_ash.jpg1111/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/StairCon/_x0023_TREADcon_ash.jpg1111/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+ -> (Import Result ID: 'd46b306d6e6e717a5636e42a28ac0e3c') in 0.334257542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6c118625c5a0d66818c5e9140e4fd839 DependenciesID=91c98b05d53f52ac7e3698634425c7dc StaticDependenciesID=8a0d547447824fada2424f960d4c6d83 
+Start importing Assets/My_Custom/cake_display.glb using Guid(f08985aee588a47f9955873ed5e230b0) (ScriptedImporter)KHR_materials_pbrSpecularGlossiness has been deprecated, material standardSurface3 may not look correct. Use `gltf-transform metalrough` or other tools to convert to PBR. (File: Assets/My_Custom/cake_display.glb)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMaterials.cs:29)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124> (UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124&)
+UnityGLTF.GLTFSceneImporter:ConstructMaterial (GLTF.Schema.GLTFMaterial,int)
+UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMeshes.cs:42)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137> (UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137&)
+UnityGLTF.GLTFSceneImporter:CreateMaterials (GLTF.Schema.MeshPrimitive)
+UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMeshes.cs:150)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138> (UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138&)
+UnityGLTF.GLTFSceneImporter:ConstructMesh (GLTF.Schema.GLTFMesh,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1134)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1420)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105> (UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105&)
+UnityGLTF.GLTFSceneImporter:ConstructScene (GLTF.Schema.GLTFScene,bool,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:777)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94> (UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94&)
+UnityGLTF.GLTFSceneImporter:_LoadScene (int,bool,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:542)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85> (UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85&)
+UnityGLTF.GLTFSceneImporter:LoadSceneAsync (int,bool,System.Action`2<UnityEngine.GameObject, System.Runtime.ExceptionServices.ExceptionDispatchInfo>,System.Threading.CancellationToken,System.IProgress`1<UnityGLTF.ImportProgress>)
+UnityGLTF.GLTFImporter/<>c__DisplayClass55_0:<CreateGLTFScene>b__1 () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:1006)
+UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:25)
+System.Runtime.CompilerServices.AsyncVoidMethodBuilder:Start<UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d> (UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d&)
+UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0:<RunSync>b__0 (object)
+UnityGLTF.AsyncHelpers/ExclusiveSynchronizationContext:BeginMessageLoop () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:119)
+UnityGLTF.AsyncHelpers:RunSync (System.Func`1<System.Threading.Tasks.Task>) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:37)
+UnityGLTF.GLTFImporter:CreateGLTFScene (UnityGLTF.Plugins.GLTFImportContext,UnityEngine.GameObject&,UnityEngine.AnimationClip[]&,UnityGLTF.GLTFSceneImporter&) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:1006)
+UnityGLTF.GLTFImporter:OnImportAsset (UnityEditor.AssetImporters.AssetImportContext) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:325)
+UnityEditor.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.AssetImporters.AssetImportContext) (at /Users/bokken/build/output/unity/unity/Modules/AssetPipelineEditor/Public/ScriptedImporter.cs:25)
+
+(Filename: ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMaterials.cs Line: 29)
+
+KHR_materials_pbrSpecularGlossiness has been deprecated, material standardSurface2 may not look correct. Use `gltf-transform metalrough` or other tools to convert to PBR. (File: Assets/My_Custom/cake_display.glb)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMaterials.cs:29)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124> (UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124&)
+UnityGLTF.GLTFSceneImporter:ConstructMaterial (GLTF.Schema.GLTFMaterial,int)
+UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMeshes.cs:42)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137> (UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137&)
+UnityGLTF.GLTFSceneImporter:CreateMaterials (GLTF.Schema.MeshPrimitive)
+UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMeshes.cs:150)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138> (UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138&)
+UnityGLTF.GLTFSceneImporter:ConstructMesh (GLTF.Schema.GLTFMesh,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1134)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1420)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105> (UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105&)
+UnityGLTF.GLTFSceneImporter:ConstructScene (GLTF.Schema.GLTFScene,bool,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:777)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94> (UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94&)
+UnityGLTF.GLTFSceneImporter:_LoadScene (int,bool,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:542)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85> (UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85&)
+UnityGLTF.GLTFSceneImporter:LoadSceneAsync (int,bool,System.Action`2<UnityEngine.GameObject, System.Runtime.ExceptionServices.ExceptionDispatchInfo>,System.Threading.CancellationToken,System.IProgress`1<UnityGLTF.ImportProgress>)
+UnityGLTF.GLTFImporter/<>c__DisplayClass55_0:<CreateGLTFScene>b__1 () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:1006)
+UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:25)
+System.Runtime.CompilerServices.AsyncVoidMethodBuilder:Start<UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d> (UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d&)
+UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0:<RunSync>b__0 (object)
+UnityGLTF.AsyncHelpers/ExclusiveSynchronizationContext:BeginMessageLoop () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:119)
+UnityGLTF.AsyncHelpers:RunSync (System.Func`1<System.Threading.Tasks.Task>) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:37)
+UnityGLTF.GLTFImporter:CreateGLTFScene (UnityGLTF.Plugins.GLTFImportContext,UnityEngine.GameObject&,UnityEngine.AnimationClip[]&,UnityGLTF.GLTFSceneImporter&) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:1006)
+UnityGLTF.GLTFImporter:OnImportAsset (UnityEditor.AssetImporters.AssetImportContext) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:325)
+UnityEditor.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.AssetImporters.AssetImportContext) (at /Users/bokken/build/output/unity/unity/Modules/AssetPipelineEditor/Public/ScriptedImporter.cs:25)
+
+(Filename: ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMaterials.cs Line: 29)
+
+ -> (Import Result ID: '39ff4ceea7ed7d8a76976864e9179639') in 0.016245958 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=211e0b79da8c2569b62f3d202115985a DependenciesID=94fe2ab6165c22b0f7a27c7a3af48b1b StaticDependenciesID=93d02ff934b50fab90f8c3fe81c3c91f 
+Start importing Assets/BCaT_assets/SewingRoom/bed.glb using Guid(b1651a3289f334245b9bec82007dfd02) (ScriptedImporter)Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/defaultMaterial/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+ -> (Import Result ID: '08529badfdcb5620597aaddfcf8c01ce') in 1.231727375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c5885d87cea7c246676a4075290b5f23 DependenciesID=04be28a9bdf481228c7202a9d5278ca4 StaticDependenciesID=03d1616e9fd7e64e161b24a618ef0352 
+Start importing Assets/BCaT/Exhibits/BlackKitchen/Models/BlackKitchen_ScannedEnvironment.glb using Guid(9219852dcb8fc461ca23946a136c6119) (ScriptedImporter) -> (Import Result ID: '94fa0e6be97214c38f062cc024ed10b6') in 0.331684333 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ae1fe821bba53dc8e4058207b3db9b46 DependenciesID=b9faebc08b101e7075d82be242de56d6 StaticDependenciesID=31500419213e36ff51e40ce48f295bfc 
+Start importing Assets/BCaT_assets/LindaLeaks/Models/LL_PhotoAlbum.glb using Guid(f49453a7cba9548f39155f0e8be63582) (ScriptedImporter) -> (Import Result ID: 'ab77122d1636ef04d6e12910a213d5e1') in 0.046743667 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e732cc629e10b07efe31a18c0bd4854c DependenciesID=f3931b0565bd9f3633658ea05ae24ee9 StaticDependenciesID=5f86566190ebccb2a77530021b46ab3f 
+Start importing Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb using Guid(e51f5d2ac2ffb4761b44e43ff6c3dbb7) (ScriptedImporter) -> (Import Result ID: 'e51e4125a4379b42b23f971d9fcd6fdb') in 0.052043667 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7a2847fd07a38a012203120d7ab67c9e DependenciesID=5437209cd50bb6160788b8d95c3aa931 StaticDependenciesID=3f42d3171b2dfa03df2ab15824e3d24f 
+Start importing Assets/BCaT_assets/HOMED/Models/Candle.glb using Guid(861898bb17b4d44178aeebfb7ff10aad) (ScriptedImporter) -> (Import Result ID: 'f0d6640a103082e4f502b1a27da7e53d') in 0.022681667 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=135f04f2943c8938363d0100a09fca48 DependenciesID=23347f623ff201da9043170e65245bb8 StaticDependenciesID=5afeaf42df344c037e36b33a83de68be 
+Start importing Assets/My_Custom/japanese_red_bridge.glb using Guid(b650702d37278487f8bb7951cc443513) (ScriptedImporter) -> (Import Result ID: '435b33961728c4da545010f9716562f4') in 0.239996083 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b8400b1d650d328595c826de4adf9eca DependenciesID=1414340a4b049c9e2999d5cbb801235e StaticDependenciesID=a5d8de7274007fba5c3b394020ead519 
+Start importing Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb using Guid(487b20c2c3ddf435cb2cedcbf42ff6e7) (ScriptedImporter) -> (Import Result ID: '38dfaf2b6a5e3dddb258b66f1668ac9e') in 0.77525675 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=09154de4a027d4429a4e509893a094b8 DependenciesID=b193b583d8607ca62c1469e4fadd3543 StaticDependenciesID=613b4f480ddb631544270b66539dd3a6 
+Start importing Assets/BCaT_assets/SewingRoom/needle_and_thread.glb using Guid(78445511b2c194a2ca401b6eb2bfc65b) (ScriptedImporter) -> (Import Result ID: '3404a06e3ced3f45b65defce67379ffa') in 0.005673083 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a1f457836a8b67d78a5daf335b149b45 DependenciesID=980a1f1d8abd10b29ce6b26d3fea1979 StaticDependenciesID=8b7c1199868742f7ad3579c1cd7403b1 
+Start importing Assets/BCaT_assets/9night/drum.glb using Guid(78899a072c6b0420bbf557b45b4d7377) (ScriptedImporter)Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/Drum.001_Drum_0/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+ -> (Import Result ID: '14020ddf9a0199d92ff81b8923d95a7b') in 0.088753042 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=324ca474707eebcc3ca5599f70fd0880 DependenciesID=dd7e95cefc5eb33b75fa125fc4866724 StaticDependenciesID=160a471c3e15f6f0a595cace926c3721 
+Start importing Assets/BCaT_assets/Ri/glass_fish.glb using Guid(d862f5550e3de454eb6fcbb90656bd5a) (ScriptedImporter)Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0, Type:GameObject'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0/Transform, Type:Transform'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0/MeshFilter, Type:MeshFilter'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+Identifier uniqueness violation: 'Name:scenes/Sketchfab_Scene/Sketchfab_Scene/SM_Body/SM_Body_M_Body_0/MeshRenderer, Type:MeshRenderer'. Multiple Objects with the same name/type are generated by this Importer. There is no guarantee that subsequent imports of this asset will properly re-link to these targets.
+ -> (Import Result ID: '336ab966c6e4a0a9551b518d9599b7da') in 0.101089375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=57bdb3ff6897744b7432276a23f7f04c DependenciesID=015f5ee2d861d8fcad1ece9ce711ace6 StaticDependenciesID=9919e155c1dd30dc8fc4c865010c9a13 
+Start importing Assets/BCaT_assets/HOMED/Models/Recipe-Box.glb using Guid(e933342e531354997b0bc3899c77c744) (ScriptedImporter) -> (Import Result ID: '4380ba85aeeba5f4a7e551988d9a9bfa') in 0.02543125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c9624249a33bb258c9a264c4047b4b73 DependenciesID=9e818c5511886cb2882ce0574eaf4b1e StaticDependenciesID=76f77dd6804b2ba0400c041fc78234a0 
+Start importing Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb using Guid(eac12f59922e443f49156425a73f4d90) (ScriptedImporter) -> (Import Result ID: 'bb09245ab20951e791c03a0081c8488a') in 0.026955542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=99d2005a3ef4761efe4db80e6861577d DependenciesID=4de15e2b4844c657b2a794d7ea17d17b StaticDependenciesID=44dce3d725c2924493f7d83bcc8cb25d 
+Start importing Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb using Guid(8b5065b9dbf104db49b211f1124cb164) (ScriptedImporter) -> (Import Result ID: '9b3275fa4a96f2b18b2b1564cde4ac5a') in 0.106725291 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=73ad620cfca492ddb16d2265718d52dd DependenciesID=e7fde0cc15672da5c57fb01a90357ac7 StaticDependenciesID=bfdf8b7d2bb214c85b08c6f9131c8860 
+Start importing Assets/BCaT_assets/SewingRoom/old_sewing_box.glb using Guid(ebc42e710279f4d68867b200027526be) (ScriptedImporter) -> (Import Result ID: '2eb784692ddb5952aa0764867beb0218') in 0.23297125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=335941556e78b133134f418ec72def9b DependenciesID=ca775bd3573f45701f0445f8a2b4f26a StaticDependenciesID=22f5ebf323d8296009c9dfb2d0691e15 
+Start importing Assets/BCaT_assets/BTMMP_Workstation_Assembly/spray_can.glb using Guid(9d8b205b917f041a281779b5a95da0f3) (ScriptedImporter)KHR_materials_pbrSpecularGlossiness has been deprecated, material None may not look correct. Use `gltf-transform metalrough` or other tools to convert to PBR. (File: Assets/BCaT_assets/BTMMP_Workstation_Assembly/spray_can.glb)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMaterials.cs:29)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124> (UnityGLTF.GLTFSceneImporter/<ConstructMaterial>d__124&)
+UnityGLTF.GLTFSceneImporter:ConstructMaterial (GLTF.Schema.GLTFMaterial,int)
+UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMeshes.cs:42)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137> (UnityGLTF.GLTFSceneImporter/<CreateMaterials>d__137&)
+UnityGLTF.GLTFSceneImporter:CreateMaterials (GLTF.Schema.MeshPrimitive)
+UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMeshes.cs:150)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138> (UnityGLTF.GLTFSceneImporter/<ConstructMesh>d__138&)
+UnityGLTF.GLTFSceneImporter:ConstructMesh (GLTF.Schema.GLTFMesh,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1134)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1126)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d> (UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0/<<ConstructNode>g__CreateNodeComponentsAndChilds|0>d&)
+UnityGLTF.GLTFSceneImporter/<>c__DisplayClass102_0:<ConstructNode>g__CreateNodeComponentsAndChilds|0 (bool,bool)
+UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1269)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102> (UnityGLTF.GLTFSceneImporter/<ConstructNode>d__102&)
+UnityGLTF.GLTFSceneImporter:ConstructNode (GLTF.Schema.Node,int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<GetNode>d__99:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:940)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<UnityEngine.GameObject>:Start<UnityGLTF.GLTFSceneImporter/<GetNode>d__99> (UnityGLTF.GLTFSceneImporter/<GetNode>d__99&)
+UnityGLTF.GLTFSceneImporter:GetNode (int,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:1420)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105> (UnityGLTF.GLTFSceneImporter/<ConstructScene>d__105&)
+UnityGLTF.GLTFSceneImporter:ConstructScene (GLTF.Schema.GLTFScene,bool,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:777)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94> (UnityGLTF.GLTFSceneImporter/<_LoadScene>d__94&)
+UnityGLTF.GLTFSceneImporter:_LoadScene (int,bool,System.Threading.CancellationToken)
+UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85:MoveNext () (at ./Packages/org.khronos.unitygltf/Runtime/Scripts/GLTFSceneImporter.cs:542)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85> (UnityGLTF.GLTFSceneImporter/<LoadSceneAsync>d__85&)
+UnityGLTF.GLTFSceneImporter:LoadSceneAsync (int,bool,System.Action`2<UnityEngine.GameObject, System.Runtime.ExceptionServices.ExceptionDispatchInfo>,System.Threading.CancellationToken,System.IProgress`1<UnityGLTF.ImportProgress>)
+UnityGLTF.GLTFImporter/<>c__DisplayClass55_0:<CreateGLTFScene>b__1 () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:1006)
+UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d:MoveNext () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:25)
+System.Runtime.CompilerServices.AsyncVoidMethodBuilder:Start<UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d> (UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0/<<RunSync>b__0>d&)
+UnityGLTF.AsyncHelpers/<>c__DisplayClass0_0:<RunSync>b__0 (object)
+UnityGLTF.AsyncHelpers/ExclusiveSynchronizationContext:BeginMessageLoop () (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:119)
+UnityGLTF.AsyncHelpers:RunSync (System.Func`1<System.Threading.Tasks.Task>) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/Internal/AsyncHelpers.cs:37)
+UnityGLTF.GLTFImporter:CreateGLTFScene (UnityGLTF.Plugins.GLTFImportContext,UnityEngine.GameObject&,UnityEngine.AnimationClip[]&,UnityGLTF.GLTFSceneImporter&) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:1006)
+UnityGLTF.GLTFImporter:OnImportAsset (UnityEditor.AssetImporters.AssetImportContext) (at ./Packages/org.khronos.unitygltf/Editor/Scripts/GLTFImporter.cs:325)
+UnityEditor.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.AssetImporters.AssetImportContext) (at /Users/bokken/build/output/unity/unity/Modules/AssetPipelineEditor/Public/ScriptedImporter.cs:25)
+
+(Filename: ./Packages/org.khronos.unitygltf/Runtime/Scripts/SceneImporter/ImporterMaterials.cs Line: 29)
+
+ -> (Import Result ID: '26cac2954dd9af11474bf2a21d13cd26') in 0.140564125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=58f949d2a2b54257053ea000a77a1664 DependenciesID=b254608b3fe5b587241299f23e4df152 StaticDependenciesID=7fee1d4cd75af234be1973a7c08b9cea 
+Start importing Assets/BCaT_assets/SewingRoom/pillow__quilt.glb using Guid(ade6cd34bd0614ae6b27475de588b3dc) (ScriptedImporter) -> (Import Result ID: 'e610706c707d6e4a1dea9597ef2fc2f2') in 0.163028834 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a1af734a9ab24a1efad3530db722e344 DependenciesID=404cc4e8b3aece50d7c0e49731424964 StaticDependenciesID=9b0474e00b314ff952dbcd1f6274357e 
+Start importing Assets/My_Custom/modern_scandinavian_kitchen_island.glb using Guid(9e277ceefdd06470d9f6e65ad16dd129) (ScriptedImporter) -> (Import Result ID: '3753b519c74047eba42ecbe7247f38a3') in 0.62540875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a4eb692bda8c46d2dba9aea9440155ba DependenciesID=c1fa2c17f0ca0497aabcdbf3e9b406be StaticDependenciesID=fd1f58f6544e6f4dd31c1ef589825a25 
+Start importing Assets/BCaT_assets/SewingRoom/sewing_machine.glb using Guid(0f13d814b4ac04fd8bcef2314125a2b3) (ScriptedImporter) -> (Import Result ID: '3d5d99b9279881f83802f6a6bd14dacf') in 0.051094125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a68d56b16a55202bdce7c46daf98c799 DependenciesID=455a0d8421c3ad6bccc3090713441649 StaticDependenciesID=1094d392b6c8ff06d3e6731b4a37d94a 
+Start importing Assets/BCaT_assets/HOMED/Prefabs/HOMED.prefab using Guid(5bb49e593d71148b88b4a0730b72b942) (PrefabImporter) -> (Import Result ID: '616979f0a6f22376f40029c20099fa66') in 0.031365875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c1fd9bac6fa7c594c354d4bc2f354205 DependenciesID=fb4182529886171ca5e85985eff3428a StaticDependenciesID=f41a6af9f6af1c60f5e18a3deb6f1b8f 
+Start importing Assets/BCaT_assets/LindaLeaks/Prefabs/LindaLeaks_Exhibit_PhotoAlbum.prefab using Guid(1c215db076e9b43d3ab42c99efce3915) (PrefabImporter) -> (Import Result ID: 'bba0e6b12abb790c48a4e51a8c6458e2') in 0.016158709 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=370e37447b2012ef29ef120c0c61a5c8 DependenciesID=c0cffe011eee3de815907d9e5099a0b4 StaticDependenciesID=ee0eabdadddb0f53a8ff5268c48160e7 
+Start importing Assets/BCaT_assets/LindaLeaks/Prefabs/LindaLeaks_Exhibit_VintageCamera.prefab using Guid(ac65b22932d074699851b897dabb3f50) (PrefabImporter) -> (Import Result ID: 'ff0e83a6360189447daa08871fbec40d') in 0.003973375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2d709a32723b8ec531f39c7d6b64be20 DependenciesID=d0fa42ed5631048b4f3997d609013cc6 StaticDependenciesID=778374590519d10352f4c78bf1e87870 
+Refreshing native plugins compatible for Editor in 2.01 ms, found 9 plugins.
+(Values over 0.050ms)
+Asset Pipeline Refresh (id=467fcd123d1cc40fbb28b293ab3a8330): Total: 11.874 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=23 (actual=23, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=8324 ms
+		Asset DB Callback time: managed=447 ms, native=19 ms
+		Scripting: domain reloads=1, domain reload time=634 ms, compile time=2404 ms, other=40 ms
+		Project Asset Count: scripts=2792, non-scripts=5333
+		Asset File Changes: new=0, changed=21, moved=0, deleted=0
+		Scan Filter Count: 1
+	InvokePackagesCallback: 14.157ms
+	ApplyChangesToAssetFolders: 0.273ms
+	Scan: 709.351ms
+	OnSourceAssetsModified: 0.506ms
+	CategorizeScriptCompilationAssets: 104.851ms
+	ProcessAssetsWithTransientArtifactChanges: 63.605ms
+	CategorizeAssets: 141.701ms
+	CompileScripts: 2404.430ms
+	ImportOutOfDateAssets: 7180.751ms (2424.185ms without children)
+		ImportManagerImport: 4754.893ms (7.044ms without children)
+			UpdateCategorizedAssets: 0.299ms
+		UnloadImportedAssets: 0.522ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.808ms
+		OnDemandSchedulerStart: 0.297ms
+	PostProcessAllAssets: 448.312ms
+		VCAutoAddAssetPostprocess 0.584ms
+		XRBuildSystem.XRAssetImported 0.415ms
+		PostProcessCallbackCreateDeferredMaterials 0.057ms
+		MonoPostProcessAllAssets: 446.839ms
+			HDRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 270.580ms
+			AssetPostprocessor.OnPostprocessAllAssets 113.914ms
+			AssetCallbacks.OnPostprocessAllAssets 22.111ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 14.171ms
+			SyncVS.PostprocessSyncProject 4.333ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 3.339ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.498ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 1.099ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 1.076ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 1.030ms
+			AssetChangedListener.OnPostprocessAllAssets 0.754ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 0.750ms
+			VFXGraphPreprocessor.OnPostprocessAllAssets 0.734ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 0.681ms
+			MaterialPostprocessor.OnPostprocessAllAssets 0.410ms
+			SpriteEditorTexturePostprocessor.OnPostprocessAllAssets 0.334ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.329ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.313ms
+			PostProcessor.OnPostprocessAllAssets 0.256ms
+			AudioImportPostprocessor.OnPostprocessAllAssets 0.245ms
+			UVCSAssetPostprocessor.OnPostprocessAllAssets 0.238ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.212ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.208ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.185ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.158ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.137ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.128ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.122ms
+			DomainReloadProcessor.OnPostprocessAllAssets 0.118ms
+			AssetEvents.OnPostprocessAllAssets 0.118ms
+			CinemachineSettings.OnPostprocessAllAssets 0.112ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.084ms
+			UpdateCustomDependenciesAfterImport.OnPostprocessAllAssets 0.058ms
+			SamplePostprocessor.OnPostprocessAllAssets 0.052ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.051ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.051ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.051ms
+	PostAssetChangesProfiler: 4.444ms
+	UnloadStreamsBegin: 2.226ms
+	PersistCurrentRevisions: 0.267ms
+	GenerateScriptTypeHashes: 5.368ms
+	GenerateScriptTypeSerializationHashes: 9.715ms
+	Untracked: 797.184ms
+
+Application.AssetDatabase Initial Refresh End
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Scanning for USB devices : 0.115ms
+Initializing Unity extensions:
+Unloading 337 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 10832 unused Assets / (4.7 MB). Loaded Objects now: 12197.
+Memory consumption went from 0.51 GB to 0.50 GB.
+Total: 9.453583 ms (FindLiveObjects: 0.466000 ms CreateObjectMapping: 0.216667 ms MarkObjects: 6.489083 ms  DeleteObjects: 2.281708 ms)
+
+Curl error 6: Could not resolve host: config.uca.cloud.unity3d.com
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/StudyRoom Carpet/Atlas1_Metallic_Smoothness.png using Guid(00a57a9949a91c244b4a23dd64031719) (TextureImporter) -> (Import Result ID: 'dcc766ebde7e4fc5938b4d0a656a7d02') in 0.025635875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bbb908b5feda0500d68d052853e31c54 DependenciesID=e4199c09ea75bdbebbacdbdcd3f47170 StaticDependenciesID=822f8d3874a25bd0e48dd95ffba75d06 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Gingham Kitchen Linen/GinghamKitchenLinenAmbientOcclusionMap.png using Guid(407c1ec5605b5c547bc6aa7bb70eb55e) (TextureImporter) -> (Import Result ID: '458d2c2a03d88478b055de2f62db046b') in 0.055961208 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d24f0579300298365f4e2617b5a2fa6d DependenciesID=f2b5466195f8870dea39756dd93f17ad StaticDependenciesID=e041ac52b965cb9c3ba06dc832a6426a 
+Start importing Assets/Furniture Mega Pack/Textures/Tables/Table38/Table38_mat_Table38_MetallicSmoothness.png using Guid(70878db69c32a194e8c15e0ab99d7912) (TextureImporter) -> (Import Result ID: '5af1a23c0fe663447283d66d8a1157dc') in 0.063203 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=315030ebbbfe0488066f3dc09134a26f DependenciesID=07205e27aac4dd6a211c96fcb89697e3 StaticDependenciesID=ff1122e97599c85d91149af1f22a718e 
+Start importing Assets/danthaigames/DS 80s Television/Textures/TV.png using Guid(80d4b4658b29e1b4681c01606dd6ad80) (TextureImporter) -> (Import Result ID: 'bdfda5af9937303ec4677611572cf492') in 0.056923166 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ae758c52060041d02c63c06289ddf9e9 DependenciesID=592600311d7b80ed12a4601665336ff8 StaticDependenciesID=fa3af5e04408ecc75e129fcfed1e1f30 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/BedFrame/AtlasTexture_BedFrame_AtlasTexture_BedFrame_Normal.png using Guid(b03da7d53f5d6cf4380a818f033a0d61) (TextureImporter) -> (Import Result ID: 'ed4422772f7d3ce1037a000f84e4aaa1') in 0.08048875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b8817eea79b1d315a72399b5c30d3e0b DependenciesID=81d5dcc9383c3fe19f9abeaf80a70c91 StaticDependenciesID=120f71016b64b62b573a09471bd6e77f 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_Moss_Normal.tif using Guid(2114e87dbc5872042860b1588217688e) (TextureImporter) -> (Import Result ID: '6623b6f00716a1d900319a19fed18a1d') in 0.139131333 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4491e09b74801c4da924367d571e0fe5 DependenciesID=92a711b76a05f07b1c62fb4626bb9104 StaticDependenciesID=053c7c694dd9378951dd0a4439ea7a62 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair49/Chair49_mat_Chair49_Normal.png using Guid(31706f688c42f5a48be63d8be6e29be2) (TextureImporter) -> (Import Result ID: 'cbf0aced3da14ee0507d4b81bc523048') in 0.07652075 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9615a57b5266cabac3593de96ca4424f DependenciesID=b6e607ef267227af83c3e639559c14bc StaticDependenciesID=9b7e27292d34ce93d3458bf96fa09f93 
+Start importing Assets/HyTeKGames/SRPMaterialConverter/ConvertedMaterials/Maps/balcony_wood_Metallic.png using Guid(3156b231077074e4b963fe0b3103ebf5) (TextureImporter) -> (Import Result ID: '4c1631ef91353a878a7af7d563c65280') in 0.023829458 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=151ca49932b9935dd3cf40ba84d46ae1 DependenciesID=55b0f8e9ff674b46affa15b68b1c0f11 StaticDependenciesID=0cbe0af9ca3a4fb9b02235fbd82777ca 
+Start importing Assets/picture-frame/textures/pictureframe.png using Guid(319dc69870a164115b8de138771077ef) (TextureImporter) -> (Import Result ID: '3fbd05b417d397be245a8d42c04bdd98') in 0.059200458 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a9d811ac31b62a441dc1dc9cd67d8baf DependenciesID=0384aca50870162df4446db0ee947211 StaticDependenciesID=0466bacd9eeb299a01e7b0eacec45daa 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_attachments_metal_Normal.png using Guid(31fde4f3b0425b441a98a6a1b84dfcb1) (TextureImporter) -> (Import Result ID: '63891b825fe1c4a704e9d44720f41d41') in 0.069596875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9e68f11c334263c61d91338c48b9f427 DependenciesID=a53cd5012979a4a98ce5d1d1a57e984d StaticDependenciesID=941058ba9f2ade64e304f43d3a2b3ae2 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Living Room/TV_Shelf/TV_Shelf_DefaultMaterial_MetallicSmoothness.png using Guid(51c9bb2f5d373a1439ad447c7f6333de) (TextureImporter) -> (Import Result ID: '3e3c099d570a29f0fe64fef77388ec75') in 0.021127334 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b105b318596b9b4d72155b3dbf6280f5 DependenciesID=4f797289de613a1c883b356af15e5ce6 StaticDependenciesID=7f228cb0e9a496591018b12f6b8043db 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_attachments_metal_BaseMap.png using Guid(517be585df5bfa841a011c1dee224d78) (TextureImporter) -> (Import Result ID: '35d92e72b1dec2dd0b51bd66d593aa0c') in 0.077090125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=32b6aa36176333894e7258897d9c3497 DependenciesID=3c51ffd0a9e16ca1e81b3634bf399bad StaticDependenciesID=6ca4ee53c8a2cf8427d1622433d3e216 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair37/Chair37_mat_Chair37_MetallicSmoothness.png using Guid(910c6f043532a984db7696e3810e0138) (TextureImporter) -> (Import Result ID: '986dc8d3a0d9a72a38ab2257c353e34c') in 0.058410292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=8c9155a3195d1da8e25fd49829f30741 DependenciesID=25cfdfa1a92bbd03898e38469b6d5219 StaticDependenciesID=4851b84b3dec640a53fc2588b80ef90c 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/table/Study Table_Normal.png using Guid(b1902fa3554f46842b1eda9ac3b0fefc) (TextureImporter) -> (Import Result ID: '20c5aae1bf4efe0e192947c461749325') in 0.046542625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c55c9e02908d7d494d12212e8c56f62a DependenciesID=4327eea34fb508ce5c99184aacb01dc8 StaticDependenciesID=a8f111fd1b7d81585eeda125186fa64b 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Soil_Rocks_MaskMap.tif using Guid(b1c590e575d73224eb6773fd8c1cbb64) (TextureImporter) -> (Import Result ID: 'c24a6de422c57ec544058e93bd65afdd') in 0.136713917 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=cc96c4632e421bfb29c30645759e35eb DependenciesID=31bb0be029d9c1bd4e63c4a312c92bb7 StaticDependenciesID=8e24ffb2c1a332c7ec11273daea50874 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair49/Chair49_mat_Chair49_MetallicSmoothness.png using Guid(d1fe71c7404838741a6fb425e3c44f5f) (TextureImporter) -> (Import Result ID: 'bd37fef0165f146cb11dabb5ab5a5a0d') in 0.056547458 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=47801d14fbd2087988a1c4c00e682a88 DependenciesID=4e55ba46679a328b7411804f0caddb05 StaticDependenciesID=59eaf7e4020421ac09a43f8dd2428add 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Sand_BaseColor.tif using Guid(e18ae12a8286a594bae0eb036ce9bc12) (TextureImporter) -> (Import Result ID: '0a3772cf4b85711037f2ee8b15ac01ad') in 0.077472542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2a3076e0ae334d690fabb0e270430045 DependenciesID=14c3b19726f3970c2312a3e0e03ef619 StaticDependenciesID=f50143169900a41eebf9dfb0442337ed 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/table/Study Table_MetallicSmoothness.png using Guid(f1428830577059544bcf6480754fd7c8) (TextureImporter) -> (Import Result ID: 'e3649b1812b49b78f6df82a5660dffe8') in 0.049046458 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=abab80dd6590617abba2ec627bf144a4 DependenciesID=f63fa721e0b62503ac8c39b5318d5da5 StaticDependenciesID=f134f9502e2ff96d12061b5387691751 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair47/Chair47_mat_Chair47_AlbedoTransparency.png using Guid(122a2e946a74ea24ba8bea4754ffa247) (TextureImporter) -> (Import Result ID: 'e248ee1712f64a83c3d7adf7d249d9bb') in 0.071967 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5af2e6f0759f2e1389045c26a2abc360 DependenciesID=597873c09e1b1394270ef84bcd4358a2 StaticDependenciesID=dc41dd1ed528929f0c7c23b3a1bbbbf5 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Sand_MaskMap.tif using Guid(32c701976955001429b200f33da0d4a9) (TextureImporter) -> (Import Result ID: '2544cc38b496bbf7ded5abc2d95ddc73') in 0.074650583 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=31e946ef9295c5bb533882e773ec7105 DependenciesID=4abb53a3b3cc5793538a7419dc3939cb StaticDependenciesID=816e3611304587b3ce58f1d03bc782e9 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_Normal.png using Guid(82d79d265f71d1f48af0fc9246a91665) (TextureImporter)crunched in 0.551408
+ -> (Import Result ID: '0bbc9e681aee42bd42abc74710cd0bbc') in 0.587423292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=65cafe05e05849ed4ea049f83f3fbb30 DependenciesID=44a8742d1c726b55a9a81c0b919e9650 StaticDependenciesID=030fd050f9c8ea5a0610d300e9be0eea 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_boat_kit_Normal.png using Guid(82480d53faa85b54e863e95782be0751) (TextureImporter) -> (Import Result ID: '4d04098a983b502d21a5795d5595e8b8') in 0.076586334 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b1625ed3672334827c49f95813de5eef DependenciesID=23335aff31e4a189a4aa9f7093c27588 StaticDependenciesID=6f83f76cc764f23523e670c9a9c04dab 
+Start importing Assets/Furniture Mega Pack/Textures/Cushions/Cushion17_24/Cushion17_24_mat_Cushion17_24_MetallicSmoothness.png using Guid(a20debe6e1c951147acc81e481a64858) (TextureImporter) -> (Import Result ID: '0e1ee240086f4f090f38ffe1a4c124cf') in 0.065178791 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bd8a4c632beb5545ba2facae60dcab32 DependenciesID=82565cb19ad506e8b2facc8b875a63dc StaticDependenciesID=e69f289aa072a8b7b935c5c4825d6751 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/Blanket/AtlasTexture_Blanket_DefaultMaterial_MetallicSmoothness.png using Guid(c2f9325ce48498945bd830bbee92eca3) (TextureImporter) -> (Import Result ID: '76122bc3509d0ab5c7ba8aee393b5bd3') in 0.044558083 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=212e1d5647f30b1378aadffcc14f24d5 DependenciesID=f8958e8c7e8dfcb659fdaee15ab706a1 StaticDependenciesID=d66eeea2c7c5f6a030f2c647c3668df4 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Soil_Rocks_BaseColor.tif using Guid(e257fa53a087b404d8579225e1c7cddb) (TextureImporter) -> (Import Result ID: 'c9c35c4e47d7ceac445ed9bfdf7044ae') in 0.137765708 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2dd184921fc029dbe97ebacc9200113a DependenciesID=edf0ff6448a61f5fe01723328423e6fd StaticDependenciesID=e81a187f0b4cd2f68a84caaccda725a5 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Painted Beech Wall Boards/PaintedBeechWallBoardsAmbientOcclusionMap.png using Guid(f215e3a6d81ef3d4689eef8d40e04abf) (TextureImporter) -> (Import Result ID: '5a0e1cc1605960f0d878a871ba8aca4a') in 0.052049375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1ee290a89d9c94080c6512f4610e831e DependenciesID=0f7b8c0777dce69444182119aab431c1 StaticDependenciesID=f7c88f9e7a254372570997dc11e9af77 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_skybox_cloudy.png using Guid(f267470655dacfc49962f90c04d97f13) (TextureImporter) -> (Import Result ID: '3837840d77f05bb726fc3823790d6f51') in 0.060537625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ef6d100a1ed8d56d5b9595b74603a09f DependenciesID=5bc6fe372ef45bd187af46f6a0810706 StaticDependenciesID=8541b99e60a340a4c91fce248add1a93 
+Start importing Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png using Guid(03159f8be35accb4883befca9d0641e1) (TextureImporter) -> (Import Result ID: 'a9096c62fd1ecf35f2f6f7ffbd0849ce') in 0.081962833 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e630139ca159672413b486b819ed4028 DependenciesID=9a035ed011d7898185b73c3e8fae51f6 StaticDependenciesID=1b9ca101f8595b3552504d669eb2db54 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_windows_italian_Normal.png using Guid(038d30311552c0546a2c93d33c2cb94c) (TextureImporter) -> (Import Result ID: 'c16f0af5d25a590c748447de139ba8d1') in 0.070581834 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=24d4184ad2b90ed1b5971326e9469fd2 DependenciesID=d6f3dc8c428664d5cd09d7af09bd536c StaticDependenciesID=fbadb864a58c6c43f89f1dcc13ca90cb 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Black_Sand_MaskMap.tif using Guid(33e332af78571f249aa14092c01288cb) (TextureImporter) -> (Import Result ID: '630ce0d473ed525788858a56807d4a20') in 0.135690416 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ef359f04713356cfa450fe0fa200dd75 DependenciesID=da74d50efbb10e6a4023ef38e9d707fe StaticDependenciesID=b7f19a72f50ad6a11616098b5ffc876e 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Sand_Normal.tif using Guid(83f03b3c2b2d5df40898d8c2123239ae) (TextureImporter) -> (Import Result ID: '75ede0bb47eb3b192587a373dc2f72f8') in 0.139943709 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fb7c355f99b66a98792a9e336ce7d5d1 DependenciesID=c46f10f5f950d607b1ca177e232ce941 StaticDependenciesID=8ed85203ed1a54ecad42bb6f273c0464 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_attachments_stone_Normal.png using Guid(83a99c1ea02057342a1ce0d1482a1442) (TextureImporter) -> (Import Result ID: '4e8b0826328b3901ee6f12fee3c369cc') in 0.065852167 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5142b23d97e956be43f45cdb7de83f47 DependenciesID=66695965d11ffcea3e8a33018bdaba3d StaticDependenciesID=80af218a837b58c0a7d99088c45e12a6 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Gingham Kitchen Linen/GinghamKitchenLinenNormalMap.png using Guid(a36ea2025ba79a747b7ebcc596e43496) (TextureImporter) -> (Import Result ID: '92a0e112285d777f15950781e43d80ee') in 0.117495417 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=28302c5ea1fdf0feca1031b4073610bf DependenciesID=8ac449324092ce0174dc43075b019448 StaticDependenciesID=1222c47b90807ab80c25755385037e21 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/trash-can_albedo.png using Guid(d38c1ad6c2c8a2a459454250d5a5e6c8) (TextureImporter) -> (Import Result ID: '4950918d9c2621b9fc01430ef862132b') in 0.111381583 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e627913a6a75cda46e1c46a1f29da4e9 DependenciesID=e950d92f5efcec1e11914dd0bd2ebbac StaticDependenciesID=21d53193123a6ac64c7559d3a283678a 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_B_BaseColor.tif using Guid(e318f31bebce62d48a648da3f8ba56c9) (TextureImporter) -> (Import Result ID: 'd2428cb2069c5ba6a887aa662a94c030') in 0.133380542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2fd9da546b4d7181006d99d3ac4ef339 DependenciesID=c64b592e386ebe46b94c36adf28ead47 StaticDependenciesID=afa9ef705239973f05731bdbbe9a01a3 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/table/Study Table_AlbedoTransparency.png using Guid(f315679a285d0b4458c4e3add82c552c) (TextureImporter) -> (Import Result ID: 'fca45abd886385736eeb499d43ec1c20') in 0.067116917 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=963b976f74b0a05bdb734820ceb4b9b0 DependenciesID=981370f4c5bfc1658fb08517c3ac7ee6 StaticDependenciesID=ea8517f3a635232ca414dc6b725b2136 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Painted Beech Wall Boards/PaintedBeechWallBoardsNormalMap.png using Guid(1487087e53fd63b45a10cd95b7c76426) (TextureImporter) -> (Import Result ID: 'd676610cf62f4784b5ecc5c87e12da8b') in 0.116060125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=54a56e4e21cf34457b732e54c22ae21e DependenciesID=5e60c9a31a342050d8138efe0adbc567 StaticDependenciesID=c3ad5a14f96edfed846a149cf71c1129 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_windows_italian_MaskMap.png using Guid(34a737902bfc1044abf481c52f7c545f) (TextureImporter) -> (Import Result ID: '3cb69b1e235c2afa9804dd0bd3b6b66a') in 0.077799583 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ee9bc1536b8986d51a8dbff604f0a899 DependenciesID=1ff2be081628f958cc5375c07021a6a8 StaticDependenciesID=1d5dcde510e917e85754ef038d1d2a63 
+Start importing Assets/Furniture Mega Pack/Textures/Cushions/Cushion01_08/Cushion01_08_mat_Cushion01_08_Normal.png using Guid(44fca3d4e88470e4cac51892f0aecb23) (TextureImporter) -> (Import Result ID: 'd6395b533f67ce8cc2e0166890a6bed1') in 0.084085875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7e1977ea05683195c2d11378f723c831 DependenciesID=d66f3af3ed03d0e92bedab3f837954cd StaticDependenciesID=59a1b7289cc03bda6d733e9011d40e38 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair49/Chair49_mat_Chair49_AlbedoTransparency.png using Guid(845a68c6647facc42a7a5feef3b52b04) (TextureImporter) -> (Import Result ID: '4fd72ec5711ebdb6233e2637bc2b2687') in 0.058018917 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b7955d84a7a74f3a5013456bbd781dce DependenciesID=ffc9575daa3361a7c5718c4ca406176c StaticDependenciesID=00d9d89b8cfe4ae59422d10b6beede04 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/Mattress/AtlasTexture_Mattress_DefaultMaterial_Normal.png using Guid(c4ef6d76988f7b74d99f74f5ad16d0e0) (TextureImporter) -> (Import Result ID: '992c2372dfc7cc233653d6259c426de5') in 0.09745825 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=84c6a750504f81dfcd6e81662f109d76 DependenciesID=ef7b15711717a934e38875593f2d32f1 StaticDependenciesID=8d7f68d15889818fa4fb7d5633f56a3d 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_Moss_BaseColor.tif using Guid(d44cec25420524046b0137655ed7f307) (TextureImporter) -> (Import Result ID: '15718e45b3304bdc9656229fe9174286') in 0.133194166 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=8a910951c2ebd82b352d5b904f0699ac DependenciesID=1e0a8bcf479b4b504e8faee3dcdc62fb StaticDependenciesID=1fcc54e26c41eb76146f80e574da0301 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/note_pad/note_pad_note_pad_MetallicSmoothness.png using Guid(d45def87323bfd64f8a5a68f411b7ac3) (TextureImporter) -> (Import Result ID: 'b3b9bb26f3ffda12552754f6433951c2') in 0.040439292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1d69746e67bd9152bbe8373fcf1ab6ff DependenciesID=cfd0d46747f961c759ace6bc67ba778f StaticDependenciesID=8b13e5086d20447e84e4d1f775dfdf27 
+Start importing Assets/Furniture Mega Pack/Textures/Cushions/Cushion01_08/Cushion01_08_mat_Cushion01_08_AlbedoTransparency.png using Guid(55c65c2cfbff64f4e8bc4dda91dda6c7) (TextureImporter) -> (Import Result ID: '6ab30115cc4395494acb2efac5c14b12') in 0.055835125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2420568cde5fd9fd5735788751f5d731 DependenciesID=7004e208e3b7dfc851443b406609e1ff StaticDependenciesID=2cb9720f496461209c5ca855d884da9d 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/table/Study Table_AO.png using Guid(65825a3d46e779f4293d671f06d86440) (TextureImporter) -> (Import Result ID: '45dc4d0e972c47285abef2e414e78605') in 0.058831708 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7975cc85f71bfdf20a6ed4eb3d6a9d67 DependenciesID=867d69924b7a432b815386b6c323d59f StaticDependenciesID=7fc333c837ed1aff5983fa08fbb4de3f 
+Start importing Assets/Furniture Mega Pack/Textures/Sofas/Sofa13/Sofa13_mat_Sofa13_AlbedoTransparency.png using Guid(7521ffdb8bfe27f47af8a345413efc0c) (TextureImporter) -> (Import Result ID: '87bf36ba79145e421dc6488ebf3a0c5a') in 0.070840709 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a2b6cbe22cdc1b4c4a54da0b07408516 DependenciesID=e3024db9962201d1a58d43739d4ff9db StaticDependenciesID=58cff07ebbd9e7e2f28c6ace45d2f4aa 
+Start importing Assets/HyTeKGames/SRPMaterialConverter/ConvertedMaterials/Maps/carpet_Metallic.png using Guid(85125b2f9ef3948c78e9c57b090c6281) (TextureImporter) -> (Import Result ID: '7d50235b94c4d3d6a044c688cfdc6028') in 0.025385375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d237fd99abb4036dd72505d07758bc34 DependenciesID=09a36531f831b116b4278808574de1f7 StaticDependenciesID=b5a9ba8185716c948176ca41e5433f6f 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_carpet/carpet_carpet_AlbedoTransparency.png using Guid(95588a1d7e2b9764a9eb2fe8e7cbd9f0) (TextureImporter)crunched in 0.248867
+ -> (Import Result ID: '0f4bd26741613fc86789924337f71882') in 0.289210208 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f212816f4aa2a6a97fc3f7c21f112387 DependenciesID=aed33c884125b42a86036f2c0188c743 StaticDependenciesID=cef912ab04c9f5816923f287611e38ca 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_windows_italian_BaseMap.png using Guid(a5321679aefe059479148c37fcb2d277) (TextureImporter) -> (Import Result ID: '5768f95745eb710bfc155d3daa577dd1') in 0.074853916 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=263b91a26a1a9656c6243d1fcea9b6a7 DependenciesID=eb4c8e558121ddf5440d76172ac4c3c1 StaticDependenciesID=66ce8c4c5e01e1096ce87e616ddc0916 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Gingham Kitchen Linen/GinghamKitchenLinenDisplacementMap.png using Guid(c505a7b0c3a42164f858522acb744b5c) (TextureImporter) -> (Import Result ID: '1e7674213b465d0a87977d42407027cd') in 0.056809167 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=344d69fa6c468b2c8e488a09a0ae534d DependenciesID=e9c40cb2af24e17b40bb86d925a26fa6 StaticDependenciesID=613b8f8941bc96f9aa60c23d5543ad22 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_attachments_metal_MaskMap.png using Guid(c5663c619dfec1547b67f20113066932) (TextureImporter) -> (Import Result ID: '6ad513011fd30b4438277cb63270eaa2') in 0.078600792 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fe14bdc4b2a0659a1b9562a990a329f4 DependenciesID=cbc4a03d8f5472ea4457647e461849b1 StaticDependenciesID=cf8fe898c515a60499930c475d3ba451 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_AO.png using Guid(c5cf688ecaef83a429d9706ce6428fcf) (TextureImporter)crunched in 0.340206
+ -> (Import Result ID: '45b26cee91e2b633b92b88fa6c3d08b2') in 0.375211459 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ce627324926bf077c64882f285757495 DependenciesID=cb453c489dbd26e5b537e1a4a1af5c16 StaticDependenciesID=9787ed7dfbf6024adaf6129dc6ffef61 
+Start importing Assets/HyTeKGames/SRPMaterialConverter/ConvertedMaterials/Maps/balcony_wood_AO.png using Guid(d582beb2d02e5431089556ced58426aa) (TextureImporter) -> (Import Result ID: '995fead63bcd4638c7cabdc583d9f50d') in 0.027499 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e05ec83ea728f9649de2798482a4319f DependenciesID=4c22f41600349a027a7d4b58bf0f27a9 StaticDependenciesID=ec123a5b2bf1a8be702c6ae4e3cc8af3 
+Start importing Assets/Furniture Mega Pack/Textures/Sofas/Sofa13/Sofa13_mat_Sofa13_MetallicSmoothness.png using Guid(d5923d19d4e73a44b9eb1386d00ee319) (TextureImporter) -> (Import Result ID: 'b8131599cab68c486a336a955e3599d7') in 0.062522542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=763a202d31dbad3b1ec375ee3e36428a DependenciesID=57a5f9ba13bcd013ef46cbe6b324dc90 StaticDependenciesID=154a2ab644098a94726d509ba8fdf993 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/trash-can_normal.png using Guid(e5ff8bc75e32d7b4b985255ae49d69ba) (TextureImporter) -> (Import Result ID: '121a20243189f0a69a056173e08cf0c8') in 0.148331875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=552c314ea0dcf66f12f0d9b86863c233 DependenciesID=3e7895cd77ec0bd9452b8262d0e4fff7 StaticDependenciesID=8404057dd0210a1a1b37c7cd82cbe2a9 
+Start importing Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Normal_OpenGL.png using Guid(168bb243bae8f0d4d84f05d54375dfac) (TextureImporter) -> (Import Result ID: '885da3e2d08179a4476484e03117ed46') in 0.663996291 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=48d8a2837379e9e855916ae6fb145667 DependenciesID=90d46bf6728683ea40ff097aa91c925e StaticDependenciesID=1aa6acbf7627a63ef80ea1074c9973fb 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/Mattress/AtlasTexture_Mattress_DefaultMaterial_MetallicSmoothness.png using Guid(263218967b61c8c449bee60a97c61499) (TextureImporter) -> (Import Result ID: '70d0047bbaf875df05e564d5926cc3fa') in 0.048644875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1adb4f418158b0e60aee0c369c871ff5 DependenciesID=e3586739a79585cbf46b31b4f1acdfcb StaticDependenciesID=79f31975d440aeca2aaa62e0dc8c8d13 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/StudyRoom Carpet/Emission.png using Guid(262de638f7ceb6740bb501c2b2791889) (TextureImporter) -> (Import Result ID: '3202cb9ab6fde17d5a50667a9b2d2004') in 0.037632125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0b4aa72260b1909784217f3b3ce17d70 DependenciesID=5ded6c189d24e8dc1fb90b261bf1be88 StaticDependenciesID=a1742345da4af1a2621ff6a20aa7a3a0 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Painted Beech Wall Boards/PaintedBeechWallBoardsDisplacementMap.png using Guid(566c60dbdf642744688e6c4725d86cf4) (TextureImporter) -> (Import Result ID: '2f2566495e895204fab0d869b39f2b93') in 0.052354166 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=47482dfbda881360f5239263412dd927 DependenciesID=0dcbc64b7d51ccdc09195d38655e73fc StaticDependenciesID=c82896245dbc717661b44607a28ee4da 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_chairs_Normal.png using Guid(e6987b70e176a814fbc2c128a94ab19e) (TextureImporter) -> (Import Result ID: '44ef9f5b135409a271c7f71c965a1901') in 0.071208334 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ab445aba83572cfa6386bb5459e3dd8b DependenciesID=a9e84ae6f56f42580110216aa90cfaf1 StaticDependenciesID=ee16348863c99d822f6c1f02eda9c37e 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair37/Chair37_mat_Chair37_AlbedoTransparency.png using Guid(3798847807668cf4eb97f1f1b7f00711) (TextureImporter) -> (Import Result ID: 'f1c2bb959735b13b8c2544f4d2f0a94b') in 0.068209125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c2f7e30fe708fadd34206a9490d1979a DependenciesID=d25a1b2f0d068244cf74553ac6a1e29e StaticDependenciesID=7cbefaf4c7cb84e34b7516e3546160f2 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Pebbles_C_MaskMap.tif using Guid(37bf2efdabb269f4b891344af9233d9e) (TextureImporter) -> (Import Result ID: '281b954df6207b31a9de5534bf27b91e') in 0.077263792 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7ec43c67954b56b996085d8b59dbebe8 DependenciesID=1e935c1ab9356e6568c74abd78b15ead StaticDependenciesID=d938f9299dd76cfb24acd4e660601355 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair47/Chair47_mat_Chair47_MetallicSmoothness.png using Guid(5758bb91468306d4881c8c4220552814) (TextureImporter) -> (Import Result ID: 'c2669a9d455887722973aa465a48bf85') in 0.060639792 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=409f6b79648bdd5c9cfab4d0c2d8780a DependenciesID=29f48a5a903699f76f59179dcbe3d2bb StaticDependenciesID=d56def42f1f9a979655fd2fdf5a96217 
+Start importing Assets/Furniture Mega Pack/Textures/Cushions/Cushion17_24/Cushion17_24_mat_Cushion17_24_Normal.png using Guid(77301e5d4e5829e4d9223a81aeb642ac) (TextureImporter) -> (Import Result ID: '4734d9b8e99fd2382ae513d3cda0383d') in 0.09217075 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3493020f4fc3e79cb77512a05be35127 DependenciesID=5664045ea289e8e6113af09b07db549e StaticDependenciesID=d21709aef2363c558acd2b73b555f4de 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Soil_Rocks_Normal.tif using Guid(773f0cf0efc85a14a9f70e559642746f) (TextureImporter) -> (Import Result ID: 'a7d4a2636dde2fba12d290a2a3fedbb4') in 0.139244625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bf19f24035fa50a1c0317dbe36df4f24 DependenciesID=463ac6668e10f279b6d96fe2b8f03040 StaticDependenciesID=6e7b2bf08fae099387bd55f593644c69 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_attachments_stone_MaskMap.png using Guid(a7cad43563298ae448fcd3e5c094d994) (TextureImporter) -> (Import Result ID: 'a87f508134671dcaeb9744b5be9454f4') in 0.074758625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e240ff0753e0ba62cd3e673997fbd561 DependenciesID=e94181edece5caed45fea924bd3b17cc StaticDependenciesID=3892f101d7864f96f958e11521864585 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_floortiles_ceramic_BaseColor.png using Guid(b7c14f48463ae7f4e9efb68337fce6f0) (TextureImporter) -> (Import Result ID: 'abe940870c6632c3a5a85d6d3aeba479') in 0.087798209 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=be6fbe49d30d356494978afdf8b6bc1e DependenciesID=54637de59de4c75120897c35efd19c10 StaticDependenciesID=b40fa198436bc44f885addc0cfedec66 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair09/Chair09_mat_Chair09_Normal.png using Guid(b7d7e6f6588f6b0458a3b0d47e3f0bbc) (TextureImporter) -> (Import Result ID: 'a08055701220cf46cb32def0a7b4cb68') in 0.090401417 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e07545f7f656876f7b29299543017b1d DependenciesID=4355cfdac02b788e7b0e8ebfa7870f22 StaticDependenciesID=60d5084d2ce7fca46cff43d783f00e86 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/imac/Imac_imac_AlbedoTransparency.png using Guid(c765156c89b24fb40bb5b4304036f66b) (TextureImporter) -> (Import Result ID: 'b1264c48cde5c871e2fa00d5f63a42fc') in 0.111288709 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ba130f0b40555175beeb7e3c06a6d3bd DependenciesID=ffbd15880430524c2ddb0dc66507b192 StaticDependenciesID=0b7666e6794582bc8692dfbdb156d979 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair37/Chair37_mat_Chair37_Normal.png using Guid(c71b5f837696ce4449112c8079036452) (TextureImporter) -> (Import Result ID: '4654ebde2dd80aa77d5f1ce15839b60f') in 0.077535375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=eb43293ce82c556e691e0253353602e4 DependenciesID=1e96aed91158a2eec82a450a1e8f21fe StaticDependenciesID=30e42106d69c6a031ba08e6923bc6343 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/Blanket/AtlasTexture_Blanket_DefaultMaterial_Normal.png using Guid(e70ec7456b389f34da840b3389d72901) (TextureImporter) -> (Import Result ID: 'f4ba9ec8b5ffe0727f17eced070d0749') in 0.094367667 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c8cf9872d804f2fd98730f7e82d15009 DependenciesID=5c80129d07ed9c8f51f1ed26bf1a8c17 StaticDependenciesID=8b520fa0f067009540374ed3afbc90ed 
+Start importing Assets/Furniture Mega Pack/Textures/Bathroom/AtlasTexture_BathroomCollection_BathroomCollection_MetallicSmoothness.png using Guid(08d83e56fabe6f84891fdf794ff8ac1c) (TextureImporter) -> (Import Result ID: '109734da604b4f17e9bc410b75651217') in 0.057314917 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5726a254bbcebb5cd95b233e2717135b DependenciesID=292d1000262b177520fe718abae2032c StaticDependenciesID=a6f35ddbd61024d9d429eddf54f9232c 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Black_Sand_Normal.tif using Guid(28a478660ea9d9541b2118c5e95cbb4e) (TextureImporter) -> (Import Result ID: '7658a685b310c590c218669271b89527') in 0.133852959 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=959cedd7522be5efcbee134e42cdde64 DependenciesID=49da3557bc6473790edc661b7c680cd2 StaticDependenciesID=28ffe763343aab19a369ff0ebe58382d 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_floortiles_ceramic_Normal.png using Guid(3873ad96f36ae694e98b6fd54fece600) (TextureImporter) -> (Import Result ID: '4544b594adf355a6d17b30ff8f964401') in 0.070125542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c77a49ee781baa8432dc096cf2cdb922 DependenciesID=95912b45c11a6df66757ce1b6d91bfe9 StaticDependenciesID=9389a2be9f53e7393ac0a780e3f1971e 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair26/Chair26_mat_Chair26_AlbedoTransparency.png using Guid(c8811e35ecb52404297be4000726aa41) (TextureImporter) -> (Import Result ID: '201d69d0fdae855fba4ef1a0ea88f87b') in 0.053299792 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=87826b8f31067971e0e031eab603f54c DependenciesID=ec929489e94c6afe19e855e5bb60ff1f StaticDependenciesID=ee6c073d40122db2e027cb79489faa3a 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Gingham Kitchen Linen/GinghamKitchenLinenAlbedo.png using Guid(c86967003bfea014d9aa9b879be13abf) (TextureImporter) -> (Import Result ID: '6b2581a157da983bfe84b012c48258e9') in 0.106909292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=20a7f4f1e6a7c17ec0d95a49962c673a DependenciesID=f5e103a45418bf7a4382439e3c89c049 StaticDependenciesID=975f78fb9b36ffc3ffcab95844621597 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_Dry_Normal.tif using Guid(d835c61db4c94444eabef9cf95e8a7c4) (TextureImporter) -> (Import Result ID: '9197a54b2a20539469de24a8edbed2ca') in 0.1332455 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=51c048371aecf2286bd35b42c31f5038 DependenciesID=8a540ac9abf540ed3d4e2c0f7bb1b3fd StaticDependenciesID=46336e05308b85a2cc768c96e02068c4 
+Start importing Assets/Furniture Mega Pack/Textures/Tables/Table06/Table06_mat_Table06_MetallicSmoothness.png using Guid(f8d3dca6a69e134478a31c2d05f5614a) (TextureImporter) -> (Import Result ID: 'bbb4954e5427972bc25238a432d82cc5') in 0.060153917 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=37b1a110a6ece6be1df410157bf141f5 DependenciesID=22c2f6a88116fe630e4a8d44375c344c StaticDependenciesID=6d9ffc2d86e1ad08db1cdfa89fff4505 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Bathroom_Glass/glass_glass_Normal.png using Guid(09db36ff06548e54da892ef9a23d38e9) (TextureImporter) -> (Import Result ID: 'a140d9f95f745bb35e2459d21fe470ba') in 0.031491459 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e5ffd5da6eb07437fbf6d37cf5e69ad3 DependenciesID=a8aab6a0e7b458b8ffd9d1594c696300 StaticDependenciesID=4d5407b9c095249dee2a7537bb2b247f 
+Start importing Assets/danthaigames/DS 80s Television/Textures/TVHandlesSurround.png using Guid(19317e77a17495e44a4a2bae2ac29309) (TextureImporter) -> (Import Result ID: '174802f0bb722a991d48c9fb4ef4c76b') in 0.041674666 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4dd6957b6a9f070f07af1df750614fb6 DependenciesID=23548cf7ba4f1826e1d33664c0006a2e StaticDependenciesID=ff07e7b0e8d6c5e04ee2b04a96220ac6 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Pebbles_C_Normal.tif using Guid(297a3ddfc901318499e15b3a0c8ec74d) (TextureImporter) -> (Import Result ID: 'c51f5d3b118920225512ae864471f25f') in 0.133641542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=416659746fba03374effb6f18c04316b DependenciesID=ca61c9e6e53e6bc5d1d2145a1a458243 StaticDependenciesID=46a1be4a897222b094879d07595364f7 
+Start importing Assets/Furniture Mega Pack/Textures/Cushions/Cushion01_08/Cushion01_08_mat_Cushion01_08_MetallicSmoothness.png using Guid(39d043143ef6cd4499188539f4c0d585) (TextureImporter) -> (Import Result ID: '1de0f7b77a1fa941ae6fa8f2562719b9') in 0.04738675 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=35b3161d99226601879be839eb084146 DependenciesID=56413177c42980667385700775540a1e StaticDependenciesID=51ba7a2ea5cd3390dfc33451f57abb93 
+Start importing Assets/HyTeKGames/SRPMaterialConverter/ConvertedMaterials/Maps/carpet_AO.png using Guid(59b640d8c42dc41dc88a0298538d9c62) (TextureImporter) -> (Import Result ID: '5646f81bd227c18dabb8506a48dca912') in 0.026240709 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0168bb8d9bcf7578193eb9ae469a2be3 DependenciesID=a2e62f2006957b2f5cc7de343423e342 StaticDependenciesID=d219be44a0d4464b72529ea4e190d11d 
+Start importing Assets/Coconut Palm Tree Pack/Textures/Coconut_Palm_Tree_diffuse.psd using Guid(69c952e0cacbc0c428fbb6b81f6c4035) (TextureImporter) -> (Import Result ID: 'c88c78d258ec953627ef993443a57e6a') in 0.048372125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ee6af1b13ed5f325362685ca654da759 DependenciesID=3771fbee77cae151b79d040599fd0ad6 StaticDependenciesID=5b02266991c35c9e8c377814eac6c692 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/imac/Imac_imac_AlbedoTransparency_emission.png using Guid(793372e56eb55e8418fe26e65f3af8c0) (TextureImporter) -> (Import Result ID: '57cf15b311601ebc9d37e6dd772186d8') in 0.085804584 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a02faa2fdd013eaa7b3091e0d4bdd193 DependenciesID=17bcc3c627da5a0355808f665dcfe9aa StaticDependenciesID=ead7b4e38eaf173948ef3219b1e729de 
+Start importing Assets/Shaded Spectrum/Cozy Interiors Demo Pack/Textures/Painted Beech Wall Boards/PaintedBeechWallBoardsAlbedo.png using Guid(792d0f119fdb13f4b91674c99f744692) (TextureImporter) -> (Import Result ID: '1a7d2834f4b1ffdd99d0bf780f980dea') in 0.095634292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=004b26f7ecff7719996be489006d2d93 DependenciesID=15ba967da4687e47749f5110acf77a55 StaticDependenciesID=57a349cf716a5840928d24635643f7e1 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_AO.png using Guid(99ac31510bdd75a4b85266b0763525ae) (TextureImporter)crunched in 0.166829
+ -> (Import Result ID: 'e594e192dfbe72359dda8f68d6d99c79') in 0.19881175 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c6a34e2607b9c39c88c676bf6f6c54a7 DependenciesID=bf7cb6837c94efec6aecf17170786365 StaticDependenciesID=4419b914ebe169f3d127e1cbe684fa8d 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_chairs_MaskMap.png using Guid(d9d65c892e6f6e54b883150c6f809d9b) (TextureImporter) -> (Import Result ID: '3265b0048ea2a03bc92636bc243ac0e8') in 0.070348 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=87b9cdf9ee540a4e0f708690810612ef DependenciesID=158fe92fc931a217d166d57802d16f97 StaticDependenciesID=a022bad5991431d69b1650105edc46f0 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_Normal.png using Guid(e9c300d374265bb4d897a01eb3ecd463) (TextureImporter)crunched in 0.068779
+ -> (Import Result ID: 'a385db3dfd94eadbd890d46bf8a45f0b') in 0.0958265 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e9cd84a251cc7d3ef0e4b6e6c154d232 DependenciesID=321f95a76dc551094066a419f5746925 StaticDependenciesID=3781d9bd94be040f3719f4a89fd3b416 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/Blanket/AtlasTexture_Blanket_DefaultMaterial_AlbedoTransparency.png using Guid(f9f08585d412f6744ab68e2fe766082b) (TextureImporter) -> (Import Result ID: '70d4041f5c1bb15a570fb151a3456c7b') in 0.086628375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0ef6a9de16090e1240a771f0aba80fc1 DependenciesID=b5848bc1327f0136936054dfd015813e StaticDependenciesID=6f4310a6e37fa4765b26a19886b8845a 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_AlbedoTransparency.png using Guid(1add9e2198fd6e04b84838f8c0eb46ca) (TextureImporter)crunched in 0.323959
+ -> (Import Result ID: 'f0358c42043e68ac05dd4ead1f65d60c') in 0.358408875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=92f9d75c09fd9638b38777d31f177384 DependenciesID=47a4fcf3cdb0a05ce64efef4d1825a6e StaticDependenciesID=8fb746526e84dd07e90ba0d1c075c13f 
+Start importing Assets/danthaigames/DS 80s Television/Textures/TVScreen.png using Guid(4aa823bfc1bb0dc4aa20f3a818e4b86d) (TextureImporter) -> (Import Result ID: '6d956131498f7bb56a50738080fd75f6') in 0.04702175 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dab219e0744a9f0560117beac09d6a9d DependenciesID=f518ba6c58ddd15a1622ad3521d61f5a StaticDependenciesID=532c2ed3fec0371099dd5b4cb2b4e5b5 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_MetallicSmoothness.png using Guid(aa58420c6b1c25c42b52effa028a4045) (TextureImporter)crunched in 0.879125
+ -> (Import Result ID: 'c5ab9924457806acb05f6646355d3113') in 0.917816292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ea5cb1a4906bfa0aaebc559cb34f74ce DependenciesID=8f946ac975e5b2d51b2c1c5df6af6b05 StaticDependenciesID=a2a0bf0c99e9b5671fbccae26ec4925b 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_doors_italian_Normal.png using Guid(ca540ce6636a5474eb5d2194d6944fde) (TextureImporter) -> (Import Result ID: '135f780b851fdcf8d001be76c79bb2fd') in 0.072817292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=08907e398b99b4bd087a49c37e5af2ba DependenciesID=605b7c71b82b7bc171d3fd0e34f6e112 StaticDependenciesID=5a911ab86e0f07706e4381d42acb2ae0 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Black_Sand_BaseColor.tif using Guid(0b59c495bf285c442b1b799c94a9f8aa) (TextureImporter) -> (Import Result ID: 'f73dab2e50f35ed0244d44f487270c9d') in 0.143655125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=53badbfbe2b83048e97b8b8592cfb6c0 DependenciesID=73d850b184023036a83cf093fd22bae1 StaticDependenciesID=57e703ee69c44bea09552d28509f1d9c 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_windows_italian_Emissive.png using Guid(2bccd413dcceca744af1e16b1f51edd6) (TextureImporter) -> (Import Result ID: '27e85659175c2f3d79c7fcae10a936d5') in 0.03764625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b69585c6ec4a854ffb02fc3130f6cffa DependenciesID=a6557f2b7cc71f2868d53f26dcf39cee StaticDependenciesID=40cfe61484fecb6d301d63cd2e7ec75e 
+Start importing Assets/Furniture Mega Pack/Textures/Closet/AtlasTexture_Closet_Normal.png using Guid(3b2b04765bc760148b4b6560492f7c27) (TextureImporter) -> (Import Result ID: '1ec2d6525f01970a95ae19ba9a1eb372') in 0.065872 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e49878c207b1f9a8dfb80111815ced1d DependenciesID=7ffb03184593fd93baf710786bf4a268 StaticDependenciesID=f198f2b3a5c58987e8a34d589fba5c43 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair47/Chair47_mat_Chair47_Normal.png using Guid(6b615e3429d60ea41908f52002bc81c9) (TextureImporter) -> (Import Result ID: '8ded08722981e0f48e5b989af660461c') in 0.078642542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=88866d9437f0609b827408c9655e9b9e DependenciesID=386eb981d1de7fa1d563dd092dceb395 StaticDependenciesID=358227274d7ce6589cebfa8040b73d71 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/StudyRoom_BG1.png using Guid(6bb6cecd65d0d4a4fa4c47bf01346043) (TextureImporter) -> (Import Result ID: '23216090aeba589122a2fafa420d7d7c') in 0.063618542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bece331d4dba20b3017823462f5841bd DependenciesID=f4ac9679d43029a69df45a294ee0313e StaticDependenciesID=8889b8f0d28c08fca310ae8b60777e30 
+Start importing Assets/Furniture Mega Pack/Textures/Bathroom/AtlasTexture_BathroomCollection_BathroomCollection_AlbedoTransparency.png using Guid(6babfd0d068827a40b5b1b82e02bb56f) (TextureImporter) -> (Import Result ID: 'fc56f6f729ee7d26c11b299010b64663') in 0.047286541 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=563938c2739f3b8d13faf61937510c94 DependenciesID=e9c650b4b86564b1b68a51ac780ae4de StaticDependenciesID=a6f296a198e10ddeda2a104ae316c665 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/BedFrame/AtlasTexture_BedFrame_AtlasTexture_BedFrame_MetallicSmoothness.png using Guid(9b0408324cfd2fd4cb055dfeb324b6ed) (TextureImporter) -> (Import Result ID: '0a654d7688f45ac40f83f5f164630e7c') in 0.049267542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b95d0bb74432726608aa983e600fa4ac DependenciesID=96626170969e855f9001949258c39ee4 StaticDependenciesID=a052c19b09259b1deee7ce51a375b342 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_MetallicSmoothness.png using Guid(ab540dedf6d59d84c9ceddedef5f3b98) (TextureImporter)crunched in 0.061163
+ -> (Import Result ID: '53a3f2a6decf6fb038c08d099cd179b6') in 0.0854665 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ac8b0fab57a51f0a40d61a6211ef737b DependenciesID=2a9103b660255d322ad8ebd7930a553c StaticDependenciesID=394f3aeac168cd7cf877906bf3ce8e4c 
+Start importing Assets/Furniture Mega Pack/Textures/Tables/Table38/Table38_mat_Table38_AlbedoTransparency.png using Guid(ab9b7dfd962bc1640909391fdce74f6d) (TextureImporter) -> (Import Result ID: 'e79a34d4af6bc01c635fd2a20f9bc07a') in 0.072509583 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0f498f9959c5a248bffc39028f5f178f DependenciesID=8d80b4929732d44c00aa1456f49cd89a StaticDependenciesID=8b3de1d06ce0d70bd4ce6050c7087b44 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_doors_italian_BaseMap.png using Guid(bb5b5abded48ff04889387c6efc6176b) (TextureImporter) -> (Import Result ID: '110349aae12fcc7304986def94284b18') in 0.07363775 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bdc167ff6a3fc37621a184ba92a4a12e DependenciesID=1b14c8dfa52869ebb7ae8f87b465d7f5 StaticDependenciesID=71d3bd3c66d20e217f5850c22708ab12 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_AlbedoTransparency.png using Guid(cba5243a3236f634395774718b521522) (TextureImporter)crunched in 0.286799
+ -> (Import Result ID: '97795a04a1a5cce669fdd92988786858') in 0.349385042 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dbaad806dfb5dc19df29829653934034 DependenciesID=e5dac0926c90e5a3e21a3051b898bfdc StaticDependenciesID=b69fa544148118a5d4a8a05b0e02687d 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_B_Normal.tif using Guid(eb70932bab3d971408c011dbb45767a9) (TextureImporter) -> (Import Result ID: '044fb6976770a817729277b7303a8956') in 0.142174292 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=37d7340e325b41f1f31468df08280cda DependenciesID=42e1c8395a7f3f14ff09a3bfbae3430d StaticDependenciesID=fd06e9cc5b3c5933fd559b4fe0037810 
+Start importing Assets/Furniture Mega Pack/Textures/Cushions/Cushion17_24/Cushion17_24_mat_Cushion17_24_AlbedoTransparency.png using Guid(eb0edffd0f2a2864baf145ec52e02dc1) (TextureImporter) -> (Import Result ID: '05da3f2cdf215ab50c8251fcae7bf944') in 0.067223625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ca42b8f869b18ba21daabeb4cb4d0118 DependenciesID=55fea094f9613e07f144aafcf700f74a StaticDependenciesID=39f15e3b6e62b9d1f792f457eeb2a15a 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/BedFrame/AtlasTexture_BedFrame_AtlasTexture_BedFrame_AlbedoTransparency.png using Guid(1c899d619b455004c8d5be5f2eb167be) (TextureImporter) -> (Import Result ID: 'ed9d257393655461b0e787350375b8e8') in 0.073903875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a629d730fefaf1f00f9bdd4539433535 DependenciesID=de60a485d92a72b8b630c3cc1de52341 StaticDependenciesID=da48cd108245751b7d135aa7b5df2a8d 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair26/Chair26_mat_Chair26_Normal.png using Guid(2c56fb820a6e93a4ebfbbfb08c3de0b7) (TextureImporter) -> (Import Result ID: '007ff004900898352e4c3fb513f5dd67') in 0.078662708 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c7f073d38778dd78c5638ecb9e244482 DependenciesID=ba609bc71f8edd01c36b1f63e6a49a8f StaticDependenciesID=0d722d1ffda72c8a3f59019be73aef89 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/imac/Imac_imac_MetallicSmoothness.png using Guid(3c34aa249294f0f4e92074f4a6e69cbe) (TextureImporter) -> (Import Result ID: '01aaa66ed72f91d999ca428c6c3fafcf') in 0.112071958 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=afb1cd1cdb969a310b6beeb3165f8c20 DependenciesID=b0aba31f4193d3008a54e55f92383d58 StaticDependenciesID=aba7a770198fb2c44facdba12eca9f60 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/note_pad/note_pad_note_pad_AlbedoTransparency.png using Guid(8c1b87d7335f93142bb00dd5dbd1e945) (TextureImporter) -> (Import Result ID: '493d7a5dc8ec52be6e83476ec2908bfd') in 0.062611125 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5b5bf3c1a78ea02d9d8801bc3bea089f DependenciesID=f8c1b6a784c2dc412f95bdb5df44fc14 StaticDependenciesID=7fd0b5f6492d959f8190dbd42d7e539e 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair09/Chair09_mat_Chair09_AlbedoTransparency.png using Guid(bc9e44c9b92198849a7ebf910289c006) (TextureImporter) -> (Import Result ID: 'b7d12923621bb7200e89a184ea190851') in 0.063140709 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a69c8c96d18e3dea14cb1c59f168fe18 DependenciesID=c58144026fd67b0fe0c4792b298b8e27 StaticDependenciesID=c2139ca36006d402702718f81b032e9f 
+Start importing Assets/Furniture Mega Pack/Textures/Bathroom/AtlasTexture_BathroomCollection_BathroomCollection_Normal.png using Guid(cceeac9afbbe8094287dd15e0a761d52) (TextureImporter) -> (Import Result ID: '6276fbe4d91c949c7d853ef7f82c5c80') in 0.065332958 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c46721dd0adb1c859b67b9de63b8be09 DependenciesID=e6c749fe17eb4c88df08f9cd7fa1b11e StaticDependenciesID=ee2bb87481b51d8c2d707dbf57188567 
+Start importing Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Base_color.png using Guid(dc5957f23a73e0945b24147f3c4d999e) (TextureImporter) -> (Import Result ID: 'dfe4078440dfeb99c885001e73a339b3') in 0.224490375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=54eba2c64e8195e80a7634547cd68acb DependenciesID=0811cabec0b19e5aef539fed9aeb1b3e StaticDependenciesID=4d65c948ce935c0081fc80cb62cc3309 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair26/Chair26_mat_Chair26_MetallicSmoothness.png using Guid(ecb91a313c83844419d7aa3cc604db91) (TextureImporter) -> (Import Result ID: 'd6e80a6cf8703ab32edb95384d716ffa') in 0.06012675 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=12b44afd668fc211d7d378a8a05d0225 DependenciesID=b3d60b62c18cfaab8f5cda3bd86f7bb1 StaticDependenciesID=9f53b489b5cf292a2f4b797686603929 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_attachments_stone_BaseMap.png using Guid(ecae078095ae8854491244e464221ee0) (TextureImporter) -> (Import Result ID: '59eb6ad3704df33cc7a8f16a4285dbfe') in 0.085163167 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d051eb72a88487e8beb9374c4c18ab45 DependenciesID=b3fb4f7b6347fb6322883a80e0449694 StaticDependenciesID=c6b6f5d6a00a0770a2c0aabce4c6035c 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/note_pad/note_pad_note_pad_Normal.png using Guid(1d2c7ae6434180b48affadf2854af698) (TextureImporter) -> (Import Result ID: '32227555401d7327eba41eb3797d5254') in 0.063486459 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5fdad519ea8768a9c69368e3c954811f DependenciesID=90bcc5a3256f6c4fa006e4cf230e5c71 StaticDependenciesID=fc747d26733a9b61d07907fa3233e3a1 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_Moss_MaskMap.tif using Guid(2d41276a33f8bc949b93fed615e212c4) (TextureImporter) -> (Import Result ID: '81c2e7ae0cddda896097a36f8f312b8e') in 0.135244833 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0298b7d0379f729c210a452db91ca066 DependenciesID=8a0e881c2cb4ba406d67b57d03f983aa StaticDependenciesID=2067a2ff797838fdbcc439205267ae69 
+Start importing Assets/Furniture Mega Pack/Textures/Tables/Table06/Table06_mat_Table06_AlbedoTransparency.png using Guid(2dd3c76b8bad53f43838cbb1c17e88ba) (TextureImporter) -> (Import Result ID: '34296e35834ccfbb9dc68b9dcfa46310') in 0.066502625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c978618536ad0e8a1e6bb55049c68d14 DependenciesID=da7cb118a1e3bab0450abb59de7f48d4 StaticDependenciesID=d18b7d85d8dc78e8bd9edeceb01a5b04 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Environment/Floor Texture/floor mat 1_Normal.png using Guid(2dbe0ab88b5a75344a73113fabfd7fb8) (TextureImporter) -> (Import Result ID: 'fab0b2c2c2ef86ff2700fad81bc061d2') in 0.062374792 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=46eb610c3d7eaac23ba944c1443492e4 DependenciesID=f1a10cef27dcf6e78101daebbb81c7bb StaticDependenciesID=3e6c0b31f8e341913ec3f4f908a5d324 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair09/Chair09_mat_Chair09_MetallicSmoothness.png using Guid(3d0fd94e193c9e04ab30cb7f115786f7) (TextureImporter) -> (Import Result ID: '4197f087539d9222a53adb113dafa459') in 0.061153708 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6a56e45ae508dcf33734503e74db31c2 DependenciesID=c2e0f67b864b2366834112f260a57d59 StaticDependenciesID=eea5c226d092ec8aa751235290d12895 
+Start importing Assets/Furniture Mega Pack/Textures/Closet/AtlasTexture_Closet_AlbedoTransparency.png using Guid(5de81457da979f646b0dd9c7fcfc0a76) (TextureImporter) -> (Import Result ID: 'fc2b58a0804f01691d872c74f18369f6') in 0.070806334 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=26aa6a4291d4abc8a7b2e3ad58a68316 DependenciesID=e8abbb26fc1cbe01d94424abcd1032e6 StaticDependenciesID=4e2ad3d2da2f95895fb82fb14af57747 
+Start importing Assets/Furniture Mega Pack/Textures/Closet/AtlasTexture_Closet_MetallicSmoothness.png using Guid(6d5f9e42c93796d469b9371e55a96278) (TextureImporter) -> (Import Result ID: '2b349d4821184bdda3252e1a03a137c5') in 0.0528775 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9cea03505147fc9d73df88c73ecdffd9 DependenciesID=17d09e1041fa16bde8af0728ea0952fa StaticDependenciesID=165f414e5cb28f7b67d2b3566a678fcc 
+Start importing Assets/Furniture Mega Pack/Textures/Sofas/Sofa13/Sofa13_mat_Sofa13_Normal.png using Guid(adb9a7e31bbab084c88ff063ff1e8641) (TextureImporter) -> (Import Result ID: 'd843725dce1b1fc0abd8bb7f36aaf91e') in 0.0839525 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=79f32380fc5ef541b88da158d0562477 DependenciesID=fd6c0b51493c7a7f67e1e41ef868a553 StaticDependenciesID=bb28ee0b799d932281c4d8fc7ba85644 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair48/Chair48_mat_Chair48_Normal.png using Guid(bda142213c6de92428017c7abfb5336e) (TextureImporter) -> (Import Result ID: '39cdb848ac18149f154f6bf14b57da15') in 0.08354825 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=30e9c6bdbcac7926d69daac251d8d711 DependenciesID=016dfa196fd5e32f208e3a265ae9da01 StaticDependenciesID=3a935c72806b62df9832e5a0ba326ade 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/trash-can_metal.png using Guid(bd32c3aa4b887214493ad8221eb6d468) (TextureImporter) -> (Import Result ID: '55320cf36e69b78b9bc81913e9012d62') in 0.060663375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0a3a85745bf582ef9efffc793ef62df9 DependenciesID=2b60a380800b227cc211d3eed7c7e401 StaticDependenciesID=6818e9d9d73e927b79b8b45d39dc947d 
+Start importing Assets/Furniture Mega Pack/Textures/Tables/Table06/Table06_mat_Table06_Normal.png using Guid(bd9ea5267f43ed045a3d36f656a62830) (TextureImporter) -> (Import Result ID: '13296cabdba6aea6ef1cec2c209a159e') in 0.0718105 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ae427191b5775ef51a5a03fad325d0f7 DependenciesID=377d5f71aa9ec7c9b3ec205bd3468cf8 StaticDependenciesID=d1d93b8f87da8adf9d316e7548ef094e 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_skybox_01.png using Guid(2ef96fac30c9b6c4cb7af005ab93ae93) (TextureImporter) -> (Import Result ID: '7b32804a07f34cb348a72547eb03d0f4') in 0.05124975 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4a2062bd87c6089c7d8c1eb2f1ed7c6b DependenciesID=55721c0f0ab743a94f11d479388c9b62 StaticDependenciesID=eedd2dbab143474d41bd7f166c19ea2b 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/imac/Imac_imac_Normal.png using Guid(2eba4926bdfb1bc40b38ef592a88b3db) (TextureImporter) -> (Import Result ID: 'af7a22286bfa548a78355b64686ad946') in 0.114405208 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=664eb6d03f2e29cd019e948d90c8c720 DependenciesID=298cbf062f263e61d84098e85677b444 StaticDependenciesID=e557e7137185b816879e694317d2e5d8 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_MetallicSmoothness.png using Guid(3ea71fdb0e2aa5141819fc9321ebdc5e) (TextureImporter)crunched in 0.059562
+ -> (Import Result ID: '891fec19d0514e5d8aab4d15bbd07382') in 0.083307708 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5438171b5b3cc65fc3fc144b613bc8f1 DependenciesID=ddae6708e421001e19cbf371d0552a9a StaticDependenciesID=84c304c0c3075b312c730e7691b7866f 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair48/Chair48_mat_Chair48_AlbedoTransparency.png using Guid(7ef19fdce0f06a34a802ef61cd9298e2) (TextureImporter) -> (Import Result ID: '2d61c341fadd205b248d0b5f4c6a0d00') in 0.067134792 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4dc31bfa5586ef471b63aa703a729f29 DependenciesID=5333f75e83d5af9af02a79462b3953eb StaticDependenciesID=cc725274fca18dd6ef9c211e41e552c3 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_Dry_BaseColor.tif using Guid(7e6fff2112f33d748962082012d11cce) (TextureImporter) -> (Import Result ID: 'ee1d701b8f1456094f79c61aa15dd55e') in 0.137939833 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6e9ff406768c9bdb1773cf84d5b47c06 DependenciesID=caa9a145d467f549f7ea3c6a7f18a946 StaticDependenciesID=0491e366b074760f06c5cbdf4b5db32f 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_boat_kit_MaskMap.png using Guid(8e10656f984d7f14c824ce7243154595) (TextureImporter) -> (Import Result ID: '6f33aea91e82609f17aa6c015333a080') in 0.068483875 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d762bf52b50ed4e27b095e853e2e2375 DependenciesID=b5fd5b0a3951586f1d5ddca971116ab9 StaticDependenciesID=2dbe694f84dbf911bc7a0bd70fd13834 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Pebbles_C_BaseColor.tif using Guid(8e255f57d15705e488d4db5425239501) (TextureImporter) -> (Import Result ID: 'c60d6af1d96df909159dbfae287b6650') in 0.140938459 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=17d553a84564cf0b8f5e017ab8d37185 DependenciesID=6e118155874aae023324c512be819dbe StaticDependenciesID=37b61b2617c403fe5576b5589467f7d8 
+Start importing Assets/Furniture Mega Pack/Textures/Chairs/Chair48/Chair48_mat_Chair48_MetallicSmoothness.png using Guid(be4478d2e304e724f8d262d4b1fa83f6) (TextureImporter) -> (Import Result ID: '3072e354084912f8ab4242555fe1cd63') in 0.053145208 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=aad36587c0c498a27c977c3cd2095fd0 DependenciesID=c4f2914861cd1c8dc647c4fdd15e35c6 StaticDependenciesID=186a57fa2d95ed6e4cb4497141671511 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Study Room/StudyRoom Carpet/Atlas_1.png using Guid(ce33b92103cd98e4eaeb3e207d645381) (TextureImporter) -> (Import Result ID: '8bf0052516f759845104728257405266') in 0.053784791 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bd5e4a8700958b24ea93626a4e44bdab DependenciesID=27ab1804c95cb76aa20cdf8f2e6c02e1 StaticDependenciesID=e47fba914e43cb9dfb055aaab38c0569 
+Start importing Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Mixed_AO.png using Guid(de081bbef34671741ac786e6cc4a51d9) (TextureImporter) -> (Import Result ID: 'af961f06ff4a126497f92e6ccec495ee') in 0.134785625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b7cc42c3aa68269a9c2b683341b9b3b0 DependenciesID=c298ef3f0af882945b428f4922d09416 StaticDependenciesID=80e0d1f0706017230be525f61d029c2f 
+Start importing Assets/Furniture Mega Pack/Textures/Bed/Mattress/AtlasTexture_Mattress_DefaultMaterial_AlbedoTransparency.png using Guid(ee198704a6c9c644989fb2e7fa702efe) (TextureImporter) -> (Import Result ID: '5202390c48642a16e00d79f9ee170889') in 0.075758208 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b55e88705f9c7f20923e0995ec9a5995 DependenciesID=2a7d5a688c2e9dff2bc0d4d26f9f7933 StaticDependenciesID=408c7945b72cc1649bc5c45a64213f87 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_B_MaskMap.tif using Guid(0f48eac8617d0de4cbc056e1734e798b) (TextureImporter) -> (Import Result ID: '5a2b34f249d7650ad2a3ac3ded180660') in 0.080457375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c92017d8c82a13f9d07f5eff55d8f45d DependenciesID=9f5691eda4585328c0380ee4274be6c3 StaticDependenciesID=b9e32342a28c4b5b7e6a2e942b1f7984 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_doors_italian_MaskMap.png using Guid(1fb2cca6cf7008748970b6a2cafe84b0) (TextureImporter) -> (Import Result ID: 'de7ebc28d356b50667ac163752ad4536') in 0.067263708 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a8d449a93960b52e1cb24dd4a24a51a4 DependenciesID=40704c4aab37366168349c7f4fca3ce8 StaticDependenciesID=5d6f1d8a994d3eed0a8ea12e9437f51a 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_AO.png using Guid(3f6d4eb1c003062439d621eed0bc72b1) (TextureImporter)crunched in 0.051339
+ -> (Import Result ID: '50d0ee2f6d2c626b1a43e0eac804d57a') in 0.081081917 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=464f2e54d98e83be0f405165ca2ca46e DependenciesID=1887b89bdd731d658c11431ad28a351a StaticDependenciesID=e662438267dc316281b2cf87cb13a5b9 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_chairs_BaseMap.png using Guid(5fc4310cf999a354da02cfe7d5a08cd4) (TextureImporter) -> (Import Result ID: 'ff007bd38a0dfa283cf44a61c76e4c19') in 0.068092542 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=89273ef3e3fd2ec675d0656899d3311d DependenciesID=63079223c77d774af6b8ac0f8f2792d7 StaticDependenciesID=ab099e4396f7538ceb6f38a47ec1cd00 
+Start importing Assets/TerrainSampleAssets/Textures/Terrain/Grass_Dry_MaskMap.tif using Guid(9f2c593ad6e69ad4ab880e57ce9b69d6) (TextureImporter) -> (Import Result ID: '9d7200bf6965acc718a2f2c315330414') in 0.08526025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=20823b0733be1cc9f6b6db465f24bad6 DependenciesID=b72939313f501f23166e44aaee909b34 StaticDependenciesID=d702ddc84039b8298e6bb095040d197f 
+Start importing Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_AlbedoTransparency.png using Guid(cf4b972f44fabeb46889bdcefc048766) (TextureImporter)crunched in 0.380562
+ -> (Import Result ID: '11643edecb6578d52f766b04a8770ae7') in 0.422282167 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=64731b56735223e8f21504573ef12eff DependenciesID=caadfa94d1618f31cb9183077b227065 StaticDependenciesID=224ea832ebec635e96004b8b86c7d417 
+Start importing Assets/Idyllic Italian Coast Town/Textures/M_boat_kit_BaseMap.png using Guid(efb37fc0753f6c14da5efd349547dfa1) (TextureImporter) -> (Import Result ID: '4ecee39f2ff893e2df53e7b04bb13119') in 0.072975625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=682ed3b67dcd6a546ec3bfa193b75605 DependenciesID=2913b4f72643e92226c41412c51d2ad1 StaticDependenciesID=23f35a130a17c22c3d06d410d56ba271 
+Start importing Assets/Furniture Mega Pack/Textures/Tables/Table38/Table38_mat_Table38_Normal.png using Guid(ff96b7fa3a63de5468ec8e923c2743d7) (TextureImporter) -> (Import Result ID: '5ffaf06ecde34d6702ce5e1ac7189e2b') in 0.081626083 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fcdc676c6ef4c32f10e50711cf4cfefc DependenciesID=fd4e95cdcd89b62fc2e438a19afb4ee0 StaticDependenciesID=24a244d4822827a8a57d658c79f50225 
+Refreshing native plugins compatible for Editor in 4.44 ms, found 9 plugins.
+(Values over 0.050ms)
+Asset Pipeline Refresh (id=5227e5eedd780415b9746d6fca6a7323): Total: 15.443 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=159 (actual=146, local cache=13, cache server=0)
+		Asset DB Process Time: managed=25 ms, native=15370 ms
+		Asset DB Callback time: managed=14 ms, native=33 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=2792, non-scripts=5333
+		Asset File Changes: new=0, changed=146, moved=0, deleted=0
+		Scan Filter Count: 218
+	ApplyChangesToAssetFolders: 0.234ms
+	Scan: 27.503ms
+	OnSourceAssetsModified: 0.714ms
+	CategorizeScriptCompilationAssets: 0.471ms
+	ProcessAssetsWithTransientArtifactChanges: 0.231ms
+	CategorizeAssets: 122.761ms
+	ImportOutOfDateAssets: 15161.005ms (0.397ms without children)
+		ImportManagerImport: 15150.802ms (5.731ms without children)
+			UpdateCategorizedAssets: 0.643ms
+		ReloadNativeAssets: 0.062ms
+		UnloadImportedAssets: 8.866ms
+		ReloadImportedAssets: 94.205ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.557ms
+		OnDemandSchedulerStart: 0.314ms
+	PostProcessAllAssets: 41.564ms
+		XRBuildSystem.XRAssetImported 19.131ms
+		PostProcessCallbackCreateDeferredMaterials 0.277ms
+		ShaderAssetModifiedCallback 0.251ms
+		RaytracingShaderImportPostprocess 0.193ms
+		ComputeShaderImportPostprocess 0.134ms
+		LocalizationDatabase.AssetDatabasePostprocessCallback 0.124ms
+		BlockShaderImporter.PostprocessAllAssets 0.116ms
+		SpeedTreeImporter.PostprocessAllAssets 0.113ms
+		AssemblyValidation.PostprocessAllAssets 0.059ms
+		MonoPostProcessAllAssets: 12.939ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 3.727ms
+			AssetPostprocessor.OnPostprocessAllAssets 1.667ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 1.612ms
+			SyncVS.PostprocessSyncProject 1.359ms
+			PostProcessor.OnPostprocessAllAssets 0.880ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.717ms
+			VFXGraphPreprocessor.OnPostprocessAllAssets 0.475ms
+			MaterialPostprocessor.OnPostprocessAllAssets 0.453ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.448ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.443ms
+			AssetChangedListener.OnPostprocessAllAssets 0.185ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.098ms
+	PostAssetChangesProfiler: 5.310ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.275ms
+	UnloadStreamsBegin: 2.493ms
+	PersistCurrentRevisions: 0.508ms
+	Untracked: 78.763ms
+
+[BCATOpt] WebGL overrides applied to 146 textures
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+BCATOptimizationTool:SetWebGLTextureOverrides () (at Assets/Editor/BCATOptimizationTool.cs:203)
+BCATOptimizationTool:TextureOptimizationPass () (at Assets/Editor/BCATOptimizationTool.cs:217)
+
+(Filename: Assets/Editor/BCATOptimizationTool.cs Line: 203)
+
+[BCATOpt] Inventory complete
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+BCATOptimizationTool:InventoryBigAssetsCore () (at Assets/Editor/BCATOptimizationTool.cs:134)
+BCATOptimizationTool:InventoryAfterwards () (at Assets/Editor/BCATOptimizationTool.cs:232)
+BCATOptimizationTool:TextureOptimizationPass () (at Assets/Editor/BCATOptimizationTool.cs:218)
+
+(Filename: Assets/Editor/BCATOptimizationTool.cs Line: 134)
+
+Opening scene 'Assets/BH_XR_MainScene.unity'
+Curl error 6: Could not resolve host: cdp.cloud.unity3d.com
+Unloading 244 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/BH_XR_MainScene.unity'
+	Deserialize:            79.316 ms
+	Integration:            634.785 ms
+	Integration of assets:  2.913 ms
+	Thread Wait Time:       -0.942 ms
+	Total Operation Time:   716.072 ms
+Unloading 817 unused Assets / (277.7 MB). Loaded Objects now: 29764.
+Memory consumption went from 1.76 GB to 1.49 GB.
+Total: 18.901875 ms (FindLiveObjects: 0.923250 ms CreateObjectMapping: 0.290042 ms MarkObjects: 13.562667 ms  DeleteObjects: 4.125667 ms)
+
+Opening scene 'Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity'
+Unloading 444 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity'
+	Deserialize:            4.107 ms
+	Integration:            154.774 ms
+	Integration of assets:  0.028 ms
+	Thread Wait Time:       0.005 ms
+	Total Operation Time:   158.914 ms
+Unloading 4976 unused Assets / (0.55 GB). Loaded Objects now: 13045.
+Memory consumption went from 1.25 GB to 0.70 GB.
+Total: 16.777750 ms (FindLiveObjects: 0.403666 ms CreateObjectMapping: 0.397084 ms MarkObjects: 5.732709 ms  DeleteObjects: 10.244083 ms)
+
+Opening scene 'Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity'
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity'
+	Deserialize:            0.678 ms
+	Integration:            146.185 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.007 ms
+	Total Operation Time:   146.871 ms
+Unloading 401 unused Assets / (34.5 MB). Loaded Objects now: 12220.
+Memory consumption went from 0.68 GB to 0.65 GB.
+Total: 17.853375 ms (FindLiveObjects: 0.270416 ms CreateObjectMapping: 0.170000 ms MarkObjects: 5.875459 ms  DeleteObjects: 11.537333 ms)
+
+[BCATOpt] Deep validation complete
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+BCATOptimizationTool:ValidateScenesDeep () (at Assets/Editor/BCATOptimizationTool.cs:269)
+BCATOptimizationTool:TextureOptimizationPass () (at Assets/Editor/BCATOptimizationTool.cs:219)
+
+(Filename: Assets/Editor/BCATOptimizationTool.cs Line: 269)
+
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Compressing using quality level 255
+Thread 0x16fd67000 may have been prematurely finalized
+Killing ADB server in 0.047068 seconds.
+Thread 0x17071b000 may have been prematurely finalized
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+[Licensing::IpcConnector] LicenseClient-terrence-6000.4.5-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-terrence-6000.4.5 channel disconnected successfully.
+Thread 0x170a87000 may have been prematurely finalized
+Thread 0x170b9f000 may have been prematurely finalized
+Thread 0x170b13000 may have been prematurely finalized
+Thread 0x170c2b000 may have been prematurely finalized
+Thread 0x170d43000 may have been prematurely finalized
+Thread 0x170dcf000 may have been prematurely finalized
+Thread 0x170cb7000 may have been prematurely finalized
+Thread 0x170e5b000 may have been prematurely finalized
+AcceleratorClientConnectionCallback - disconnected - :0
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      ALC ILPP context 1 is unloading
+Cleanup mono
+CodeReloadManager destroyed
+debugger-agent: Unable to listen on 44

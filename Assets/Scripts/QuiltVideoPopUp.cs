@@ -22,6 +22,7 @@ public class QuiltVideoPopUp : MonoBehaviour
     private bool isOpen = false;
     private bool playWhenPrepared = false;
     private bool prepareRequested = false;
+    private GameObject loadingIndicator;
 
     private void Start()
     {
@@ -34,9 +35,11 @@ public class QuiltVideoPopUp : MonoBehaviour
         if (videoPlayer != null)
         {
             videoPlayer.source = VideoSource.Url;
-            videoPlayer.url = RuntimeMediaPaths.StreamingAssetUrl("in_my_sisters_room_xr.mp4");
+            videoPlayer.url = RuntimeMediaPaths.ResolveMediaUrl("in_my_sisters_room_xr.mp4");
             videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
             videoPlayer.prepareCompleted += OnVideoPrepared;
+            videoPlayer.errorReceived += OnVideoError;
+            videoPlayer.loopPointReached += OnVideoEnded;
         }
 
         if (videoAudioSource != null)
@@ -67,6 +70,8 @@ public class QuiltVideoPopUp : MonoBehaviour
     {
         isOpen = true;
 
+        VideoExhibitCoordinator.NotifyOpened(this, ClosePopUp);
+
         if (promptText != null)
             promptText.SetActive(false);
 
@@ -87,6 +92,8 @@ public class QuiltVideoPopUp : MonoBehaviour
     {
         isOpen = false;
 
+        VideoExhibitCoordinator.NotifyClosed(this);
+        VideoLoadingIndicator.Hide(ref loadingIndicator);
         playWhenPrepared = false;
         ReleaseVideoResources();
 
@@ -116,7 +123,13 @@ public class QuiltVideoPopUp : MonoBehaviour
     private void OnDestroy()
     {
         if (videoPlayer != null)
+        {
             videoPlayer.prepareCompleted -= OnVideoPrepared;
+            videoPlayer.errorReceived -= OnVideoError;
+            videoPlayer.loopPointReached -= OnVideoEnded;
+        }
+
+        VideoExhibitCoordinator.NotifyClosed(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -156,6 +169,8 @@ public class QuiltVideoPopUp : MonoBehaviour
         if (!videoPlayer.isPrepared)
         {
             playWhenPrepared = true;
+            if (isOpen && loadingIndicator == null && popUpPanel != null)
+                loadingIndicator = VideoLoadingIndicator.Show(popUpPanel.transform, "Loading video…");
             PrepareVideoIfNeeded();
             return;
         }
@@ -170,7 +185,7 @@ public class QuiltVideoPopUp : MonoBehaviour
             return;
 
         videoPlayer.source = VideoSource.Url;
-        videoPlayer.url = RuntimeMediaPaths.StreamingAssetUrl("in_my_sisters_room_xr.mp4");
+        videoPlayer.url = RuntimeMediaPaths.ResolveMediaUrl("in_my_sisters_room_xr.mp4");
         prepareRequested = true;
         videoPlayer.Prepare();
     }
@@ -184,9 +199,34 @@ public class QuiltVideoPopUp : MonoBehaviour
         videoAudioSource.Play();
     }
 
+    private void OnVideoError(VideoPlayer source, string message)
+    {
+        Debug.LogError($"[QuiltVideoPopUp] errorReceived: {message} (url={source.url})");
+        prepareRequested = false;
+        playWhenPrepared = false;
+
+        if (isOpen && popUpPanel != null)
+        {
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(popUpPanel.transform, "");
+            VideoLoadingIndicator.SetMessage(loadingIndicator,
+                "Video unavailable.\nClose and reopen the exhibit to try again.");
+        }
+    }
+
+    private void OnVideoEnded(VideoPlayer endedPlayer)
+    {
+        if (!endedPlayer.isLooping)
+        {
+            endedPlayer.Stop();
+            prepareRequested = false;
+        }
+    }
+
     private void OnVideoPrepared(VideoPlayer preparedPlayer)
     {
         prepareRequested = false;
+        VideoLoadingIndicator.Hide(ref loadingIndicator);
         if (!isOpen || !playWhenPrepared)
             return;
 

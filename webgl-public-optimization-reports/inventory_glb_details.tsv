@@ -1,0 +1,414 @@
+asset	subAsset	kind	detail
+Assets/BCaT/Exhibits/BlackKitchen/Models/BlackKitchen_ScannedEnvironment.glb	material_0	Material	shader=UnityGLTF/UnlitGraph
+Assets/BCaT/Exhibits/BlackKitchen/Models/BlackKitchen_ScannedEnvironment.glb	Texture_0 	Texture2D	8192x8192 fmt=RGB24 mips=14 estMB=268.4
+Assets/BCaT/Exhibits/BlackKitchen/Models/BlackKitchen_ScannedEnvironment.glb		Mesh	verts=478024 tris=659560 submeshes=1 readable=False bounds=(5.75, 2.73, 4.05)
+Assets/BCaT_assets/9night/drum.glb	Drum	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/9night/drum.glb	Texture_0 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/9night/drum.glb	Texture_1 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/9night/drum.glb	Drum.001_Drum_0	Mesh	verts=65533 tris=89817 submeshes=1 readable=False bounds=(4.75, 4.68, 6.76)
+Assets/BCaT_assets/9night/drum.glb	Drum.001_Drum_0	Mesh	verts=65533 tris=73154 submeshes=1 readable=False bounds=(4.75, 4.67, 6.76)
+Assets/BCaT_assets/9night/drum.glb	Drum.001_Drum_0	Mesh	verts=48255 tris=27129 submeshes=1 readable=False bounds=(4.73, 4.67, 6.76)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_0	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_1	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_2	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_3	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_4	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_5	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_6	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_7	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_8	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_9	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_10	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_11	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_12	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_13	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_14	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_15	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_16	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_17	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_18	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_19	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_20	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_21	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_22	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_23	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_24	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_25	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_26	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_27	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_28	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_29	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_30	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_31	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_32	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_33	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_34	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_35	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_36	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_37	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_38	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_39	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_40	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_41	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_42	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_43	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_44	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_45	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_46	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_47	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_48	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_49	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_50	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_51	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_52	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_53	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_54	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_55	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_56	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_57	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_58	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_59	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_60	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_61	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_62	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_63	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_64	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_65	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_66	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_67	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_68	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_69	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_70	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_71	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_72	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_73	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_74	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_75	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	material_76	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Texture_2 _00	Texture2D	1024x1024 fmt=DXT5 mips=11 estMB=1.4
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_0	Mesh	verts=3024 tris=3124 submeshes=1 readable=False bounds=(2.63, 0.05, 4.17)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_1	Mesh	verts=88 tris=80 submeshes=1 readable=False bounds=(2.27, 0.42, 3.75)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_2	Mesh	verts=3024 tris=3124 submeshes=1 readable=False bounds=(2.63, 0.05, 4.17)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_3	Mesh	verts=3954 tris=5128 submeshes=1 readable=False bounds=(4.67, 0.11, 9.51)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_4	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.19, 0.51, 0.19)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_5	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.19, 0.51, 0.19)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_6	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.19, 0.51, 0.19)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_7	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.19, 0.51, 0.19)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_8	Mesh	verts=3434 tris=4484 submeshes=1 readable=False bounds=(4.67, 0.10, 9.51)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_9	Mesh	verts=326 tris=388 submeshes=1 readable=False bounds=(0.33, 0.18, 0.25)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_10	Mesh	verts=1158 tris=1522 submeshes=1 readable=False bounds=(1.02, 0.44, 3.72)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_11	Mesh	verts=244 tris=284 submeshes=1 readable=False bounds=(0.28, 0.14, 0.15)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_12	Mesh	verts=645 tris=976 submeshes=1 readable=False bounds=(2.62, 0.46, 0.97)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_13	Mesh	verts=2556 tris=3440 submeshes=1 readable=False bounds=(4.67, 0.15, 9.37)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_14	Mesh	verts=84 tris=72 submeshes=1 readable=False bounds=(4.28, 1.05, 8.31)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_15	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.21, 1.00, 0.21)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_16	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.21, 1.00, 0.21)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_17	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.21, 1.00, 0.21)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_18	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.21, 1.00, 0.21)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_19	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.21, 1.00, 0.21)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_20	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.21, 1.00, 0.21)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_21	Mesh	verts=4204 tris=6634 submeshes=1 readable=False bounds=(7.36, 1.61, 11.95)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_22	Mesh	verts=592 tris=646 submeshes=1 readable=False bounds=(3.35, 0.24, 6.02)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_23	Mesh	verts=2131 tris=3676 submeshes=1 readable=False bounds=(6.60, 2.00, 11.96)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_24	Mesh	verts=1720 tris=2540 submeshes=1 readable=False bounds=(2.11, 0.95, 2.18)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_25	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.15, 0.72, 0.15)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_26	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.15, 0.72, 0.15)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_27	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.15, 0.72, 0.15)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_28	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.15, 0.72, 0.15)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_29	Mesh	verts=3564 tris=6050 submeshes=1 readable=False bounds=(2.22, 2.12, 3.34)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_30	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.08, 0.17, 0.08)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_31	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.08, 0.17, 0.08)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_32	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.08, 0.17, 0.08)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_33	Mesh	verts=1481 tris=2276 submeshes=1 readable=False bounds=(6.59, 4.41, 4.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_34	Mesh	verts=1532 tris=2276 submeshes=1 readable=False bounds=(6.59, 4.41, 4.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_35	Mesh	verts=1481 tris=2276 submeshes=1 readable=False bounds=(6.59, 4.41, 4.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_36	Mesh	verts=1532 tris=2276 submeshes=1 readable=False bounds=(6.59, 4.41, 4.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_37	Mesh	verts=546 tris=824 submeshes=1 readable=False bounds=(8.40, 0.69, 5.05)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_38	Mesh	verts=84 tris=100 submeshes=1 readable=False bounds=(0.26, 1.79, 0.26)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_39	Mesh	verts=2417 tris=3508 submeshes=1 readable=False bounds=(1.32, 1.50, 1.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_40	Mesh	verts=546 tris=824 submeshes=1 readable=False bounds=(8.40, 0.69, 5.05)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_41	Mesh	verts=84 tris=100 submeshes=1 readable=False bounds=(0.26, 1.79, 0.26)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_42	Mesh	verts=2417 tris=3508 submeshes=1 readable=False bounds=(1.32, 1.50, 1.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_43	Mesh	verts=546 tris=824 submeshes=1 readable=False bounds=(8.40, 0.69, 5.05)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_44	Mesh	verts=84 tris=100 submeshes=1 readable=False bounds=(0.26, 1.79, 0.26)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_45	Mesh	verts=2417 tris=3508 submeshes=1 readable=False bounds=(1.32, 1.50, 1.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_46	Mesh	verts=546 tris=824 submeshes=1 readable=False bounds=(8.40, 0.69, 5.05)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_47	Mesh	verts=84 tris=100 submeshes=1 readable=False bounds=(0.26, 1.79, 0.26)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_48	Mesh	verts=2417 tris=3508 submeshes=1 readable=False bounds=(1.32, 1.50, 1.32)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_49	Mesh	verts=258 tris=384 submeshes=1 readable=False bounds=(0.42, 0.14, 0.37)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_50	Mesh	verts=258 tris=384 submeshes=1 readable=False bounds=(0.42, 0.14, 0.37)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_51	Mesh	verts=258 tris=384 submeshes=1 readable=False bounds=(0.42, 0.14, 0.37)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_52	Mesh	verts=258 tris=384 submeshes=1 readable=False bounds=(0.42, 0.14, 0.37)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_53	Mesh	verts=182 tris=264 submeshes=1 readable=False bounds=(0.74, 0.43, 0.74)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_54	Mesh	verts=182 tris=264 submeshes=1 readable=False bounds=(0.74, 0.43, 0.74)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_55	Mesh	verts=182 tris=264 submeshes=1 readable=False bounds=(0.74, 0.43, 0.74)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_56	Mesh	verts=182 tris=264 submeshes=1 readable=False bounds=(0.74, 0.43, 0.74)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_57	Mesh	verts=536 tris=720 submeshes=1 readable=False bounds=(1.42, 0.41, 1.42)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_58	Mesh	verts=536 tris=720 submeshes=1 readable=False bounds=(1.42, 0.41, 1.42)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_59	Mesh	verts=536 tris=720 submeshes=1 readable=False bounds=(1.42, 0.41, 1.42)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_60	Mesh	verts=536 tris=720 submeshes=1 readable=False bounds=(1.42, 0.41, 1.42)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_61	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_62	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_63	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_64	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_65	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_66	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_67	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_68	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_69	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_70	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_71	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_72	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_73	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_74	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_75	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb	Object_76	Mesh	verts=196 tris=280 submeshes=1 readable=False bounds=(0.12, 0.18, 0.12)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	barrelSG	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	tulip1SG	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	tulip2SG	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	tulip3SG	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	tulip4SG	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_0 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_1 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_2 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_3 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_4 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_5 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_6 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Texture_7 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Object_0	Mesh	verts=32 tris=16 submeshes=1 readable=False bounds=(35.77, 36.46, 0.08)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Object_1	Mesh	verts=573 tris=576 submeshes=1 readable=False bounds=(44.21, 44.05, 43.92)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Object_2	Mesh	verts=3297 tris=3596 submeshes=1 readable=False bounds=(47.76, 48.43, 33.94)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Object_3	Mesh	verts=2208 tris=2408 submeshes=1 readable=False bounds=(40.63, 43.27, 31.35)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Object_4	Mesh	verts=1452 tris=1584 submeshes=1 readable=False bounds=(38.47, 36.10, 27.93)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb	Object_5	Mesh	verts=2268 tris=2472 submeshes=1 readable=False bounds=(42.76, 45.51, 30.82)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/metal_table_asset.glb	Metal_Table	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/metal_table_asset.glb	Texture_2 _02	Texture2D	2048x2048 fmt=DXT5 mips=12 estMB=5.6
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/metal_table_asset.glb	Object_0	Mesh	verts=65532 tris=123608 submeshes=1 readable=False bounds=(1.64, 0.91, 0.82)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/metal_table_asset.glb	Object_1	Mesh	verts=65532 tris=122204 submeshes=1 readable=False bounds=(2.09, 0.91, 0.85)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/metal_table_asset.glb	Object_2	Mesh	verts=65143 tris=124276 submeshes=1 readable=False bounds=(1.62, 0.89, 0.83)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	Material	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	Material.001	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	material_0	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	Object_0	Mesh	verts=65532 tris=66507 submeshes=1 readable=False bounds=(2.03, 0.18, 2.04)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	Object_1	Mesh	verts=16054 tris=16676 submeshes=1 readable=False bounds=(2.03, 0.08, 2.04)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	Object_2	Mesh	verts=3319 tris=4551 submeshes=1 readable=False bounds=(2.00, 0.02, 2.00)
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/notebook.glb	Object_3	Mesh	verts=7644 tris=13824 submeshes=1 readable=False bounds=(2.27, 12.30, 2.27)
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Models/chest.glb	PBRGraph	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Models/chest.glb	d23dec5e424da5ef8e77e838729eb3eb	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Models/chest.glb		Mesh	verts=12259 tris=21656 submeshes=1 readable=True bounds=(1.00, 0.63, 0.78)
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Models/chest_chair.glb	PBRGraph	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Models/chest_chair.glb	7fb09bcb3b78f73a1ff952dd12d26bc3	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Models/chest_chair.glb		Mesh	verts=10046 tris=14130 submeshes=1 readable=True bounds=(0.67, 1.00, 0.68)
+Assets/BCaT_assets/HOMED/Models/Candle.glb	PBRGraph	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/HOMED/Models/Candle.glb	a7f9dab409e7b1dca6d17c8f8b362a7f	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/HOMED/Models/Candle.glb		Mesh	verts=3242 tris=4732 submeshes=1 readable=False bounds=(0.34, 0.99, 0.34)
+Assets/BCaT_assets/HOMED/Models/Recipe-Box.glb	PBRGraph	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/HOMED/Models/Recipe-Box.glb	22b3a088e5ba4df0370ac35fba5dbf6a	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/HOMED/Models/Recipe-Box.glb		Mesh	verts=11259 tris=16135 submeshes=1 readable=False bounds=(0.70, 0.48, 0.99)
+Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb	Material.002	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb	Texture_0 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb	Texture_1 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb	Texture_2 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb	Texture_3 	Texture2D	1024x1024 fmt=RGBA32 mips=11 estMB=5.6
+Assets/BCaT_assets/LindaLeaks/Models/LL_AntiqueCamera.glb	kamera.001_Material.002_0	Mesh	verts=18865 tris=17946 submeshes=1 readable=False bounds=(2.41, 1.86, 1.32)
+Assets/BCaT_assets/LindaLeaks/Models/LL_PhotoAlbum.glb	album	Material	shader=UnityGLTF/UnlitGraph
+Assets/BCaT_assets/LindaLeaks/Models/LL_PhotoAlbum.glb	Texture_0 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/LindaLeaks/Models/LL_PhotoAlbum.glb	Object_0	Mesh	verts=65532 tris=119691 submeshes=1 readable=False bounds=(2.54, 2.32, 1.51)
+Assets/BCaT_assets/LindaLeaks/Models/LL_PhotoAlbum.glb	Object_1	Mesh	verts=39608 tris=60053 submeshes=1 readable=False bounds=(2.55, 2.32, 1.56)
+Assets/BCaT_assets/Ri/glass_fish.glb	M_Body	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/Ri/glass_fish.glb	M_InnerBody	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/Ri/glass_fish.glb	Texture_0 	Texture2D	1024x1024 fmt=ARGB32 mips=11 estMB=1.4
+Assets/BCaT_assets/Ri/glass_fish.glb	Texture_1 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/Ri/glass_fish.glb	Texture_2 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/BCaT_assets/Ri/glass_fish.glb	SM_Body_M_Body_0	Mesh	verts=65532 tris=107956 submeshes=1 readable=False bounds=(7.15, 11.45, 3.01)
+Assets/BCaT_assets/Ri/glass_fish.glb	SM_Body_M_Body_0	Mesh	verts=65532 tris=89534 submeshes=1 readable=False bounds=(7.16, 11.46, 3.02)
+Assets/BCaT_assets/Ri/glass_fish.glb	SM_Body_M_Body_0	Mesh	verts=3548 tris=2510 submeshes=1 readable=False bounds=(7.07, 10.70, 2.92)
+Assets/BCaT_assets/Ri/glass_fish.glb	SM_InnerBody_M_InnerBody_0	Mesh	verts=52695 tris=100000 submeshes=1 readable=False bounds=(3.33, 9.62, 2.52)
+Assets/BCaT_assets/SewingRoom/bed.glb	Blanket	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/SewingRoom/bed.glb	Blue_Wood	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/SewingRoom/bed.glb	Brown_Wood	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/SewingRoom/bed.glb	Matress	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/SewingRoom/bed.glb	Pillow	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_0 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_1 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_2 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_3 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_4 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_5 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_6 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_7 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_8 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_9 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_10 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_11 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_12 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_13 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/bed.glb	Texture_14 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/SewingRoom/bed.glb	defaultMaterial	Mesh	verts=1508 tris=1624 submeshes=1 readable=False bounds=(1.73, 0.36, 0.62)
+Assets/BCaT_assets/SewingRoom/bed.glb	defaultMaterial	Mesh	verts=458 tris=568 submeshes=1 readable=False bounds=(2.00, 0.70, 3.30)
+Assets/BCaT_assets/SewingRoom/bed.glb	defaultMaterial	Mesh	verts=1202 tris=1688 submeshes=1 readable=False bounds=(2.00, 0.92, 3.30)
+Assets/BCaT_assets/SewingRoom/bed.glb	defaultMaterial	Mesh	verts=1225 tris=1847 submeshes=1 readable=False bounds=(2.30, 0.81, 2.53)
+Assets/BCaT_assets/SewingRoom/bed.glb	defaultMaterial	Mesh	verts=22 tris=12 submeshes=1 readable=False bounds=(1.91, 0.19, 2.93)
+Assets/BCaT_assets/SewingRoom/old_sewing_box.glb	wire_012012012	Material	shader=UnityGLTF/PBRGraph
+Assets/BCaT_assets/SewingRoom/old_sewing_box.glb	Texture_0 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/old_sewing_box.glb	Texture_1 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/BCaT_assets/SewingRoom/old_sewing_box.glb	Texture_2 	Texture2D	2048x2048 fmt=RGBA32 mips=12 estMB=22.4
+Assets/BCaT_assets/SewingRoom/old_sewing_box.glb	Object_0	Mesh	verts=5491 tris=10344 submeshes=1 readable=False bounds=(16.52, 6.88, 12.77)
+Assets/My_Custom/dishwasher.glb	M_Dishwasher	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/dishwasher.glb	Texture_2 _02	Texture2D	2048x2048 fmt=DXT5 mips=12 estMB=5.6
+Assets/My_Custom/dishwasher.glb	SM_Dishwasher_M_Dishwasher_0	Mesh	verts=2201 tris=3128 submeshes=1 readable=False bounds=(0.63, 0.60, 0.85)
+Assets/My_Custom/japanese_red_bridge.glb	Chipped_Paint_Wood	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/japanese_red_bridge.glb	Painted_wooden_surface	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/japanese_red_bridge.glb	Texture_0 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/My_Custom/japanese_red_bridge.glb	Texture_1 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/My_Custom/japanese_red_bridge.glb	Texture_2 	Texture2D	1024x1024 fmt=RGBA32 mips=11 estMB=5.6
+Assets/My_Custom/japanese_red_bridge.glb	Texture_3 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/My_Custom/japanese_red_bridge.glb	Texture_4 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/My_Custom/japanese_red_bridge.glb	Texture_5 	Texture2D	1024x1024 fmt=RGBA32 mips=11 estMB=5.6
+Assets/My_Custom/japanese_red_bridge.glb	Object_0	Mesh	verts=1944 tris=972 submeshes=1 readable=False bounds=(1.98, 0.80, 4.38)
+Assets/My_Custom/japanese_red_bridge.glb	Object_1	Mesh	verts=432 tris=216 submeshes=1 readable=False bounds=(1.72, 0.09, 5.38)
+Assets/My_Custom/japanese_red_bridge.glb	Object_2	Mesh	verts=65532 tris=32768 submeshes=1 readable=False bounds=(0.24, 2.46, 3.89)
+Assets/My_Custom/japanese_red_bridge.glb	Object_3	Mesh	verts=65532 tris=32766 submeshes=1 readable=False bounds=(2.18, 2.46, 2.45)
+Assets/My_Custom/japanese_red_bridge.glb	Object_4	Mesh	verts=65533 tris=32767 submeshes=1 readable=False bounds=(2.15, 2.46, 3.89)
+Assets/My_Custom/japanese_red_bridge.glb	Object_5	Mesh	verts=65534 tris=32766 submeshes=1 readable=False bounds=(2.20, 2.46, 2.45)
+Assets/My_Custom/japanese_red_bridge.glb	Object_6	Mesh	verts=5643 tris=2821 submeshes=1 readable=False bounds=(0.24, 2.27, 1.78)
+Assets/My_Custom/japanese_red_bridge.glb	Object_7	Mesh	verts=428 tris=226 submeshes=1 readable=False bounds=(1.91, 1.00, 4.30)
+Assets/My_Custom/japanese_red_bridge.glb	Object_8	Mesh	verts=65532 tris=107777 submeshes=1 readable=False bounds=(2.20, 2.46, 4.90)
+Assets/My_Custom/japanese_red_bridge.glb	Object_9	Mesh	verts=20488 tris=32639 submeshes=1 readable=False bounds=(2.20, 2.46, 2.44)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	bar1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	bar2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	book1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	book2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	carpet	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	cooking_bench	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	curtain1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	curtain2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec3	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec4	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	frame	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	house1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	house2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	leaves	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	light1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	light2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	light3	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	material	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	oven1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	oven2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	oven3	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	seat1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	seat2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	table	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	tree	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	vase	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	vase_cup2	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	vase_dec1	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	wood	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_0 	Texture2D	4096x4096 fmt=RGB24 mips=13 estMB=67.1
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_1 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_2 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_3 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_4 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_5 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_6 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_7 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_8 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_9 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_10 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_11 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_12 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_13 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_14 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_15 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_16 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_17 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	Texture_18 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	bar_bar1_0	Mesh	verts=848 tris=428 submeshes=1 readable=False bounds=(0.74, 4.60, 0.79)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	bar_bar2_0	Mesh	verts=2027 tris=2784 submeshes=1 readable=False bounds=(0.69, 0.88, 0.83)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	book_book1_0	Mesh	verts=48 tris=24 submeshes=1 readable=False bounds=(0.32, 0.13, 0.45)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	book_book2_0	Mesh	verts=48 tris=24 submeshes=1 readable=False bounds=(0.32, 0.15, 0.45)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	carpet_carpet_0	Mesh	verts=24 tris=12 submeshes=1 readable=False bounds=(3.32, 1.11, 0.01)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	cooking bench_cooking bench_0	Mesh	verts=48 tris=24 submeshes=1 readable=False bounds=(0.58, 1.49, 1.02)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	cup_cup_0	Mesh	verts=1092 tris=1084 submeshes=1 readable=False bounds=(0.41, 2.54, 0.12)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	curtain_curtain1_0	Mesh	verts=264 tris=132 submeshes=1 readable=False bounds=(1.72, 0.04, 0.98)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	curtain_curtain2_0	Mesh	verts=28 tris=14 submeshes=1 readable=False bounds=(1.72, 0.05, 0.97)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec_dec1_0	Mesh	verts=440 tris=396 submeshes=1 readable=False bounds=(0.27, 3.46, 0.45)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec_dec2_0	Mesh	verts=136 tris=124 submeshes=1 readable=False bounds=(0.10, 0.29, 0.28)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec_dec3_0	Mesh	verts=272 tris=248 submeshes=1 readable=False bounds=(0.14, 0.32, 0.21)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	dec_dec4_0	Mesh	verts=347 tris=478 submeshes=1 readable=False bounds=(0.29, 0.29, 0.06)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	frame_frame_0	Mesh	verts=232 tris=176 submeshes=1 readable=False bounds=(4.49, 8.89, 2.41)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	house_house1_0	Mesh	verts=108 tris=62 submeshes=1 readable=False bounds=(2.82, 2.53, 2.00)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	house_house2_0	Mesh	verts=4 tris=2 submeshes=1 readable=False bounds=(0.00, 2.47, 2.00)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	leaves.001_leaves_0	Mesh	verts=3360 tris=1680 submeshes=1 readable=False bounds=(1.37, 7.03, 0.73)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	light_light1_0	Mesh	verts=452 tris=444 submeshes=1 readable=False bounds=(0.14, 1.60, 1.41)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	light_light2_0	Mesh	verts=792 tris=768 submeshes=1 readable=False bounds=(0.42, 1.88, 0.18)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	light_light3_0	Mesh	verts=794 tris=1472 submeshes=1 readable=False bounds=(0.10, 1.56, 0.12)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	oven_oven1_0	Mesh	verts=1456 tris=792 submeshes=1 readable=False bounds=(0.08, 0.70, 0.86)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	oven_oven2_0	Mesh	verts=48 tris=24 submeshes=1 readable=False bounds=(0.89, 0.83, 1.48)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	oven_oven3_0	Mesh	verts=28 tris=16 submeshes=1 readable=False bounds=(0.00, 0.83, 1.48)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	seat_seat1_0	Mesh	verts=884 tris=1624 submeshes=1 readable=False bounds=(0.44, 1.46, 0.05)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	seat_seat2_0	Mesh	verts=912 tris=552 submeshes=1 readable=False bounds=(0.53, 1.48, 0.89)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	table_table_0	Mesh	verts=162 tris=96 submeshes=1 readable=False bounds=(4.44, 7.23, 0.90)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	tree_tree_0	Mesh	verts=43520 tris=48576 submeshes=1 readable=False bounds=(1.36, 7.03, 0.91)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	vase dec_vase cup2_0	Mesh	verts=394 tris=380 submeshes=1 readable=False bounds=(0.19, 0.19, 1.87)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	vase dec_vase dec1_0	Mesh	verts=657 tris=986 submeshes=1 readable=False bounds=(0.19, 0.19, 1.47)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	vase_vase_0	Mesh	verts=792 tris=1152 submeshes=1 readable=False bounds=(1.03, 6.81, 0.41)
+Assets/My_Custom/modern_scandinavian_kitchen_island.glb	wood_wood_0	Mesh	verts=2196 tris=1398 submeshes=1 readable=False bounds=(4.41, 7.99, 3.00)
+Assets/My_Custom/morten-s.glb	x0023_BALUSTER0.80.80.81	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_BALUSTER1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_BEGIN_OPENINGPine_x0020_wall_x0020_3.jpg1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_BEGIN_PLATFORM1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_BEGIN_PLATFORMcon_ash.jpg1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_BEGIN_WALLPine_x0020_wall_x0020_3.jpg1110.3	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_BOTTOMRAIL1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_HANDRAIL1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_OBJECT3D0.90.90.91	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_OBJECT3DParquet_x0020_12.jpg1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_POST1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_RISERcon_ash.jpg1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_STRING0.90.90.91	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_STRING1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_TREAD0.90.90.91	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	x0023_TREADcon_ash.jpg1111	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/morten-s.glb	Texture_0 	Texture2D	1024x512 fmt=RGB24 mips=11 estMB=2.1
+Assets/My_Custom/morten-s.glb	Texture_1 	Texture2D	256x256 fmt=RGB24 mips=9 estMB=0.3
+Assets/My_Custom/morten-s.glb	Texture_2 	Texture2D	1024x1024 fmt=RGB24 mips=11 estMB=4.2
+Assets/My_Custom/morten-s.glb	_x0023_BALUSTER0.80.80.81	Mesh	verts=2099 tris=3373 submeshes=1 readable=False bounds=(0.05, 0.07, 0.10)
+Assets/My_Custom/morten-s.glb	_x0023_BALUSTER0.80.80.81	Mesh	verts=2099 tris=3373 submeshes=1 readable=False bounds=(0.05, 0.07, 0.10)
+Assets/My_Custom/morten-s.glb	_x0023_BALUSTER0.80.80.81	Mesh	verts=2099 tris=3373 submeshes=1 readable=False bounds=(0.05, 0.07, 0.10)
+Assets/My_Custom/morten-s.glb	_x0023_BALUSTER0.80.80.81	Mesh	verts=2099 tris=3373 submeshes=1 readable=False bounds=(0.05, 0.07, 0.10)
+Assets/My_Custom/morten-s.glb	_x0023_BALUSTER1111	Mesh	verts=2660 tris=2544 submeshes=1 readable=False bounds=(1.12, 3.10, 3.49)
+Assets/My_Custom/morten-s.glb	_x0023_BEGIN_OPENINGPine_x0020_wall_x0020_3.jpg1111	Mesh	verts=16 tris=8 submeshes=1 readable=False bounds=(1.09, 3.22, 0.17)
+Assets/My_Custom/morten-s.glb	_x0023_BEGIN_PLATFORM1111	Mesh	verts=48 tris=24 submeshes=1 readable=False bounds=(1.05, 3.18, 0.04)
+Assets/My_Custom/morten-s.glb	_x0023_BEGIN_PLATFORMcon_ash.jpg1111	Mesh	verts=24 tris=12 submeshes=1 readable=False bounds=(0.04, 0.04, 0.77)
+Assets/My_Custom/morten-s.glb	_x0023_BEGIN_WALLPine_x0020_wall_x0020_3.jpg1110.3	Mesh	verts=96 tris=48 submeshes=1 readable=False bounds=(1.38, 3.57, 5.09)
+Assets/My_Custom/morten-s.glb	_x0023_BOTTOMRAIL1111	Mesh	verts=496 tris=608 submeshes=1 readable=False bounds=(1.07, 3.20, 0.02)
+Assets/My_Custom/morten-s.glb	_x0023_HANDRAIL1111	Mesh	verts=1284 tris=1637 submeshes=1 readable=False bounds=(1.09, 3.25, 2.52)
+Assets/My_Custom/morten-s.glb	_x0023_OBJECT3D0.90.90.91	Mesh	verts=617 tris=373 submeshes=1 readable=False bounds=(2.60, 4.77, 0.17)
+Assets/My_Custom/morten-s.glb	_x0023_OBJECT3DParquet_x0020_12.jpg1111	Mesh	verts=131 tris=129 submeshes=1 readable=False bounds=(7.38, 9.57, 2.63)
+Assets/My_Custom/morten-s.glb	_x0023_POST1111	Mesh	verts=1240 tris=934 submeshes=1 readable=False bounds=(0.12, 0.12, 1.21)
+Assets/My_Custom/morten-s.glb	_x0023_POST1111	Mesh	verts=4080 tris=2232 submeshes=1 readable=False bounds=(1.22, 3.35, 1.49)
+Assets/My_Custom/morten-s.glb	_x0023_RISERcon_ash.jpg1111	Mesh	verts=1032 tris=632 submeshes=1 readable=False bounds=(1.22, 3.31, 2.59)
+Assets/My_Custom/morten-s.glb	_x0023_STRING0.90.90.91	Mesh	verts=120 tris=120 submeshes=1 readable=False bounds=(0.01, 0.05, 0.19)
+Assets/My_Custom/morten-s.glb	_x0023_STRING1111	Mesh	verts=558 tris=372 submeshes=1 readable=False bounds=(1.08, 3.30, 2.40)
+Assets/My_Custom/morten-s.glb	_x0023_TREAD0.90.90.91	Mesh	verts=2400 tris=2400 submeshes=1 readable=False bounds=(0.94, 2.76, 2.08)
+Assets/My_Custom/morten-s.glb	_x0023_TREADcon_ash.jpg1111	Mesh	verts=330 tris=286 submeshes=1 readable=False bounds=(1.25, 3.34, 2.48)
+Assets/My_Custom/morten-s.glb	_x0023_TREADcon_ash.jpg1111	Mesh	verts=312 tris=160 submeshes=1 readable=False bounds=(1.13, 2.78, 1.92)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	antique_brass	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	paper_blades	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	void	Material	shader=UnityGLTF/PBRGraph
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Texture_0 	Texture2D	2048x2048 fmt=RGB24 mips=12 estMB=16.8
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cube.002_antique brass_0	Mesh	verts=150 tris=128 submeshes=1 readable=False bounds=(0.10, 0.05, 1.09)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cube.003_antique brass_0	Mesh	verts=70 tris=64 submeshes=1 readable=False bounds=(0.05, 0.06, 0.06)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cube.003_void_0	Mesh	verts=9 tris=8 submeshes=1 readable=False bounds=(0.05, 0.01, 0.04)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder.001_antique brass_0	Mesh	verts=693 tris=832 submeshes=1 readable=False bounds=(0.92, 0.92, 0.86)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder.001_void_0	Mesh	verts=328 tris=316 submeshes=1 readable=False bounds=(0.78, 0.78, 0.76)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder.002_antique brass_0	Mesh	verts=98 tris=94 submeshes=1 readable=False bounds=(0.14, 0.14, 1.30)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder.003_antique brass_0	Mesh	verts=792 tris=768 submeshes=1 readable=False bounds=(0.82, 0.82, 0.53)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder.003_void_0	Mesh	verts=32 tris=30 submeshes=1 readable=False bounds=(0.04, 0.04, 0.00)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder.004_antique brass_0	Mesh	verts=691 tris=702 submeshes=1 readable=False bounds=(0.55, 0.55, 0.23)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder_antique brass_0	Mesh	verts=2115 tris=1870 submeshes=1 readable=False bounds=(2.23, 2.13, 0.19)
+Assets/My_Custom/zedah_prevalent_52_inch_luxury_fan.glb	Cylinder_paper blades_0	Mesh	verts=960 tris=940 submeshes=1 readable=False bounds=(6.28, 6.02, 0.76)

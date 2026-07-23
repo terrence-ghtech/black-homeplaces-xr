@@ -1,0 +1,5 @@
+Assets/BH_XR_MainScene.unity	_SceneContent/Home/SecondFloor/MemoryRoom/Pen/Object007	MeshRenderer slot 0
+Assets/BH_XR_MainScene.unity	_SceneContent/Home/SecondFloor/MemoryRoom/Pen/Object005	MeshRenderer slot 0
+Assets/BH_XR_MainScene.unity	_SceneContent/Home/SecondFloor/MemoryRoom/Pen/Object004	MeshRenderer slot 0
+Assets/BH_XR_MainScene.unity	_SceneContent/Home/SecondFloor/MemoryRoom/Pen/Object002	MeshRenderer slot 0
+Assets/BH_XR_MainScene.unity	_SceneContent/Home/SecondFloor/MemoryRoom/Pen/Object001	MeshRenderer slot 0

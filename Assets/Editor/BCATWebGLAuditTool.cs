@@ -65,7 +65,7 @@ public static class BCATWebGLAuditTool
         }
     }
 
-    private static void WriteBuildReport(BuildReport report, string dir)
+    public static void WriteBuildReport(BuildReport report, string dir)
     {
         var s = report.summary;
         var sb = new StringBuilder();

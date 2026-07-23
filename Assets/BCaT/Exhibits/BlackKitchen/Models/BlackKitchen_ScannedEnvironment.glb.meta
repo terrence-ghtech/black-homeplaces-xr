@@ -39,7 +39,7 @@ ScriptedImporter:
   _texturesReadWriteEnabled: 0
   _generateMipMaps: 1
   _useSceneNameIdentifier: 1
-  _textureCompression: -50
+  _textureCompression: 50
   _gltfAsset: '<b>Version: </b>2.0
 
 

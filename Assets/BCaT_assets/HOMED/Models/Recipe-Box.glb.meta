@@ -36,10 +36,10 @@ ScriptedImporter:
   _animationLoopPose: 0
   _importMaterials: 1
   _enableGpuInstancing: 0
-  _texturesReadWriteEnabled: 1
+  _texturesReadWriteEnabled: 0
   _generateMipMaps: 1
   _useSceneNameIdentifier: 1
-  _textureCompression: -50
+  _textureCompression: 50
   _gltfAsset: '<b>Version: </b>2.0
 
 

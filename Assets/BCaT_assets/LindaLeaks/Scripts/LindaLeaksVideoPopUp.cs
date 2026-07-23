@@ -26,6 +26,7 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
     private bool isOpen;
     private bool playWhenPrepared;
     private bool prepareRequested;
+    private GameObject loadingIndicator;
 
     private void Start()
     {
@@ -46,7 +47,13 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
     private void OnDestroy()
     {
         if (videoPlayer != null)
+        {
             videoPlayer.prepareCompleted -= OnVideoPrepared;
+            videoPlayer.errorReceived -= OnVideoError;
+            videoPlayer.loopPointReached -= OnVideoEnded;
+        }
+
+        VideoExhibitCoordinator.NotifyClosed(this);
     }
 
     private void Update()
@@ -61,6 +68,8 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
     public void OpenPopUp()
     {
         isOpen = true;
+
+        VideoExhibitCoordinator.NotifyOpened(this, ClosePopUp);
 
         ShowPopup();
 
@@ -77,6 +86,8 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         isOpen = false;
         playWhenPrepared = false;
 
+        VideoExhibitCoordinator.NotifyClosed(this);
+        VideoLoadingIndicator.Hide(ref loadingIndicator);
         ReleaseVideoResources();
 
         if (videoAudioSource != null)
@@ -100,6 +111,8 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
 
         videoPlayer.playOnAwake = false;
         videoPlayer.prepareCompleted += OnVideoPrepared;
+        videoPlayer.errorReceived += OnVideoError;
+        videoPlayer.loopPointReached += OnVideoEnded;
         EnsureVideoSource();
     }
 
@@ -110,9 +123,10 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         // WebGL cannot decode imported VideoClip assets and does not support
-        // AudioSource video output; stream from StreamingAssets with direct audio.
+        // AudioSource video output; stream by URL (remote CDN when configured,
+        // otherwise StreamingAssets) with direct audio.
         videoPlayer.source = VideoSource.Url;
-        videoPlayer.url = RuntimeMediaPaths.StreamingAssetUrl(videoFileName);
+        videoPlayer.url = RuntimeMediaPaths.ResolveMediaUrl(videoFileName);
         videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
 #else
         if (videoClip != null)
@@ -123,7 +137,7 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         else
         {
             videoPlayer.source = VideoSource.Url;
-            videoPlayer.url = RuntimeMediaPaths.StreamingAssetUrl(videoFileName);
+            videoPlayer.url = RuntimeMediaPaths.ResolveMediaUrl(videoFileName);
         }
 
         if (videoAudioSource != null)
@@ -145,6 +159,12 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         if (!videoPlayer.isPrepared)
         {
             playWhenPrepared = true;
+            if (loadingIndicator == null)
+            {
+                Transform parent = popupCanvas != null ? popupCanvas.transform
+                    : (popupRoot != null ? popupRoot.transform : null);
+                loadingIndicator = VideoLoadingIndicator.Show(parent, "Loading video…");
+            }
             PrepareVideoIfNeeded();
             return;
         }
@@ -211,9 +231,36 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
             videoImage.enabled = false;
     }
 
+    private void OnVideoError(VideoPlayer source, string message)
+    {
+        Debug.LogError($"[LindaLeaksVideoPopUp] errorReceived: {message} (url={source.url})");
+        prepareRequested = false;
+        playWhenPrepared = false;
+
+        if (isOpen)
+        {
+            Transform parent = popupCanvas != null ? popupCanvas.transform
+                : (popupRoot != null ? popupRoot.transform : null);
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(parent, "");
+            VideoLoadingIndicator.SetMessage(loadingIndicator,
+                "Video unavailable.\nClose and reopen the exhibit to try again.");
+        }
+    }
+
+    private void OnVideoEnded(VideoPlayer endedPlayer)
+    {
+        if (!endedPlayer.isLooping)
+        {
+            endedPlayer.Stop();
+            prepareRequested = false;
+        }
+    }
+
     private void OnVideoPrepared(VideoPlayer preparedPlayer)
     {
         prepareRequested = false;
+        VideoLoadingIndicator.Hide(ref loadingIndicator);
         if (!isOpen || !playWhenPrepared)
             return;
 
