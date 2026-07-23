@@ -36,11 +36,7 @@ public class QuiltVideoPopUp : MonoBehaviour
             videoPlayer.source = VideoSource.Url;
             videoPlayer.url = RuntimeMediaPaths.StreamingAssetUrl("in_my_sisters_room_xr.mp4");
             videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
-#if UNITY_WEBGL && !UNITY_EDITOR
             videoPlayer.prepareCompleted += OnVideoPrepared;
-#else
-            videoPlayer.Prepare();
-#endif
         }
 
         if (videoAudioSource != null)
@@ -91,13 +87,11 @@ public class QuiltVideoPopUp : MonoBehaviour
     {
         isOpen = false;
 
-        if (videoPlayer != null)
-            videoPlayer.Stop();
-
         playWhenPrepared = false;
+        ReleaseVideoResources();
 
         if (videoAudioSource != null)
-            videoAudioSource.Stop();
+            StopAndUnloadIfSafe(videoAudioSource);
 
         if (popUpPanel != null)
             popUpPanel.SetActive(false);
@@ -109,6 +103,22 @@ public class QuiltVideoPopUp : MonoBehaviour
             promptText.SetActive(true);
     }
 
+    private void OnDisable()
+    {
+        isOpen = false;
+        playWhenPrepared = false;
+        ReleaseVideoResources();
+
+        if (videoAudioSource != null)
+            StopAndUnloadIfSafe(videoAudioSource);
+    }
+
+    private void OnDestroy()
+    {
+        if (videoPlayer != null)
+            videoPlayer.prepareCompleted -= OnVideoPrepared;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -117,6 +127,10 @@ public class QuiltVideoPopUp : MonoBehaviour
 
             if (!isOpen && promptText != null)
                 promptText.SetActive(true);
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+            PrepareVideoIfNeeded();
+#endif
         }
     }
 
@@ -128,6 +142,9 @@ public class QuiltVideoPopUp : MonoBehaviour
 
             if (promptText != null)
                 promptText.SetActive(false);
+
+            if (!isOpen)
+                ReleaseVideoResources();
         }
     }
 
@@ -136,22 +153,26 @@ public class QuiltVideoPopUp : MonoBehaviour
         if (videoPlayer == null)
             return;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
         if (!videoPlayer.isPrepared)
         {
             playWhenPrepared = true;
-            if (!prepareRequested)
-            {
-                prepareRequested = true;
-                videoPlayer.Prepare();
-            }
-
+            PrepareVideoIfNeeded();
             return;
         }
-#endif
 
         videoPlayer.Play();
         PlayVideoAudio();
+    }
+
+    private void PrepareVideoIfNeeded()
+    {
+        if (videoPlayer == null || videoPlayer.isPrepared || prepareRequested)
+            return;
+
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = RuntimeMediaPaths.StreamingAssetUrl("in_my_sisters_room_xr.mp4");
+        prepareRequested = true;
+        videoPlayer.Prepare();
     }
 
     private void PlayVideoAudio()
@@ -163,7 +184,6 @@ public class QuiltVideoPopUp : MonoBehaviour
         videoAudioSource.Play();
     }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
     private void OnVideoPrepared(VideoPlayer preparedPlayer)
     {
         prepareRequested = false;
@@ -175,5 +195,44 @@ public class QuiltVideoPopUp : MonoBehaviour
         preparedPlayer.Play();
         PlayVideoAudio();
     }
-#endif
+
+    private void ReleaseVideoResources()
+    {
+        if (videoPlayer == null)
+            return;
+
+        videoPlayer.Stop();
+        prepareRequested = false;
+        playWhenPrepared = false;
+        ClearTargetTexture();
+
+        if (videoPlayer.source == VideoSource.Url)
+            videoPlayer.url = string.Empty;
+    }
+
+    private void ClearTargetTexture()
+    {
+        RenderTexture texture = videoPlayer != null ? videoPlayer.targetTexture : null;
+        if (texture == null)
+            return;
+
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = texture;
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = previous;
+    }
+
+    private static void StopAndUnloadIfSafe(AudioSource source)
+    {
+        if (source == null)
+            return;
+
+        source.Stop();
+
+        AudioClip clip = source.clip;
+        if (clip == null || clip.loadType == AudioClipLoadType.Streaming || clip.loadState != AudioDataLoadState.Loaded)
+            return;
+
+        clip.UnloadAudioData();
+    }
 }

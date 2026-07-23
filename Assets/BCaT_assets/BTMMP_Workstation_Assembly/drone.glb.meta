@@ -27,7 +27,7 @@ ScriptedImporter:
     textureCountBefore: 0
     textureCountAfter: 0
   _maximumLod: 300
-  _readWriteEnabled: 1
+  _readWriteEnabled: 0
   _generateColliders: 0
   _addColliders: 0
   _swapUvs: 0

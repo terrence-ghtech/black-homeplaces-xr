@@ -547,7 +547,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3306812593671072468}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: e8f8953eb957a423788fd5aae2865145, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -557,7 +557,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
@@ -693,7 +693,7 @@ MonoBehaviour:
   videoImage: {fileID: 6165804563526512357}
   videoFileName: Linda_Leaks_CHOF_720p.mp4
   videoUrlOverride:
-  editorPreviewClip: {fileID: 32900000, guid: e8f8953eb957a423788fd5aae2865145, type: 3}
+  editorPreviewClip: {fileID: 0}
   videoPlayer: {fileID: 6594257823320743892}
   videoAudioSource: {fileID: 0}
   separateAudioSource: {fileID: 2280167887616593893}

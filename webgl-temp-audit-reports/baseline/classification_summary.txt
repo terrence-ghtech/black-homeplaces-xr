@@ -1,0 +1,43 @@
+Category counts and source sizes:
+  A:   977 assets,     2104.2 MB source
+  B:    29 assets,        0.1 MB source
+  C:  4712 assets,     5036.2 MB source
+  D:   105 assets,        4.6 MB source
+
+Deletion candidates: 4712 assets, 5036.2 MB source, 0.0 MB packed (Category B only)
+
+Deletion candidates by top-level folder (count, MB):
+  Assets/Furniture Mega Pack: 1428 files, 1634.2 MB
+  Assets/TerrainSampleAssets: 186 files, 1394.5 MB
+  Assets/DevDen Arch Viz Scotland: 532 files, 532.1 MB
+  Assets/BCaT_assets: 33 files, 225.7 MB
+  Assets/Idyllic Italian Coast Town: 384 files, 183.7 MB
+  Assets/SubstanceAssets: 217 files, 177.8 MB
+  Assets/RealBlend: 34 files, 177.2 MB
+  Assets/YughuesFreeCobbleMaterials: 59 files, 140.1 MB
+  Assets/Shaded Spectrum: 16 files, 117.8 MB
+  Assets/HyTeKGames: 577 files, 98.7 MB
+  Assets/_Recovery: 25 files, 97.8 MB
+  Assets/BCaT: 5 files, 77.4 MB
+  Assets/Animated Tropical Vegetation: 226 files, 52.1 MB
+  Assets/My_Custom: 15 files, 37.5 MB
+  Assets/danthaigames: 4 files, 37.1 MB
+  Assets/Coconut Palm Tree Pack: 85 files, 34.3 MB
+  Assets/Pandazole_Ultimate_Pack: 291 files, 5.9 MB
+  Assets/UnityTechnologies: 107 files, 3.9 MB
+  Assets/SimpleNaturePack: 51 files, 2.7 MB
+  Assets/Food Pack-Demo: 232 files, 2.5 MB
+  Assets/LowPolyLivingRoomPack: 139 files, 2.2 MB
+  Assets/BrokenVector: 41 files, 0.6 MB
+  Assets/TutorialInfo: 4 files, 0.2 MB
+  Assets/Emilulz_Assets: 5 files, 0.1 MB
+  Assets/IgniteCoders: 4 files, 0.0 MB
+  Assets/Tree.prefab: 1 files, 0.0 MB
+  Assets/BH_XR_MainScene: 1 files, 0.0 MB
+  Assets/Tree_Textures: 4 files, 0.0 MB
+  Assets/Yughues Free Palm Trees: 1 files, 0.0 MB
+  Assets/Readme.asset: 1 files, 0.0 MB
+  Assets/NewLayer 2.terrainlayer: 1 files, 0.0 MB
+  Assets/NewLayer 3.terrainlayer: 1 files, 0.0 MB
+  Assets/NewLayer 4.terrainlayer: 1 files, 0.0 MB
+  Assets/MeshellNotebookInteractionProxy.obj: 1 files, 0.0 MB

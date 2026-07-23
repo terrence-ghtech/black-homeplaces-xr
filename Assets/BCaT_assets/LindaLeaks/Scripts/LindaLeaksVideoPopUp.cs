@@ -33,6 +33,22 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         ConfigureVideoPlayer();
     }
 
+    private void OnDisable()
+    {
+        isOpen = false;
+        playWhenPrepared = false;
+        ReleaseVideoResources();
+
+        if (videoAudioSource != null)
+            StopAndUnloadIfSafe(videoAudioSource);
+    }
+
+    private void OnDestroy()
+    {
+        if (videoPlayer != null)
+            videoPlayer.prepareCompleted -= OnVideoPrepared;
+    }
+
     private void Update()
     {
         if (Keyboard.current == null || !Keyboard.current[interactionKey].wasPressedThisFrame)
@@ -51,6 +67,7 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         if (videoPlayer == null)
             return;
 
+        EnsureVideoSource();
         videoPlayer.time = 0;
         BeginVideoPlayback();
     }
@@ -60,11 +77,10 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         isOpen = false;
         playWhenPrepared = false;
 
-        if (videoPlayer != null)
-            videoPlayer.Stop();
+        ReleaseVideoResources();
 
         if (videoAudioSource != null)
-            videoAudioSource.Stop();
+            StopAndUnloadIfSafe(videoAudioSource);
 
         HidePopup();
     }
@@ -78,6 +94,16 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
     }
 
     private void ConfigureVideoPlayer()
+    {
+        if (videoPlayer == null)
+            return;
+
+        videoPlayer.playOnAwake = false;
+        videoPlayer.prepareCompleted += OnVideoPrepared;
+        EnsureVideoSource();
+    }
+
+    private void EnsureVideoSource()
     {
         if (videoPlayer == null)
             return;
@@ -109,12 +135,6 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
             videoPlayer.SetTargetAudioSource(0, videoAudioSource);
         }
 #endif
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-        videoPlayer.prepareCompleted += OnVideoPrepared;
-#else
-        videoPlayer.Prepare();
-#endif
     }
 
     private void BeginVideoPlayback()
@@ -122,22 +142,25 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         if (videoPlayer == null)
             return;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
         if (!videoPlayer.isPrepared)
         {
             playWhenPrepared = true;
-            if (!prepareRequested)
-            {
-                prepareRequested = true;
-                videoPlayer.Prepare();
-            }
-
+            PrepareVideoIfNeeded();
             return;
         }
-#endif
 
         videoPlayer.Play();
         PlayVideoAudioIfSeparate();
+    }
+
+    private void PrepareVideoIfNeeded()
+    {
+        if (videoPlayer == null || videoPlayer.isPrepared || prepareRequested)
+            return;
+
+        EnsureVideoSource();
+        prepareRequested = true;
+        videoPlayer.Prepare();
     }
 
     private void PlayVideoAudioIfSeparate()
@@ -188,7 +211,6 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
             videoImage.enabled = false;
     }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
     private void OnVideoPrepared(VideoPlayer preparedPlayer)
     {
         prepareRequested = false;
@@ -200,5 +222,48 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         preparedPlayer.Play();
         PlayVideoAudioIfSeparate();
     }
+
+    private void ReleaseVideoResources()
+    {
+        if (videoPlayer == null)
+            return;
+
+        videoPlayer.Stop();
+        prepareRequested = false;
+        playWhenPrepared = false;
+        ClearTargetTexture();
+
+        if (videoPlayer.source == VideoSource.Url)
+            videoPlayer.url = string.Empty;
+#if !UNITY_WEBGL || UNITY_EDITOR
+        else if (videoPlayer.source == VideoSource.VideoClip)
+            videoPlayer.clip = null;
 #endif
+    }
+
+    private void ClearTargetTexture()
+    {
+        RenderTexture texture = videoPlayer != null ? videoPlayer.targetTexture : null;
+        if (texture == null)
+            return;
+
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = texture;
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = previous;
+    }
+
+    private static void StopAndUnloadIfSafe(AudioSource source)
+    {
+        if (source == null)
+            return;
+
+        source.Stop();
+
+        AudioClip clip = source.clip;
+        if (clip == null || clip.loadType == AudioClipLoadType.Streaming || clip.loadState != AudioDataLoadState.Loaded)
+            return;
+
+        clip.UnloadAudioData();
+    }
 }

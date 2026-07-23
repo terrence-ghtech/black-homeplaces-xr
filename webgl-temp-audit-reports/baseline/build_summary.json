@@ -1,0 +1,12 @@
+{
+  "result": "Succeeded",
+  "platform": "WebGL",
+  "outputPath": "/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/webgl-temp-audit",
+  "totalSizeBytes": 945776711,
+  "totalTimeSeconds": 1694.8,
+  "totalErrors": 0,
+  "totalWarnings": 9,
+  "buildStartedAt": "2026-07-23T18:56:22.1525730",
+  "buildEndedAt": "2026-07-23T19:24:36.9133200",
+  "guid": "69a5c11880d1465a90545e4610050a79"
+}

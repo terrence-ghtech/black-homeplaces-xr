@@ -1,0 +1,39 @@
+path	newCategory	reason
+Assets/BCaT/Exhibits/BlackKitchen/Documentation/BlackKitchen_ImplementationNotes.txt	D	under folder path referenced by production tooling scripts
+Assets/BCaT/Exhibits/BlackKitchen/Materials/BlackKitchen_DarkWall.mat	D	under folder path referenced by production tooling scripts
+Assets/BCaT/Exhibits/BlackKitchen/Materials/BlackKitchen_PromptPanel.mat	D	under folder path referenced by production tooling scripts
+Assets/BCaT/Exhibits/BlackKitchen/Models/Reference/point_cloud_scan_REFERENCE_ONLY_DO_NOT_BUILD.ply	D	under folder path referenced by production tooling scripts
+Assets/BCaT/Exhibits/PrivacyLawExhibit/Textures/PrivacyLaw_SourceBlueprint.png	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/BlackFamilyMuseumArchive/Prefabs/BFM_Chest_OnChair.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/BlackParlors/Assets/picture-frame/source/pictureframe.fbx	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/BlackParlors/Assets/picture-frame/textures/pictureframe.png	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/ExhibitCanvases/DigitalExhibitCanvas.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/ExhibitCanvases/HolographicPhotoSlideshow.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/ExhibitCanvases/MediaExhibitCanvas.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/ExhibitCanvases/MediaVideoExhibit_Billboard.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/ExhibitCanvases/MediaVideoExhibit_Hologram.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/ExhibitCanvases/SoundExhibitCanvas.prefab	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/LindaLeaks/Images/image03b.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image05b.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image07b.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image22b.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image26b.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image58.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image66.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image68.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image69.asset	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Images/image69.jpg	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Linda_Leaks_CHOF_720p.mp4	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/LindaLeaks/Materials/LL_RoseClay.mat	D	under folder path referenced by production tooling scripts
+Assets/BCaT_assets/Meshell_Sturgis/My Grandma's Garden.heif	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Meshell_Sturgis/articles/A Tesseract for Art & Scholarship _ New Archives.pdf	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Meshell_Sturgis/articles/AYIBA_2020_2021.pdf	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Meshell_Sturgis/articles/Getting Home Article.pdf	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Ri/360_images/dining_room.jpg	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Ri/360_images/kitchen.jpg	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Ri/360_images/living_room.jpg	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/BCaT_assets/Ri/360_images/living_room_2.jpg	D	policy: project-authored BCaT content retained (insufficient evidence of abandonment)
+Assets/RealBlend/Art/Shaders/VertexColorPreview.shader	D	referenced by kept file (crossref_hits.tsv)
+Assets/RealBlend/VertexColorPalettes/Color_Example.json	D	under folder path referenced by production tooling scripts
+Assets/RealBlend/VertexColorPalettes/Color_Example2.json	D	under folder path referenced by production tooling scripts
+Assets/TutorialInfo/Icons/Water Shader icon.PNG	D	referenced by kept file (crossref_hits.tsv)

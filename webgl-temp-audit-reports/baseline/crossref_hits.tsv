@@ -1,0 +1,3 @@
+candidatePath	referencedBy
+Assets/RealBlend/Art/Shaders/VertexColorPreview.shader	Assets/RealBlend/Editor/VertexPainter_PaintTab.cs (path-string)
+Assets/TutorialInfo/Icons/Water Shader icon.PNG	Assets/IgniteCoders/Simple Water Shader/Info/Scripts/Readme.cs.meta (meta)

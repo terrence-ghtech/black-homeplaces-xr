@@ -84,3 +84,11 @@ Assets/SimpleNaturePack/SimpleNaturePack_2020.3_HDRP_v1.24.unitypackage.meta
 Assets/SimpleNaturePack/SimpleNaturePack_2020.3_URP_v1.24.unitypackage.meta
 Assets/YughuesFreeCobbleMaterials/YughuesFreeCobbleMaterials_URP.unitypackage.meta
 Packages/org.khronos.unitygltf/Runtime/Plugins/GLTFSerialization/Legacy~/GLTFSerialization.csproj.meta
+
+# WebGL audit/optimization outputs (2026-07 public-release workstream)
+webgl-temp-audit/
+webgl-temp-audit-reports/baseline_build_artifacts/
+webgl-public-optimized/
+webgl-public-optimization-reports/build_artifacts/
+GLB_Originals_Backup/
+ServerData/

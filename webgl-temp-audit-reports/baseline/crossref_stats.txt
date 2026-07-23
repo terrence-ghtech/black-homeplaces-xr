@@ -1,0 +1,3 @@
+files scanned: 3498
+candidates: 4712
+candidates referenced by kept files (RETAIN): 2

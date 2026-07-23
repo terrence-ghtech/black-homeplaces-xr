@@ -64,6 +64,7 @@ public class MediaVideoController : MonoBehaviour
     private bool playerInRange;
     private bool playWhenPrepared;
     private bool prepareRequested;
+    private bool ownsTargetTexture;
 
     private string LogTag => $"[MediaVideo:{gameObject.name}]";
 
@@ -83,11 +84,26 @@ public class MediaVideoController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (videoPlayer == null)
+        ReleaseVideoResources(destroyOwnedTexture: true);
+
+        if (videoPlayer != null)
+        {
+            videoPlayer.prepareCompleted -= OnVideoPrepared;
+            videoPlayer.errorReceived -= OnVideoError;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (!isOpen && videoPlayer == null)
             return;
 
-        videoPlayer.prepareCompleted -= OnVideoPrepared;
-        videoPlayer.errorReceived -= OnVideoError;
+        isOpen = false;
+        playWhenPrepared = false;
+        ReleaseVideoResources(destroyOwnedTexture: false);
+
+        if (separateAudioSource != null)
+            StopAndUnloadIfSafe(separateAudioSource);
     }
 
     private void Update()
@@ -144,6 +160,8 @@ public class MediaVideoController : MonoBehaviour
             return;
         }
 
+        EnsureVideoSource();
+        EnsureRenderTexture();
         videoPlayer.time = 0;
         BeginVideoPlayback();
     }
@@ -154,11 +172,10 @@ public class MediaVideoController : MonoBehaviour
         playWhenPrepared = false;
         Debug.Log($"{LogTag} ClosePopUp");
 
-        if (videoPlayer != null)
-            videoPlayer.Stop();
+        ReleaseVideoResources(destroyOwnedTexture: false);
 
         if (separateAudioSource != null)
-            separateAudioSource.Stop();
+            StopAndUnloadIfSafe(separateAudioSource);
 
         HidePopup();
 
@@ -181,6 +198,14 @@ public class MediaVideoController : MonoBehaviour
         videoPlayer.prepareCompleted += OnVideoPrepared;
         videoPlayer.errorReceived += OnVideoError;
 
+        EnsureVideoSource();
+    }
+
+    private void EnsureVideoSource()
+    {
+        if (videoPlayer == null)
+            return;
+
 #if UNITY_EDITOR
         if (editorPreviewClip != null)
         {
@@ -195,6 +220,12 @@ public class MediaVideoController : MonoBehaviour
             videoPlayer.url = ResolveUrl();
             Debug.Log($"{LogTag} Video URL: {videoPlayer.url}");
         }
+    }
+
+    private void EnsureRenderTexture()
+    {
+        if (videoPlayer == null)
+            return;
 
         // Make the popup self-sufficient: create a render texture if none is wired.
         if (videoPlayer.renderMode == VideoRenderMode.RenderTexture && videoPlayer.targetTexture == null)
@@ -202,17 +233,14 @@ public class MediaVideoController : MonoBehaviour
             var rt = new RenderTexture(1280, 720, 0);
             rt.name = gameObject.name + "_VideoRT";
             videoPlayer.targetTexture = rt;
+            ownsTargetTexture = true;
             if (videoImage != null)
                 videoImage.texture = rt;
             Debug.Log($"{LogTag} Auto-created 1280x720 RenderTexture");
         }
 
-#if !UNITY_WEBGL || UNITY_EDITOR
-        // Preload so the first open starts fast. On WebGL, defer preparation
-        // until the user opens the popup (browser gesture requirement).
-        prepareRequested = true;
-        videoPlayer.Prepare();
-#endif
+        if (videoImage != null && videoImage.texture == null)
+            videoImage.texture = videoPlayer.targetTexture;
     }
 
     private void ConfigureAudio()
@@ -280,6 +308,17 @@ public class MediaVideoController : MonoBehaviour
         PlaySeparateAudio();
     }
 
+    private void PrepareVideoIfNeeded()
+    {
+        if (videoPlayer == null || videoPlayer.isPrepared || prepareRequested)
+            return;
+
+        EnsureVideoSource();
+        EnsureRenderTexture();
+        prepareRequested = true;
+        videoPlayer.Prepare();
+    }
+
     private void PlaySeparateAudio()
     {
         if (separateAudioSource == null)
@@ -307,6 +346,8 @@ public class MediaVideoController : MonoBehaviour
     private void OnVideoError(VideoPlayer source, string message)
     {
         Debug.LogError($"{LogTag} errorReceived: {message} (url={source.url})");
+        prepareRequested = false;
+        playWhenPrepared = false;
     }
 
     private bool IsPlayerLookingAtThisObject()
@@ -334,6 +375,10 @@ public class MediaVideoController : MonoBehaviour
 
         if (!isOpen && promptRoot != null)
             promptRoot.SetActive(true);
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+        PrepareVideoIfNeeded();
+#endif
     }
 
     private void OnTriggerExit(Collider other)
@@ -346,6 +391,9 @@ public class MediaVideoController : MonoBehaviour
 
         if (promptRoot != null)
             promptRoot.SetActive(false);
+
+        if (!isOpen)
+            ReleaseVideoResources(destroyOwnedTexture: false);
     }
 
     private void ApplyBillboardText()
@@ -378,5 +426,64 @@ public class MediaVideoController : MonoBehaviour
 
         if (videoImage != null)
             videoImage.enabled = false;
+    }
+
+    private void ReleaseVideoResources(bool destroyOwnedTexture)
+    {
+        if (videoPlayer == null)
+            return;
+
+        if (videoPlayer.isPlaying)
+            videoPlayer.Stop();
+        else
+            videoPlayer.Stop();
+
+        prepareRequested = false;
+        playWhenPrepared = false;
+        ClearTargetTexture();
+
+        if (videoPlayer.source == VideoSource.Url)
+            videoPlayer.url = string.Empty;
+#if UNITY_EDITOR
+        else if (videoPlayer.source == VideoSource.VideoClip)
+            videoPlayer.clip = null;
+#endif
+
+        if (destroyOwnedTexture && ownsTargetTexture && videoPlayer.targetTexture != null)
+        {
+            RenderTexture texture = videoPlayer.targetTexture;
+            videoPlayer.targetTexture = null;
+            if (videoImage != null && videoImage.texture == texture)
+                videoImage.texture = null;
+            texture.Release();
+            Destroy(texture);
+            ownsTargetTexture = false;
+        }
+    }
+
+    private void ClearTargetTexture()
+    {
+        RenderTexture texture = videoPlayer != null ? videoPlayer.targetTexture : null;
+        if (texture == null)
+            return;
+
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = texture;
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = previous;
+    }
+
+    private static void StopAndUnloadIfSafe(AudioSource source)
+    {
+        if (source == null)
+            return;
+
+        source.Stop();
+
+        AudioClip clip = source.clip;
+        if (clip == null || clip.loadType == AudioClipLoadType.Streaming || clip.loadState != AudioDataLoadState.Loaded)
+            return;
+
+        clip.UnloadAudioData();
     }
 }

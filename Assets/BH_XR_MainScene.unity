@@ -5439,7 +5439,7 @@ MonoBehaviour:
   videoImage: {fileID: 680522910}
   videoFileName: and that is the truth - you know what I'm meaning_720p.mp4
   videoUrlOverride: 
-  editorPreviewClip: {fileID: 32900000, guid: 2a51ef1f3fb7a4f9481aa5eaac8d9620, type: 3}
+  editorPreviewClip: {fileID: 0}
   videoPlayer: {fileID: 75067012}
   videoAudioSource: {fileID: 0}
   separateAudioSource: {fileID: 75067011}
@@ -5554,7 +5554,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75067008}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 2a51ef1f3fb7a4f9481aa5eaac8d9620, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -5564,7 +5564,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
@@ -48498,7 +48498,7 @@ MonoBehaviour:
   videoImage: {fileID: 240157879}
   videoFileName: subjected_to_recognition_720p.mp4
   videoUrlOverride: 
-  editorPreviewClip: {fileID: 32900000, guid: 80e74142482094496b0af508561a2042, type: 3}
+  editorPreviewClip: {fileID: 0}
   videoPlayer: {fileID: 776940180}
   videoAudioSource: {fileID: 0}
   separateAudioSource: {fileID: 776940179}
@@ -48661,7 +48661,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776940173}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 80e74142482094496b0af508561a2042, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -48671,7 +48671,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 3
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
@@ -68343,7 +68343,7 @@ MonoBehaviour:
   videoImage: {fileID: 1865094814}
   videoFileName: you don't know about style my darling_720p.mp4
   videoUrlOverride: 
-  editorPreviewClip: {fileID: 32900000, guid: 0b58676588fca44be8eac322beaf1662, type: 3}
+  editorPreviewClip: {fileID: 0}
   videoPlayer: {fileID: 1079933047}
   videoAudioSource: {fileID: 0}
   separateAudioSource: {fileID: 1079933046}
@@ -68506,7 +68506,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079933040}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 0b58676588fca44be8eac322beaf1662, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -68516,7 +68516,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 3
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
@@ -118067,7 +118067,7 @@ MonoBehaviour:
   videoImage: {fileID: 1841775551}
   videoFileName: subjected_to_recognition_720p.mp4
   videoUrlOverride: 
-  editorPreviewClip: {fileID: 32900000, guid: 80e74142482094496b0af508561a2042, type: 3}
+  editorPreviewClip: {fileID: 0}
   videoPlayer: {fileID: 1889404807}
   videoAudioSource: {fileID: 0}
   separateAudioSource: {fileID: 1889404806}
@@ -118230,7 +118230,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889404800}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 80e74142482094496b0af508561a2042, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -118240,7 +118240,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 3
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
@@ -130237,7 +130237,7 @@ MonoBehaviour:
   videoImage: {fileID: 1819214029}
   videoFileName: such lovely gravy_720p.mp4
   videoUrlOverride: 
-  editorPreviewClip: {fileID: 32900000, guid: 0fa9c270dbc194001aa700a9f0737386, type: 3}
+  editorPreviewClip: {fileID: 0}
   videoPlayer: {fileID: 2077636732}
   videoAudioSource: {fileID: 0}
   separateAudioSource: {fileID: 2077636731}
@@ -130400,7 +130400,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077636725}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 0fa9c270dbc194001aa700a9f0737386, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -130410,7 +130410,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 3
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0

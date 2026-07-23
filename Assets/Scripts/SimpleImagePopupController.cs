@@ -36,7 +36,9 @@ public class SimpleImagePopupController : MonoBehaviour
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
 
-        RefreshContent();
+        if (titleText != null)
+            titleText.text = title;
+        ClearCurrentSprite();
         HidePopup();
     }
 
@@ -84,6 +86,7 @@ public class SimpleImagePopupController : MonoBehaviour
             return;
 
         isOpen = false;
+        ClearCurrentSprite();
         HidePopup();
         RestoreInput();
     }

@@ -36,7 +36,6 @@ public class LindaLeaksPhotoAlbumController : MonoBehaviour
     {
         currentIndex = Mathf.Clamp(startIndex, 0, Mathf.Max(photos.Count - 1, 0));
         HideAlbum();
-        Refresh();
     }
 
     public void OpenAlbum()
@@ -119,5 +118,16 @@ public class LindaLeaksPhotoAlbumController : MonoBehaviour
 
         if (albumCanvas != null)
             albumCanvas.enabled = false;
+
+        ClearDisplayedPhoto();
+    }
+
+    private void ClearDisplayedPhoto()
+    {
+        if (photoImage != null)
+        {
+            photoImage.sprite = null;
+            photoImage.enabled = false;
+        }
     }
 }

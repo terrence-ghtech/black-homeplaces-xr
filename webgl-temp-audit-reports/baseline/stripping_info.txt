@@ -1,0 +1,311 @@
+Animation Module
+  <- Animation
+  <- AnimationClip
+  <- Animator
+  <- AnimatorController
+  <- AnimatorOverrideController
+  <- Avatar
+  <- AvatarMask
+  <- Motion
+  <- RuntimeAnimatorController
+  <- Required by Director Module
+Audio Module
+  <- AudioBehaviour
+  <- AudioClip
+  <- AudioListener
+  <- AudioManager
+  <- AudioResource
+  <- AudioSource
+  <- SampleClip
+  <- Required by Director Module
+  <- Required by UnityWebRequestAudio Module
+  <- Required by Video Module
+Core Module
+  <- Behaviour
+  <- BuildSettings
+  <- Camera
+  <- Component
+  <- ComputeShader
+  <- Cubemap
+  <- CubemapArray
+  <- CustomRenderTexture
+  <- DelayedCallManager
+  <- EditorExtension
+  <- GameManager
+  <- GameObject
+  <- GlobalGameManager
+  <- GraphicsSettings
+  <- InputManager
+  <- LODGroup
+  <- LevelGameManager
+  <- Light
+  <- LightProbeProxyVolume
+  <- LightProbes
+  <- LightingSettings
+  <- LightmapSettings
+  <- LineRenderer
+  <- LowerResBlitTexture
+  <- Material
+  <- Mesh
+  <- MeshFilter
+  <- MeshRenderer
+  <- MonoBehaviour
+  <- MonoManager
+  <- MonoScript
+  <- NamedObject
+  <- Object
+  <- PlayerSettings
+  <- PreloadData
+  <- QualitySettings
+  <- RayTracingShader
+  <- RectTransform
+  <- ReflectionProbe
+  <- RenderSettings
+  <- RenderTexture
+  <- Renderer
+  <- ResourceManager
+  <- RuntimeInitializeOnLoadManager
+  <- Shader
+  <- ShaderNameRegistry
+  <- ShaderVariantCollection
+  <- SkinnedMeshRenderer
+  <- Skybox
+  <- SortingGroup
+  <- Sprite
+  <- SpriteAtlas
+  <- SpriteRenderer
+  <- TagManager
+  <- TextAsset
+  <- Texture
+  <- Texture2D
+  <- Texture2DArray
+  <- Texture3D
+  <- TimeManager
+  <- Transform
+  <- Required by Animation Module
+  <- Required by Audio Module
+  <- Required by Director Module
+  <- Required by GraphicsStateCollectionSerializer Module
+  <- Required by HierarchyCore Module
+  <- Required by IMGUI Module
+  <- Required by ImageConversion Module
+  <- Required by Input Module
+  <- Required by InputForUI Module
+  <- Required by InputLegacy Module
+  <- Required by JSONSerialize Module
+  <- Required by ParticleSystem Module
+  <- Required by Physics Module
+  <- Required by Physics2D Module
+  <- Required by PhysicsBackendPhysX Module
+  <- Required by Properties Module
+  <- Required by RuntimeInitializeOnLoadManagerInitializer Module
+  <- Required by Subsystems Module
+  <- Required by TLS Module
+  <- Required by Terrain Module
+  <- Required by TerrainPhysics Module
+  <- Required by TextCoreFontEngine Module
+  <- Required by TextCoreTextEngine Module
+  <- Required by TextRendering Module
+  <- Required by UI Module
+  <- Required by UIElements Module
+  <- Required by UnityAnalytics Module
+  <- Required by UnityAnalyticsCommon Module
+  <- Required by UnityConnect Module
+  <- Required by UnityWebRequest Module
+  <- Required by UnityWebRequestAudio Module
+  <- Required by VFX Module
+  <- Required by VR Module
+  <- Required by Video Module
+  <- Required by WebGL Module
+  <- Required by XR Module
+Director Module
+  <- PlayableDirector
+GraphicsStateCollectionSerializer Module
+  <- GraphicsStateCollectionSerializer is always required
+HierarchyCore Module
+  <- Required by UIElements Module
+IMGUI Module
+  <- Required by InputForUI Module
+  <- Required by UIElements Module
+ImageConversion Module
+Input Module
+  <- Required by VR Module
+  <- Required by XR Module
+InputForUI Module
+  <- Required by UIElements Module
+InputLegacy Module
+  <- Required by IMGUI Module
+  <- Required by InputForUI Module
+  <- Required by TextCoreTextEngine Module
+  <- Required by UIElements Module
+JSONSerialize Module
+  <- Required by GraphicsStateCollectionSerializer Module
+  <- Required by Input Module
+  <- Required by RuntimeInitializeOnLoadManagerInitializer Module
+  <- Required by Subsystems Module
+  <- Required by UIElements Module
+  <- Required by UnityAnalytics Module
+  <- Required by VR Module
+  <- Required by XR Module
+ParticleSystem Module
+  <- ParticleSystem
+  <- ParticleSystemRenderer
+Physics Module
+  <- BoxCollider
+  <- CapsuleCollider
+  <- CharacterController
+  <- Collider
+  <- MeshCollider
+  <- PhysicsManager
+  <- Rigidbody
+  <- SphereCollider
+  <- Required by PhysicsBackendPhysX Module
+  <- Required by TerrainPhysics Module
+  <- Required by UIElements Module
+  <- Required by VR Module
+  <- Required by XR Module
+Physics2D Module
+  <- Physics2DSettings
+PhysicsBackendPhysX Module
+  <- Force included module
+Properties Module
+  <- Required by UIElements Module
+RuntimeInitializeOnLoadManagerInitializer Module
+  <- RuntimeInitializeOnLoadManagerInitializer is always required
+Scripting Module
+  <- Required by Animation Module
+  <- Required by Audio Module
+  <- Required by Core Module
+  <- Required by Director Module
+  <- Required by GraphicsStateCollectionSerializer Module
+  <- Required by HierarchyCore Module
+  <- Required by IMGUI Module
+  <- Required by ImageConversion Module
+  <- Required by Input Module
+  <- Required by InputForUI Module
+  <- Required by InputLegacy Module
+  <- Required by JSONSerialize Module
+  <- Required by ParticleSystem Module
+  <- Required by Physics Module
+  <- Required by Physics2D Module
+  <- Required by PhysicsBackendPhysX Module
+  <- Required by Properties Module
+  <- Required by RuntimeInitializeOnLoadManagerInitializer Module
+  <- Required by Subsystems Module
+  <- Required by TLS Module
+  <- Required by Terrain Module
+  <- Required by TerrainPhysics Module
+  <- Required by TextCoreFontEngine Module
+  <- Required by TextCoreTextEngine Module
+  <- Required by TextRendering Module
+  <- Required by UI Module
+  <- Required by UIElements Module
+  <- Required by UnityAnalytics Module
+  <- Required by UnityAnalyticsCommon Module
+  <- Required by UnityConnect Module
+  <- Required by UnityWebRequest Module
+  <- Required by UnityWebRequestAudio Module
+  <- Required by VFX Module
+  <- Required by VR Module
+  <- Required by Video Module
+  <- Required by WebGL Module
+  <- Required by XR Module
+SharedInternals Module
+  <- Required by Animation Module
+  <- Required by Audio Module
+  <- Required by Core Module
+  <- Required by Director Module
+  <- Required by GraphicsStateCollectionSerializer Module
+  <- Required by HierarchyCore Module
+  <- Required by IMGUI Module
+  <- Required by ImageConversion Module
+  <- Required by Input Module
+  <- Required by InputForUI Module
+  <- Required by InputLegacy Module
+  <- Required by JSONSerialize Module
+  <- Required by ParticleSystem Module
+  <- Required by Physics Module
+  <- Required by Physics2D Module
+  <- Required by PhysicsBackendPhysX Module
+  <- Required by Properties Module
+  <- Required by RuntimeInitializeOnLoadManagerInitializer Module
+  <- Required by Scripting Module
+  <- Required by Subsystems Module
+  <- Required by TLS Module
+  <- Required by Terrain Module
+  <- Required by TerrainPhysics Module
+  <- Required by TextCoreFontEngine Module
+  <- Required by TextCoreTextEngine Module
+  <- Required by TextRendering Module
+  <- Required by UI Module
+  <- Required by UIElements Module
+  <- Required by UnityAnalytics Module
+  <- Required by UnityAnalyticsCommon Module
+  <- Required by UnityConnect Module
+  <- Required by UnityWebRequest Module
+  <- Required by UnityWebRequestAudio Module
+  <- Required by VFX Module
+  <- Required by VR Module
+  <- Required by Video Module
+  <- Required by WebGL Module
+  <- Required by XR Module
+Subsystems Module
+  <- Required by XR Module
+TLS Module
+  <- Required by UnityAnalytics Module
+  <- Required by UnityWebRequest Module
+  <- Required by Video Module
+Terrain Module
+  <- Terrain
+  <- TerrainData
+  <- TerrainLayer
+  <- Required by TerrainPhysics Module
+TerrainPhysics Module
+  <- TerrainCollider
+TextCoreFontEngine Module
+  <- Required by TextCoreTextEngine Module
+  <- Required by UIElements Module
+TextCoreTextEngine Module
+  <- Required by IMGUI Module
+  <- Required by UIElements Module
+TextRendering Module
+  <- Font
+  <- Required by IMGUI Module
+  <- Required by TextCoreFontEngine Module
+  <- Required by TextCoreTextEngine Module
+  <- Required by UI Module
+  <- Required by UIElements Module
+UI Module
+  <- Canvas
+  <- CanvasGroup
+  <- CanvasRenderer
+  <- Required by UIElements Module
+  <- Required by Video Module
+UIElements Module
+  <- UIRenderer
+UnityAnalytics Module
+UnityAnalyticsCommon Module
+  <- Required by Subsystems Module
+  <- Required by UnityAnalytics Module
+  <- Required by VR Module
+UnityConnect Module
+  <- Required by UnityAnalytics Module
+UnityWebRequest Module
+  <- Required by UnityAnalytics Module
+  <- Required by UnityWebRequestAudio Module
+  <- Required by Video Module
+UnityWebRequestAudio Module
+VFX Module
+  <- VFXManager
+  <- VFXRenderer
+  <- VisualEffect
+  <- VisualEffectAsset
+  <- VisualEffectObject
+VR Module
+Video Module
+  <- VideoClip
+  <- VideoPlayer
+WebGL Module
+  <- WebGL is always required
+XR Module
+  <- Required by VR Module

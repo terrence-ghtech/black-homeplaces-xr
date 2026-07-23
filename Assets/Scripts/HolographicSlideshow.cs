@@ -55,7 +55,6 @@ public class HolographicSlideshow : MonoBehaviour
     {
         currentIndex = Mathf.Clamp(startIndex, 0, Mathf.Max(photos.Count - 1, 0));
         HideAlbum();
-        Refresh();
     }
 
     private void Update()
@@ -255,7 +254,17 @@ public class HolographicSlideshow : MonoBehaviour
         if (albumCanvas != null)
             albumCanvas.enabled = false;
 
+        ClearDisplayedPhoto();
         RestoreDesktopInput();
+    }
+
+    private void ClearDisplayedPhoto()
+    {
+        if (photoImage != null)
+        {
+            photoImage.sprite = null;
+            photoImage.enabled = false;
+        }
     }
 
     private void CaptureDesktopInput()
