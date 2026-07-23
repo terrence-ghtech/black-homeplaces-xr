@@ -27,7 +27,6 @@
 *.hdr filter=lfs diff=lfs merge=lfs -text
 *.unitypackage filter=lfs diff=lfs merge=lfs -text
 *.assetbundle filter=lfs diff=lfs merge=lfs -text
-
 # Source and Unity YAML files
 *.cs text
 *.shader text
@@ -52,3 +51,6 @@
 *.anim text
 *.controller text
 *.asset text
+webgl/Build/*.br filter=lfs diff=lfs merge=lfs -text
+*.data.br filter=lfs diff=lfs merge=lfs -text
+*.wasm.br filter=lfs diff=lfs merge=lfs -text
