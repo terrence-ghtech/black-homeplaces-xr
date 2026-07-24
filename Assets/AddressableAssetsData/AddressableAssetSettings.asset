@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b4e8584c4cc514f3686c38ed5f2154e5
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: f9ebd3be91f8c0c7c1b87c18746a0859
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -24,11 +24,11 @@ MonoBehaviour:
   m_InternalBundleIdMode: 1
   m_AssetLoadMode: 0
   m_BundledAssetProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
   m_AssetBundleProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_EnableJsonCatalog: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
       - m_Id: 10ec9f28dc9944d96bdda97f4e1d0b6d
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: 16760fb7a7bfb41b2be6c23c7126efe6
-        m_Value: 'http://127.0.0.1:8090/addressables/[BuildTarget]'
+        m_Value: 'https://16fa2ad5-0549-4c84-becb-af764d166f3a.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/4b277eb6-a3a0-40f6-9d6b-7d99c69fd1c1/release_by_badge/production/entry_by_path/content/?path=ServerData/[BuildTarget]'
       - m_Id: 32b9fca2714444b7f93560a331f54588
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: a5602186f69a14e258888b786aaf5f5a

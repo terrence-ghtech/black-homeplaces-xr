@@ -11,19 +11,19 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f8a1c2e9b7d4e5fa6c8d0b2e4f61a39, type: 3}
   m_Name: RemoteMediaConfig
-  m_EditorClassIdentifier:
-  remoteBaseUrl:
+  m_EditorClassIdentifier: 
+  remoteBaseUrl: https://16fa2ad5-0549-4c84-becb-af764d166f3a.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/4b277eb6-a3a0-40f6-9d6b-7d99c69fd1c1/release_by_badge/production/entry_by_path/content/?path=videos/
   useRemoteInEditor: 0
   entries:
   - fileName: Linda_Leaks_CHOF_720p.mp4
-    remoteUrl:
+    remoteUrl: 
   - fileName: and that is the truth - you know what I'm meaning_720p.mp4
-    remoteUrl:
+    remoteUrl: 
   - fileName: in_my_sisters_room_xr.mp4
-    remoteUrl:
+    remoteUrl: 
   - fileName: subjected_to_recognition_720p.mp4
-    remoteUrl:
+    remoteUrl: 
   - fileName: such lovely gravy_720p.mp4
-    remoteUrl:
+    remoteUrl: 
   - fileName: you don't know about style my darling_720p.mp4
-    remoteUrl:
+    remoteUrl: 
