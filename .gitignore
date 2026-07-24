@@ -20,6 +20,9 @@
 # Crash reports
 sysinfo.txt
 
+# Zip files
+*.zip
+
 # Builds
 *.apk
 *.aab
