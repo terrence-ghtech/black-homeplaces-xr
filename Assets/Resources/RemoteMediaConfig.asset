@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RemoteMediaConfig
   m_EditorClassIdentifier: 
   remoteBaseUrl: https://16fa2ad5-0549-4c84-becb-af764d166f3a.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/4b277eb6-a3a0-40f6-9d6b-7d99c69fd1c1/release_by_badge/production/entry_by_path/content/?path=videos/
-  useRemoteInEditor: 0
+  useRemoteInEditor: 1
   entries:
   - fileName: Linda_Leaks_CHOF_720p.mp4
     remoteUrl: 

@@ -1,0 +1,20 @@
+path,type,fileBytes,lengthSeconds,channels,frequency,loadType,compressionFormat,preloadAudioData,videoWidth,videoHeight
+"Assets/BCaT/Exhibits/BlackKitchen/Audio/birthday_cake.mp3",AudioClip,2693086,83.09551,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT/Exhibits/BlackKitchen/Audio/cultural_background.mp3",AudioClip,731633,22.72653,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT/Exhibits/BlackKitchen/Audio/exit_reflection.mp3",AudioClip,3399471,105.8482,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT/Exhibits/BlackKitchen/Audio/kitchen_conversation.mp3",AudioClip,2211889,68.78041,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT/Exhibits/BlackKitchen/Audio/niece_cake.mp3",AudioClip,627681,19.33061,2,44100,CompressedInMemory,Vorbis,False,,
+"Assets/BCaT/Exhibits/BlackKitchen/Audio/rice_and_bean_pot.mp3",AudioClip,1509859,46.91592,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT_assets/9night/9night-soundscape.wav",AudioClip,99988554,86.78207,6,44100,Streaming,Vorbis,False,,
+"Assets/BCaT_assets/LindaLeaks/Linda_Leaks_CHOF_720p_audio.wav",AudioClip,55976110,317.3239,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT_assets/Ri/and that is the truth - you know what I'm meaning.mp3",AudioClip,17999572,741.312,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT_assets/Ri/duppy know who fi frighten.mp3",AudioClip,2669004,83.27837,2,44100,DecompressOnLoad,Vorbis,False,,
+"Assets/BCaT_assets/Ri/such lovely gravy.mp3",AudioClip,1008340,44.592,2,44100,DecompressOnLoad,Vorbis,False,,
+"Assets/BCaT_assets/Ri/you don't know about style my darling.mp3",AudioClip,2660692,160.56,2,44100,DecompressOnLoad,Vorbis,False,,
+"Assets/BCaT_assets/SewingRoom/in_my_sisters_room_audio.wav",AudioClip,36634702,190.8053,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT_assets/SewingRoom/sewing-sounds.wav",AudioClip,36757578,190.7906,2,44100,Streaming,Vorbis,False,,
+"Assets/BCaT_assets/LindaLeaks/Linda_Leaks_CHOF_720p.mp4",VideoClip,34127159,317.250268139093,,,,,,1280,720
+"Assets/BCaT_assets/Meshell_Sturgis/subjected_to_recognition_720p.mp4",VideoClip,230720,60,,,,,,1080,720
+"Assets/BCaT_assets/Ri/and that is the truth - you know what I'm meaning_720p.mp4",VideoClip,124790760,741.240503440257,,,,,,1280,720
+"Assets/BCaT_assets/Ri/such lovely gravy_720p.mp4",VideoClip,7518495,44.5111335399191,,,,,,1280,720
+"Assets/BCaT_assets/Ri/you don't know about style my darling_720p.mp4",VideoClip,14920335,160.493667411552,,,,,,1280,720

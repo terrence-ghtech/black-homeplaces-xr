@@ -155,44 +155,6 @@ public static class BlackKitchenExperienceBuilder
 
         BlackKitchenAudioCoordinator coordinator = Child(root.transform, "BlackKitchenAudioCoordinator").AddComponent<BlackKitchenAudioCoordinator>();
 
-        AudioSource conversation = AudioSourceObject(root.transform, "AmbientConversationZone", LoadClip("kitchen_conversation.mp3"), 0f, 0.2f, 7f, 0.45f);
-        BlackKitchenAmbientZone ambient = conversation.gameObject.AddComponent<BlackKitchenAmbientZone>();
-
-        AudioSource cultural = AudioSourceObject(root.transform, "CulturalBackgroundAudio", LoadClip("cultural_background.mp3"), 0f, 1f, 8f, 0.2f);
-        SetPrivate(coordinator, "kitchenConversationSource", conversation);
-        SetPrivate(coordinator, "culturalBackgroundSource", cultural);
-        SetPrivate(ambient, "source", conversation);
-        SetPrivate(ambient, "coordinator", coordinator);
-
-        GameObject oven = Child(root.transform, "OvenInteraction");
-        oven.transform.position = new Vector3(-1.65f, 0.95f, 0.85f);
-        BoxCollider ovenCollider = oven.AddComponent<BoxCollider>();
-        ovenCollider.isTrigger = true;
-        ovenCollider.size = new Vector3(1.25f, 1.5f, 1.25f);
-        oven.AddComponent<Rigidbody>().isKinematic = true;
-        AudioSource ovenSource = oven.AddComponent<AudioSource>();
-        GameObject birthdayChild = Child(oven.transform, "BirthdayCakeAudio");
-        GameObject nieceChild = Child(oven.transform, "NieceCakeAudio");
-        birthdayChild.SetActive(true);
-        nieceChild.SetActive(true);
-        TMP_Text ovenPrompt = CreatePrompt(oven.transform, "OvenPrompt", new Vector3(0f, 1.15f, -0.55f), "Press E to Listen to Oven Story");
-        BlackKitchenOvenInteraction ovenInteraction = oven.AddComponent<BlackKitchenOvenInteraction>();
-        ovenInteraction.Configure(LoadClip("birthday_cake.mp3"), LoadClip("niece_cake.mp3"), ovenSource, coordinator, ovenPrompt);
-        WireXrSelect(oven, ovenInteraction, nameof(BlackKitchenOvenInteraction.OnXRSelect));
-
-        GameObject pot = Child(root.transform, "RiceBeansPotInteraction");
-        pot.transform.position = new Vector3(0.9f, 0.95f, -0.25f);
-        SphereCollider potCollider = pot.AddComponent<SphereCollider>();
-        potCollider.isTrigger = true;
-        potCollider.radius = 0.45f;
-        pot.AddComponent<Rigidbody>().isKinematic = true;
-        AudioSource potSource = pot.AddComponent<AudioSource>();
-        Child(pot.transform, "RiceBeansAudio");
-        TMP_Text potPrompt = CreatePrompt(pot.transform, "PotPrompt", new Vector3(0f, 0.7f, -0.35f), "Press E to Listen to Rice and Beans Story");
-        BlackKitchenStoryInteractable potInteraction = pot.AddComponent<BlackKitchenStoryInteractable>();
-        potInteraction.Configure(LoadClip("rice_and_bean_pot.mp3"), potSource, coordinator, potPrompt);
-        WireXrSelect(pot, potInteraction, nameof(BlackKitchenStoryInteractable.OnXRSelect));
-
         GameObject exit = Child(root.transform, "ExitInterface");
         exit.transform.position = new Vector3(2.55f, 1.15f, -3.75f);
         BoxCollider exitCollider = exit.AddComponent<BoxCollider>();
@@ -207,12 +169,15 @@ public static class BlackKitchenExperienceBuilder
         GameObject controllerObject = Child(root.transform, "BlackKitchenExperienceController");
         BlackKitchenExperienceController controller = controllerObject.AddComponent<BlackKitchenExperienceController>();
         SetPrivate(controller, "spawnPoint", spawn.transform);
-        SetPrivate(controller, "culturalBackgroundSource", cultural);
         SetPrivate(controller, "exitReflectionSource", exitReflection);
         SetPrivate(controller, "exitPromptText", exitPrompt);
         SetPrivate(controller, "exitInteractionRoot", exit.transform);
         SetPrivate(controller, "audioCoordinator", coordinator);
         WireXrSelect(exit, controller, nameof(BlackKitchenExperienceController.OnXRExitSelect));
+
+        // The five audio stations and the interaction manager share one implementation
+        // with the retrofit menu action.
+        BlackKitchenAudioStationBuilder.CreateStationsAndManager(root.transform, coordinator, controller);
 
         Light light = Child(root.transform, "RestrainedAreaLight").AddComponent<Light>();
         light.type = LightType.Directional;

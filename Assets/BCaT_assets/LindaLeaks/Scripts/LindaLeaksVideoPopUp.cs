@@ -151,10 +151,28 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
 #endif
     }
 
+    private bool HasPlayableSource()
+    {
+        return videoPlayer != null
+            && (videoPlayer.source != VideoSource.Url || !string.IsNullOrEmpty(videoPlayer.url));
+    }
+
     private void BeginVideoPlayback()
     {
         if (videoPlayer == null)
             return;
+
+        if (!HasPlayableSource())
+        {
+            Debug.LogError("[LindaLeaksVideoPopUp] No playable video source (file missing locally and no remote URL configured); showing unavailable message");
+            Transform indicatorParent = popupCanvas != null ? popupCanvas.transform
+                : (popupRoot != null ? popupRoot.transform : null);
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(indicatorParent, "");
+            VideoLoadingIndicator.SetMessage(loadingIndicator,
+                "Video unavailable.\nClose and reopen the exhibit to try again.");
+            return;
+        }
 
         if (!videoPlayer.isPrepared)
         {
@@ -179,6 +197,9 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
             return;
 
         EnsureVideoSource();
+        if (!HasPlayableSource())
+            return;
+
         prepareRequested = true;
         videoPlayer.Prepare();
     }

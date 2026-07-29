@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b9e449a1a47fdbd448e132232d1f3c94
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176776
+  packageName: Animated Tropical Vegetation
+  packageVersion: 1.05
+  assetPath: Assets/Animated Tropical Vegetation/Shaders/StandardDoubleSided.shader
+  uploadId: 793422

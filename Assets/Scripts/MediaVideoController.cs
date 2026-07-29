@@ -298,8 +298,24 @@ public class MediaVideoController : MonoBehaviour
         return RuntimeMediaPaths.ResolveMediaUrl(videoFileName);
     }
 
+    private bool HasPlayableSource()
+    {
+        return videoPlayer != null
+            && (videoPlayer.source != VideoSource.Url || !string.IsNullOrEmpty(videoPlayer.url));
+    }
+
     private void BeginVideoPlayback()
     {
+        if (!HasPlayableSource())
+        {
+            Debug.LogError($"{LogTag} No playable video source (file missing locally and no remote URL configured); showing unavailable message");
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
+            VideoLoadingIndicator.SetMessage(loadingIndicator,
+                "Video unavailable.\nClose and reopen the exhibit to try again.");
+            return;
+        }
+
         if (!videoPlayer.isPrepared)
         {
             playWhenPrepared = true;
@@ -326,6 +342,9 @@ public class MediaVideoController : MonoBehaviour
             return;
 
         EnsureVideoSource();
+        if (!HasPlayableSource())
+            return;
+
         EnsureRenderTexture();
         prepareRequested = true;
         videoPlayer.Prepare();

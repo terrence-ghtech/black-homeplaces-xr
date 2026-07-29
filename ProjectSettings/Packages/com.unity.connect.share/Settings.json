@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/webgl-public-optimized;/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/webgl-temp-audit;;;;;;;;\"}"
+                "value": "{\"m_Value\":\"/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/final-sample;/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/webgl-public-optimized;/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/webgl-temp-audit;;;;;;;\"}"
             }
         ]
     }

@@ -13,12 +13,6 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 public class BlackKitchenExperienceController : MonoBehaviour
 {
-    public enum CulturalTriggerMode
-    {
-        AfterEntryDelay,
-        FirstInteraction
-    }
-
     [Header("Spawn and Return")]
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private string mainHouseSceneName = SceneTransitionState.MainHouseSceneName;
@@ -28,17 +22,6 @@ public class BlackKitchenExperienceController : MonoBehaviour
     [Tooltip("Returns the active player to SpawnPoint while in Black Kitchen if their root falls below this world-space Y value.")]
     [SerializeField] private float fallRecoveryYThreshold = -2.5f;
     [SerializeField] private bool enableFallRecovery = true;
-
-    [Header("Cultural Background")]
-    [SerializeField] private AudioSource culturalBackgroundSource;
-    [SerializeField] private CulturalTriggerMode triggerMode = CulturalTriggerMode.AfterEntryDelay;
-    [SerializeField] private float entryDelay = 4f;
-    [Range(0f, 1f)]
-    [SerializeField] private float volume = 0.18f;
-    [SerializeField] private float fadeInDuration = 3f;
-    [SerializeField] private float fadeOutDuration = 2f;
-    [SerializeField] private bool playOncePerVisit = true;
-    [SerializeField] private bool playOncePerApplicationSession = false;
 
     [Header("Exit Reflection")]
     [SerializeField] private AudioSource exitReflectionSource;
@@ -58,7 +41,8 @@ public class BlackKitchenExperienceController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool resetExitReflectionSessionFlagOnStart;
 
-    private bool culturalPlayedThisVisit;
+    private float exitModalCloseTime = -999f;
+    private const float ExitModalReopenCooldown = 0.35f;
     private bool exitInProgress;
     private bool exitReflectionRequested;
     private bool exitModalOpen;
@@ -68,7 +52,6 @@ public class BlackKitchenExperienceController : MonoBehaviour
     private CanvasGroup exitReflectionModalGroup;
     private CanvasGroup sceneFadeGroup;
     private const float ExitReflectionStartFadeDuration = 0.05f;
-    private static bool culturalPlayedThisSession;
     private Transform fallbackPlayerRoot;
     private readonly List<Behaviour> modalDisabledDesktopControls = new();
     private bool cursorStateCaptured;
@@ -76,6 +59,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
     private CursorLockMode previousCursorLockMode;
 
     public Transform SpawnPoint => spawnPoint;
+    public bool IsExitModalOpen => exitModalOpen;
 
     private void Awake()
     {
@@ -85,13 +69,6 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
     private void Start()
     {
-        if (culturalBackgroundSource != null)
-        {
-            culturalBackgroundSource.playOnAwake = false;
-            culturalBackgroundSource.loop = false;
-            culturalBackgroundSource.volume = 0f;
-        }
-
         if (exitReflectionSource != null)
         {
             exitReflectionSource.playOnAwake = false;
@@ -99,8 +76,8 @@ public class BlackKitchenExperienceController : MonoBehaviour
             exitReflectionSource.volume = 0f;
         }
 
-        if (triggerMode == CulturalTriggerMode.AfterEntryDelay)
-            StartCoroutine(PlayCulturalAfterDelay());
+        if (audioCoordinator != null)
+            audioCoordinator.RegisterNarrativeSource(exitReflectionSource);
     }
 
     private void Update()
@@ -124,17 +101,16 @@ public class BlackKitchenExperienceController : MonoBehaviour
             ExitBlackKitchen();
     }
 
-    public static void NotifyMeaningfulInteraction()
-    {
-        BlackKitchenExperienceController controller = FindFirstObjectByType<BlackKitchenExperienceController>();
-        if (controller != null)
-            controller.OnMeaningfulInteraction();
-    }
-
     public void ExitBlackKitchen()
     {
-        if (exitInProgress)
+        if (exitInProgress || exitModalOpen)
             return;
+
+        if (Time.unscaledTime - exitModalCloseTime < ExitModalReopenCooldown)
+        {
+            Debug.Log($"[BlackKitchenExperienceController] Exit Reflection reopen suppressed within {ExitModalReopenCooldown:0.00}s of closing.");
+            return;
+        }
 
         StartExitReflectionIfNeeded();
         ShowExitReflectionModal();
@@ -143,12 +119,6 @@ public class BlackKitchenExperienceController : MonoBehaviour
     public void OnXRExitSelect()
     {
         ExitBlackKitchen();
-    }
-
-    private void OnMeaningfulInteraction()
-    {
-        if (triggerMode == CulturalTriggerMode.FirstInteraction)
-            StartCulturalBackground();
     }
 
     private void UpdateFallRecovery()
@@ -176,53 +146,6 @@ public class BlackKitchenExperienceController : MonoBehaviour
         return fallbackPlayerRoot;
     }
 
-    private IEnumerator PlayCulturalAfterDelay()
-    {
-        yield return new WaitForSeconds(entryDelay);
-        StartCulturalBackground();
-    }
-
-    private void StartCulturalBackground()
-    {
-        if (culturalBackgroundSource == null)
-            return;
-        if (playOncePerVisit && culturalPlayedThisVisit)
-            return;
-        if (playOncePerApplicationSession && culturalPlayedThisSession)
-            return;
-
-        culturalPlayedThisVisit = true;
-        culturalPlayedThisSession = true;
-
-        if (audioCoordinator != null)
-            audioCoordinator.TryPlayNarrative(culturalBackgroundSource, culturalBackgroundSource.clip, volume, false, fadeInDuration, fadeOutDuration);
-        else
-            StartCoroutine(FadeCultural(volume, fadeInDuration, true));
-    }
-
-    private IEnumerator FadeCultural(float target, float duration, bool play)
-    {
-        if (play && !culturalBackgroundSource.isPlaying)
-            culturalBackgroundSource.Play();
-
-        float start = culturalBackgroundSource.volume;
-        for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
-        {
-            float t = duration <= 0f ? 1f : elapsed / duration;
-            culturalBackgroundSource.volume = Mathf.Lerp(start, target, t);
-            if (audioCoordinator != null)
-                audioCoordinator.SetCulturalBaseMultiplier(volume <= 0f ? 0f : culturalBackgroundSource.volume / volume);
-            yield return null;
-        }
-
-        culturalBackgroundSource.volume = target;
-        if (audioCoordinator != null)
-            audioCoordinator.SetCulturalBaseMultiplier(volume <= 0f ? 0f : culturalBackgroundSource.volume / volume);
-
-        if (target <= 0f)
-            culturalBackgroundSource.Stop();
-    }
-
     private void StartExitReflectionIfNeeded()
     {
         if (exitReflectionRequested || IsExitReflectionPlaying())
@@ -234,21 +157,18 @@ public class BlackKitchenExperienceController : MonoBehaviour
             return;
         }
 
-        if (audioCoordinator != null)
+        if (audioCoordinator == null)
         {
-            float startFadeDuration = Mathf.Min(exitReflectionFadeDuration, ExitReflectionStartFadeDuration);
-            bool started = audioCoordinator.PlayNarrativeReplacingActive(exitReflectionSource, exitReflectionSource.clip, 1f, startFadeDuration, startFadeDuration);
-            if (!started)
-            {
-                Debug.Log("[BlackKitchenExperienceController] Exit Reflection was not started by the audio coordinator.");
-                return;
-            }
+            Debug.LogWarning("[BlackKitchenExperienceController] Exit Reflection not started: no audio coordinator assigned. The coordinator is the sole authority for narrative playback.");
+            return;
         }
-        else
+
+        float startFadeDuration = Mathf.Min(exitReflectionFadeDuration, ExitReflectionStartFadeDuration);
+        bool started = audioCoordinator.PlayNarrativeReplacingActive(exitReflectionSource, exitReflectionSource.clip, 1f, startFadeDuration, startFadeDuration);
+        if (!started)
         {
-            exitReflectionSource.volume = 1f;
-            exitReflectionSource.Play();
-            Debug.Log($"[BlackKitchenExperienceController] Exit Reflection started: '{exitReflectionSource.clip.name}'.");
+            Debug.Log("[BlackKitchenExperienceController] Exit Reflection was not started by the audio coordinator.");
+            return;
         }
 
         exitReflectionRequested = true;
@@ -295,6 +215,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
     private void HideExitReflectionModal()
     {
         exitModalOpen = false;
+        exitModalCloseTime = Time.unscaledTime;
 
         if (exitReflectionModalGroup != null)
         {
@@ -345,6 +266,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
         HideExitReflectionModal();
         StopExitReflectionImmediate();
+        SetDesktopModalControls(true);
         StartCoroutine(ExitToMainHouseRoutine());
     }
 
@@ -396,32 +318,23 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
     private void StopExitReflectionImmediate()
     {
-        if (exitReflectionSource == null)
-        {
-            Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' exit audio stopped: no exit reflection source.");
-            return;
-        }
-
-        AudioClip reflectionClip = exitReflectionSource.clip;
-        if (audioCoordinator != null && reflectionClip != null && audioCoordinator.IsNarrativeActive(exitReflectionSource, reflectionClip))
-        {
-            audioCoordinator.StopNarrativeImmediate(exitReflectionSource, reflectionClip);
-            Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' exit audio stopped.");
-            return;
-        }
         if (audioCoordinator != null)
-            audioCoordinator.StopActiveNarrativeImmediate();
+            audioCoordinator.StopAllNarrativesImmediate();
 
-        if (exitReflectionSource.isPlaying)
-            exitReflectionSource.Stop();
-        exitReflectionSource.volume = 0f;
+        if (exitReflectionSource != null)
+        {
+            if (exitReflectionSource.isPlaying)
+                exitReflectionSource.Stop();
+            exitReflectionSource.volume = 0f;
+        }
+
         Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' exit audio stopped.");
     }
 
     private void PrepareAudioForSceneExit()
     {
         if (audioCoordinator != null)
-            audioCoordinator.StopActiveNarrativeImmediate();
+            audioCoordinator.PrepareForSceneExit();
 
         foreach (AudioSource source in GetComponentsInChildren<AudioSource>(true))
         {
@@ -723,6 +636,20 @@ public class BlackKitchenExperienceController : MonoBehaviour
 #else
         activeEventSystem.gameObject.AddComponent<StandaloneInputModule>();
 #endif
+    }
+
+    public bool IsAimingAtExit()
+    {
+        return IsLookingAtExit();
+    }
+
+    public bool IsExitCollider(Collider candidate)
+    {
+        if (candidate == null)
+            return false;
+
+        Transform root = exitInteractionRoot != null ? exitInteractionRoot : transform;
+        return candidate.transform == root || candidate.transform.IsChildOf(root);
     }
 
     private bool IsLookingAtExit()
