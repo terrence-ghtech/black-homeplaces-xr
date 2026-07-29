@@ -1,0 +1,10 @@
+terrain=_Rendering/Terrain/Terrain_main
+pixelError: 6 -> 4
+basemapDistance: 100 -> 90
+detailObjectDistance: 20 -> 18
+treeDistance: 100 -> 90
+treeBillboardDistance: 50 -> 45
+treeCrossFadeLength: 5 -> 8
+shadowCastingMode: On (unchanged)
+drawInstanced: True (unchanged)
+note: WebGL/Quest use stronger values via Quality-level terrain overrides (see QualitySettings.asset).

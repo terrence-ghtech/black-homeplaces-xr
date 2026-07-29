@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 55a5c6c62c3a7ef4989fc8ecd475d9a7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176776
+  packageName: Animated Tropical Vegetation
+  packageVersion: 1.05
+  assetPath: Assets/Animated Tropical Vegetation/Models/Big Palm Tree/big_palm_tree.controller
+  uploadId: 793422

@@ -1,0 +1,14 @@
+{
+  "current_shadow_casters": 1939,
+  "current_shadow_tris": 2726764,
+  "safe_stop_count": 1447,
+  "safe_stop_tris": 1185178,
+  "review_count": 34,
+  "review_tris": 1145081,
+  "unique_materials": 307,
+  "material_slots": 2162,
+  "instancing_candidates": 66,
+  "renderer_candidates": 60,
+  "atlas_candidates": 19,
+  "lod_candidates": 14
+}

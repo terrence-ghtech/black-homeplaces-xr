@@ -1,0 +1,91 @@
+label,parent_path,renderers,src_tris_total,lod1_tris_total,lod2_tris_total,t0,t1,cull,status
+metal_table_asset,_SceneContent/ImplementedContributorInstallations/BTMMP_Workstation_Assembly/static/metal_table_asset,3,370088,185041,74018,0.4,0.15,0.02,APPLIED
+RW_PhotoAlbum,_SceneContent/ImplementedContributorInstallations/RI/Photo_Asset/Photo-Album/RW_PhotoAlbum_Model,2,179744,107847,44936,0.35,0.12,0.02,APPLIED
+LL_PhotoAlbum_Preview,_SceneContent/ImplementedContributorInstallations/LindaLeaks_Exhibit/PhotoAlbum_Preview/Artifact_PhotoAlbum/LL_PhotoAlbum_Model,2,179744,107847,44936,0.35,0.12,0.02,APPLIED
+glass_fish,_SceneContent/ImplementedContributorInstallations/RI/Fish_Asset/glass_fish,4,300000,149999,60000,0.4,0.15,0.02,APPLIED
+japanese_red_bridge,_SceneContent/Home/Exterior/Pond/japanese_red_bridge,9,275502,137632,49546,0.5,0.2,0.005,APPLIED
+drum,_SceneContent/ImplementedContributorInstallations/9Night/drum,3,190100,104555,41822,0.4,0.15,0.02,APPLIED
+object_path,mesh,lod_levels_wired,status
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (1)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (2)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (3)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (4)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (5)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (6)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (7)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (8)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (9)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (10)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (11)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (12)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (13)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (14)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (15)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (16)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (17)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (18)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (19)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (17)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (18)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (19)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (8)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (11)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (10)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (9)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (15)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (14)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (13)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (12)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (4)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (7)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (6)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (5)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (2)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 1 (1)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (2)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (3)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Left/Jungle Bush 3 (1)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (14)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (28)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (1)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (2)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (3)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (4)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (5)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (6)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (7)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (9)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (10)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (11)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (12)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (13)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (15)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (16)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (17)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (18)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (19)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (17)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (18)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (19)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (20)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (22)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (23)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (24)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (25)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (26)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (27)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (29)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (31)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (32)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (33)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (20)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (21)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 1 (22)/jungle_bush_1_LOD0,jungle_bush_1_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (34)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (35)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+_SceneContent/Environment/vegetation/FrontHomeFlowers/Right/Jungle Bush 3 (36)/jungle_bush_3_LOD0,jungle_bush_3_LOD0,2,APPLIED
+SUMMARY,lodgroups_built=80,,
+object_path,src_tris,lod1_tris,lod2_tris,status
+BlackKitchenExperience_ROOT/ScannedKitchenEnvironment/BlackKitchen_ScannedEnvironment,659560,329779,131912,APPLIED

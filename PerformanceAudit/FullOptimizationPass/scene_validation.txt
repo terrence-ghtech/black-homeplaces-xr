@@ -1,0 +1,23 @@
+scene=Assets/BH_XR_MainScene.unity
+  missingScripts=0 nullMaterialSlots=5 missingMeshes=0
+  duplicateLODGroupComponents=0 lodTriangleOrderErrors=0 lodMaterialSubmeshMismatches=0 lod0UsingOptimizedMesh=0
+  emptyMeshColliders=0
+  activeEventSystems=1 [EventSystem]
+  activeAudioListeners=1 [BuildProfiles/Web/DesktopRig/PlayerCameraRoot/MainCamera]
+scene=Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity
+  missingScripts=0 nullMaterialSlots=0 missingMeshes=0
+  duplicateLODGroupComponents=0 lodTriangleOrderErrors=0 lodMaterialSubmeshMismatches=0 lod0UsingOptimizedMesh=0
+  emptyMeshColliders=0
+  activeEventSystems=1 [DesktopEventSystem]
+  activeAudioListeners=1 [DesktopRigRoot/DesktopRig/PlayerCameraRoot/DesktopMainCamera]
+scene=Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity
+  missingScripts=0 nullMaterialSlots=0 missingMeshes=0
+  duplicateLODGroupComponents=0 lodTriangleOrderErrors=0 lodMaterialSubmeshMismatches=0 lod0UsingOptimizedMesh=0
+  emptyMeshColliders=0
+  activeEventSystems=0 []
+  activeAudioListeners=0 []
+buildScenes:
+  enabled=True Assets/BH_XR_MainScene.unity exists=True
+  enabled=False Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity exists=True
+  enabled=True Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity exists=True
+addressablesSettings=OK groups=2

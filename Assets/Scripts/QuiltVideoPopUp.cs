@@ -161,10 +161,29 @@ public class QuiltVideoPopUp : MonoBehaviour
         }
     }
 
+    private bool HasPlayableSource()
+    {
+        return videoPlayer != null
+            && (videoPlayer.source != VideoSource.Url || !string.IsNullOrEmpty(videoPlayer.url));
+    }
+
     private void BeginVideoPlayback()
     {
         if (videoPlayer == null)
             return;
+
+        if (!HasPlayableSource())
+        {
+            Debug.LogError("[QuiltVideoPopUp] No playable video source (file missing locally and no remote URL configured); showing unavailable message");
+            if (isOpen && popUpPanel != null)
+            {
+                if (loadingIndicator == null)
+                    loadingIndicator = VideoLoadingIndicator.Show(popUpPanel.transform, "");
+                VideoLoadingIndicator.SetMessage(loadingIndicator,
+                    "Video unavailable.\nClose and reopen the exhibit to try again.");
+            }
+            return;
+        }
 
         if (!videoPlayer.isPrepared)
         {
@@ -186,6 +205,9 @@ public class QuiltVideoPopUp : MonoBehaviour
 
         videoPlayer.source = VideoSource.Url;
         videoPlayer.url = RuntimeMediaPaths.ResolveMediaUrl("in_my_sisters_room_xr.mp4");
+        if (!HasPlayableSource())
+            return;
+
         prepareRequested = true;
         videoPlayer.Prepare();
     }
