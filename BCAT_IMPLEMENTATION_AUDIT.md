@@ -20,11 +20,11 @@
 
 ## Main Scene Evidence
 
-- Build scene: [EditorBuildSettings.asset](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/ProjectSettings/EditorBuildSettings.asset:7>)
-- Main scene: [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:1>)
+- Build scene: [EditorBuildSettings.asset](<<PROJECT_ROOT>/ProjectSettings/EditorBuildSettings.asset:7>)
+- Main scene: [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:1>)
 - Runtime scripts present in project:
-  - [InteractableLinkLauncher.cs](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/Scripts/InteractableLinkLauncher.cs:1>)
-  - [QuiltVideoPopUp.cs](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/Scripts/QuiltVideoPopUp.cs:1>)
+  - [InteractableLinkLauncher.cs](<<PROJECT_ROOT>/Assets/Scripts/InteractableLinkLauncher.cs:1>)
+  - [QuiltVideoPopUp.cs](<<PROJECT_ROOT>/Assets/Scripts/QuiltVideoPopUp.cs:1>)
 
 ## Per-Project Audit
 
@@ -62,9 +62,9 @@
 - Recommended next action:
   - Restore or replace `BillboardToCamera`, then verify the prompt still faces the player and the external link opens from the built target.
 - Evidence:
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:49264>)
-  - [HOMED.prefab](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCaT_assets/HOMED/Prefabs/HOMED.prefab:542>)
-  - [HOMED.prefab](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCaT_assets/HOMED/Prefabs/HOMED.prefab:561>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:49264>)
+  - [HOMED.prefab](<<PROJECT_ROOT>/Assets/BCaT_assets/HOMED/Prefabs/HOMED.prefab:542>)
+  - [HOMED.prefab](<<PROJECT_ROOT>/Assets/BCaT_assets/HOMED/Prefabs/HOMED.prefab:561>)
 
 ### Fatou Sow + collaborators — Black Family Museum & Archive
 
@@ -95,9 +95,9 @@
 - Recommended next action:
   - Restore or replace `BillboardToCamera` and remove or explicitly archive the unused alternate prefab if it is no longer needed.
 - Evidence:
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:49095>)
-  - [BFM_Chest_OnChair_W_Text.prefab](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCaT_assets/BlackFamilyMuseumArchive/Prefabs/BFM_Chest_OnChair_W_Text.prefab:505>)
-  - [BFM_Chest_OnChair_W_Text.prefab](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCaT_assets/BlackFamilyMuseumArchive/Prefabs/BFM_Chest_OnChair_W_Text.prefab:394>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:49095>)
+  - [BFM_Chest_OnChair_W_Text.prefab](<<PROJECT_ROOT>/Assets/BCaT_assets/BlackFamilyMuseumArchive/Prefabs/BFM_Chest_OnChair_W_Text.prefab:505>)
+  - [BFM_Chest_OnChair_W_Text.prefab](<<PROJECT_ROOT>/Assets/BCaT_assets/BlackFamilyMuseumArchive/Prefabs/BFM_Chest_OnChair_W_Text.prefab:394>)
 
 ### Psyche Williams-Forson, Cheryl Hicks, Carla McGinnis — Black Parlors / Boardinghouses Web Exhibition
 
@@ -130,9 +130,9 @@
 - Recommended next action:
   - Restore or replace `BillboardToCamera`, and decide whether the contributor title in Unity should be updated to match the requested exhibition naming.
 - Evidence:
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:44087>)
-  - [Black_Parlors.prefab](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCaT_assets/BlackParlors/Prefabs/Black_Parlors.prefab:491>)
-  - [Black_Parlors.prefab](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCaT_assets/BlackParlors/Prefabs/Black_Parlors.prefab:405>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:44087>)
+  - [Black_Parlors.prefab](<<PROJECT_ROOT>/Assets/BCaT_assets/BlackParlors/Prefabs/Black_Parlors.prefab:491>)
+  - [Black_Parlors.prefab](<<PROJECT_ROOT>/Assets/BCaT_assets/BlackParlors/Prefabs/Black_Parlors.prefab:405>)
 
 ### Alisa Hardy — Breonna Taylor / Say Her Name mural archive — Backyard
 
@@ -169,9 +169,9 @@
 - Recommended next action:
   - Bind or populate the prompt text, restore prompt billboarding, and rename/regroup this content so its ownership is explicit in the scene hierarchy.
 - Evidence:
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:122>)
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:36431>)
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:31635>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:122>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:36431>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:31635>)
 
 ### Maurika Smutherman — Sewing Room
 
@@ -218,9 +218,9 @@
 - Recommended next action:
   - Restore or replace `BillboardToCamera`, then test the quilt interaction in the actual target runtime to confirm the `Player` tag, trigger volume, and streaming video path all behave correctly.
 - Evidence:
-  - [QuiltVideoPopUp.cs](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/Scripts/QuiltVideoPopUp.cs:1>)
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:15320>)
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:31307>)
+  - [QuiltVideoPopUp.cs](<<PROJECT_ROOT>/Assets/Scripts/QuiltVideoPopUp.cs:1>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:15320>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:31307>)
 
 ### Christin Washington — Nine Night and Good Mourning
 
@@ -246,8 +246,8 @@
 - Recommended next action:
   - Decide whether ambient-only playback is the intended final behavior. If not, add a trigger, prompt behavior, or link-out interaction.
 - Evidence:
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:29683>)
-  - [BH_XR_MainScene.unity](</Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BH_XR_MainScene.unity:5052>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:29683>)
+  - [BH_XR_MainScene.unity](<<PROJECT_ROOT>/Assets/BH_XR_MainScene.unity:5052>)
 
 ### Evan Starling-Davis — Backyard/Deck/Garage XR Dreamscape
 

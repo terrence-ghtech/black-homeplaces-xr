@@ -11,7 +11,7 @@ Outputs (webgl-temp-audit-reports/baseline/):
 from __future__ import annotations
 import os, subprocess, collections
 
-ROOT = "/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST"
+ROOT = "<PROJECT_ROOT>"
 BASE = os.path.join(ROOT, "webgl-temp-audit-reports", "baseline")
 
 # R1: exact candidates referenced by kept files (crossref_hits.tsv is read below)

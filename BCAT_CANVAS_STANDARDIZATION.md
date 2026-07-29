@@ -55,7 +55,7 @@ Scene (`BH_XR_MainScene.unity`):
 - Black Parlors launcher `promptText` field now points at its canvas PromptText (was null → prompt stayed empty).
 - New `Quilt_XRSelect` child (2 m box collider, non-trigger + XRSimpleInteractable `SelectEntered` → `QuiltVideoPopUp.TogglePopUp`) — XR rays ignore trigger colliders (`m_RaycastTriggerInteraction: Ignore`), so the existing proximity trigger box was unselectable in XR.
 - Quilt `Canvas_Prompt` upgraded to the MediaExhibitCanvas layout: BG_Image (purple), LabelBodyText ("In My Sister's Room / Maurika Smutherman / Short Film · Video Exhibit"), PromptText restyled (white, bottom strip). Existing `promptText` show/hide link from QuiltVideoPopUp preserved.
-- Quilt VideoPlayer stale serialized URL `file:///Users/terrence/...` cleared (runtime sets it; old absolute path pointed at the pre-move project location).
+- Quilt VideoPlayer stale serialized URL `file://<USER_HOME>/...` cleared (runtime sets it; old absolute path pointed at the pre-move project location).
 
 Assets:
 - `Linda_Leaks_CHOF_720p.mp4` copied to `Assets/StreamingAssets/` (matches the prefab's `videoFileName`).

@@ -111,3 +111,9 @@ webgl-public-optimization-reports/build_artifacts/
 webgl-public-optimization-reports/build/
 webgl-public-optimization-reports/*.pid
 webgl-public-optimization-reports/*.log
+webgl-temp-audit-reports/**/*.pid
+webgl-temp-audit-reports/**/*.log
+PerformanceAudit/**/*.log
+PerformanceAudit/*.log
+/unity-meshell-interaction.log
+/unity-meshell-validation.log

@@ -68,15 +68,15 @@ E. Keep outside GitHub but back up separately
 - /Volumes/T9(Samsung)/UnityProjects/BCAT.zip
 - /Volumes/T9(Samsung)/UnityProjects/BCAT_AssetBackups_20260714_174521
 - /Volumes/T9(Samsung)/Builds/Unity/BCAT_Builds
-- /Users/terrence/Documents/scripts/optimize_videos_720p.sh, unless project tooling is intentionally versioned.
-- /Users/terrence/Documents/scripts/bcat_audit.sh, unless project tooling is intentionally versioned.
-- /Users/terrence/Downloads/BCaT/Linda Leaks/Linda Leaks - 2023 Cooperative Hall of Fame - Cooperative Development Foundation (1080p, h264).mp4 as original/source media.
-- /Users/terrence/Downloads/BCaT videos and optimized exports that are not referenced by Unity.
+- <USER_HOME>/Documents/scripts/optimize_videos_720p.sh, unless project tooling is intentionally versioned.
+- <USER_HOME>/Documents/scripts/bcat_audit.sh, unless project tooling is intentionally versioned.
+- <USER_HOME>/Downloads/BCaT/Linda Leaks/Linda Leaks - 2023 Cooperative Hall of Fame - Cooperative Development Foundation (1080p, h264).mp4 as original/source media.
+- <USER_HOME>/Downloads/BCaT videos and optimized exports that are not referenced by Unity.
 
 F. Missing or unresolved
 
 - No required missing local file was confirmed for the active project.
-- Assets/_Recovery scenes are unresolved: several contain stale file:///Users/terrence/... VideoPlayer URLs. Decide whether these scenes are source, backup, or disposable before migration.
+- Assets/_Recovery scenes are unresolved: several contain stale file://<USER_HOME>/... VideoPlayer URLs. Decide whether these scenes are source, backup, or disposable before migration.
 - External web dependencies are unresolved for long-term preservation: ArcGIS StoryMaps, Artsteps, Kuula, Heyzine, MapHub, and bcatlab.org.
 
 G. Requires a licensing or privacy decision
@@ -86,7 +86,7 @@ G. Requires a licensing or privacy decision
 - Black Kitchen scanned environment and point cloud/reference scan assets.
 - Third-party asset packs under Assets, including Furniture Mega Pack, TerrainSampleAssets, DevDen Arch Viz Scotland, Idyllic Italian Coast Town, RealBlend, Shaded Spectrum, SubstanceAssets, and other asset-store or downloaded packs.
 - External web URLs that launch outside the Unity app, including StoryMaps, Artsteps, Kuula, Heyzine, MapHub, and bcatlab.org.
-- Any original media under /Users/terrence/Downloads/BCaT before publishing to a public GitHub repository.
+- Any original media under <USER_HOME>/Downloads/BCaT before publishing to a public GitHub repository.
 
 Migration verdict:
 

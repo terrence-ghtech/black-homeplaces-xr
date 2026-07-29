@@ -1,6 +1,6 @@
 # BCaT GitHub Preparation Dry-Run Report
 
-Project root: `/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST`
+Project root: `<PROJECT_ROOT>`
 
 ## Executive Summary
 
@@ -394,7 +394,7 @@ Directories that appear to rely on an empty folder existing:
 - Total size: 97,803,606 bytes, 93.27 MiB
 - Scene files: 25
 - Separate non-scene assets: none detected; contents are recovery scenes and their `.meta` files.
-- Stale `file:///Users/terrence/...` paths would be committed: yes, in seven recovery scenes.
+- Stale `file://<USER_HOME>/...` paths would be committed: yes, in seven recovery scenes.
 - External production dependency check: no GUID references from outside `Assets/_Recovery` to recovery scene GUIDs were found. Based on GUID references, excluding this directory later would not remove a production dependency. This does not prove there is no name/path-based runtime dependency.
 
 Largest recovery files:
@@ -412,7 +412,7 @@ Largest recovery files:
 | 5.02 MiB | `Assets/_Recovery/0 (13).unity` |
 | 5.01 MiB | `Assets/_Recovery/0 (11).unity` |
 
-Recovery files containing stale local `file:///Users/terrence/...` paths:
+Recovery files containing stale local `file://<USER_HOME>/...` paths:
 
 ```text
 Assets/_Recovery/0 (1).unity:25431
@@ -469,7 +469,7 @@ Do not run these in this dry-run task.
 Suggested validation commands:
 
 ```sh
-cd "/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST"
+cd "<PROJECT_ROOT>"
 git status --short
 git remote -v
 git lfs status
@@ -481,7 +481,7 @@ git check-attr filter -- "Assets/StreamingAssets/and that is the truth - you kno
 Suggested staging command only after blockers are resolved:
 
 ```sh
-cd "/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST"
+cd "<PROJECT_ROOT>"
 git add .gitattributes .gitignore README.md GITHUB_MIGRATION_AND_ASSET_NOTICE.md BCAT_GITHUB_PREP_REPORT.md Assets Packages ProjectSettings
 git status --short
 git lfs status

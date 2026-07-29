@@ -10,7 +10,7 @@ Outputs (webgl-temp-audit-reports/baseline/):
 from __future__ import annotations
 import os, re, sys, collections
 
-ROOT = "/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST"
+ROOT = "<PROJECT_ROOT>"
 BASE = os.path.join(ROOT, "webgl-temp-audit-reports", "baseline")
 
 GUID_RE = re.compile(rb"guid: ([0-9a-f]{32})")

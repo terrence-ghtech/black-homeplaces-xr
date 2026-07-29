@@ -3,7 +3,7 @@ import os, re, csv, json, subprocess, hashlib, math, plistlib
 from pathlib import Path
 from collections import defaultdict, Counter
 
-ROOT = Path('/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST')
+ROOT = Path('<PROJECT_ROOT>')
 REPORT = ROOT / 'BCAT_AUDIT_REPORT'
 ASSETS = ROOT / 'Assets'
 WEBGL = ROOT / 'webgl'

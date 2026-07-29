@@ -1,6 +1,6 @@
 # Stage 1 — Project Discovery
 Date: 2026-07-23
-Project: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST
+Project: <PROJECT_ROOT>
 Method: read-only inspection of ProjectSettings, Packages, Assets, and existing build outputs. No project files modified during this stage.
 
 ## Unity version

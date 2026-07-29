@@ -1,6 +1,6 @@
 # Initial Project Facts
 
-1. Project path exists: `/Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST`.
+1. Project path exists: `<PROJECT_ROOT>`.
 2. Unity version: `6000.4.5f1` from `ProjectSettings/ProjectVersion.txt`.
 3. Total project size: `54G`; `Assets` is `3.4G`, `ProjectSettings` is `168K`, `Packages` is `8.2M`.
 4. Largest asset directories:

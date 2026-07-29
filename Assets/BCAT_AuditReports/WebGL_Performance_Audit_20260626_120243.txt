@@ -1,6 +1,6 @@
 ﻿BCAT WebGL Performance Audit
 Generated: 2026-06-26 12:02:43
-Report Path: /Volumes/T9(Samsung)/UnityProjects/BCAT_6000_4_TEST/Assets/BCAT_AuditReports/WebGL_Performance_Audit_20260626_120243.txt
+Report Path: <PROJECT_ROOT>/Assets/BCAT_AuditReports/WebGL_Performance_Audit_20260626_120243.txt
 
 Scene
 Active Scene Name: BH_XR_MainScene
