@@ -1,0 +1,16 @@
+group_id,duplicate_material,canonical_material,slots_remapped,instancing_enabled,status
+EXACT-1,Assets/BCaT_assets/BTMMP_Workstation_Assembly/drone.glb,-,0,false,SKIPPED_embedded_or_single
+EXACT-2,Assets/My_Custom/mtrls/HallWood 2.mat,Assets/My_Custom/mtrls/HallWood 1.mat,pending,True,REMAP
+EXACT-2,Assets/My_Custom/mtrls/HallWood 3.mat,Assets/My_Custom/mtrls/HallWood 1.mat,pending,True,REMAP
+EXACT-2,Assets/My_Custom/mtrls/HallWood 4.mat,Assets/My_Custom/mtrls/HallWood 1.mat,pending,True,REMAP
+EXACT-3,Assets/My_Custom/mtrls/OldStairway.mat,Assets/My_Custom/mtrls/OldPathway.mat,pending,True,REMAP
+EXACT-4,Assets/My_Custom/morten-s.glb,-,0,false,SKIPPED_embedded_or_single
+EXACT-5,Assets/My_Custom/morten-s.glb,-,0,false,SKIPPED_embedded_or_single
+EXACT-6,Assets/My_Custom/modern_scandinavian_kitchen_island.glb,-,0,false,SKIPPED_embedded_or_single
+EXACT-7,Assets/BCaT_assets/BTMMP_Workstation_Assembly/camera-canon-eos-400d/source/Cilindro low-bajo.fbx,-,0,false,SKIPPED_embedded_or_single
+EXACT-8,Assets/BCaT_assets/BTMMP_Workstation_Assembly/flowerbarrel_with_tulips.glb,-,0,false,SKIPPED_embedded_or_single
+EXACT-9,Assets/BCaT_assets/SewingRoom/bed.glb,-,0,false,SKIPPED_embedded_or_single
+EXACT-10,Assets/BCaT_assets/BTMMP_Workstation_Assembly/camera-canon-eos-400d/source/Cilindro low-bajo.fbx,-,0,false,SKIPPED_embedded_or_single
+EXACT-11,Assets/Furniture Mega Pack/FBX/Sofa/Sofa33.fbx;Assets/Furniture Mega Pack/FBX/Table/Table04.fbx,-,0,false,SKIPPED_embedded_or_single
+EXACT-12,Assets/My_Custom/morten-s.glb,-,0,false,SKIPPED_embedded_or_single
+SUMMARY,duplicates_remapped=4,renderer_slots_updated=31,,,

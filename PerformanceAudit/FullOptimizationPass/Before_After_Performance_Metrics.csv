@@ -1,0 +1,26 @@
+category,scene,metric,before,after,delta,measurement_type,notes
+scene,BH_XR_MainScene,renderers_total_in_scene_file,2046,2254,+208,measured_editor_static,"Added renderers are LOD1/LOD2 copies inside LODGroups; exactly one LOD level draws at runtime. 900 flower renderers were disabled (kept for authoring) and replaced by 4 combined renderers"
+scene,BH_XR_MainScene,renderers_drawable_default_state_LOD0,816,816,0,measured_editor_static,"Enabled+active renderers at LOD0; close-view state intentionally unchanged (LOD0 preserves originals)"
+scene,BH_XR_MainScene,flower_renderers_when_beds_active,900,4,-896,measured_editor_static,"FrontHomeFlowers Left/Right combined into 4 chunked meshes; placement and color composition preserved exactly (geometry combined in place)"
+scene,BH_XR_MainScene,triangles_effective_LOD0,2431185,2431185,0,measured_editor_static,"By design: LOD0 = original meshes. Distant views now render LOD1/LOD2 (roughly 50%/20% triangles) for 6 top assets + 80 vegetation groups + 86 new LODGroups total"
+scene,BH_XR_MainScene,shadow_casters_active_set,795,487,-308,measured_editor_static,"Active+enabled casters at LOD0"
+scene,BH_XR_MainScene,shadow_casters_changed_scene_wide,0,1447,1447 renderers set to Off,measured_editor_static,"Includes currently-inactive exhibit objects that activate at runtime; per audit safe list only (visual_risk=Low)"
+scene,BH_XR_MainScene,shadow_caster_triangles_active_set,2430351,1540581,-36.6%,measured_editor_static,
+scene,BH_XR_MainScene,unique_materials_referenced,297,293,-4,measured_editor_static,"4 exact duplicates remapped to canonical (HallWood 2/3/4->HallWood 1; OldStairway->OldPathway); embedded GLB duplicate groups deliberately not merged"
+scene,BH_XR_MainScene,material_slots,910,910,0,measured_editor_static,
+scene,BH_XR_MainScene,lod_groups,144,230,+86,measured_editor_static,"6 top-asset groups + 80 vegetation groups wired from FBX-provided LOD meshes"
+scene,BH_XR_MainScene,mesh_colliders,386,386,0,measured_editor_static,"11 simplified in place; none removed; no triggers touched"
+scene,BH_XR_MainScene,mesh_collider_triangles,466240,193740,-58.4%,measured_editor_static,"Bridge rails simplified to ~12%; bridge deck/steps colliders untouched (walkable safety)"
+scene,BH_XR_MainScene,canvases,39,39,0,measured_editor_static,"Report-only pass; no constant-rebuild offenders found in static scan; 1 EventSystem (no duplicates existed)"
+scene,BH_XR_MainScene,terrain_scene_baseline_pixelError/detail/tree/billboard,6|20|100|50,4|18|90|45,tuned,measured_editor_static,"Scene baseline serves PC/Editor; WebGL now overrides to 6|14|75|35 and Quest to 7|12|65|30 via Quality terrain overrides (previously WebGL override was 3|40|180|80 - worse than scene)"
+scene,BlackKitchen_MemoryScene,triangles_scanned_environment_LOD0,660404,660404,0,measured_editor_static,"LOD0 preserved; LOD1=329779 LOD2=131912 generated; scene stays isolated-load via remote Addressables"
+scene,BlackKitchen_MemoryScene,lod_groups,0,1,+1,measured_editor_static,
+scene,BlackKitchen_MemoryScene,renderers_total,27,29,+2,measured_editor_static,"+2 LOD copies of scanned environment"
+assets,project,texture_importers_changed,0,551,551,measured_editor_static,"Default max cap 2048; WebGL+Android(Quest) overrides 1024 for >1024 sources; Read/Write disabled; compression enforced. Third-party packs only; archival/exhibit textures untouched"
+assets,project,materials_gpu_instancing_newly_enabled,0,14,+14,measured_editor_static,"17 more were already enabled; 9 embedded GLB materials skipped (cannot persist)"
+assets,project,generated_optimized_meshes,0,73,+73,measured_editor_static,"27 LOD meshes + 46 collision/derived meshes + 4 combined flower chunks in Assets/BCaT/OptimizedMeshes; all 73 pass integrity validation; no source asset overwritten"
+quality,project,webgl_msaa,4x,2x,-,configuration,
+quality,project,webgl_shadow_distance,50,30,-40%,configuration,
+quality,project,quest_quality_tier,none (used Mobile),dedicated Quest level (Android default),new,configuration,"MSAA 4 for VR clarity; shadow distance 20; terrain overrides 7|12|65|30"
+runtime,project,fps_webgl,unmeasured,unmeasured,n/a,NOT_MEASURED,"No WebGL build/browser benchmark run in this pass; static reductions above are measured, runtime FPS gains are estimates until the benchmark matrix is executed"
+runtime,project,fps_quest,unmeasured,unmeasured,n/a,NOT_MEASURED,"No Android/Quest build produced in this pass"

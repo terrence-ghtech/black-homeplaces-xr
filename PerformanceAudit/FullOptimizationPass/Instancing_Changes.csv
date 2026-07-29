@@ -1,0 +1,41 @@
+material,shader,instances_in_scene,prev_enabled,new_enabled,status
+Assets/Emilulz_Assets/DEMOLowPolyFlowers/Prefabs/M_DEMOAtlas_LowPolyFlowers.mat,Universal Render Pipeline/Lit,741,False,True,ENABLED
+Assets/Animated Tropical Vegetation/Materials/jungle_bush_leaves.mat,Universal Render Pipeline/Lit,43,True,True,ALREADY_ENABLED
+Assets/Animated Tropical Vegetation/Materials/Billboards/jungle_bush_1_billboard.mat,Universal Render Pipeline/Lit,43,True,True,ALREADY_ENABLED
+Assets/Animated Tropical Vegetation/Materials/Billboards/jungle_bush_3_billboard.mat,Universal Render Pipeline/Lit,39,True,True,ALREADY_ENABLED
+Assets/Samples/XR Interaction Toolkit/3.3.1/Starter Assets/DemoSceneAssets/Materials/Lit White.mat,Universal Render Pipeline/Simple Lit,36,True,True,ALREADY_ENABLED
+Assets/Idyllic Italian Coast Town/Materials/M_wall_plaster.mat,Universal Render Pipeline/Lit,31,False,True,ENABLED
+Assets/Pandazole_Ultimate_Pack/Pandazole Farm Ranch Pack/Materials/PandaMat.mat,Universal Render Pipeline/Lit,31,False,True,ENABLED
+Assets/My_Custom/mtrls/Blue_Wall.mat,Universal Render Pipeline/Lit,27,True,True,ALREADY_ENABLED
+Assets/Idyllic Italian Coast Town/Materials/M_wall_plaster 10.mat,Universal Render Pipeline/Lit,22,False,True,ENABLED
+Assets/SimpleNaturePack/Materials/SimpleNaturePack_Texture_01.mat,Universal Render Pipeline/Lit,21,False,True,ENABLED
+Assets/BCaT/Exhibits/PrivacyLawExhibit/Materials/PrivacyLaw_HologramLine.mat,Universal Render Pipeline/Unlit,17,False,True,ENABLED
+Assets/My_Custom/mtrls/HallWood 2.mat,Universal Render Pipeline/Lit,11,True,True,ALREADY_ENABLED
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/spray-paint-bottle-2/source/spray_paint_bottle_2.fbx,Universal Render Pipeline/Lit,9,-,-,SKIPPED_embedded_in_model_asset
+Assets/Idyllic Italian Coast Town/Materials/M_skybox.mat,Skybox/Panoramic,9,False,True,ENABLED
+Assets/UnityTechnologies/Basic Asset Pack Interior/Materials/WallGreen.mat,Universal Render Pipeline/Lit,9,True,True,ALREADY_ENABLED
+Assets/UnityTechnologies/Basic Asset Pack Interior/Materials/Glass.mat,Universal Render Pipeline/Lit,9,False,True,ENABLED
+Assets/HyTeKGames/SRPMaterialConverter/ConvertedMaterials/bathroom_wall_mat_1.mat,Universal Render Pipeline/Lit,8,False,True,ENABLED
+Assets/My_Custom/mtrls/Mint_wall_plaster.mat,Universal Render Pipeline/Lit,7,True,True,ALREADY_ENABLED
+Assets/DevDen Arch Viz Scotland/Materials/Kitchen Room/marble.mat,Universal Render Pipeline/Lit,7,True,True,ALREADY_ENABLED
+Assets/Idyllic Italian Coast Town/Materials/M_chairs.mat,Universal Render Pipeline/Lit,6,False,True,ENABLED
+Assets/My_Custom/mtrls/YellowWall.mat,Universal Render Pipeline/Lit,6,True,True,ALREADY_ENABLED
+Assets/My_Custom/mtrls/OldStairway.mat,Universal Render Pipeline/Lit,6,True,True,ALREADY_ENABLED
+Assets/Idyllic Italian Coast Town/Meshes/Props/SM_fence_02.fbx,Shader Graphs/PhysicalMaterial3DsMax,5,-,-,SKIPPED_embedded_in_model_asset
+Assets/BCaT_assets/BTMMP_Workstation_Assembly/generic_tulip_flower.glb,UnityGLTF/PBRGraph,5,-,-,SKIPPED_embedded_in_model_asset
+Assets/DevDen Arch Viz Scotland/Materials/Bed Room/Bedroom_wood_table.mat,Universal Render Pipeline/Lit,5,True,True,ALREADY_ENABLED
+Assets/Idyllic Italian Coast Town/Materials/M_attachments_stone.mat,Universal Render Pipeline/Lit,4,False,True,ENABLED
+Assets/My_Custom/morten-s.glb,UnityGLTF/PBRGraph,4,-,-,SKIPPED_embedded_in_model_asset
+Assets/Furniture Mega Pack/Materials/Chair/mat_Chair37.mat,Universal Render Pipeline/Lit,4,False,True,ENABLED
+Assets/LowPolyLivingRoomPack/ScenesDemo/M_LowPolyLivingRoom_Floor.mat,Universal Render Pipeline/Lit,4,False,True,ENABLED
+Packages/com.unity.render-pipelines.universal/Runtime/Materials/Lit.mat,Universal Render Pipeline/Lit,4,False,True,ENABLED
+Resources/unity_builtin_extra,Legacy Shaders/Particles/Alpha Blended Premultiply,4,-,-,SKIPPED_embedded_in_model_asset
+Assets/BCaT_assets/Ri/glass_fish.glb,UnityGLTF/PBRGraph,3,-,-,SKIPPED_embedded_in_model_asset
+Assets/BCaT_assets/9night/drum.glb,UnityGLTF/PBRGraph,3,-,-,SKIPPED_embedded_in_model_asset
+Assets/BCaT_assets/SewingRoom/bed.glb,UnityGLTF/PBRGraph,3,-,-,SKIPPED_embedded_in_model_asset
+Assets/DevDen Arch Viz Scotland/Materials/Study Room/Notepad.mat,Universal Render Pipeline/Lit,3,True,True,ALREADY_ENABLED
+Assets/My_Custom/mtrls/HallWood 3.mat,Universal Render Pipeline/Lit,3,True,True,ALREADY_ENABLED
+Assets/picture-frame/source/pictureframe.fbx,Universal Render Pipeline/Lit,3,-,-,SKIPPED_embedded_in_model_asset
+Assets/DevDen Arch Viz Scotland/Materials/Study Room/book_3.mat,Universal Render Pipeline/Lit,3,True,True,ALREADY_ENABLED
+Assets/DevDen Arch Viz Scotland/Materials/Study Room/book_5.mat,Universal Render Pipeline/Lit,3,True,True,ALREADY_ENABLED
+Assets/DevDen Arch Viz Scotland/Materials/Bathroom/Bathroom_glass_1.mat,Universal Render Pipeline/Lit,3,True,True,ALREADY_ENABLED

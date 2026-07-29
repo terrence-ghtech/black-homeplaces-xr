@@ -1,0 +1,553 @@
+asset,dim,default_max_prev,default_max_new,webgl_override,android_override,readwrite_prev,readwrite_new,status
+Assets/Animated Tropical Vegetation/Textures/palm_tree_3_leaves_color.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Animated Tropical Vegetation/Textures/palm_tree_3_leaves_normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Coconut_Palm_Tree_AFS.psd,1024,2048,2048,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Coconut_Palm_Tree_diffuse.psd,1024,2048,2048,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Coconut_Palm_Tree_normalspec.psd,1024,2048,2048,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Coconut_Palm_Tree_normalspec_bark.psd,1024,2048,2048,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Coconut_Palm_Tree_transgloss.psd,1024,2048,2048,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Bark1_normal.tif,512,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Bark2_normal.tif,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Bark_diffuse.tif,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Bark_gloss.tif,512,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Bark_normal.tif,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch1_diffuse.psd,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch1_gloss.png,256,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch1_normal.tif,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch1_shadowoffset.png,256,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch1_translucency.png,256,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch2_diffuse.psd,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch2_gloss.png,256,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch2_normal.png,1024,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch2_shadowoffset.png,256,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Coconut_Palm_Tree_Branch2_translucency.png,256,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Palm_Brush_diffuse.psd,512,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Palm_Brush_gloss.png,128,1024,1024,-,-,True,False,APPLIED
+Assets/Coconut Palm Tree Pack/Textures/Parts/Palm_Brush_normal.tif,512,1024,1024,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Bird and Nest.png,1200,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Cartoon.png,1200,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Decor 1.png,800,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Family Love.png,700,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Let's Eat.png,1875,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Line.png,800,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Loading.png,1200,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Decals/Tree.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/HDRI/HDRI.png,8192,8192,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_glass_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_glass_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_glass_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_glass_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_metal_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_metal_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_metal_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony/balcony_balcony_metal_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_chair/balcony_ chair_balcony_chair1_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_chair/balcony_ chair_balcony_chair1_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_chair/balcony_ chair_balcony_chair1_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_chair/balcony_ chair_balcony_chair1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_mat/balcony_mat1_MaskMap.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_mat/balcony_mat_balcony_mat1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_mat/balcony_mat_balcony_mat1_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_mat/balcony_mat_balcony_mat1_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balcony_mat/balcony_mat_balcony_mat1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balconY_tacle/balcony_table_balcony_table_2_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balconY_tacle/balcony_table_balcony_table_2_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balconY_tacle/balcony_table_balcony_table_2_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Balcony/balconY_tacle/balcony_table_balcony_table_2_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_cabin/bathroom_cabin_bathroom_cabin_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_cabin/bathroom_cabin_bathroom_cabin_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_cabin/bathroom_cabin_bathroom_cabin_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_cabin/bathroom_cabin_bathroom_cabin_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Bathroom_Glass/glass_glass_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_shelf/bathroom_shelf_bathroom_shelf_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_shelf/bathroom_shelf_bathroom_shelf_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_shelf/bathroom_shelf_bathroom_shelf_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_shelf/bathroom_shelf_bathroom_shelf_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_wall/bathroom_wall_phong1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_wall/bathroom_wall_phong1_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/bathroom_wall/bathroom_wall_phong1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/MetalDryer/dry_M_metaldryer_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/MetalDryer/dry_M_metaldryer_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/MetalDryer/dry_M_metaldryer_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/MetalDryer/dry_M_metaldryer_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet/toilet_DefaultMaterial_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet/toilet_DefaultMaterial_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet/toilet_DefaultMaterial_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet/toilet_DefaultMaterial_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet_wood/3_toilet_wood1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet_wood/3_toilet_wood1_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Toilet_wood/3_toilet_wood1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/TolPaper/tolpaper_DefaultMaterial_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/TolPaper/tolpaper_DefaultMaterial_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/TolPaper/tolpaper_DefaultMaterial_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/TolPaper/tolpaper_DefaultMaterial_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_toilet_wood_1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_toilet_wood_1_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_toilet_wood_1_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_toilet_wood_1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_towl_2_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_towl_2_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/towel_2/2_towl_2_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washbasin/washbasin_M_washbasin_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washbasin/washbasin_M_washbasin_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washbasin/washbasin_M_washbasin_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washbasin/washbasin_M_washbasin_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washing_machine/washingmachine_M_washingmachine_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washing_machine/washingmachine_M_washingmachine_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bathroom/Washing_machine/washingmachine_M_washingmachine_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_bed_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_bed_coat_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_bed_coat_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_bed_coat_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_bed_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_bed_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_low_bed_sheet_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_low_bed_sheet_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_low_bed_sheet_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_pillow_1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_pillow_1_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bed/bed_pillow_1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_carpet/carpet_carpet_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_carpet/carpet_carpet_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_carpet/carpet_carpet_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_carpet/carpet_carpet_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_table/bedside_table_bedside_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_table/bedside_table_bedside_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_table/bedside_table_bedside_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedside_table/bedside_table_bedside_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bed_lamp_glass1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bed_lamp_glass1_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bed_lamp_glass1_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bed_lamp_glass1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bedside_lamp1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bedside_lamp1_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bedside_lamp1_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/BedsideLamp/bedside_lamp_bedside_lamp1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedsider/bedsider_bed_sider_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedsider/bedsider_bed_sider_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedsider/bedsider_bed_sider_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/bedsider/bedsider_bed_sider_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/dressing_mirror/dresing_mirror_dressing_mirror1_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/dressing_mirror/dresing_mirror_dressing_mirror1_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/dressing_mirror/dresing_mirror_dressing_mirror1_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/dressing_mirror/dresing_mirror_dressing_mirror1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_1/Painting_Photo_B_Paintings_House_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_1/Painting_Photo_B_Paintings_House_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_1/Painting_Photo_B_Paintings_House_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_2/Painting_Small_C_Paintings_House_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_2/Painting_Small_C_Paintings_House_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_2/Painting_Small_C_Paintings_House_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_2/Painting_Small_C_Paintings_House_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_3/Painting_StandPhoto_A_Paintings_House_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_3/Painting_StandPhoto_A_Paintings_House_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_3/Painting_StandPhoto_A_Paintings_House_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/foto_frame_3/Painting_StandPhoto_A_Paintings_House_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/FOTO_FRAME_4/Painting_StandPhoto_C_Paintings_House_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/FOTO_FRAME_4/Painting_StandPhoto_C_Paintings_House_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/FOTO_FRAME_4/Painting_StandPhoto_C_Paintings_House_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/FOTO_FRAME_4/Painting_StandPhoto_C_Paintings_House_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/FOTO_FRAME_4/Paintings_House_MaskMap.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/Photo_stand/fotostand_fotostand_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/Photo_stand/fotostand_fotostand_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/Photo_stand/fotostand_fotostand_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Bed Room/Photo_stand/fotostand_fotostand_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/AirConditioner/airconditioner_DefaultMaterial_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/AirConditioner/airconditioner_DefaultMaterial_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/AirConditioner/airconditioner_DefaultMaterial_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/AirConditioner/airconditioner_DefaultMaterial_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/AirConditioner/airconditioner_emision.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/CUTLERY/Cutlery FBX_Cutlery_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/CUTLERY/Cutlery FBX_Cutlery_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/CUTLERY/Cutlery FBX_Cutlery_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_door1_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_door1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_door_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_handle_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_handle_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_handle_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/door and handle/door and handles_handle_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic01.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic01_Metallic.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic01_NM.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic02.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic02_Metallic.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic02_NM.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic04.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic04_Metallic.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/CommonCeramic04_NM.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Interior_props/StudyRoom_BG1.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Magazine/magazine.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Plate/plate_1_plate_1_AO.png,2048,4096,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Plate/plate_1_plate_1_BaseColor.png,4096,4096,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Plate/plate_1_plate_1_Metallic.png,4096,4096,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Plate/plate_1_plate_1_Normal.png,2048,4096,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/dish-rack_ao.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/dish-rack_metal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/knives_albedo.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/knives_metal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/SmallObj/knives_normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Socket/socket_M_socket_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Socket/socket_M_socket_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Socket/socket_M_socket_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Switch/switch_M_switch_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Switch/switch_M_switch_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Common/Switch/switch_M_switch_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_diining_chair_wood_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_dinning_chair_cusion_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_dinning_chair_cusion_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_dinning_chair_cusion_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_chair/dinning_chair_dinning_chair_cusion_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_table/dinning_table_dinning_table_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_table/dinning_table_dinning_table_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/dinning_table/dinning_table_dinning_table_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/food_cloth/tablemat_1.1_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/food_cloth/tablemat_1.1_BaseColor.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Dining Room/food_cloth/tablemat_1.1_Metallic.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/Floor Texture/floor mat 1_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/Floor Texture/floor mat 1_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bathroom_floor3_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bathroom_floor3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bathroom_wall3_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bathroom_wall3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bathroom_wall3_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bedroom_floor3_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bedroom_floor3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bedroom_floor3_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bedroom_wall4_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bedroom_wall4_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_bedroom_wall4_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_glass_wall_glass4_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_glass_wall_glass4_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_glass_wall_glass4_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_hall_way_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_hall_way_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_hall_way_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_inner_roof3_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_inner_roof3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_inner_roof3_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_livingroom_floor4_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_livingroom_floor4_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_livingroom_floor4_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_livingroom_wall3_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_livingroom_wall3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_pattern_wall_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_pattern_wall_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_pattern_wall_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_studyroom_floor3_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_studyroom_floor3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_studyroom_floor3_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_studyroom_wall3_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_studyroom_wall3_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Environment/inner_wall/inner_wall_studyroom_wall3_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Chopboard/Chopboard_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Chopboard/Chopboard_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Chopboard/Chopboard_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Chopboard/Chopboard_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/CoffeeMachine/coffeemachine_DefaultMaterial_AlbedoTransparency_2.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/CoffeeMachine/coffeemachine_DefaultMaterial_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/CoffeeMachine/coffeemachine_DefaultMaterial_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/CoffeeMachine/coffeemachine_DefaultMaterial_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Fridge/frifge_green_wood_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Fridge/frifge_green_wood_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Fridge/frifge_green_wood_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Fridge/frifge_green_wood_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/fridge_2/frifge_gold_tap_handle_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/fridge_2/frifge_gold_tap_handle_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/fridge_2/frifge_gold_tap_handle_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/fridge_2/frifge_gold_tap_handle_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/fridge_2/frifge_green_wood_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/fridge_2/frifge_green_wood_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kettle/kitchan mat 2_kitchan_mat_2_BaseColor 1.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kettle/kitchan mat 2_kitchan_mat_2_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kettle/kitchan mat 2_kitchan_mat_2_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen/induction-hob_albedo.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen/induction-hob_metal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen/induction-hob_normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_chimini_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_chimini_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_chimini_Emission.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_chimini_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_glass_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_glass_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_glass_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_glass_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_gold_tap_handle_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_gold_tap_handle_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_gold_tap_handle_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_gold_tap_handle_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_granite_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_granite_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_granite_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_granite_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_plastic_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_plastic_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_plastic_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_steel_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_steel_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_steel_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_steel_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_switch1_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_switch1_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_switch1_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/kitchen_1/kitchen_switch1_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_1/kitchen_2_green_wood_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_1/kitchen_2_green_wood_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_1/kitchen_2_green_wood_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_1/kitchen_2_green_wood_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_2/kitchen_granite_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_2/kitchen_green_wood_AlbedoTransparencyTest.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_2/kitchen_green_wood_AO 1.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Kitchen_cupboard_2/kitchen_green_wood_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Knife Holder/Knife Holder_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Knife Holder/Knife Holder_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Knife Holder/Knife Holder_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Knife Holder/Knife Holder_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Mug Holder/Mug Holder_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Mug Holder/Mug Holder_AO.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Mug Holder/Mug Holder_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/Mug Holder/Mug Holder_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_marble_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_metal_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_metal_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_metal_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_metal_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_white_wood_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_white_wood_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_white_wood_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/side_piece/side_piece_white_wood_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/TOASTER/toaster_toaster_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/TOASTER/toaster_toaster_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/TOASTER/toaster_toaster_Emission.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Kitchen Room/TOASTER/toaster_toaster_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Laptop/laptop_DefaultMaterial_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Laptop/laptop_DefaultMaterial_AO.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Laptop/laptop_DefaultMaterial_emission.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Laptop/laptop_DefaultMaterial_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Laptop/laptop_DefaultMaterial_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Remotecontrol/RemoteControl_DefaultMaterial_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Remotecontrol/RemoteControl_DefaultMaterial_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/Remotecontrol/RemoteControl_DefaultMaterial_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/sofa_2/sofa_2_01 - Default_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/tea_table/Tea Table_teatable_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/tea_table/Tea Table_teatable_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/tea_table/Tea Table_teatable_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/tea_table/Tea Table_teatable_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Living Room/TV_Panels/TV_Panels_DefaultMaterial_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/lamp/lamp_AlbedoTransparency.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/lamp/Lamp_emission_Emission.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/lamp/Lamp_emission_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/lamp/Lamp_emission_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/lamp/lamp_MetallicSmoothness.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/lamp/lamp_Normal.png,2048,2048,2048,1024,1024,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/shelf/shelf_shelf1_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/shelf/shelf_shelf1_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/shelf/shelf_shelf1_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/shelf/shelf_shelf1_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chair_seat_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chair_seat_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chair_seat_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chairI_Leg_AlbedoTransparency.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chairI_Leg_AO.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chairI_Leg_MetallicSmoothness.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/DevDen Arch Viz Scotland/Textures/Study Room/study_chair/CHair2_study_chairI_Leg_Normal.png,1024,2048,2048,-,-,True,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair01/Chair01_mat_Chair01_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair01/Chair01_mat_Chair01_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair01/Chair01_mat_Chair01_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair02/Chair02_mat_Chair02_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair02/Chair02_mat_Chair02_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair02/Chair02_mat_Chair02_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair03/Chair03_mat_Chair03_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair03/Chair03_mat_Chair03_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair03/Chair03_mat_Chair03_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair04/Chair04_mat_Chair04_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair04/Chair04_mat_Chair04_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair04/Chair04_mat_Chair04_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair05/Chair05_mat_Chair05_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair05/Chair05_mat_Chair05_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair05/Chair05_mat_Chair05_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair06/Chair06_mat_Chair06_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair06/Chair06_mat_Chair06_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair06/Chair06_mat_Chair06_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair07/Chair07_mat_Chair07_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair07/Chair07_mat_Chair07_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair07/Chair07_mat_Chair07_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair08/Chair08_mat_Chair08_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair08/Chair08_mat_Chair08_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair08/Chair08_mat_Chair08_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair10/Chair10_mat_Chair10_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair10/Chair10_mat_Chair10_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair10/Chair10_mat_Chair10_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair11/Chair11_mat_Chair11_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair11/Chair11_mat_Chair11_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair11/Chair11_mat_Chair11_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair12/Chair12_mat_Chair12_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair12/Chair12_mat_Chair12_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair12/Chair12_mat_Chair12_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair13/Chair13_mat_Chair13_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair13/Chair13_mat_Chair13_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair13/Chair13_mat_Chair13_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair14/Chair14_mat_Chair14_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair14/Chair14_mat_Chair14_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair14/Chair14_mat_Chair14_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair15/Chair15_mat_Chair15_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair15/Chair15_mat_Chair15_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair15/Chair15_mat_Chair15_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair16/Chair16_mat_Chair16_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair16/Chair16_mat_Chair16_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair16/Chair16_mat_Chair16_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair17/Chair17_mat_Chair17_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair17/Chair17_mat_Chair17_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair17/Chair17_mat_Chair17_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair18/Chair18_mat_Chair18_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair18/Chair18_mat_Chair18_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair18/Chair18_mat_Chair18_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair19/Chair19_mat_Chair19_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair19/Chair19_mat_Chair19_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair19/Chair19_mat_Chair19_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair20/Chair20_mat_Chair20_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair20/Chair20_mat_Chair20_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair20/Chair20_mat_Chair20_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair21/Chair21_mat_Chair21_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair21/Chair21_mat_Chair21_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair21/Chair21_mat_Chair21_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair22/Chair22_mat_Chair22_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair22/Chair22_mat_Chair22_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair22/Chair22_mat_Chair22_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair23/Chair23_mat_Chair23_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair23/Chair23_mat_Chair23_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair23/Chair23_mat_Chair23_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair24/Chair24_mat_Chair24_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair24/Chair24_mat_Chair24_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair24/Chair24_mat_Chair24_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair25/Chair25_mat_Chair25_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair25/Chair25_mat_Chair25_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair25/Chair25_mat_Chair25_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair27/Chair27_mat_Chair27_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair27/Chair27_mat_Chair27_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair27/Chair27_mat_Chair27_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair28/Chair28_mat_Chair28_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair28/Chair28_mat_Chair28_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair28/Chair28_mat_Chair28_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair29/Chair29_mat_Chair29_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair29/Chair29_mat_Chair29_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair29/Chair29_mat_Chair29_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair30/Chair30_mat_Chair30_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair30/Chair30_mat_Chair30_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair30/Chair30_mat_Chair30_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair31/Chair31_mat_Chair31_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair31/Chair31_mat_Chair31_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair31/Chair31_mat_Chair31_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair32/Chair32_mat_Chair32_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair32/Chair32_mat_Chair32_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair32/Chair32_mat_Chair32_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair33/Chair33_mat_Chair33_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair33/Chair33_mat_Chair33_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair33/Chair33_mat_Chair33_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair34/Chair34_mat_Chair34_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair34/Chair34_mat_Chair34_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair34/Chair34_mat_Chair34_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair35/Chair35_mat_Chair35_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair35/Chair35_mat_Chair35_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair35/Chair35_mat_Chair35_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair36/Chair36_mat_Chair36_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair36/Chair36_mat_Chair36_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair36/Chair36_mat_Chair36_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair38/Chair38_mat_Chair38_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair38/Chair38_mat_Chair38_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair38/Chair38_mat_Chair38_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair39/Chair39_mat_Chair39_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair39/Chair39_mat_Chair39_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair39/Chair39_mat_Chair39_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair40/Chair40_mat_Chair40_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair40/Chair40_mat_Chair40_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair40/Chair40_mat_Chair40_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair41/Chair41_mat_Chair41_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair41/Chair41_mat_Chair41_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair41/Chair41_mat_Chair41_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair42/Chair42_mat_Chair42_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair42/Chair42_mat_Chair42_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair42/Chair42_mat_Chair42_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair43/Chair43_mat_Chair43_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair43/Chair43_mat_Chair43_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair43/Chair43_mat_Chair43_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair44/Chair44_mat_Chair44_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair44/Chair44_mat_Chair44_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair44/Chair44_mat_Chair44_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair45/Chair45_mat_Chair45_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair45/Chair45_mat_Chair45_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair45/Chair45_mat_Chair45_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair46/Chair46_mat_Chair46_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair46/Chair46_mat_Chair46_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair46/Chair46_mat_Chair46_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair50/Chair50_mat_Chair50_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair50/Chair50_mat_Chair50_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Chairs/Chair50/Chair50_mat_Chair50_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion09_16/Cushion09_16_mat_Cushion09_16_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion09_16/Cushion09_16_mat_Cushion09_16_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion09_16/Cushion09_16_mat_Cushion09_16_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion25_28/Cushion25_28_mat_Cushion25_28_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion25_28/Cushion25_28_mat_Cushion25_28_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion25_28/Cushion25_28_mat_Cushion25_28_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion29_36/Cushion29_36_mat_Cushion29_36_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion29_36/Cushion29_36_mat_Cushion29_36_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion29_36/Cushion29_36_mat_Cushion29_36_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion37_40/Cushion37_40_mat_Cushion37_40_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion37_40/Cushion37_40_mat_Cushion37_40_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion37_40/Cushion37_40_mat_Cushion37_40_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion41_48/Cushion41_48_mat_Cushion41_48_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion41_48/Cushion41_48_mat_Cushion41_48_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion41_48/Cushion41_48_mat_Cushion41_48_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion49_50/Cushion49_50_mat_Cushion49_50_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion49_50/Cushion49_50_mat_Cushion49_50_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Cushions/Cushion49_50/Cushion49_50_mat_Cushion49_50_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Drawer/AtlasTexture_Drawer_DefaultMaterial_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Drawer/AtlasTexture_Drawer_DefaultMaterial_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Drawer/AtlasTexture_Drawer_DefaultMaterial_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Kitchen/AtlasTexture_KitchenCollection_Atlastexture_KitchenCollection_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Kitchen/AtlasTexture_KitchenCollection_Atlastexture_KitchenCollection_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Kitchen/AtlasTexture_KitchenCollection_Atlastexture_KitchenCollection_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/SectionalSofaFabric/SectionalSofaFabric_mat_SectionalSofaLeather_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/SectionalSofaFabric/SectionalSofaFabric_mat_SectionalSofaLeather_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/SectionalSofaFabric/SectionalSofaFabric_mat_SectionalSofaLeather_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/SectionalSofaLeather/SectionalSofaLeather_mat_SectionalSofaLeather_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/SectionalSofaLeather/SectionalSofaLeather_mat_SectionalSofaLeather_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/SectionalSofaLeather/SectionalSofaLeather_mat_SectionalSofaLeather_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa01/Sofa01_mat_Sofa01_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa01/Sofa01_mat_Sofa01_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa01/Sofa01_mat_Sofa01_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa02/Sofa02_mat_Sofa02_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa02/Sofa02_mat_Sofa02_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa02/Sofa02_mat_Sofa02_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa03/Sofa03_mat_Sofa03_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa03/Sofa03_mat_Sofa03_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa03/Sofa03_mat_Sofa03_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa04/Sofa04_mat_Sofa04_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa04/Sofa04_mat_Sofa04_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa04/Sofa04_mat_Sofa04_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa06/Sofa06_mat_Sofa06_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa06/Sofa06_mat_Sofa06_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa06/Sofa06_mat_Sofa06_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa07/Sofa07_mat_Sofa07_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa07/Sofa07_mat_Sofa07_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa07/Sofa07_mat_Sofa07_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa08/Sofa08_mat_Sofa08_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa08/Sofa08_mat_Sofa08_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa08/Sofa08_mat_Sofa08_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa09/Sofa09_mat_Sofa09_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa09/Sofa09_mat_Sofa09_MetallicSmoothness.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa09/Sofa09_mat_Sofa09_Normal.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/Furniture Mega Pack/Textures/Sofas/Sofa10/Sofa10_mat_Sofa10_AlbedoTransparency.png,2048,2048,2048,1024,1024,False,False,APPLIED
+Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Base_color.png,1024,4096,2048,-,-,False,False,APPLIED
+Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png,1024,4096,2048,-,-,False,False,APPLIED
+Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Mixed_AO.png,1024,4096,2048,-,-,False,False,APPLIED
+Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Normal_OpenGL.png,1024,4096,2048,-,-,False,False,APPLIED
+SUMMARY,textures_changed=551,,,,,,,

@@ -1,0 +1,12 @@
+scene,object_path,prev_collider_tris,action,new_collider,new_tris,status
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/Exterior/Pond/japanese_red_bridge/Handle Bars_2/Object_8,32768,simplified_mesh(ratio~0.12),MeshCollider,3931,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/Exterior/Pond/japanese_red_bridge/Handle Bars_2/Object_9,32766,simplified_mesh(ratio~0.12),MeshCollider,3932,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/Exterior/Pond/japanese_red_bridge/Handle Bars_2/Object_10,32767,simplified_mesh(ratio~0.12),MeshCollider,3932,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/Exterior/Pond/japanese_red_bridge/Handle Bars_2/Object_11,32766,simplified_mesh(ratio~0.12),MeshCollider,3932,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/Exterior/Pond/japanese_red_bridge/Handle Bars.001_4/Object_16,107777,simplified_mesh(ratio~0.12),MeshCollider,12933,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/Exterior/Pond/japanese_red_bridge/Handle Bars.001_4/Object_17,32639,simplified_mesh(ratio~0.12),MeshCollider,3917,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/FirstFloor/LivingRoom/flower_pot_1,17730,simplified_mesh(ratio~0.12),MeshCollider,2128,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/SecondFloor/Roof/SM_building_modular_roof_2x1_01 (2),5110,simplified_mesh(ratio~0.12),MeshCollider,612,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/SecondFloor/Roof/SM_building_modular_roof_2x1_01 (4),5110,simplified_mesh(ratio~0.12),MeshCollider,612,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/SecondFloor/Roof/SM_building_modular_roof_2x1_01 (1),5110,simplified_mesh(ratio~0.12),MeshCollider,612,APPLIED
+Assets/BH_XR_MainScene.unity,_SceneContent/Home/SecondFloor/Roof/SM_building_modular_roof_2x1_01 (3),5110,simplified_mesh(ratio~0.12),MeshCollider,612,APPLIED

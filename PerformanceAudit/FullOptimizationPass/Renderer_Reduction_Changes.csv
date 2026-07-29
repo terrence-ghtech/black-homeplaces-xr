@@ -1,0 +1,4 @@
+action,group,detail,renderers_before,renderers_after,status
+combine,Flowers_Left,chunks=2;material=M_DEMOAtlas_LowPolyFlowers;shadowsOff=True,483,2,APPLIED
+combine,Flowers_Right,chunks=2;material=M_DEMOAtlas_LowPolyFlowers;shadowsOff=True,417,2,APPLIED
+static_flags,IdyllicItalianCoastTown+BTMMP_static,BatchingStatic|OccludeeStatic|OccluderStatic,261,261,APPLIED
