@@ -1,84 +1,63 @@
+using BCaT.Production.Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MeshellArticleNotebookInputRouter : MonoBehaviour
+/// <summary>
+/// Interaction target for the Meshell article notebook. Previously polled the
+/// keyboard and raycast for the notebook's parent BoxCollider each press; the
+/// central InteractionRouter now owns selection and input, preserving the
+/// parent-collider pattern (all child colliders belong to this target, and the
+/// router's line-of-sight test skips foreign trigger volumes the same way the
+/// original raycast walk did).
+/// </summary>
+public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarget
 {
     private const string LogTag = "[MeshellNotebookInput]";
 
+#pragma warning disable 0414 // retained for scene-data compatibility; router owns input/camera now
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private float interactionDistance = 4f;
     [SerializeField] private Key interactionKey = Key.E;
+#pragma warning restore 0414
+    [SerializeField] private float interactionDistance = 4f;
 
-    private void Update()
+    private Collider[] ownColliders;
+
+    // ---- IInteractionTarget --------------------------------------------
+
+    public Vector3 FocusPoint => transform.position;
+    public float MaxDistance => interactionDistance;
+    public float MaxViewAngle => 16f;
+    public bool RequireLineOfSight => true;
+    public int Priority => 0;
+    public bool IsAvailable => isActiveAndEnabled;
+    public bool AllowDesktopClick => false;
+    public bool Exists => this != null;
+
+    public Collider[] OwnColliders
     {
-        if (Keyboard.current == null || !Keyboard.current[interactionKey].wasPressedThisFrame)
-            return;
-
-        if (playerCamera == null || !playerCamera.gameObject.activeInHierarchy)
-            playerCamera = Camera.main;
-
-        if (playerCamera == null)
+        get
         {
-            Debug.Log($"{LogTag} E pressed, but no active player camera was found.");
-            return;
+            if (ownColliders == null)
+                ownColliders = GetComponentsInChildren<Collider>(true);
+            return ownColliders;
         }
+    }
 
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        RaycastHit[] hits = Physics.RaycastAll(ray, interactionDistance, ~0, QueryTriggerInteraction.Collide);
-        if (hits.Length == 0)
-        {
-            Debug.Log($"{LogTag} E pressed. Raycast hit nothing within {interactionDistance:0.##}m.");
-            return;
-        }
+    public string GetPrompt(bool xr) => xr ? "Interact to read" : "Press E to read";
 
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+    public void OnFocusChanged(bool focused) { }
 
-        RaycastHit firstHit = hits[0];
-        Debug.Log($"{LogTag} First collider hit: {GetPath(firstHit.collider.transform)} on GameObject '{firstHit.collider.gameObject.name}' at {firstHit.distance:0.###}m.");
-
-        RaycastHit notebookHit = default;
-        bool foundNotebookHit = false;
-        foreach (RaycastHit hit in hits)
-        {
-            bool isNotebookChild = hit.collider != null && hit.collider.transform.IsChildOf(transform);
-            Debug.Log($"{LogTag} Raycast candidate: {GetPath(hit.collider.transform)} distance={hit.distance:0.###}m childOfNotePads={isNotebookChild}.");
-
-            if (!isNotebookChild)
-                continue;
-
-            notebookHit = hit;
-            foundNotebookHit = true;
-            break;
-        }
-
-        if (!foundNotebookHit)
-        {
-            Debug.Log($"{LogTag} No NotePads child collider was hit. Desktop interaction target remains blocked by '{firstHit.collider.gameObject.name}'.");
-            return;
-        }
-
+    public void OnInteract(InteractionActivation activation)
+    {
         MeshellArticleNotebookOpener opener = GetComponent<MeshellArticleNotebookOpener>();
-        Debug.Log($"{LogTag} Resolved notebook collider '{notebookHit.collider.gameObject.name}' upward to parent interaction object '{gameObject.name}'. Opener present={opener != null}.");
-
-        if (opener == null)
-            return;
-
-        Debug.Log($"{LogTag} Invoking MeshellArticleNotebookOpener.Open from desktop E.");
-        opener.Open();
+        Debug.Log($"{LogTag} Interaction dispatched to '{gameObject.name}'. Opener present={opener != null}.");
+        if (opener != null)
+            opener.Open();
     }
 
-    private static string GetPath(Transform current)
-    {
-        if (current == null)
-            return "<null>";
+    // ---------------------------------------------------------------------
 
-        string path = current.name;
-        while (current.parent != null)
-        {
-            current = current.parent;
-            path = $"{current.name}/{path}";
-        }
+    private void OnEnable() => InteractionRouter.Register(this);
 
-        return path;
-    }
+    private void OnDisable() => InteractionRouter.Unregister(this);
 }

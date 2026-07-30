@@ -56,14 +56,11 @@ public class LindaLeaksVideoPopUp : MonoBehaviour
         VideoExhibitCoordinator.NotifyClosed(this);
     }
 
-    private void Update()
-    {
-        if (Keyboard.current == null || !Keyboard.current[interactionKey].wasPressedThisFrame)
-            return;
-
-        if (IsPlayerLookingAtThisObject())
-            TogglePopUp();
-    }
+    // Legacy remnant: this component is no longer referenced by any scene or
+    // prefab (the shipped Linda Leaks exhibit uses MediaVideoController). Its
+    // keyboard polling was removed during the interaction-router migration so
+    // no stray E-key listener can ever compete; XR/programmatic entry points
+    // remain for the legacy builder tool.
 
     public void OpenPopUp()
     {

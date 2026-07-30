@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BCaT.Production.Interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +12,16 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
+/// <summary>
+/// Black Kitchen session controller: spawn/fall recovery, the Exit Reflection
+/// audio, the Stay/Exit Now modal, and the return transition. Interaction
+/// input arrives through the shared interaction architecture: the
+/// BlackKitchenInteractionManager (the router's exclusive zone) forwards the
+/// interact press via <see cref="HandleExitInteract"/>, and the modal's
+/// keyboard shortcuts read the central FocusedUiInput helper. While the modal
+/// is open it registers a Modal interaction blocker so nothing else in the
+/// scene can receive input.
+/// </summary>
 public class BlackKitchenExperienceController : MonoBehaviour
 {
     [Header("Spawn and Return")]
@@ -29,7 +40,9 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
     [Header("Exit Interface")]
     [SerializeField] private float exitInteractionDistance = 4f;
+#pragma warning disable 0414 // retained for scene-data compatibility; router owns the interact key now
     [SerializeField] private Key interactionKey = Key.E;
+#pragma warning restore 0414
     [SerializeField] private TMP_Text exitPromptText;
     [SerializeField] private string desktopExitPrompt = "Press E to Exit Black Kitchen";
     [SerializeField] private string xrExitPrompt = "Interact to Exit Black Kitchen";
@@ -80,6 +93,12 @@ public class BlackKitchenExperienceController : MonoBehaviour
             audioCoordinator.RegisterNarrativeSource(exitReflectionSource);
     }
 
+    private void OnDestroy()
+    {
+        InteractionState.Unblock(this);
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
+    }
+
     private void Update()
     {
         UpdateFallRecovery();
@@ -91,14 +110,19 @@ public class BlackKitchenExperienceController : MonoBehaviour
         {
             PlaceExitReflectionModal();
             HandleExitModalKeyboard();
-            return;
         }
+    }
 
-        if (exitInProgress || Keyboard.current == null || !Keyboard.current[interactionKey].wasPressedThisFrame)
+    /// <summary>
+    /// Interact press forwarded by the BlackKitchenInteractionManager while the
+    /// player is aiming at the exit interface (replaces direct key polling).
+    /// </summary>
+    public void HandleExitInteract()
+    {
+        if (exitInProgress || exitModalOpen)
             return;
 
-        if (IsLookingAtExit())
-            ExitBlackKitchen();
+        ExitBlackKitchen();
     }
 
     public void ExitBlackKitchen()
@@ -173,6 +197,9 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
         exitReflectionRequested = true;
         BlackKitchenSessionState.MarkExitReflectionPlayed();
+
+        // Long-form narration: the kiosk inactivity policy must know about it.
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStarted(this, StopExitReflectionImmediate);
     }
 
     private bool IsExitReflectionPlaying()
@@ -199,6 +226,9 @@ public class BlackKitchenExperienceController : MonoBehaviour
         EnsureActiveEventSystemForModal(exitModalUsesXR);
         SetDesktopModalControls(false);
 
+        // Focused modal: block all other interaction; kiosk reset closes via Stay.
+        InteractionState.Block(this, InteractionBlockReason.Modal, SelectStay);
+
         exitReflectionModalCanvas.gameObject.SetActive(true);
         exitReflectionModalCanvas.enabled = true;
         if (exitReflectionModalGroup != null)
@@ -216,6 +246,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
     {
         exitModalOpen = false;
         exitModalCloseTime = Time.unscaledTime;
+        InteractionState.Unblock(this);
 
         if (exitReflectionModalGroup != null)
         {
@@ -328,6 +359,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
             exitReflectionSource.volume = 0f;
         }
 
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
         Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' exit audio stopped.");
     }
 
@@ -536,16 +568,18 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
     private void HandleExitModalKeyboard()
     {
-        if (!exitModalOpen || exitModalChoiceHandled || exitModalUsesXR || Keyboard.current == null)
+        if (!exitModalOpen || exitModalChoiceHandled || exitModalUsesXR)
             return;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.sKey.wasPressedThisFrame)
+        // Modal shortcuts read the central focused-UI input helper
+        // (Esc/S = Stay, Enter/E/L = Exit Now — unchanged wording in the modal).
+        if (FocusedUiInput.CancelPressed || FocusedUiInput.KeyPressed(Key.S))
         {
             SelectStay();
             return;
         }
 
-        if (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.numpadEnterKey.wasPressedThisFrame || Keyboard.current[interactionKey].wasPressedThisFrame || Keyboard.current.lKey.wasPressedThisFrame)
+        if (FocusedUiInput.SubmitPressed || FocusedUiInput.InteractPressed || FocusedUiInput.KeyPressed(Key.L))
             SelectExitNow();
     }
 

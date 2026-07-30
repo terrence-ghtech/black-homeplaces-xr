@@ -44,22 +44,26 @@ public class SimpleImagePopupController : MonoBehaviour
 
     private void OnDestroy()
     {
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
         ClearCurrentSprite();
     }
 
     private void Update()
     {
-        if (!isOpen || Keyboard.current == null)
+        // Focused-modal input reads the central FocusedUiInput helper; world
+        // interaction (opening) is owned by the InteractionRouter via the
+        // SimpleImagePopupInteractor target.
+        if (!isOpen)
             return;
 
-        if (Time.frameCount > openedFrame && !Keyboard.current.eKey.isPressed)
+        if (Time.frameCount > openedFrame && !BCaT.Production.Interaction.FocusedUiInput.InteractHeld)
             closeKeyReleasedSinceOpen = true;
 
         if (Time.frameCount <= openedFrame)
             return;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame
-            || (closeKeyReleasedSinceOpen && Keyboard.current.eKey.wasPressedThisFrame))
+        if (BCaT.Production.Interaction.FocusedUiInput.CancelPressed
+            || (closeKeyReleasedSinceOpen && BCaT.Production.Interaction.FocusedUiInput.InteractPressed))
         {
             Close();
         }
@@ -72,12 +76,17 @@ public class SimpleImagePopupController : MonoBehaviour
 
         isOpen = true;
         openedFrame = Time.frameCount;
-        closeKeyReleasedSinceOpen = Keyboard.current == null || !Keyboard.current.eKey.isPressed;
+        closeKeyReleasedSinceOpen = !BCaT.Production.Interaction.FocusedUiInput.InteractHeld;
 
         RefreshContent();
         ShowPopup();
         PositionPopupInFrontOfCamera();
         CaptureInput();
+
+        // Focused exhibit interface: block background world interaction and
+        // give the kiosk reset a close handle.
+        BCaT.Production.Interaction.InteractionState.Block(this,
+            BCaT.Production.Interaction.InteractionBlockReason.Modal, Close);
     }
 
     public void Close()
@@ -86,6 +95,7 @@ public class SimpleImagePopupController : MonoBehaviour
             return;
 
         isOpen = false;
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
         ClearCurrentSprite();
         HidePopup();
         RestoreInput();

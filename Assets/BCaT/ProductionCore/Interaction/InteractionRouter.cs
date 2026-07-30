@@ -1,0 +1,286 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace BCaT.Production.Interaction
+{
+    /// <summary>
+    /// The single owner of standard world interaction:
+    ///   candidate collection → validation (distance, camera focus, line of
+    ///   sight, blockers) → selection of one target → platform input →
+    ///   one interaction event → platform prompt.
+    ///
+    /// Desktop input is polled from DesktopInteractionInputProvider; Quest input
+    /// arrives event-driven via RequestXRSelect (wired from existing
+    /// XRSimpleInteractable relays), so both platforms share the same ownership,
+    /// blocking, and cooldown rules.
+    /// </summary>
+    public sealed class InteractionRouter : MonoBehaviour
+    {
+        public static InteractionRouter Instance { get; private set; }
+
+        static readonly List<IInteractionTarget> registry = new List<IInteractionTarget>();
+        static readonly List<IExclusiveInteractionZone> zones = new List<IExclusiveInteractionZone>();
+
+        [Tooltip("Seconds after any dispatched interaction during which further interactions are ignored.")]
+        public float interactionCooldown = 0.25f;
+
+        [Tooltip("Layers blocking line of sight (defaults to everything; triggers are always ignored).")]
+        public LayerMask lineOfSightMask = ~0;
+
+        public IInteractionTarget CurrentTarget { get; private set; }
+
+        IInteractionInputProvider input;
+        Camera cachedCamera;
+        float lastDispatchTime = -999f;
+        readonly RaycastHit[] losHits = new RaycastHit[16];
+
+        public static void Register(IInteractionTarget target)
+        {
+            if (target != null && !registry.Contains(target))
+                registry.Add(target);
+        }
+
+        public static void Unregister(IInteractionTarget target)
+        {
+            registry.Remove(target);
+            if (Instance != null && ReferenceEquals(Instance.CurrentTarget, target))
+                Instance.SetCurrentTarget(null);
+        }
+
+        public static void RegisterZone(IExclusiveInteractionZone zone)
+        {
+            if (zone != null && !zones.Contains(zone))
+                zones.Add(zone);
+        }
+
+        public static void UnregisterZone(IExclusiveInteractionZone zone) => zones.Remove(zone);
+
+        void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+            Instance = this;
+
+            input = PlatformCapabilities.IsQuestConfiguration || PlatformCapabilities.IsXRActive
+                ? (IInteractionInputProvider)new QuestInteractionInputProvider()
+                : new DesktopInteractionInputProvider();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            cachedCamera = null;
+            SetCurrentTarget(null);
+        }
+
+        Camera PlayerCamera
+        {
+            get
+            {
+                if (cachedCamera == null || !cachedCamera.isActiveAndEnabled)
+                    cachedCamera = Camera.main;
+                return cachedCamera;
+            }
+        }
+
+        void Update()
+        {
+            // XR may finish initializing after startup; keep provider in sync.
+            if (PlatformCapabilities.IsXRActive && input is DesktopInteractionInputProvider)
+                input = new QuestInteractionInputProvider();
+
+            if (InteractionState.IsBlocked)
+            {
+                SetCurrentTarget(null);
+                foreach (var zone in zones)
+                    if (zone.ZoneActive)
+                        zone.ZoneSuppressPrompts();
+                return;
+            }
+
+            // An active exclusive zone (Black Kitchen stations) owns selection;
+            // the router still owns input, blocking, and cooldown.
+            IExclusiveInteractionZone activeZone = null;
+            foreach (var zone in zones)
+                if (zone.ZoneActive) { activeZone = zone; break; }
+
+            if (activeZone != null)
+            {
+                SetCurrentTarget(null);
+                bool pressed = input.InteractPressedThisFrame && !InCooldown;
+                if (pressed) lastDispatchTime = Time.unscaledTime;
+                activeZone.ZoneTick(pressed);
+                return;
+            }
+
+            var cam = PlayerCamera;
+            if (cam == null)
+            {
+                SetCurrentTarget(null);
+                return;
+            }
+
+            SetCurrentTarget(SelectBestTarget(cam));
+
+            if (CurrentTarget == null || InCooldown)
+                return;
+
+            if (input.InteractPressedThisFrame)
+                Dispatch(CurrentTarget, InteractionActivation.DesktopInteractKey);
+            else if (input.ClickPressedThisFrame && CurrentTarget.AllowDesktopClick)
+                Dispatch(CurrentTarget, InteractionActivation.DesktopClick);
+        }
+
+        bool InCooldown => Time.unscaledTime - lastDispatchTime < interactionCooldown;
+
+        IInteractionTarget SelectBestTarget(Camera cam)
+        {
+            IInteractionTarget best = null;
+            float bestScore = float.MaxValue;
+            int bestPriority = int.MinValue;
+            Vector3 camPos = cam.transform.position;
+            Vector3 camFwd = cam.transform.forward;
+            bool relaxFocus = Settings.SettingsManager.Current.accessibility.persistentPrompts;
+
+            for (int i = registry.Count - 1; i >= 0; i--)
+            {
+                var t = registry[i];
+                if (t == null || !t.Exists) { registry.RemoveAt(i); continue; }
+                if (!t.IsAvailable) continue;
+
+                Vector3 to = t.FocusPoint - camPos;
+                float distance = to.magnitude;
+                if (distance > t.MaxDistance) continue;
+
+                float angle = Vector3.Angle(camFwd, to);
+                float maxAngle = t.MaxViewAngle;
+                if (maxAngle > 0f)
+                {
+                    float allowed = relaxFocus ? maxAngle * 2f : maxAngle;
+                    if (angle > allowed) continue;
+                }
+
+                if (t.RequireLineOfSight && !HasLineOfSight(camPos, t))
+                    continue;
+
+                // Priority dominates; then view angle; distance breaks ties.
+                float score = angle * 10f + distance;
+                if (t.Priority > bestPriority ||
+                    (t.Priority == bestPriority && score < bestScore))
+                {
+                    best = t;
+                    bestScore = score;
+                    bestPriority = t.Priority;
+                }
+            }
+
+            return best;
+        }
+
+        /// <summary>
+        /// Line-of-sight test using the project's established pattern: triggers
+        /// never block, and colliders belonging to the target itself never block.
+        /// </summary>
+        bool HasLineOfSight(Vector3 from, IInteractionTarget target)
+        {
+            Vector3 to = target.FocusPoint - from;
+            float distance = to.magnitude;
+            if (distance < 0.01f) return true;
+
+            int count = Physics.RaycastNonAlloc(new Ray(from, to / distance), losHits,
+                distance - 0.05f, lineOfSightMask, QueryTriggerInteraction.Ignore);
+
+            var own = target.OwnColliders;
+            for (int i = 0; i < count; i++)
+            {
+                var hit = losHits[i].collider;
+                bool isOwn = false;
+                if (own != null)
+                    for (int j = 0; j < own.Length; j++)
+                        if (own[j] == hit) { isOwn = true; break; }
+                if (!isOwn)
+                    return false;
+            }
+            return true;
+        }
+
+        void SetCurrentTarget(IInteractionTarget target)
+        {
+            if (ReferenceEquals(CurrentTarget, target))
+            {
+                // Refresh the prompt text even without a focus change (dynamic verbs).
+                if (target != null)
+                    Shell.InteractionPromptUi.Show(target.GetPrompt(PlatformCapabilities.IsXRActive));
+                return;
+            }
+
+            if (CurrentTarget != null && CurrentTarget.Exists)
+                CurrentTarget.OnFocusChanged(false);
+
+            CurrentTarget = target;
+
+            if (CurrentTarget != null)
+            {
+                CurrentTarget.OnFocusChanged(true);
+                Shell.InteractionPromptUi.Show(CurrentTarget.GetPrompt(PlatformCapabilities.IsXRActive));
+            }
+            else
+            {
+                Shell.InteractionPromptUi.Hide();
+            }
+        }
+
+        /// <summary>
+        /// Quest entry point: XRSimpleInteractable select relays call this so XR
+        /// interactions obey the same blocking and cooldown rules as desktop.
+        /// Returns true when the interaction was dispatched.
+        /// </summary>
+        public bool RequestXRSelect(IInteractionTarget target)
+        {
+            if (target == null || !target.Exists || !target.IsAvailable) return false;
+            if (InteractionState.IsBlocked || InCooldown) return false;
+            Dispatch(target, InteractionActivation.XRSelect);
+            return true;
+        }
+
+        /// <summary>Programmatic activation (smoke tests, exhibit directory).</summary>
+        public bool RequestProgrammatic(IInteractionTarget target)
+        {
+            if (target == null || !target.Exists || !target.IsAvailable) return false;
+            if (InteractionState.IsBlocked) return false;
+            Dispatch(target, InteractionActivation.Programmatic);
+            return true;
+        }
+
+        void Dispatch(IInteractionTarget target, InteractionActivation activation)
+        {
+            lastDispatchTime = Time.unscaledTime;
+            try
+            {
+                target.OnInteract(activation);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[InteractionRouter] Target '{target}' threw during OnInteract: {e}");
+            }
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()
+        {
+            registry.Clear();
+            zones.Clear();
+        }
+    }
+}

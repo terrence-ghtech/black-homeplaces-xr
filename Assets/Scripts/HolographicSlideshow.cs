@@ -57,17 +57,25 @@ public class HolographicSlideshow : MonoBehaviour
         HideAlbum();
     }
 
+    private void OnDestroy()
+    {
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
+    }
+
     private void Update()
     {
-        if (!isOpen || Keyboard.current == null)
+        // Focused-modal input goes through the central FocusedUiInput helper;
+        // world interaction (opening) is owned by the InteractionRouter via the
+        // opener component.
+        if (!isOpen)
             return;
 
-        if (Time.frameCount > openedFrame && !Keyboard.current.eKey.isPressed)
+        if (Time.frameCount > openedFrame && !BCaT.Production.Interaction.FocusedUiInput.InteractHeld)
             closeKeyReleasedSinceOpen = true;
 
         if (Time.frameCount > openedFrame
-            && (Keyboard.current.escapeKey.wasPressedThisFrame
-                || (closeKeyReleasedSinceOpen && Keyboard.current.eKey.wasPressedThisFrame)))
+            && (BCaT.Production.Interaction.FocusedUiInput.CancelPressed
+                || (closeKeyReleasedSinceOpen && BCaT.Production.Interaction.FocusedUiInput.InteractPressed)))
         {
             CloseAlbum();
             return;
@@ -76,11 +84,11 @@ public class HolographicSlideshow : MonoBehaviour
         if (!enableKeyboardShortcuts)
             return;
 
-        if (useArrowKeysForNavigation && Keyboard.current.rightArrowKey.wasPressedThisFrame)
+        if (useArrowKeysForNavigation && BCaT.Production.Interaction.FocusedUiInput.KeyPressed(Key.RightArrow))
             Next();
-        else if (useArrowKeysForNavigation && Keyboard.current.leftArrowKey.wasPressedThisFrame)
+        else if (useArrowKeysForNavigation && BCaT.Production.Interaction.FocusedUiInput.KeyPressed(Key.LeftArrow))
             Previous();
-        else if (useEscapeToClose && Keyboard.current.escapeKey.wasPressedThisFrame)
+        else if (useEscapeToClose && BCaT.Production.Interaction.FocusedUiInput.CancelPressed)
             CloseAlbum();
     }
 
@@ -105,6 +113,11 @@ public class HolographicSlideshow : MonoBehaviour
             PositionAlbumInFrontOfCamera();
         Refresh();
         CaptureDesktopInput();
+
+        // Focused exhibit interface: block background world interaction and
+        // give the kiosk reset a close handle.
+        BCaT.Production.Interaction.InteractionState.Block(this,
+            BCaT.Production.Interaction.InteractionBlockReason.Modal, CloseAlbum);
     }
 
     public void CloseAlbum()
@@ -203,7 +216,7 @@ public class HolographicSlideshow : MonoBehaviour
     {
         isOpen = true;
         openedFrame = Time.frameCount;
-        closeKeyReleasedSinceOpen = Keyboard.current == null || !Keyboard.current.eKey.isPressed;
+        closeKeyReleasedSinceOpen = !BCaT.Production.Interaction.FocusedUiInput.InteractHeld;
 
         if (albumRoot != null)
             albumRoot.SetActive(true);
@@ -247,6 +260,7 @@ public class HolographicSlideshow : MonoBehaviour
     private void HideAlbum()
     {
         isOpen = false;
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
 
         if (albumRoot != null)
             albumRoot.SetActive(false);

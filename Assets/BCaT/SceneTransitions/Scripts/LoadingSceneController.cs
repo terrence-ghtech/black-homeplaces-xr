@@ -19,6 +19,11 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         loadStarted = true;
 
+        // Shared lifecycle: the previous scene is already unloaded (single-mode
+        // load), but any registered media stop-actions and stale blockers from
+        // it must not leak into the destination scene.
+        BCaT.Production.Media.MediaPlaybackRegistry.StopAll();
+
         string destinationScene = SceneTransitionState.DestinationSceneName;
         if (string.IsNullOrWhiteSpace(destinationScene))
         {
@@ -96,6 +101,24 @@ public sealed class LoadingSceneController : MonoBehaviour
         {
             Debug.Log($"[LoadingSceneController] Remote (Addressables) scene load requested: '{destinationScene}'.");
             handle = Addressables.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
+
+            // The single-mode activation unloads THIS loading scene, destroying
+            // this controller and stopping this coroutine — code after the
+            // progress loop is not guaranteed to run on success. Store the
+            // handle from the operation's own callback, which survives the
+            // controller's destruction, so the bundle can actually be released
+            // on the way back (pre-existing latent bug: the handle was never
+            // stored and the bundle stayed resident for the app's lifetime).
+            handle.Completed += completedHandle =>
+            {
+                BCaT.Production.Addressing.AddressablesHandleRegistry.NotifyCompleted(
+                    "LoadingSceneController", destinationScene, completedHandle.Status);
+                if (completedHandle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    Debug.Log($"[LoadingSceneController] Remote scene load completed: '{destinationScene}'.");
+                    AddressableSceneHandleStore.Store(destinationScene, completedHandle);
+                }
+            };
         }
         catch (System.Exception exception)
         {
@@ -121,8 +144,9 @@ public sealed class LoadingSceneController : MonoBehaviour
             yield break;
         }
 
-        Debug.Log($"[LoadingSceneController] Remote scene load completed: '{destinationScene}'.");
-        AddressableSceneHandleStore.Store(destinationScene, handle);
+        // Success handling (handle storage + registry notification) runs in the
+        // Completed callback above — this coroutine dies with the loading scene
+        // when the destination activates, so nothing more can be done here.
     }
 
     private IEnumerator FailAndReturnToMainHouse(string destinationScene, string message)

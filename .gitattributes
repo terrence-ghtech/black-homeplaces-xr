@@ -68,3 +68,9 @@
 *.controller text
 *.asset text
 *.inputactions text
+
+# Binary-serialized .asset overrides (MUST come after '*.asset text').
+# TerrainData/LightingData/NavMesh .asset files are binary; the blanket text
+# rule above collapsed a CRLF byte pair inside New Terrain.asset at commit
+# (repaired 2026-07-29). Never let the text rule touch these.
+"/Assets/New Terrain.asset" -text

@@ -1,16 +1,23 @@
 using System.Collections.Generic;
+using BCaT.Production.Interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-// Single authority for Black Kitchen audio-station input and prompting. Exactly one
-// station can be selected at a time; only that station receives E, and only its
-// prompt is shown, on one small shared UI. Selection order: direct camera-ray hit
-// first, nearest to screen center second, nearest physical distance third.
-public class BlackKitchenInteractionManager : MonoBehaviour
+// Single authority for Black Kitchen audio-station selection and prompting.
+// Registered with the central InteractionRouter as an exclusive interaction
+// zone: the router keeps ownership of the interact input, blockers, and
+// cooldowns, and forwards one per-frame input signal to this manager, which
+// keeps its validated station-selection rules (direct camera-ray hit first,
+// nearest to screen center second, nearest physical distance third). Exactly
+// one station can be selected at a time; only that station receives the
+// interaction, and only its prompt is shown, on one small shared UI.
+public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteractionZone
 {
+#pragma warning disable 0414 // retained for scene-data compatibility; router owns the interact key now
     [SerializeField] private Key interactionKey = Key.E;
+#pragma warning restore 0414
     [Tooltip("Maximum distance for camera-ray selection of a station trigger.")]
     [SerializeField] private float rayDistance = 3f;
     [Tooltip("Eligible stations within this angle of screen center are ranked by angle; otherwise by distance.")]
@@ -28,18 +35,15 @@ public class BlackKitchenInteractionManager : MonoBehaviour
     public bool PromptVisible => promptGroup != null && promptGroup.alpha > 0.5f;
     public string PromptText => promptLabel != null ? promptLabel.text : string.Empty;
 
-    private void Start()
-    {
-        stations.Clear();
-        stations.AddRange(FindObjectsByType<BlackKitchenAudioInteractable>(FindObjectsSortMode.None));
-        if (experienceController == null)
-            experienceController = FindAnyObjectByType<BlackKitchenExperienceController>();
+    // ---- IExclusiveInteractionZone ----------------------------------------
 
-        EnsurePromptUI();
-        Debug.Log($"[BlackKitchenInteractionManager] Managing {stations.Count} audio stations.");
-    }
+    public bool ZoneActive => isActiveAndEnabled;
 
-    private void Update()
+    /// <summary>
+    /// Called once per frame by the InteractionRouter with the shared input
+    /// state. Replaces the previous direct keyboard polling.
+    /// </summary>
+    public void ZoneTick(bool interactPressed)
     {
         if (experienceController != null && experienceController.IsExitModalOpen)
         {
@@ -51,14 +55,42 @@ public class BlackKitchenInteractionManager : MonoBehaviour
         SetSelected(ResolveTarget());
         UpdatePrompt();
 
-        if (selected == null || Keyboard.current == null || !Keyboard.current[interactionKey].wasPressedThisFrame)
+        if (!interactPressed)
             return;
 
-        // The exit interface owns E while the player is aiming at it.
+        // The exit interface owns the interaction while the player aims at it.
         if (experienceController != null && experienceController.IsAimingAtExit())
+        {
+            experienceController.HandleExitInteract();
             return;
+        }
 
-        ActivateSelected();
+        if (selected != null)
+            ActivateSelected();
+    }
+
+    public void ZoneSuppressPrompts()
+    {
+        SetSelected(null);
+        if (promptGroup != null)
+            promptGroup.alpha = 0f;
+    }
+
+    // -----------------------------------------------------------------------
+
+    private void OnEnable() => InteractionRouter.RegisterZone(this);
+
+    private void OnDisable() => InteractionRouter.UnregisterZone(this);
+
+    private void Start()
+    {
+        stations.Clear();
+        stations.AddRange(FindObjectsByType<BlackKitchenAudioInteractable>(FindObjectsSortMode.None));
+        if (experienceController == null)
+            experienceController = FindAnyObjectByType<BlackKitchenExperienceController>();
+
+        EnsurePromptUI();
+        Debug.Log($"[BlackKitchenInteractionManager] Managing {stations.Count} audio stations.");
     }
 
     public void ActivateSelected()

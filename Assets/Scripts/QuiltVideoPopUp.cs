@@ -50,13 +50,10 @@ public class QuiltVideoPopUp : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (playerInRange && Keyboard.current != null && Keyboard.current[interactKey].wasPressedThisFrame)
-        {
-            TogglePopUp();
-        }
-    }
+    // Legacy remnant: this component is no longer referenced by any scene or
+    // prefab (superseded by MediaVideoController). Its keyboard polling was
+    // removed during the interaction-router migration so no stray E-key
+    // listener can ever compete; XR/programmatic entry points remain.
 
     public void TogglePopUp()
     {

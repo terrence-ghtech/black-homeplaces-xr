@@ -2,19 +2,19 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Central mapping of exhibit video files to remote (CDN) URLs.
-/// Lives at Assets/Resources/RemoteMediaConfig.asset so every scene and
-/// platform resolves URLs the same way via <see cref="RuntimeMediaPaths"/>.
+/// Central mapping of exhibit video files to remote (CDN) URLs plus the
+/// packaged-media manifest for platforms whose StreamingAssets cannot be
+/// probed with File.Exists (Android/Quest). Lives at
+/// Assets/Resources/RemoteMediaConfig.asset so every scene and platform
+/// resolves URLs the same way via <see cref="RuntimeMediaPaths"/>.
 ///
-/// Resolution order per file:
-///  1. Explicit per-file remoteUrl entry (if non-empty)
-///  2. remoteBaseUrl + URL-escaped file name (if remoteBaseUrl non-empty)
-///  3. Local StreamingAssets fallback (current shipped behavior)
-///
-/// Leave remoteBaseUrl and all remoteUrl fields empty to keep serving from
-/// StreamingAssets. Fill them in once the CDN URLs exist — no code changes
-/// or scene edits required, only this one asset.
+/// Native desktop/Quest resolution order per file (see RuntimeMediaPaths):
+///  1. Packaged StreamingAssets file (offline-safe institutional default)
+///  2. Explicit per-file remoteUrl entry (if non-empty)
+///  3. remoteBaseUrl + URL-escaped file name (if remoteBaseUrl non-empty)
+/// WebGL keeps its legacy remote-first order.
 /// </summary>
+[CreateAssetMenu(menuName = "BCaT/Remote Media Config", fileName = "RemoteMediaConfig")]
 public class RemoteMediaConfig : ScriptableObject
 {
     [Serializable]
@@ -34,6 +34,10 @@ public class RemoteMediaConfig : ScriptableObject
 
     public Entry[] entries = Array.Empty<Entry>();
 
+    [Tooltip("Media files packaged into StreamingAssets (maintained by BCaT > Production Setup). " +
+             "Required for Android/Quest, where the package contents cannot be probed at runtime.")]
+    public string[] packagedFileNames = Array.Empty<string>();
+
     private static RemoteMediaConfig instance;
     private static bool searched;
 
@@ -48,6 +52,18 @@ public class RemoteMediaConfig : ScriptableObject
             }
             return instance;
         }
+    }
+
+    /// <summary>True when the file ships inside StreamingAssets per the packaged manifest.</summary>
+    public bool IsPackaged(string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName) || packagedFileNames == null)
+            return false;
+
+        foreach (string packaged in packagedFileNames)
+            if (string.Equals(packaged, fileName, StringComparison.OrdinalIgnoreCase))
+                return true;
+        return false;
     }
 
     /// <summary>Returns true and a remote URL when one is configured for this file.</summary>

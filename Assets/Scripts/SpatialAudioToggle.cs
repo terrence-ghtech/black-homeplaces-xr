@@ -1,12 +1,22 @@
+using BCaT.Production.Interaction;
+using BCaT.Production.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SpatialAudioToggle : MonoBehaviour
+/// <summary>
+/// Look-at-and-interact toggle for a spatialized ambient AudioSource.
+/// Interaction selection/input is owned by the central InteractionRouter
+/// (no keyboard polling here); the source is routed through the Ambience
+/// audio channel so the settings mixer controls it.
+/// </summary>
+public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
 {
     [SerializeField] private AudioSource audioSource;
+#pragma warning disable 0414 // retained for scene-data compatibility; router owns input/camera now
     [SerializeField] private Key interactKey = Key.E;
-    [SerializeField] private float interactionDistance = 5f;
     [SerializeField] private Camera playerCamera;
+#pragma warning restore 0414
+    [SerializeField] private float interactionDistance = 5f;
 
     [Header("Spatial Defaults")]
     [SerializeField] private bool configureSpatialAudio = true;
@@ -16,13 +26,62 @@ public class SpatialAudioToggle : MonoBehaviour
     [SerializeField] private float maxDistance = 4f;
     [SerializeField] private float dopplerLevel;
 
+    private Collider[] ownColliders;
+
+    // ---- IInteractionTarget --------------------------------------------
+
+    public Vector3 FocusPoint => transform.position;
+    public float MaxDistance => interactionDistance;
+    public float MaxViewAngle => 16f;
+    public bool RequireLineOfSight => true;
+    public int Priority => 0;
+    public bool IsAvailable => isActiveAndEnabled && audioSource != null;
+    public bool AllowDesktopClick => false;
+    public bool Exists => this != null;
+
+    public Collider[] OwnColliders
+    {
+        get
+        {
+            if (ownColliders == null)
+                ownColliders = GetComponentsInChildren<Collider>(true);
+            return ownColliders;
+        }
+    }
+
+    public string GetPrompt(bool xr)
+    {
+        bool playing = audioSource != null && audioSource.isPlaying;
+        string action = playing ? "pause" : "listen";
+        return xr ? $"Interact to {action}" : $"Press E to {action}";
+    }
+
+    public void OnFocusChanged(bool focused) { }
+
+    public void OnInteract(InteractionActivation activation) => ToggleAudio();
+
+    // ---------------------------------------------------------------------
+
+    private void OnEnable() => InteractionRouter.Register(this);
+
+    private void OnDisable()
+    {
+        InteractionRouter.Unregister(this);
+        // Do not leave ambience playing on a disabled exhibit.
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();
+    }
+
     private void Start()
     {
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
         if (audioSource == null)
+        {
+            Debug.LogWarning($"[SpatialAudioToggle:{gameObject.name}] No AudioSource found.");
             return;
+        }
 
         if (configureSpatialAudio)
         {
@@ -35,20 +94,17 @@ public class SpatialAudioToggle : MonoBehaviour
 
         audioSource.playOnAwake = false;
         audioSource.Stop();
+
+        AudioChannelService.Register(audioSource, AudioChannel.Ambience);
     }
 
-    private void Update()
-    {
-        if (Keyboard.current == null || !Keyboard.current[interactKey].wasPressedThisFrame)
-            return;
-
-        if (IsPlayerLookingAtThisObject())
-            ToggleAudio();
-    }
-
+    /// <summary>Wire XRSimpleInteractable.SelectEntered here.</summary>
     public void OnXRSelect()
     {
-        ToggleAudio();
+        if (InteractionRouter.Instance != null)
+            InteractionRouter.Instance.RequestXRSelect(this);
+        else
+            ToggleAudio();
     }
 
     public void ToggleAudio()
@@ -60,20 +116,5 @@ public class SpatialAudioToggle : MonoBehaviour
             audioSource.Pause();
         else
             audioSource.Play();
-    }
-
-    private bool IsPlayerLookingAtThisObject()
-    {
-        if (playerCamera == null || !playerCamera.gameObject.activeInHierarchy)
-            playerCamera = Camera.main;
-
-        if (playerCamera == null)
-            return false;
-
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
-            return false;
-
-        return hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform);
     }
 }

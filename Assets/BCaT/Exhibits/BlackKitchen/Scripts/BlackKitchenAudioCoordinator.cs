@@ -338,6 +338,11 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
         source.Play();
         Debug.Log($"[BlackKitchenAudioCoordinator] Started exclusive narrative '{narrativeId}'");
 
+        // Long-form narration: registered so the kiosk inactivity policy can
+        // defer resets and shell flows can stop it centrally.
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStarted(this, StopAllNarrativesImmediate);
+        BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStarted(narrativeId);
+
         // The isPlaying state is authoritative: verify one frame later that exclusivity
         // physically holds, and enforce it if anything else slipped through.
         yield return null;
@@ -345,7 +350,7 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
             yield break;
         VerifyAndEnforceExclusivity(source, narrativeId);
 
-        yield return FadeSourceVolume(generation, source, volume, fadeIn);
+        yield return FadeSourceVolume(generation, source, volume * NarrationUserScale(), fadeIn);
         if (generation != playbackGeneration)
             yield break;
 
@@ -365,6 +370,8 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
         Debug.Log($"[BlackKitchenAudioCoordinator] Narrative finished: '{narrativeId}'");
         activeNarrativeSource = null;
         activeNarrativeClip = null;
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
+        BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStopped(narrativeId);
         StartAmbientDucking(false);
         narrativeRoutine = null;
     }
@@ -513,13 +520,23 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
     private void ApplyDuckingImmediate()
     {
         bool duck = AnyRegisteredNarrativePlaying();
-        float target = conversationBaseMultiplier * (duck ? kitchenConversationDuckMultiplier : 1f);
+        float target = conversationBaseMultiplier * (duck ? kitchenConversationDuckMultiplier : 1f) * AmbienceUserScale();
         foreach (AudioSource source in ambienceSources)
         {
             if (source != null)
                 source.volume = target;
         }
     }
+
+    // User audio-settings integration: the coordinator stays the sole authority
+    // over Black Kitchen volumes; it folds the visitor's Narration/Ambience
+    // levels into its own targets whenever it computes them. (Master volume is
+    // applied globally through AudioListener.volume by the settings service.)
+    private static float NarrationUserScale() =>
+        Mathf.Clamp01(BCaT.Production.Settings.SettingsManager.Current.audio.narration);
+
+    private static float AmbienceUserScale() =>
+        Mathf.Clamp01(BCaT.Production.Settings.SettingsManager.Current.audio.ambience);
 
     private IEnumerator FadeSourceVolume(int generation, AudioSource source, float target, float duration)
     {

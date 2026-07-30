@@ -84,10 +84,12 @@ public class MeshellArticleReaderController : MonoBehaviour
 
     private void Update()
     {
-        if (!isOpen || Keyboard.current == null)
+        // Focused-modal input reads the central FocusedUiInput helper; opening
+        // is owned by the InteractionRouter via the notebook target.
+        if (!isOpen)
             return;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (BCaT.Production.Interaction.FocusedUiInput.CancelPressed)
             Close();
     }
 
@@ -112,6 +114,11 @@ public class MeshellArticleReaderController : MonoBehaviour
             Show();
             PositionPopupInFrontOfCamera();
             LogVisibilityState();
+
+            // Focused exhibit interface: block background world interaction and
+            // give the kiosk reset a close handle.
+            BCaT.Production.Interaction.InteractionState.Block(this,
+                BCaT.Production.Interaction.InteractionBlockReason.Modal, Close);
         }
 
         Refresh();
@@ -123,6 +130,7 @@ public class MeshellArticleReaderController : MonoBehaviour
             return;
 
         isOpen = false;
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
         ClearCurrentSprite();
         Hide();
         RestoreWorldInput();

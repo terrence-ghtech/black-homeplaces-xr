@@ -15,12 +15,17 @@ public static class AddressableSceneHandleStore
     private static string heldSceneName;
     private static bool hasHandle;
 
+    /// <summary>Owner name reported to the Addressables handle registry.</summary>
+    private const string OwnerName = "AddressableSceneHandleStore";
+
     public static void Store(string sceneName, AsyncOperationHandle<SceneInstance> handle)
     {
         ReleaseIfHeld(exceptScene: sceneName);
         heldHandle = handle;
         heldSceneName = sceneName;
         hasHandle = true;
+        BCaT.Production.Addressing.AddressablesHandleRegistry.NotifyCreated(
+            OwnerName, sceneName, handle);
     }
 
     /// <summary>Releases the held remote-scene handle unless it belongs to exceptScene.</summary>
@@ -41,6 +46,8 @@ public static class AddressableSceneHandleStore
         }
         finally
         {
+            BCaT.Production.Addressing.AddressablesHandleRegistry.NotifyReleased(
+                OwnerName, heldSceneName);
             heldHandle = default;
             heldSceneName = null;
             hasHandle = false;

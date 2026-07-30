@@ -1,3 +1,7 @@
+using System.Collections;
+using BCaT.Production;
+using BCaT.Production.Interaction;
+using BCaT.Production.Media;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -5,15 +9,20 @@ using UnityEngine.Video;
 
 /// <summary>
 /// Reusable drop-in video exhibit controller (billboard or hologram popup).
-/// One component drives desktop/WebGL (E key via proximity trigger or look
-/// raycast) and Quest/XR (wire XRSimpleInteractable.SelectEntered to
-/// <see cref="OnXRSelect"/>). Platform-safe video source and audio routing:
-///  - WebGL: always URL (StreamingAssets or hosted), Direct audio.
-///  - Device builds (Quest etc.): always URL.
+/// One component drives desktop (interaction router selection + E) and
+/// Quest/XR (wire XRSimpleInteractable.SelectEntered to <see cref="OnXRSelect"/>;
+/// the select request is validated by the shared router).
+/// Platform-safe video source and audio routing:
+///  - Desktop/Quest: URL (packaged StreamingAssets first, remote fallback).
+///  - WebGL remnant: always URL, Direct audio.
 ///  - Editor: optional VideoClip fallback for quick testing.
-/// Every lifecycle step logs with the object name for on-device debugging.
+/// Registers with the central InteractionRouter instead of polling the
+/// keyboard; while the popup is open it registers a Media interaction blocker
+/// so background exhibits cannot be triggered, and E/Escape close it through
+/// FocusedUiInput. Playback is tracked by MediaPlaybackRegistry (kiosk resets,
+/// return-to-entrance) and failures are reported through MediaErrorLog.
 /// </summary>
-public class MediaVideoController : MonoBehaviour
+public class MediaVideoController : MonoBehaviour, IInteractionTarget
 {
     public enum DesktopActivation
     {
@@ -43,6 +52,8 @@ public class MediaVideoController : MonoBehaviour
     [Tooltip("Editor-only preview clip. Builds always stream by URL.")]
     [SerializeField] private VideoClip editorPreviewClip;
     [SerializeField] private VideoPlayer videoPlayer;
+    [Tooltip("Seconds allowed for Prepare() before the exhibit reports the media as unavailable.")]
+    [SerializeField] private float prepareTimeoutSeconds = 20f;
 
     [Header("Audio")]
     [Tooltip("Route video audio through this AudioSource (spatial). Ignored on WebGL (Direct is used).")]
@@ -52,11 +63,14 @@ public class MediaVideoController : MonoBehaviour
     [Tooltip("Ambient AudioSource paused while the popup is open (e.g. sewing machine loop).")]
     [SerializeField] private AudioSource pauseWhileOpen;
 
-    [Header("Desktop / WebGL Input")]
+    [Header("Desktop Input (selection is owned by the InteractionRouter)")]
     [SerializeField] private DesktopActivation desktopActivation = DesktopActivation.LookRaycast;
+#pragma warning disable 0414 // retained for scene-data compatibility; router owns input/camera now
+    [Tooltip("Retained for scene-data compatibility; the router now owns the interact key.")]
     [SerializeField] private Key interactKey = Key.E;
-    [SerializeField] private float interactionDistance = 5f;
     [SerializeField] private Camera playerCamera;
+#pragma warning restore 0414
+    [SerializeField] private float interactionDistance = 5f;
     [Tooltip("Prompt object shown while the player is inside the proximity trigger.")]
     [SerializeField] private GameObject promptRoot;
 
@@ -66,8 +80,67 @@ public class MediaVideoController : MonoBehaviour
     private bool prepareRequested;
     private bool ownsTargetTexture;
     private GameObject loadingIndicator;
+    private Collider[] ownColliders;
+    private Coroutine prepareWatchdog;
 
     private string LogTag => $"[MediaVideo:{gameObject.name}]";
+
+    private string ExhibitName => string.IsNullOrEmpty(title) ? gameObject.name : title;
+
+    // ---- IInteractionTarget --------------------------------------------
+
+    public Vector3 FocusPoint => transform.position;
+
+    public float MaxDistance =>
+        desktopActivation == DesktopActivation.ProximityTrigger ? 999f : interactionDistance;
+
+    public float MaxViewAngle =>
+        desktopActivation == DesktopActivation.ProximityTrigger ? 0f : 16f;
+
+    public bool RequireLineOfSight => desktopActivation == DesktopActivation.LookRaycast;
+
+    public int Priority => 0;
+
+    public bool IsAvailable =>
+        isActiveAndEnabled && !isOpen &&
+        (desktopActivation != DesktopActivation.ProximityTrigger || playerInRange);
+
+    public bool AllowDesktopClick => false;
+
+    public bool Exists => this != null;
+
+    public Collider[] OwnColliders
+    {
+        get
+        {
+            if (ownColliders == null)
+                ownColliders = GetComponentsInChildren<Collider>(true);
+            return ownColliders;
+        }
+    }
+
+    public string GetPrompt(bool xr) =>
+        xr ? "Interact to watch" : "Press E to watch";
+
+    public void OnFocusChanged(bool focused)
+    {
+        // Prompt-object visibility keeps its authored per-mode behavior
+        // (trigger mode: shown while in range; raycast mode: shown until open);
+        // the router adds the screen-space prompt on desktop.
+    }
+
+    public void OnInteract(InteractionActivation activation)
+    {
+        Debug.Log($"{LogTag} Interaction dispatched ({activation})");
+        TogglePopUp();
+    }
+
+    // ---------------------------------------------------------------------
+
+    private void OnEnable()
+    {
+        InteractionRouter.Register(this);
+    }
 
     private void Start()
     {
@@ -81,6 +154,13 @@ public class MediaVideoController : MonoBehaviour
         ApplyBillboardText();
         ConfigureVideoPlayer();
         ConfigureAudio();
+
+        if (videoAudioSource != null)
+            BCaT.Production.Settings.AudioChannelService.Register(
+                videoAudioSource, BCaT.Production.Settings.AudioChannel.Media);
+        if (separateAudioSource != null)
+            BCaT.Production.Settings.AudioChannelService.Register(
+                separateAudioSource, BCaT.Production.Settings.AudioChannel.Media);
     }
 
     private void OnDestroy()
@@ -95,15 +175,21 @@ public class MediaVideoController : MonoBehaviour
         }
 
         VideoExhibitCoordinator.NotifyClosed(this);
+        MediaPlaybackRegistry.NotifyStopped(this);
+        InteractionState.Unblock(this);
     }
 
     private void OnDisable()
     {
+        InteractionRouter.Unregister(this);
+
         if (!isOpen && videoPlayer == null)
             return;
 
         isOpen = false;
         playWhenPrepared = false;
+        InteractionState.Unblock(this);
+        MediaPlaybackRegistry.NotifyStopped(this);
         ReleaseVideoResources(destroyOwnedTexture: false);
 
         if (separateAudioSource != null)
@@ -112,21 +198,12 @@ public class MediaVideoController : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current == null || !Keyboard.current[interactKey].wasPressedThisFrame)
-            return;
-
-        if (desktopActivation == DesktopActivation.ProximityTrigger)
+        // While open this popup is a focused media interface: it owns E/Escape
+        // through the central modal input helper (world interaction is blocked).
+        if (isOpen && (FocusedUiInput.InteractPressed || FocusedUiInput.CancelPressed))
         {
-            if (playerInRange)
-            {
-                Debug.Log($"{LogTag} Desktop key {interactKey} pressed while in range");
-                TogglePopUp();
-            }
-        }
-        else if (IsPlayerLookingAtThisObject())
-        {
-            Debug.Log($"{LogTag} Desktop key {interactKey} pressed while looking at exhibit");
-            TogglePopUp();
+            Debug.Log($"{LogTag} Close requested from focused-media input");
+            ClosePopUp();
         }
     }
 
@@ -134,7 +211,19 @@ public class MediaVideoController : MonoBehaviour
     public void OnXRSelect()
     {
         Debug.Log($"{LogTag} XR SelectEntered received");
-        TogglePopUp();
+        if (isOpen)
+        {
+            // Closing an open popup is always allowed.
+            ClosePopUp();
+        }
+        else if (InteractionRouter.Instance != null)
+        {
+            InteractionRouter.Instance.RequestXRSelect(this);
+        }
+        else
+        {
+            TogglePopUp();
+        }
     }
 
     public void TogglePopUp()
@@ -152,6 +241,10 @@ public class MediaVideoController : MonoBehaviour
 
         // Close any other open video exhibit so two videos never buffer at once.
         VideoExhibitCoordinator.NotifyOpened(this, ClosePopUp);
+
+        // Focused media interface: block background world interaction and give
+        // the kiosk reset a close handle.
+        InteractionState.Block(this, InteractionBlockReason.Media, ClosePopUp);
 
         if (promptRoot != null)
             promptRoot.SetActive(false);
@@ -180,7 +273,11 @@ public class MediaVideoController : MonoBehaviour
         Debug.Log($"{LogTag} ClosePopUp");
 
         VideoExhibitCoordinator.NotifyClosed(this);
+        MediaPlaybackRegistry.NotifyStopped(this);
+        InteractionState.Unblock(this);
+        BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStopped(videoFileName);
         VideoLoadingIndicator.Hide(ref loadingIndicator);
+        StopPrepareWatchdog();
         ReleaseVideoResources(destroyOwnedTexture: false);
 
         if (separateAudioSource != null)
@@ -308,11 +405,13 @@ public class MediaVideoController : MonoBehaviour
     {
         if (!HasPlayableSource())
         {
-            Debug.LogError($"{LogTag} No playable video source (file missing locally and no remote URL configured); showing unavailable message");
+            MediaErrorLog.LogFailure(ExhibitName, videoFileName,
+                "no playable source (file missing locally and no remote URL configured)",
+                remoteAttempted: RemoteMediaConfig.Instance != null, recovered: true);
             if (loadingIndicator == null)
                 loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
             VideoLoadingIndicator.SetMessage(loadingIndicator,
-                "Video unavailable.\nClose and reopen the exhibit to try again.");
+                "This media is currently unavailable.\nPress E to close, or try again later.");
             return;
         }
 
@@ -326,6 +425,7 @@ public class MediaVideoController : MonoBehaviour
             {
                 prepareRequested = true;
                 videoPlayer.Prepare();
+                StartPrepareWatchdog();
             }
 
             return;
@@ -334,6 +434,7 @@ public class MediaVideoController : MonoBehaviour
         Debug.Log($"{LogTag} Play() called (url={videoPlayer.url})");
         videoPlayer.Play();
         PlaySeparateAudio();
+        NotifyPlaybackStarted();
     }
 
     private void PrepareVideoIfNeeded()
@@ -350,6 +451,49 @@ public class MediaVideoController : MonoBehaviour
         videoPlayer.Prepare();
     }
 
+    private void StartPrepareWatchdog()
+    {
+        StopPrepareWatchdog();
+        if (prepareTimeoutSeconds > 0f)
+            prepareWatchdog = StartCoroutine(PrepareWatchdog());
+    }
+
+    private void StopPrepareWatchdog()
+    {
+        if (prepareWatchdog != null)
+        {
+            StopCoroutine(prepareWatchdog);
+            prepareWatchdog = null;
+        }
+    }
+
+    private IEnumerator PrepareWatchdog()
+    {
+        yield return new WaitForSecondsRealtime(prepareTimeoutSeconds);
+        prepareWatchdog = null;
+
+        if (!prepareRequested || videoPlayer == null || videoPlayer.isPrepared)
+            yield break;
+
+        // The decoder/network stalled: fail gracefully instead of an endless
+        // "Loading video…" state, and leave the exhibit closeable.
+        prepareRequested = false;
+        playWhenPrepared = false;
+        videoPlayer.Stop();
+
+        MediaErrorLog.LogFailure(ExhibitName, videoPlayer.url,
+            $"prepare timeout after {prepareTimeoutSeconds:F0}s",
+            remoteAttempted: true, recovered: true);
+
+        if (isOpen)
+        {
+            if (loadingIndicator == null)
+                loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
+            VideoLoadingIndicator.SetMessage(loadingIndicator,
+                "This exhibit requires an internet connection.\nPress E to close and try again later.");
+        }
+    }
+
     private void PlaySeparateAudio()
     {
         if (separateAudioSource == null)
@@ -359,10 +503,17 @@ public class MediaVideoController : MonoBehaviour
         separateAudioSource.Play();
     }
 
+    private void NotifyPlaybackStarted()
+    {
+        MediaPlaybackRegistry.NotifyStarted(this, ClosePopUp);
+        BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStarted(videoFileName);
+    }
+
     private void OnVideoPrepared(VideoPlayer preparedPlayer)
     {
         Debug.Log($"{LogTag} prepareCompleted (duration={preparedPlayer.length:F1}s, size={preparedPlayer.width}x{preparedPlayer.height})");
         prepareRequested = false;
+        StopPrepareWatchdog();
         VideoLoadingIndicator.Hide(ref loadingIndicator);
 
         if (!isOpen || !playWhenPrepared)
@@ -373,20 +524,24 @@ public class MediaVideoController : MonoBehaviour
         Debug.Log($"{LogTag} Play() called after prepare");
         preparedPlayer.Play();
         PlaySeparateAudio();
+        NotifyPlaybackStarted();
     }
 
     private void OnVideoError(VideoPlayer source, string message)
     {
-        Debug.LogError($"{LogTag} errorReceived: {message} (url={source.url})");
+        MediaErrorLog.LogFailure(ExhibitName, source.url, message,
+            remoteAttempted: true, recovered: true);
         prepareRequested = false;
         playWhenPrepared = false;
+        StopPrepareWatchdog();
+        MediaPlaybackRegistry.NotifyStopped(this);
 
         if (isOpen)
         {
             if (loadingIndicator == null)
                 loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
             VideoLoadingIndicator.SetMessage(loadingIndicator,
-                "Video unavailable.\nClose and reopen the exhibit to try again.");
+                "The media file could not be loaded.\nPress E to close, or try again later.");
         }
     }
 
@@ -398,6 +553,8 @@ public class MediaVideoController : MonoBehaviour
             Debug.Log($"{LogTag} Playback ended; releasing video resources");
             endedPlayer.Stop();
             prepareRequested = false;
+            MediaPlaybackRegistry.NotifyStopped(this);
+            BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStopped(videoFileName);
         }
     }
 
@@ -408,21 +565,6 @@ public class MediaVideoController : MonoBehaviour
         if (popupCanvas != null)
             return popupCanvas.transform;
         return popupRoot != null ? popupRoot.transform : null;
-    }
-
-    private bool IsPlayerLookingAtThisObject()
-    {
-        if (playerCamera == null || !playerCamera.gameObject.activeInHierarchy)
-            playerCamera = Camera.main;
-
-        if (playerCamera == null)
-            return false;
-
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
-            return false;
-
-        return hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -493,13 +635,11 @@ public class MediaVideoController : MonoBehaviour
         if (videoPlayer == null)
             return;
 
-        if (videoPlayer.isPlaying)
-            videoPlayer.Stop();
-        else
-            videoPlayer.Stop();
+        videoPlayer.Stop();
 
         prepareRequested = false;
         playWhenPrepared = false;
+        StopPrepareWatchdog();
         ClearTargetTexture();
 
         if (videoPlayer.source == VideoSource.Url)

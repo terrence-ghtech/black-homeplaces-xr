@@ -171,7 +171,60 @@ public class PrivacyLawExhibitController : MonoBehaviour
 
     private void OnDisable()
     {
+        BCaT.Production.Interaction.InteractionRouter.Unregister(routerTarget);
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
         RestoreDesktopInput();
+    }
+
+    private void OnEnable()
+    {
+        if (routerTarget == null)
+            routerTarget = new PrivacyLawInteractionTarget(this);
+        BCaT.Production.Interaction.InteractionRouter.Register(routerTarget);
+    }
+
+    private PrivacyLawInteractionTarget routerTarget;
+
+    /// <summary>
+    /// Router adapter for the proximity-gated open interaction. The exhibit's
+    /// ProximityTrigger collider keeps deciding availability (playerNearby);
+    /// the router owns input, prompts, and blocking.
+    /// </summary>
+    private sealed class PrivacyLawInteractionTarget : BCaT.Production.Interaction.IInteractionTarget
+    {
+        readonly PrivacyLawExhibitController owner;
+        Collider[] ownColliders;
+
+        public PrivacyLawInteractionTarget(PrivacyLawExhibitController owner) => this.owner = owner;
+
+        public Vector3 FocusPoint => owner != null ? owner.transform.position : Vector3.zero;
+        public float MaxDistance => 999f; // proximity handled by the exhibit's trigger
+        public float MaxViewAngle => 0f;  // proximity-based, no camera focus requirement
+        public bool RequireLineOfSight => false;
+        public int Priority => 0;
+        public bool AllowDesktopClick => false;
+        public bool Exists => owner != null;
+
+        public bool IsAvailable =>
+            owner != null && owner.isActiveAndEnabled &&
+            owner.playerNearby && owner.state == ExhibitState.Idle;
+
+        public Collider[] OwnColliders
+        {
+            get
+            {
+                if (ownColliders == null && owner != null)
+                    ownColliders = owner.GetComponentsInChildren<Collider>(true);
+                return ownColliders;
+            }
+        }
+
+        public string GetPrompt(bool xr) => xr ? owner.xrPrompt : owner.desktopPrompt;
+
+        public void OnFocusChanged(bool focused) { }
+
+        public void OnInteract(BCaT.Production.Interaction.InteractionActivation activation) =>
+            owner.OpenExhibit();
     }
 
     private void Update()
@@ -179,26 +232,22 @@ public class PrivacyLawExhibitController : MonoBehaviour
         AnimateIdleHologram();
         RefreshPrompt();
 
-        if (state == ExhibitState.Open && Keyboard.current != null)
+        // Focused-modal input reads the central FocusedUiInput helper; the
+        // idle-state open interaction is owned by the InteractionRouter.
+        if (state == ExhibitState.Open)
         {
-            if (Time.frameCount > openedFrame && !Keyboard.current[interactionKey].isPressed)
+            if (Time.frameCount > openedFrame &&
+                !BCaT.Production.Interaction.FocusedUiInput.KeyHeld(interactionKey))
                 closeKeyReleasedSinceOpen = true;
 
             if (Time.frameCount > openedFrame
-                && (Keyboard.current.escapeKey.wasPressedThisFrame
-                    || (closeKeyReleasedSinceOpen && Keyboard.current[interactionKey].wasPressedThisFrame)))
+                && (BCaT.Production.Interaction.FocusedUiInput.CancelPressed
+                    || (closeKeyReleasedSinceOpen &&
+                        BCaT.Production.Interaction.FocusedUiInput.KeyPressed(interactionKey))))
             {
                 CloseExhibit();
             }
-
-            return;
         }
-
-        if (!playerNearby || state != ExhibitState.Idle || Keyboard.current == null)
-            return;
-
-        if (Keyboard.current[interactionKey].wasPressedThisFrame)
-            OpenExhibit();
     }
 
     public void HandleProximityEnter(Collider other)
@@ -223,6 +272,11 @@ public class PrivacyLawExhibitController : MonoBehaviour
 
     public void OpenFromXR()
     {
+        if (BCaT.Production.Interaction.InteractionState.IsBlocked)
+        {
+            Debug.Log("[PrivacyLawExhibit] XR open suppressed (interaction blocked).");
+            return;
+        }
         OpenExhibit();
     }
 
@@ -233,15 +287,22 @@ public class PrivacyLawExhibitController : MonoBehaviour
 
         currentPage = Mathf.Clamp(startingPage, 0, pages.Length - 1);
         openedFrame = Time.frameCount;
-        closeKeyReleasedSinceOpen = Keyboard.current == null || !Keyboard.current[interactionKey].isPressed;
+        closeKeyReleasedSinceOpen =
+            !BCaT.Production.Interaction.FocusedUiInput.KeyHeld(interactionKey);
         SetState(ExhibitState.Open, false);
         PositionExpandedViewInFrontOfCamera();
         CaptureDesktopInput();
+
+        // Focused exhibit interface: block background world interaction and
+        // give the kiosk reset a close handle.
+        BCaT.Production.Interaction.InteractionState.Block(this,
+            BCaT.Production.Interaction.InteractionBlockReason.Modal, CloseExhibit);
     }
 
     public void CloseExhibit()
     {
         currentPage = Mathf.Clamp(startingPage, 0, pages.Length - 1);
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
         RestoreDesktopInput();
         ResetPage03Scroll();
         SetState(playerNearby ? ExhibitState.Idle : ExhibitState.Hidden, false);

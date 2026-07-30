@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/BCaT/ProductionCore/Scenes/MainMenuScene.unity
+    guid: 2b50ad5c1a8124e54a48b56129bec018
+  - enabled: 1
     path: Assets/BH_XR_MainScene.unity
     guid: 682df8046c3564f1b92d250dd0fcf67b
-  - enabled: 0
-    path: Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity
-    guid: 22bc6237247ca41a09d4974e94a690a7
   - enabled: 1
     path: Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity
     guid: e4b6edc3be9c46caada6c5451608bc17
+  - enabled: 0
+    path: Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity
+    guid: 22bc6237247ca41a09d4974e94a690a7
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 74ef6f6512ecb4913ac5328744878eb6, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

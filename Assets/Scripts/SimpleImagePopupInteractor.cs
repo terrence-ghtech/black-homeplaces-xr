@@ -1,40 +1,73 @@
+using BCaT.Production.Interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class SimpleImagePopupInteractor : MonoBehaviour
+/// <summary>
+/// Interaction entry point for the simple image popup exhibit. Selection and
+/// input are owned by the central InteractionRouter; the world prompt text now
+/// uses the shared InteractionPromptText helper (previously this script read
+/// XRSettings directly and missed the XR-initialization fallback).
+/// </summary>
+public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
 {
     [SerializeField] private SimpleImagePopupController popup;
+#pragma warning disable 0414 // retained for scene-data compatibility; router owns input/camera now
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private float interactionDistance = 4f;
     [SerializeField] private Key interactionKey = Key.E;
+#pragma warning restore 0414
+    [SerializeField] private float interactionDistance = 4f;
     [SerializeField] private TMP_Text promptText;
     [SerializeField] private string desktopPrompt = "Press E to view My Grandma's Garden.";
     [SerializeField] private string xrPrompt = "Interact to view My Grandma's Garden.";
 
-    private void Start()
+    private Collider[] ownColliders;
+
+    // ---- IInteractionTarget --------------------------------------------
+
+    public Vector3 FocusPoint => transform.position;
+    public float MaxDistance => interactionDistance;
+    public float MaxViewAngle => 16f;
+    public bool RequireLineOfSight => true;
+    public int Priority => 0;
+    public bool IsAvailable => isActiveAndEnabled && popup != null && !popup.IsOpen;
+    public bool AllowDesktopClick => false;
+    public bool Exists => this != null;
+
+    public Collider[] OwnColliders
     {
-        RefreshPrompt();
+        get
+        {
+            if (ownColliders == null)
+                ownColliders = GetComponentsInChildren<Collider>(true);
+            return ownColliders;
+        }
     }
 
-    private void Update()
-    {
-        RefreshPrompt();
+    public string GetPrompt(bool xr) => xr ? xrPrompt : desktopPrompt;
 
-        if (Keyboard.current == null || popup == null || popup.IsOpen)
-            return;
+    public void OnFocusChanged(bool focused) { }
 
-        if (!Keyboard.current[interactionKey].wasPressedThisFrame)
-            return;
+    public void OnInteract(InteractionActivation activation) => Open();
 
-        if (IsPlayerLookingAtThisObject())
-            popup.Open();
-    }
+    // ---------------------------------------------------------------------
+
+    private void OnEnable() => InteractionRouter.Register(this);
+
+    private void OnDisable() => InteractionRouter.Unregister(this);
+
+    private void Start() => RefreshPrompt();
+
+    private void Update() => RefreshPrompt();
 
     public void OpenFromXR(SelectEnterEventArgs args)
     {
+        if (BCaT.Production.Interaction.InteractionState.IsBlocked)
+        {
+            Debug.Log($"[SimpleImagePopupInteractor:{gameObject.name}] XR open suppressed (interaction blocked).");
+            return;
+        }
         Open();
     }
 
@@ -49,30 +82,6 @@ public class SimpleImagePopupInteractor : MonoBehaviour
         if (promptText == null)
             return;
 
-        promptText.text = XRSettings.isDeviceActive ? xrPrompt : desktopPrompt;
-    }
-
-    private bool IsPlayerLookingAtThisObject()
-    {
-        if (playerCamera == null || !playerCamera.gameObject.activeInHierarchy)
-            playerCamera = Camera.main;
-
-        if (playerCamera == null)
-            return false;
-
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        RaycastHit[] hits = Physics.RaycastAll(ray, interactionDistance);
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform))
-                return true;
-
-            if (!hit.collider.isTrigger)
-                return false;
-        }
-
-        return false;
+        promptText.text = InteractionPromptText.IsXRActive() ? xrPrompt : desktopPrompt;
     }
 }
