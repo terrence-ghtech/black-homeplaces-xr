@@ -1,8 +1,8 @@
 # BCaT Architecture Validation
 
-Generated: 2026-08-07 11:05 · mode: report
+Generated: 2026-08-07 11:25 · mode: report
 
-**0 error(s), 11 warning(s).** No error-severity rule is failing; the build gate passes.
+**0 error(s), 5 warning(s).** No error-severity rule is failing; the build gate passes.
 
 ## Summary by rule
 
@@ -18,9 +18,9 @@ Generated: 2026-08-07 11:05 · mode: report
 | BCAT-L004 | Warning | PASS | DevOnly subtrees are editor-only |
 | BCAT-L005 | Warning | PASS | Raw platform APIs used only in sanctioned files |
 | BCAT-L006 | Error | PASS | World-interaction keyboard polling is centralized |
-| BCAT-P001 | Warning | 2 | Exactly one ScenePlatformBinding per inhabited scene |
+| BCAT-P001 | Warning | PASS | Exactly one ScenePlatformBinding per inhabited scene |
 | BCAT-P002 | Warning | PASS | Platform branches are authored inactive |
-| BCAT-P003 | Warning | 2 | One root Platform group with Desktop/Quest children only |
+| BCAT-P003 | Warning | PASS | One root Platform group with Desktop/Quest children only |
 | BCAT-P004 | Warning | PASS | One EventSystem per scene with exactly one input module |
 | BCAT-P005 | Warning | PASS | One rig per kind, both under Platform/ |
 | BCAT-P006 | Warning | PASS | One XRInteractionManager, under Platform/Quest |
@@ -29,7 +29,7 @@ Generated: 2026-08-07 11:05 · mode: report
 | BCAT-S001 | Error | PASS | Transition destination scenes are loadable |
 | BCAT-S002 | Error | PASS | Transition spawn ids resolve |
 | BCAT-S003 | Warning | PASS | Each platform branch has a MainCamera |
-| BCAT-S004 | Warning | 2 | Presentation scenes are head-tracked on Quest |
+| BCAT-S004 | Warning | PASS | Presentation scenes are head-tracked on Quest |
 | BCAT-S005 | Error | PASS | Quality tiers exist with the expected names |
 | BCAT-S006 | Error | PASS | Black Kitchen Addressables group uses local paths |
 | BCAT-S007 | Error | PASS | Android application identifier is project-owned |
@@ -41,16 +41,6 @@ Generated: 2026-08-07 11:05 · mode: report
 - `BH_XR_MainScene → _SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio` — XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select.
 - `BH_XR_MainScene → _SceneContent/ImplementedContributorInstallations/RI/TV_Asset/TV_Preview` — XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select.
 
-### BCAT-P001 — Exactly one ScenePlatformBinding per inhabited scene
-
-- `LoadingScene` — No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform.
-- `MainMenuScene` — No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform.
-
-### BCAT-P003 — One root Platform group with Desktop/Quest children only
-
-- `LoadingScene` — No root GameObject named 'Platform'. Platform rigs and platform services must live in one root platform group.
-- `MainMenuScene` — No root GameObject named 'Platform'. Platform rigs and platform services must live in one root platform group.
-
 ### BCAT-Q001 — Trigger-only interaction targets carry an XR select surface
 
 - `BH_XR_MainScene → _SceneContent/Home/FirstFloor/SewingRoom/Quilt/pillow__quilt` — Interaction target 'MediaVideoController' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component.
@@ -59,8 +49,3 @@ Generated: 2026-08-07 11:05 · mode: report
 ### BCAT-Q002 — Both desktop and XR prompts are valid
 
 - `BH_XR_MainScene → _SceneContent/ImplementedContributorInstallations/BlackKitchenPortal_ROOT/BlackKitchenPortalController` — XR prompt is empty.
-
-### BCAT-S004 — Presentation scenes are head-tracked on Quest
-
-- `LoadingScene` — Presentation scene has a camera but no Quest presentation branch: on Quest the view would be head-locked (no tracked pose) for the whole scene.
-- `MainMenuScene` — Presentation scene has a camera but no Quest presentation branch: on Quest the view would be head-locked (no tracked pose) for the whole scene.

@@ -1,19 +1,13 @@
 {
-  "generated": "2026-08-07T11:05:48.7768070-07:00",
+  "generated": "2026-08-07T11:25:08.2672040-07:00",
   "strict": false,
   "errors": 0,
-  "warnings": 11,
+  "warnings": 5,
   "findings": [
     {"rule": "BCAT-Q001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/Home/FirstFloor/SewingRoom/Quilt/pillow__quilt", "message": "Interaction target 'MediaVideoController' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component."},
     {"rule": "BCAT-D004", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio", "message": "XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select."},
     {"rule": "BCAT-Q001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio", "message": "Interaction target 'SpatialAudioToggle' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component."},
     {"rule": "BCAT-D004", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/TV_Asset/TV_Preview", "message": "XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select."},
-    {"rule": "BCAT-Q002", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/BlackKitchenPortal_ROOT/BlackKitchenPortalController", "message": "XR prompt is empty."},
-    {"rule": "BCAT-P003", "severity": "Warning", "scene": "MainMenuScene", "object": "", "message": "No root GameObject named 'Platform'. Platform rigs and platform services must live in one root platform group."},
-    {"rule": "BCAT-P001", "severity": "Warning", "scene": "MainMenuScene", "object": "", "message": "No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform."},
-    {"rule": "BCAT-S004", "severity": "Warning", "scene": "MainMenuScene", "object": "", "message": "Presentation scene has a camera but no Quest presentation branch: on Quest the view would be head-locked (no tracked pose) for the whole scene."},
-    {"rule": "BCAT-P003", "severity": "Warning", "scene": "LoadingScene", "object": "", "message": "No root GameObject named 'Platform'. Platform rigs and platform services must live in one root platform group."},
-    {"rule": "BCAT-P001", "severity": "Warning", "scene": "LoadingScene", "object": "", "message": "No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform."},
-    {"rule": "BCAT-S004", "severity": "Warning", "scene": "LoadingScene", "object": "", "message": "Presentation scene has a camera but no Quest presentation branch: on Quest the view would be head-locked (no tracked pose) for the whole scene."}
+    {"rule": "BCAT-Q002", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/BlackKitchenPortal_ROOT/BlackKitchenPortalController", "message": "XR prompt is empty."}
   ]
 }

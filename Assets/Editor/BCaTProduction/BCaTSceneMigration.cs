@@ -153,6 +153,137 @@ namespace BCaT.EditorTools
             Report("Main scene");
         }
 
+        // ---- Presentation scenes -------------------------------------------
+
+        const string LoadingScenePath = "Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity";
+        const string MainMenuScenePath = "Assets/BCaT/ProductionCore/Scenes/MainMenuScene.unity";
+
+        const string XrRigPrefabPath =
+            "Assets/Samples/XR Interaction Toolkit/3.3.1/Starter Assets/Prefabs/XR Origin (XR Rig).prefab";
+
+        [MenuItem("BCaT/Architecture/Migrate Presentation Scenes")]
+        public static void MigratePresentationScenes()
+        {
+            Log.Clear();
+            MigratePresentationScene(LoadingScenePath, "Loading Camera");
+            MigratePresentationScene(MainMenuScenePath, "Menu Camera");
+            Report("Presentation scenes");
+        }
+
+        /// <summary>
+        /// Menu and loading scenes are presentational: no locomotion, no
+        /// interaction. But a plain camera in a headset is head-locked — it does
+        /// not respond to head rotation at all — and the Black Kitchen bundle
+        /// load can hold that view for a long time. A head-locked view is a
+        /// recognized discomfort trigger, so these scenes get a Quest branch
+        /// whose camera is head-tracked.
+        /// </summary>
+        static void MigratePresentationScene(string scenePath, string desktopCameraName)
+        {
+            Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+            Note($"--- {scene.name}");
+
+            GameObject platform = EnsureRoot(scene, PlatformGroup);
+            GameObject desktop = EnsureChild(platform, DesktopBranch);
+            GameObject quest = EnsureChild(platform, QuestBranch);
+
+            MoveIntoBranch(scene, desktopCameraName, desktop);
+            EnsurePresentationXrCamera(quest);
+
+            SetAuthoredActive(desktop, false);
+            SetAuthoredActive(quest, false);
+
+            GameObject services = EnsureRoot(scene, SceneServices);
+            MoveIntoBranch(scene, "LoadingSceneController", services);
+            MoveIntoBranch(scene, "MainMenu", services);
+
+            EventSystem eventSystem = ConsolidateEventSystems(scene, services);
+            WireBinding(services, desktop, quest, eventSystem, expectsPlayerRig: false);
+
+            Save(scene);
+        }
+
+        /// <summary>
+        /// Build the head-tracked presentation camera by reusing the project's
+        /// XR rig prefab and switching off locomotion and the interactors. That
+        /// reuses a known-good TrackedPoseDriver configuration (with its input
+        /// action bindings) instead of hand-wiring one, and keeps a loading
+        /// screen from carrying interactors that would auto-provision an
+        /// XRInteractionManager.
+        /// </summary>
+        static void EnsurePresentationXrCamera(GameObject questBranch)
+        {
+            bool hasCamera = questBranch.GetComponentsInChildren<Camera>(true).Length > 0;
+            if (hasCamera)
+                return;
+
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(XrRigPrefabPath);
+            if (prefab == null)
+            {
+                Note($"WARNING XR rig prefab not found at {XrRigPrefabPath}; presentation scene will " +
+                     "stay head-locked on Quest.");
+                return;
+            }
+
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, questBranch.scene);
+            instance.name = "XR Presentation";
+            instance.transform.SetParent(questBranch.transform, worldPositionStays: false);
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = Quaternion.identity;
+
+            // Unpack so the unwanted subtrees can be removed outright rather
+            // than merely deactivated. What remains is a small, self-contained
+            // head-tracked camera that cannot drift when the XRI sample is
+            // reimported — and a loading screen carries no controller meshes,
+            // interactors or locomotion it will never use.
+            PrefabUtility.UnpackPrefabInstance(instance, PrefabUnpackMode.Completely,
+                InteractionMode.AutomatedAction);
+
+            foreach (string childName in new[]
+                     {
+                         "Locomotion",
+                         "Camera Offset/Left Controller",
+                         "Camera Offset/Right Controller",
+                         "Camera Offset/Gaze Interactor",
+                         "Camera Offset/Gaze Stabilized",
+                         "Camera Offset/Left Controller Teleport Stabilized Origin",
+                         "Camera Offset/Right Controller Teleport Stabilized Origin",
+                     })
+            {
+                Transform child = instance.transform.Find(childName);
+                if (child != null)
+                {
+                    Object.DestroyImmediate(child.gameObject);
+                    Note($"removed '{childName}' from the presentation rig");
+                }
+            }
+
+            // Interaction and locomotion behaviours on the origin itself have
+            // nothing left to drive in a presentation scene.
+            foreach (Component component in instance.GetComponents<Component>())
+            {
+                if (component == null || component is Transform)
+                    continue;
+
+                string typeName = component.GetType().Name;
+                if (typeName == "XROrigin" || typeName == "CharacterController")
+                    continue;
+
+                Object.DestroyImmediate(component);
+                Note($"removed '{typeName}' from the presentation rig root");
+            }
+
+            // A ScenePlayerRig marker would make this look like an inhabited
+            // scene; it is deliberately absent.
+            foreach (ScenePlayerRig marker in instance.GetComponentsInChildren<ScenePlayerRig>(true))
+                Object.DestroyImmediate(marker);
+
+            bool tracked = instance.GetComponentsInChildren<Component>(true)
+                .Any(c => c != null && c.GetType().Name == "TrackedPoseDriver");
+            Note($"added head-tracked presentation camera '{Path(instance.transform)}' " +
+                 $"(trackedPoseDriver={tracked})");
+        }
+
         // ---- Shared steps --------------------------------------------------
 
         static GameObject FindRoot(Scene scene, string name) =>
@@ -425,7 +556,7 @@ namespace BCaT.EditorTools
         }
 
         static void WireBinding(GameObject services, GameObject desktop, GameObject quest,
-            EventSystem eventSystem)
+            EventSystem eventSystem, bool expectsPlayerRig = true)
         {
             var binding = services.GetComponent<ScenePlatformBinding>();
             if (binding == null)
@@ -438,8 +569,10 @@ namespace BCaT.EditorTools
             so.FindProperty("desktopBranch").objectReferenceValue = desktop;
             so.FindProperty("questBranch").objectReferenceValue = quest;
             so.FindProperty("sceneEventSystem").objectReferenceValue = eventSystem;
+            so.FindProperty("expectsPlayerRig").boolValue = expectsPlayerRig;
             so.ApplyModifiedPropertiesWithoutUndo();
-            Note("wired ScenePlatformBinding (desktopBranch, questBranch, sceneEventSystem)");
+            Note($"wired ScenePlatformBinding (desktopBranch, questBranch, sceneEventSystem, " +
+                 $"expectsPlayerRig={expectsPlayerRig})");
         }
 
         // ---- Plumbing ------------------------------------------------------

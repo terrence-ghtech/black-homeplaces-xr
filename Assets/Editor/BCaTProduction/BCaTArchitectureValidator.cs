@@ -665,12 +665,19 @@ namespace BCaT.EditorTools
             }
         }
 
+        /// <summary>
+        /// Rig-internal: rigs legitimately contain renderers (controller models,
+        /// reticles) and an audio listener. Both the player rigs and the
+        /// presentation rigs count — the latter carry no ScenePlayerRig marker
+        /// because they are not inhabited, so XROrigin is checked too.
+        /// </summary>
         static bool IsUnderRig(Transform t)
         {
             Transform cursor = t;
             while (cursor != null)
             {
                 if (cursor.GetComponent<ScenePlayerRig>() != null) return true;
+                if (cursor.GetComponent<XROrigin>() != null) return true;
                 cursor = cursor.parent;
             }
             return false;
@@ -900,10 +907,14 @@ namespace BCaT.EditorTools
             var listeners = all.Select(go => go.GetComponent<AudioListener>())
                 .Where(l => l != null).ToList();
 
-            // One listener per rig is correct — only one rig is ever active. The
-            // defect is two listeners that could be active simultaneously, i.e.
-            // two outside any rig, or one outside a rig plus any rig listener.
-            var free = listeners.Where(l => !IsUnderRig(l.transform)).ToList();
+            // One listener per platform branch is correct — only one branch is
+            // ever active. The defect is two listeners that could be active
+            // simultaneously, i.e. two outside every branch, or one outside plus
+            // any branch-owned listener.
+            var free = listeners.Where(l =>
+                !IsUnderRig(l.transform) &&
+                (desktopBranch == null || !l.transform.IsChildOf(desktopBranch)) &&
+                (questBranch == null || !l.transform.IsChildOf(questBranch))).ToList();
 
             if (free.Count > 1)
             {

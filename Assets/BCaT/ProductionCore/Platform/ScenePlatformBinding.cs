@@ -49,6 +49,10 @@ namespace BCaT.Production
         [Tooltip("Name of the development-only container inside a platform branch.")]
         [SerializeField] private string devOnlyGroupName = "DevOnly";
 
+        [Tooltip("Inhabited scenes carry a player rig. Presentation scenes (menu, loading) carry a " +
+                 "head-tracked camera only, so a missing rig is expected rather than an error.")]
+        [SerializeField] private bool expectsPlayerRig = true;
+
         public GameObject ActiveBranch { get; private set; }
         public ScenePlayerRig ActiveRig { get; private set; }
 
@@ -102,12 +106,21 @@ namespace BCaT.Production
                       $"devSimulator={BCaTPlatform.WantsEditorDeviceSimulator}.");
 
             if (ActiveRig == null)
-                Debug.LogError($"[ScenePlatformBinding] Scene '{gameObject.scene.name}': branch " +
-                               $"'{wanted.name}' contains no ScenePlayerRig of kind {profile.rigKind}.");
+            {
+                if (expectsPlayerRig)
+                    Debug.LogError($"[ScenePlatformBinding] Scene '{gameObject.scene.name}': branch " +
+                                   $"'{wanted.name}' contains no ScenePlayerRig of kind {profile.rigKind}.");
+                else if (FindMainCamera(wanted.transform) == null)
+                    Debug.LogError($"[ScenePlatformBinding] Scene '{gameObject.scene.name}': " +
+                                   $"presentation branch '{wanted.name}' has no camera tagged " +
+                                   "MainCamera; the scene would render nothing.");
+            }
             else if (rigCamera == null)
+            {
                 Debug.LogError($"[ScenePlatformBinding] Scene '{gameObject.scene.name}': rig " +
                                $"'{ActiveRig.name}' has no camera tagged MainCamera; Camera.main will " +
                                "not resolve to the player.");
+            }
         }
 
         void OnDestroy() => ScenePlayerRigRegistry.Unregister(gameObject.scene);
