@@ -783,12 +783,19 @@ namespace BCaT.EditorTools
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(desktop))
+            // An empty shared-HUD prompt is correct for the two sanctioned
+            // world-space prompt systems (Black Kitchen entrance, Front Home
+            // Privacy Zones hologram): the floating prompt is the only
+            // affordance there, and an empty HUD string is what prevents a
+            // duplicate. Those targets expose the wording through
+            // WorldPromptText(bool) instead, so accept an empty prompt when that
+            // returns text for the same platform.
+            if (string.IsNullOrWhiteSpace(desktop) && !HasWorldPromptText(target, false))
                 Add(findings, "BCAT-Q002", scene, HierarchyPath(go.transform),
-                    "Desktop prompt is empty.");
-            if (string.IsNullOrWhiteSpace(xr))
+                    "Desktop prompt is empty and no world-space prompt supplies wording.");
+            if (string.IsNullOrWhiteSpace(xr) && !HasWorldPromptText(target, true))
                 Add(findings, "BCAT-Q002", scene, HierarchyPath(go.transform),
-                    "XR prompt is empty.");
+                    "XR prompt is empty and no world-space prompt supplies wording.");
 
             if (!string.IsNullOrWhiteSpace(xr))
             {
@@ -802,6 +809,28 @@ namespace BCaT.EditorTools
                         break;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// The project's convention for the two sanctioned world-space prompts:
+        /// the target exposes the wording through WorldPromptText(bool) and
+        /// deliberately returns an empty shared-HUD prompt on that platform.
+        /// </summary>
+        static bool HasWorldPromptText(IInteractionTarget target, bool xr)
+        {
+            var method = target.GetType().GetMethod("WorldPromptText",
+                new[] { typeof(bool) });
+            if (method == null || method.ReturnType != typeof(string))
+                return false;
+
+            try
+            {
+                return !string.IsNullOrWhiteSpace(method.Invoke(target, new object[] { xr }) as string);
+            }
+            catch
+            {
+                return false;
             }
         }
 

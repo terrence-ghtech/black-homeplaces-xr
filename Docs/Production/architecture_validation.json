@@ -1,13 +1,8 @@
 {
-  "generated": "2026-08-07T11:33:30.7806730-07:00",
+  "generated": "2026-08-07T11:41:55.5332650-07:00",
   "strict": false,
   "errors": 0,
-  "warnings": 5,
+  "warnings": 0,
   "findings": [
-    {"rule": "BCAT-Q001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/Home/FirstFloor/SewingRoom/Quilt/pillow__quilt", "message": "Interaction target 'MediaVideoController' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component."},
-    {"rule": "BCAT-D004", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio", "message": "XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select."},
-    {"rule": "BCAT-Q001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio", "message": "Interaction target 'SpatialAudioToggle' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component."},
-    {"rule": "BCAT-D004", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/TV_Asset/TV_Preview", "message": "XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select."},
-    {"rule": "BCAT-Q002", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/BlackKitchenPortal_ROOT/BlackKitchenPortalController", "message": "XR prompt is empty."}
   ]
 }

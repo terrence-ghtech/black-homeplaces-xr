@@ -6738,6 +6738,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3649036241585482707, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       insertIndex: -1
       addedObject: {fileID: 75067009}
+    - targetCorrespondingSourceObject: {fileID: 3649036241585482707, guid: ac65b22932d074699851b897dabb3f50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 75067015}
   m_SourcePrefab: {fileID: 100100000, guid: ac65b22932d074699851b897dabb3f50, type: 3}
 --- !u!4 &75067007 stripped
 Transform:
@@ -7056,6 +7059,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8, y: 3, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &75067015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75067008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86da631f7354942e48f0dcd76013529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.Interaction.XrSelectSurface
+  sourceColliders: []
+  padding: 0
+  forwardsTo: MediaVideoController
 --- !u!1001 &75205702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69150,6 +69168,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: ade6cd34bd0614ae6b27475de588b3dc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 798815925}
+    - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: ade6cd34bd0614ae6b27475de588b3dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 798815926}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: ade6cd34bd0614ae6b27475de588b3dc, type: 3}
 --- !u!4 &798815921 stripped
 Transform:
@@ -69248,6 +69269,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &798815926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798815922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86da631f7354942e48f0dcd76013529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.Interaction.XrSelectSurface
+  sourceColliders: []
+  padding: 0
+  forwardsTo: MediaVideoController
 --- !u!1001 &799167036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -154569,6 +154605,7 @@ MonoBehaviour:
   questBranch: {fileID: 1664084391}
   sceneEventSystem: {fileID: 1595477586}
   devOnlyGroupName: DevOnly
+  expectsPlayerRig: 1
 --- !u!4 &1662973199
 Transform:
   m_ObjectHideFlags: 0
@@ -192097,6 +192134,7 @@ GameObject:
   - component: {fileID: 2102000003}
   - component: {fileID: 2102000004}
   - component: {fileID: 2102000005}
+  - component: {fileID: 2102000006}
   m_Layer: 0
   m_Name: DominoSpatialAudio
   m_TagString: Untagged
@@ -192352,6 +192390,21 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
+--- !u!114 &2102000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86da631f7354942e48f0dcd76013529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.Interaction.XrSelectSurface
+  sourceColliders: []
+  padding: 0
+  forwardsTo: SpatialAudioToggle
 --- !u!1 &2103003884
 GameObject:
   m_ObjectHideFlags: 0
