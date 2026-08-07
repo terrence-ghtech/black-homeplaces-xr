@@ -28,6 +28,54 @@ resizable window, Android minSdk 29, copies the six production videos into
 `Assets/StreamingAssets`, and records them in
 `RemoteMediaConfig.packagedFileNames`.
 
+## Architecture gate (runs automatically)
+
+Since 2026-08-07 every player build first runs `BCaTArchitectureValidator`
+(`BCaTBuildValidationStep`, `IPreprocessBuildWithReport`). Any Error-severity
+finding **aborts the build** with the rule id and the offending object path, and
+the report is written to `Docs/Production/ARCHITECTURE_VALIDATION.md`.
+
+**No manual hierarchy change is ever required before building.** Platform rig
+selection, EventSystem input-module assignment and development-aid stripping all
+happen automatically — `ScenePlatformBinding` at runtime and
+`BCaTEditorOnlyStripper` at build time. If a scene would need hand-fixing, the
+build fails instead of shipping.
+
+Run it standalone at any time:
+
+```
+Unity -projectPath <project> -batchmode -nographics -quit \
+  -executeMethod BCaT.EditorTools.BCaTArchitectureValidator.RunBatch -logFile v.log
+```
+
+Exit codes: 0 pass · 1 error-severity failure · 2 warnings only.
+Escape hatch for a deliberate diagnostic build from a known-broken tree:
+`-bcatSkipArchitectureValidation` (the resulting build is not validated).
+
+## Addressables profile safety
+
+The pipeline now **sets and asserts** the Addressables profile named by the
+target's `BCaTPlatformProfile` before `BuildPlayerContent`, instead of only
+logging whichever profile happened to be active. A Windows build made straight
+after a Quest build can no longer pick up the wrong profile and ship a catalog
+that does not match its bundles. Development builds additionally check
+`Addressables.RuntimePath` against the expected bundle folder at startup
+(`StandaloneOSX` / `StandaloneWindows64` / `Android`).
+
+## Testing a platform in the Editor
+
+`BCaT → Platform Test Mode`: **Auto** · **Desktop** · **Quest XR (Simulated)** ·
+Quest XR (Device). Quest XR (Simulated) activates the Quest branch and the XR
+Device Simulator without a headset — the mode to use for Quest prompt wording,
+rig activation, interaction routing and canvas placement. Exit and re-enter Play
+Mode after switching. CI equivalent: `-bcatPlatform=Desktop|Quest`.
+
+Quest XR (Device) additionally requires a Standalone entry in
+`Assets/XR/XRGeneralSettingsPerBuildTarget.asset` with
+`InitManagerOnStart = false`. That entry is intentionally absent: with automatic
+initialization it would flip `XRSettings.isDeviceActive` in ordinary desktop Play
+Mode on any machine with an OpenXR runtime installed.
+
 ## Building
 
 Each method builds **Addressables content first** (so the Black Kitchen bundle

@@ -4,6 +4,15 @@ One shared Unity project, one shared scene set. Platform differences are
 expressed through configuration and a small set of runtime services, never
 through duplicated scenes or projects.
 
+> **Updated 2026-08-07.** The platform layer was rebuilt per
+> `16_PLATFORM_ARCHITECTURE_REVIEW.md`; see
+> `17_PLATFORM_ARCHITECTURE_IMPLEMENTATION_LOG.md` for what changed and how it
+> was validated. In short: one resolver (`BCaTPlatform`) plus one per-scene
+> applier (`ScenePlatformBinding`) replaced `PlatformRigActivator` and
+> `ScenePlatformRigSelector`; every scene now has a root `Platform` group with
+> both branches **authored inactive**; and Quest is testable in the Editor via
+> `BCaT → Platform Test Mode → Quest XR (Simulated)`.
+
 ```
 Shared Core (Assets/BCaT/ProductionCore + existing systems)
 ├── Scenes: MainMenuScene → BH_XR_MainScene ⇄ LoadingScene ⇄ BlackKitchen_MemoryScene (Addressables)
@@ -16,7 +25,7 @@ Shared Core (Assets/BCaT/ProductionCore + existing systems)
 └── Shared UI logic: UiFactory (runtime-built menus, consistent with existing runtime modals)
 
 Desktop Profile (Windows 11 x64 · Apple Silicon macOS)
-├── StarterAssets PlayerCapsule rig (kind=Desktop) selected by PlatformRigActivator
+├── StarterAssets PlayerCapsule rig (kind=Desktop) activated by ScenePlatformBinding
 ├── DesktopInteractionInputProvider (E key + click, the ONLY sanctioned world-interaction poll)
 ├── Screen-space prompt (InteractionPromptUi) + per-exhibit world prompts
 ├── Desktop shell: MainMenuController, PauseMenuController, CrosshairController, quit confirmation
@@ -25,16 +34,44 @@ Desktop Profile (Windows 11 x64 · Apple Silicon macOS)
 └── Windows/macOS media behavior: packaged StreamingAssets first, remote CCD fallback
 
 Meta Quest Profile (Android + OpenXR, Quest feature group only)
-├── XRI 3.4 XR Origin rig (kind=XR) selected by PlatformRigActivator
+├── XRI 3.4 XR Origin rig (kind=XR) activated by ScenePlatformBinding
 ├── QuestInteractionInputProvider (event-driven; XRSimpleInteractable → Router.RequestXRSelect)
-├── World-space prompts only ("Interact …", never keyboard language)
+├── World-space prompt HUD (InteractionPromptUi in WorldSpace mode, parented to the
+│   head camera) — "Interact"/"Play — Name", never keyboard language. Plus the two
+│   sanctioned exhibit-owned world prompts (Black Kitchen entrance, Privacy hologram)
 ├── Quest quality tier (fixed), Quest_RPAsset, IL2CPP/ARM64, Vulkan+GLES3
 └── Comfort/locomotion: existing XRI rig configuration (validated on hardware by owner)
 ```
 
-## Platform capability service
+## Platform authority
 
-`BCaT.Production.PlatformCapabilities` is the single query point:
+`BCaT.Production.BCaTPlatform` is the single platform authority and the only
+place allowed to touch build defines, `XRSettings` or XR Management. It resolves
+the platform once, before the first scene object awakens, from an explicit
+precedence chain: **editor override → `-bcatPlatform=` → build define → XR device
+probe → desktop**. Only a probe-derived Desktop answer stays provisional (it may
+promote to Quest once, as the previous per-call `IsXRActive()` polling did); a
+Quest answer or any forced answer is final.
+
+Platform *policy* lives in `BCaTPlatformProfile` assets (one per platform, in
+`Resources/BCaT/Platform/`): rig kind, locomotion, input provider, prompt style,
+UI input module, app shell, kiosk, swapchain ownership, quality tier, media
+source policy, diagnostics verbosity, Addressables profile. Adding a capability
+is a field, not a new `#if`.
+
+`ScenePlatformBinding` applies that decision per scene, in `Awake`. It configures
+the scene's single `EventSystem` **before** activating the rig branch — XRI's
+`RegisteredUIInteractorCache` auto-creates its own EventSystem when it cannot
+find an *active* one, so the other order yields two EventSystems and two
+`XRUIInputModule`s on Quest.
+
+Correctness does not depend on execution order: both platform branches are
+**authored inactive**, and an inactive object never runs `Awake` at all.
+
+### Capability facade (retained)
+
+`BCaT.Production.PlatformCapabilities` remains as a facade over the resolver,
+because a lot of production code already asks there. Every member now forwards:
 IsDesktop / IsWindows / IsMacOS / IsQuestConfiguration / IsXRActive /
 SupportsKeyboardMouse / SupportsQuestControllers / SupportsExternalLinks /
 SupportsLocalMediaFileChecks / SupportsRemoteMedia / SupportsKioskMode /

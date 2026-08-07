@@ -1,6 +1,6 @@
 # BCaT Architecture Validation
 
-Generated: 2026-08-07 12:02 · mode: report
+Generated: 2026-08-07 12:06 · mode: report
 
 **0 error(s), 0 warning(s).** No error-severity rule is failing; the build gate passes.
 
