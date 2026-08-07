@@ -1,16 +1,9 @@
 {
-  "generated": "2026-08-07T11:01:08.5490930-07:00",
+  "generated": "2026-08-07T11:05:48.7768070-07:00",
   "strict": false,
   "errors": 0,
-  "warnings": 18,
+  "warnings": 11,
   "findings": [
-    {"rule": "BCAT-P003", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "BuildProfiles", "message": "Platform group is still named 'BuildProfiles'; rename to 'Platform'. The name is load-bearing for legacy branch selection."},
-    {"rule": "BCAT-P003", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "BuildProfiles/XR", "message": "Legacy platform branch name 'XR'; rename to 'Quest'."},
-    {"rule": "BCAT-P003", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "BuildProfiles/Web", "message": "Legacy platform branch name 'Web'; rename to 'Desktop'."},
-    {"rule": "BCAT-P002", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "BuildProfiles/XR", "message": "Platform branch is authored ACTIVE. Both branches must be authored inactive; ScenePlatformBinding activates exactly one in Awake. An authored-active branch runs its Awake/OnEnable on the wrong platform."},
-    {"rule": "BCAT-P001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "", "message": "No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform."},
-    {"rule": "BCAT-L001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "EventSystem", "message": "Quest-only component 'XRUIInputModule' is outside Platform/Quest."},
-    {"rule": "BCAT-L001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "BuildProfiles/Web/Test_Headset_W_Keyboard/XR Device Simulator", "message": "Quest-only component 'XRDeviceSimulator' is outside Platform/Quest."},
     {"rule": "BCAT-Q001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/Home/FirstFloor/SewingRoom/Quilt/pillow__quilt", "message": "Interaction target 'MediaVideoController' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component."},
     {"rule": "BCAT-D004", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio", "message": "XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select."},
     {"rule": "BCAT-Q001", "severity": "Warning", "scene": "BH_XR_MainScene", "object": "_SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio", "message": "Interaction target 'SpatialAudioToggle' has only trigger colliders and no XR select surface, so it is unreachable by the XRI casters on Quest. Add an XrSelectSurface component."},

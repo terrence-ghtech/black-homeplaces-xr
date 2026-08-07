@@ -1,8 +1,8 @@
 # BCaT Architecture Validation
 
-Generated: 2026-08-07 11:01 · mode: report
+Generated: 2026-08-07 11:05 · mode: report
 
-**0 error(s), 18 warning(s).** No error-severity rule is failing; the build gate passes.
+**0 error(s), 11 warning(s).** No error-severity rule is failing; the build gate passes.
 
 ## Summary by rule
 
@@ -12,15 +12,15 @@ Generated: 2026-08-07 11:01 · mode: report
 | BCAT-D004 | Warning | 2 | Every XRSimpleInteractable is reachable by XRI casters |
 | BCAT-D005 | Warning | PASS | No missing script references |
 | BCAT-D006 | Warning | PASS | At most one AudioListener per platform branch |
-| BCAT-L001 | Warning | 2 | No Quest-only components outside Platform/Quest |
+| BCAT-L001 | Warning | PASS | No Quest-only components outside Platform/Quest |
 | BCAT-L002 | Warning | PASS | No Desktop-only components outside Platform/Desktop |
 | BCAT-L003 | Warning | PASS | Platform/ contains only rigs and platform services |
 | BCAT-L004 | Warning | PASS | DevOnly subtrees are editor-only |
 | BCAT-L005 | Warning | PASS | Raw platform APIs used only in sanctioned files |
 | BCAT-L006 | Error | PASS | World-interaction keyboard polling is centralized |
-| BCAT-P001 | Warning | 3 | Exactly one ScenePlatformBinding per inhabited scene |
-| BCAT-P002 | Warning | 1 | Platform branches are authored inactive |
-| BCAT-P003 | Warning | 5 | One root Platform group with Desktop/Quest children only |
+| BCAT-P001 | Warning | 2 | Exactly one ScenePlatformBinding per inhabited scene |
+| BCAT-P002 | Warning | PASS | Platform branches are authored inactive |
+| BCAT-P003 | Warning | 2 | One root Platform group with Desktop/Quest children only |
 | BCAT-P004 | Warning | PASS | One EventSystem per scene with exactly one input module |
 | BCAT-P005 | Warning | PASS | One rig per kind, both under Platform/ |
 | BCAT-P006 | Warning | PASS | One XRInteractionManager, under Platform/Quest |
@@ -41,26 +41,13 @@ Generated: 2026-08-07 11:01 · mode: report
 - `BH_XR_MainScene → _SceneContent/ImplementedContributorInstallations/RI/domino/DominoSpatialAudio` — XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select.
 - `BH_XR_MainScene → _SceneContent/ImplementedContributorInstallations/RI/TV_Asset/TV_Preview` — XRSimpleInteractable has no non-trigger collider reachable by the XRI casters (both ignore triggers), so it is invisible in headset: no hover, no prompt, no select.
 
-### BCAT-L001 — No Quest-only components outside Platform/Quest
-
-- `BH_XR_MainScene → BuildProfiles/Web/Test_Headset_W_Keyboard/XR Device Simulator` — Quest-only component 'XRDeviceSimulator' is outside Platform/Quest.
-- `BH_XR_MainScene → EventSystem` — Quest-only component 'XRUIInputModule' is outside Platform/Quest.
-
 ### BCAT-P001 — Exactly one ScenePlatformBinding per inhabited scene
 
-- `BH_XR_MainScene` — No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform.
 - `LoadingScene` — No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform.
 - `MainMenuScene` — No ScenePlatformBinding. Every scene with a platform group must have exactly one binding, on an always-active object, to apply the resolved platform.
 
-### BCAT-P002 — Platform branches are authored inactive
-
-- `BH_XR_MainScene → BuildProfiles/XR` — Platform branch is authored ACTIVE. Both branches must be authored inactive; ScenePlatformBinding activates exactly one in Awake. An authored-active branch runs its Awake/OnEnable on the wrong platform.
-
 ### BCAT-P003 — One root Platform group with Desktop/Quest children only
 
-- `BH_XR_MainScene → BuildProfiles` — Platform group is still named 'BuildProfiles'; rename to 'Platform'. The name is load-bearing for legacy branch selection.
-- `BH_XR_MainScene → BuildProfiles/Web` — Legacy platform branch name 'Web'; rename to 'Desktop'.
-- `BH_XR_MainScene → BuildProfiles/XR` — Legacy platform branch name 'XR'; rename to 'Quest'.
 - `LoadingScene` — No root GameObject named 'Platform'. Platform rigs and platform services must live in one root platform group.
 - `MainMenuScene` — No root GameObject named 'Platform'. Platform rigs and platform services must live in one root platform group.
 

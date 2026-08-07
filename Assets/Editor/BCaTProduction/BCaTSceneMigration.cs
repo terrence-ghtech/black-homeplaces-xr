@@ -369,8 +369,29 @@ namespace BCaT.EditorTools
                     continue;
 
                 string from = Path(spawn.transform);
-                // worldPositionStays keeps the authored spawn pose exactly.
+                Transform previousParent = spawn.transform.parent;
+                Vector3 worldPosition = spawn.transform.position;
+                Quaternion worldRotation = spawn.transform.rotation;
+
+                // worldPositionStays preserves the pose, but only when the new
+                // and old parent chains are representable — non-uniform ancestor
+                // scale can introduce skew Unity cannot express in a local
+                // transform. Verify and revert rather than silently moving a
+                // spawn point the player lands on.
                 spawn.transform.SetParent(group.transform, worldPositionStays: true);
+
+                float positionDrift = Vector3.Distance(spawn.transform.position, worldPosition);
+                float rotationDrift = Quaternion.Angle(spawn.transform.rotation, worldRotation);
+                if (positionDrift > 1e-4f || rotationDrift > 1e-3f)
+                {
+                    spawn.transform.SetParent(previousParent, worldPositionStays: true);
+                    spawn.transform.SetPositionAndRotation(worldPosition, worldRotation);
+                    Note($"SKIPPED moving spawn point '{from}': re-parenting drifted the world pose " +
+                         $"by {positionDrift:F5} m / {rotationDrift:F4}° (non-uniform ancestor scale). " +
+                         "Left in place; grouping is cosmetic, spawn accuracy is not.");
+                    continue;
+                }
+
                 Note($"moved spawn point '{from}' → '{Path(group.transform)}' (world pose preserved)");
             }
         }

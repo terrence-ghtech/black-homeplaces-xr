@@ -27,6 +27,18 @@ namespace BCaT.Production
 
         public void ApplyToScene(Scene scene)
         {
+            // A migrated scene has exactly one platform authority: its
+            // ScenePlatformBinding, which already ran in Awake. Defer rather
+            // than re-asserting, so there is never a window where two systems
+            // write rig active state with different information.
+            if (HasBinding(scene))
+            {
+                Debug.Log($"[PlatformRigActivator] Scene '{scene.name}' has a ScenePlatformBinding; " +
+                          "deferring to it (this activator is legacy and applies only to " +
+                          "unmigrated scenes).");
+                return;
+            }
+
             bool useXR = ScenePlatformRigSelector.ShouldUseXR();
 
             var rigs = FindObjectsByType<ScenePlayerRig>(
@@ -64,6 +76,17 @@ namespace BCaT.Production
                 $"XR rig activation applied. scene='{scene.name}', useXR={useXR}, rigs={rigs.Length}, activated={activated}.");
             EnsureQuestCamera(scene, useXR);
             RemoveXRDeviceSimulatorIfPresent(scene, useXR);
+        }
+
+        static bool HasBinding(Scene scene)
+        {
+            if (!scene.IsValid() || !scene.isLoaded)
+                return false;
+
+            foreach (var root in scene.GetRootGameObjects())
+                if (root.GetComponentInChildren<ScenePlatformBinding>(true) != null)
+                    return true;
+            return false;
         }
 
         /// <summary>
