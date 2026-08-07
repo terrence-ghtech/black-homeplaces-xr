@@ -188,6 +188,29 @@ namespace BCaT.Production
         }
 
         /// <summary>
+        /// The Addressables platform output folder this player's content must
+        /// come from ("Android", "OSX", "Windows"), or null when the running
+        /// platform has no expectation. Lives here because it is a statement
+        /// about the build target, and the build target has exactly one
+        /// authority.
+        /// </summary>
+        public static string ExpectedAddressablesPlatformFolder
+        {
+            get
+            {
+                if (IsQuestPlayerBinary)
+                    return "Android";
+
+                return Application.platform switch
+                {
+                    RuntimePlatform.OSXPlayer => "OSX",
+                    RuntimePlatform.WindowsPlayer => "Windows",
+                    _ => null,
+                };
+            }
+        }
+
+        /// <summary>
         /// True when XR Management reports a live XR device. This is the probe
         /// the resolver uses; it is false under Editor Quest simulation, which
         /// is exactly why the Editor override outranks it.

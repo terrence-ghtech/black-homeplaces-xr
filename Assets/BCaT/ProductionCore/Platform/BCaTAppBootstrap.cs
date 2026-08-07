@@ -49,11 +49,51 @@ namespace BCaT.Production
 
             services.AddComponent<Access.SubtitleService>();
 
+            AssertAddressablesMatchPlatform();
+
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             // Apply persisted settings once the first scene is up.
             SettingsManager.ApplyAll();
             ResetService.CaptureSceneEntryPose(SceneManager.GetActiveScene());
+        }
+
+        /// <summary>
+        /// A player built against another platform's Addressables content fails
+        /// only later, deep inside the Black Kitchen portal, as an opaque
+        /// download timeout. Check the runtime path at startup instead, so the
+        /// cause is named in the first lines of the log. Development builds only:
+        /// this is a build-configuration mistake, not a runtime condition to
+        /// recover from.
+        /// </summary>
+        static void AssertAddressablesMatchPlatform()
+        {
+            if (!Debug.isDebugBuild)
+                return;
+
+            string runtimePath;
+            try
+            {
+                runtimePath = UnityEngine.AddressableAssets.Addressables.RuntimePath;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[BCaT] Could not read the Addressables runtime path: {e.Message}");
+                return;
+            }
+
+            string expected = BCaTPlatform.ExpectedAddressablesPlatformFolder;
+
+            Debug.Log($"[BCaT] Addressables runtime path: {runtimePath} (expecting a '{expected}' " +
+                      "platform folder).");
+
+            if (expected != null && !runtimePath.Contains(expected))
+            {
+                Debug.LogError($"[BCaT] Addressables content mismatch: runtime path '{runtimePath}' " +
+                               $"does not contain the expected '{expected}' platform folder. This " +
+                               "player was built against another platform's Addressables content; " +
+                               "remote scenes will fail to load.");
+            }
         }
 
         static void OnSceneLoaded(Scene scene, LoadSceneMode mode)

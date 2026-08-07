@@ -78,7 +78,7 @@ namespace BCaT.EditorTools
                     throw new InvalidOperationException("Quest production builds must rebuild Android Addressables; remove -bcatSkipAddressables.");
 
                 if (!SkipAddressables)
-                    BuildAddressablesContent(summary);
+                    BuildAddressablesContent(summary, target);
 
                 if (target == BuildTarget.Android)
                     ValidateAndroidAddressablesOutput(summary);
@@ -115,7 +115,7 @@ namespace BCaT.EditorTools
             }
         }
 
-        static void BuildAddressablesContent(StringBuilder summary)
+        static void BuildAddressablesContent(StringBuilder summary, BuildTarget target)
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
             if (settings == null)
@@ -124,6 +124,13 @@ namespace BCaT.EditorTools
                 return;
             }
 
+            // BuildPlayerContent() uses whatever profile happens to be active,
+            // which it only logged. A Windows build made right after a Quest
+            // build could therefore pick up the wrong profile and produce a
+            // player whose catalog does not match its bundles. Set and assert
+            // the profile the platform expects instead of hoping.
+            EnsureAddressablesProfile(settings, target, summary);
+
             summary.AppendLine($"Addressables: building content for profile " +
                 $"'{settings.profileSettings.GetProfileName(settings.activeProfileId)}'.");
             AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
@@ -131,6 +138,50 @@ namespace BCaT.EditorTools
                 throw new Exception("Addressables build failed: " + result.Error);
             summary.AppendLine($"Addressables: OK ({result.Duration:F1}s), " +
                 $"location count {result.LocationCount}.");
+        }
+
+        /// <summary>
+        /// Selects the Addressables profile the target platform's
+        /// BCaTPlatformProfile names, and fails loudly when that profile does not
+        /// exist rather than silently building against another one.
+        /// </summary>
+        static void EnsureAddressablesProfile(AddressableAssetSettings settings, BuildTarget target,
+            StringBuilder summary)
+        {
+            string expected = ExpectedAddressablesProfile(target);
+            if (string.IsNullOrEmpty(expected))
+                return;
+
+            string activeName = settings.profileSettings.GetProfileName(settings.activeProfileId);
+            if (activeName == expected)
+            {
+                summary.AppendLine($"Addressables profile: '{expected}' (already active).");
+                return;
+            }
+
+            string id = settings.profileSettings.GetProfileId(expected);
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new InvalidOperationException(
+                    $"Addressables profile '{expected}' (required by the " +
+                    $"{PlatformIdFor(target)} platform profile) does not exist. " +
+                    $"Profiles present: {string.Join(", ", settings.profileSettings.GetAllProfileNames())}.");
+            }
+
+            settings.activeProfileId = id;
+            summary.AppendLine($"Addressables profile: switched '{activeName}' → '{expected}' " +
+                               $"for {target}.");
+        }
+
+        static BCaT.Production.BCaTPlatformId PlatformIdFor(BuildTarget target) =>
+            target == BuildTarget.Android
+                ? BCaT.Production.BCaTPlatformId.Quest
+                : BCaT.Production.BCaTPlatformId.Desktop;
+
+        static string ExpectedAddressablesProfile(BuildTarget target)
+        {
+            var profile = BCaT.Production.BCaTPlatform.ProfileFor(PlatformIdFor(target));
+            return profile != null ? profile.addressablesProfileName : null;
         }
 
         static void ValidateAndroidAddressablesOutput(StringBuilder summary)

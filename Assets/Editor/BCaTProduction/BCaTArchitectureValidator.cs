@@ -128,40 +128,46 @@ namespace BCaT.EditorTools
         static readonly Dictionary<string, RuleSeverity> RuleSeverities =
             new Dictionary<string, RuleSeverity>
             {
+                // Promoted to Error once the project satisfied them (0 findings
+                // on all four production scenes), which is what lets the
+                // pre-build gate block on them without failing on known debt.
                 // Hierarchy structure
-                { "BCAT-P001", RuleSeverity.Warning }, // one ScenePlatformBinding per inhabited scene
-                { "BCAT-P002", RuleSeverity.Warning }, // platform branches authored inactive
-                { "BCAT-P003", RuleSeverity.Warning }, // one root Platform group, children ⊆ {Desktop,Quest}
-                { "BCAT-P004", RuleSeverity.Warning }, // one EventSystem, exactly one input module
-                { "BCAT-P005", RuleSeverity.Warning }, // one rig per kind, both under Platform/
-                { "BCAT-P006", RuleSeverity.Warning }, // one XRInteractionManager under Platform/Quest
+                { "BCAT-P001", RuleSeverity.Error }, // one ScenePlatformBinding per scene with a platform group
+                { "BCAT-P002", RuleSeverity.Error }, // platform branches authored inactive
+                { "BCAT-P003", RuleSeverity.Error }, // one root Platform group, children ⊆ {Desktop,Quest}
+                { "BCAT-P004", RuleSeverity.Error }, // one EventSystem, one input module owner
+                { "BCAT-P005", RuleSeverity.Error }, // one rig per kind, both under Platform/
+                { "BCAT-P006", RuleSeverity.Error }, // one XRInteractionManager under Platform/Quest
 
                 // Platform leaks
-                { "BCAT-L001", RuleSeverity.Warning }, // Quest components outside Platform/Quest
-                { "BCAT-L002", RuleSeverity.Warning }, // Desktop components outside Platform/Desktop
-                { "BCAT-L003", RuleSeverity.Warning }, // content inside Platform/
-                { "BCAT-L004", RuleSeverity.Warning }, // DevOnly contents are editor-only
-                { "BCAT-L005", RuleSeverity.Warning }, // raw platform API use outside sanctioned files
-                { "BCAT-L006", RuleSeverity.Error   }, // keyboard polling (already satisfied)
+                { "BCAT-L001", RuleSeverity.Error }, // Quest components outside Platform/Quest
+                { "BCAT-L002", RuleSeverity.Error }, // Desktop components outside Platform/Desktop
+                { "BCAT-L003", RuleSeverity.Error }, // content inside Platform/
+                { "BCAT-L004", RuleSeverity.Error }, // DevOnly contents are editor-only
+                { "BCAT-L005", RuleSeverity.Error }, // raw platform API use outside sanctioned files
+                { "BCAT-L006", RuleSeverity.Error }, // keyboard polling
 
                 // Duplicates and orphans
-                { "BCAT-D003", RuleSeverity.Warning }, // orphaned XRSimpleInteractable
-                { "BCAT-D004", RuleSeverity.Warning }, // interactable unreachable by XRI casters
-                { "BCAT-D005", RuleSeverity.Warning }, // missing script reference
-                { "BCAT-D006", RuleSeverity.Warning }, // duplicate AudioListener
+                { "BCAT-D003", RuleSeverity.Error }, // orphaned XRSimpleInteractable
+                { "BCAT-D004", RuleSeverity.Error }, // interactable unreachable by XRI casters
+                { "BCAT-D005", RuleSeverity.Error }, // missing script reference
+                { "BCAT-D006", RuleSeverity.Error }, // simultaneously-active AudioListeners
 
                 // Interactable contract
-                { "BCAT-Q001", RuleSeverity.Warning }, // trigger-only target needs an XR select surface
-                { "BCAT-Q002", RuleSeverity.Warning }, // both platform prompts valid
+                { "BCAT-Q001", RuleSeverity.Error   }, // trigger-only target needs an XR select surface
+                // Prompt WORDING stays a warning on purpose: it judges curatorial
+                // copy, and a legitimate phrase containing "press" or "click"
+                // must not be able to block a production build.
+                { "BCAT-Q002", RuleSeverity.Warning },
 
                 // Scene configuration
-                { "BCAT-S001", RuleSeverity.Error   }, // transition scenes resolvable
-                { "BCAT-S002", RuleSeverity.Error   }, // spawn ids resolvable
-                { "BCAT-S003", RuleSeverity.Warning }, // MainCamera reachable per branch
-                { "BCAT-S004", RuleSeverity.Warning }, // presentation scenes head-tracked on Quest
-                { "BCAT-S005", RuleSeverity.Error   }, // quality tiers (already satisfied)
-                { "BCAT-S006", RuleSeverity.Error   }, // BK Addressables local paths (already satisfied)
-                { "BCAT-S007", RuleSeverity.Error   }, // Android identifier (already satisfied)
+                { "BCAT-S001", RuleSeverity.Error }, // transition scenes resolvable
+                { "BCAT-S002", RuleSeverity.Error }, // spawn ids resolvable
+                { "BCAT-S003", RuleSeverity.Error }, // MainCamera reachable per branch
+                { "BCAT-S004", RuleSeverity.Error }, // presentation scenes head-tracked on Quest
+                { "BCAT-S005", RuleSeverity.Error }, // quality tiers
+                { "BCAT-S006", RuleSeverity.Error }, // BK Addressables local paths
+                { "BCAT-S007", RuleSeverity.Error }, // Android identifier
             };
 
         static readonly Dictionary<string, string> RuleTitles = new Dictionary<string, string>
