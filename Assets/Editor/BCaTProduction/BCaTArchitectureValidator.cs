@@ -287,8 +287,11 @@ namespace BCaT.EditorTools
 
             CheckPlatformGroup(findings, sceneName, roots, platformGroup, legacyGroupName,
                 desktopBranch, questBranch);
+            bool hasBinding = all.Any(go => go.GetComponents<MonoBehaviour>()
+                .Any(c => c != null && c.GetType().Name == "ScenePlatformBinding"));
+
             CheckBinding(findings, sceneName, all, inhabited);
-            CheckEventSystems(findings, sceneName, all);
+            CheckEventSystems(findings, sceneName, all, hasBinding);
             CheckRigs(findings, sceneName, all, platformGroup, inhabited);
             CheckInteractionManagers(findings, sceneName, all, questBranch);
             CheckPlatformLeaks(findings, sceneName, all, desktopBranch, questBranch);
@@ -451,7 +454,8 @@ namespace BCaT.EditorTools
 
         // ---- BCAT-P004 -----------------------------------------------------
 
-        static void CheckEventSystems(List<ValidationFinding> findings, string scene, List<GameObject> all)
+        static void CheckEventSystems(List<ValidationFinding> findings, string scene,
+            List<GameObject> all, bool hasBinding)
         {
             var eventSystems = all.Select(go => go.GetComponent<EventSystem>())
                 .Where(es => es != null).ToList();
@@ -473,9 +477,21 @@ namespace BCaT.EditorTools
                 var modules = es.GetComponents<BaseInputModule>();
                 if (modules.Length == 0)
                 {
+                    // With a binding present, zero authored modules is the
+                    // intended state: ScenePlatformBinding assigns the profile's
+                    // module in Awake, so there is exactly one owner.
+                    if (!hasBinding)
+                        Add(findings, "BCAT-P004", scene, HierarchyPath(es.transform),
+                            "EventSystem has no BaseInputModule and the scene has no " +
+                            "ScenePlatformBinding to assign one: UI pointer events are dead.");
+                }
+                else if (modules.Length >= 1 && hasBinding)
+                {
                     Add(findings, "BCAT-P004", scene, HierarchyPath(es.transform),
-                        "EventSystem has no BaseInputModule: UI pointer events are dead in this " +
-                        "scene until something adds one at runtime.");
+                        $"EventSystem has {modules.Length} authored input module(s) " +
+                        $"({string.Join(", ", modules.Select(m => m.GetType().Name))}) while a " +
+                        "ScenePlatformBinding owns module assignment. Author no module so the " +
+                        "platform chooses.");
                 }
                 else if (modules.Length > 1)
                 {

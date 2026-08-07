@@ -34,13 +34,18 @@ namespace BCaT.Production
             services.AddComponent<Interaction.XRInteractionPromptHoverBridge>();
             services.AddComponent<LegacyInteractionPromptSuppressor>();
 
-            if (!PlatformCapabilities.IsQuestConfiguration)
+            // Service composition follows the active platform PROFILE rather
+            // than the build define, so an Editor Quest session composes the
+            // same services a Quest device does. Composing from the build
+            // define made simulated Quest sessions grow a desktop pause menu
+            // and crosshair, which then pulled in a second EventSystem.
+            if (BCaTPlatform.ShowsAppShell)
             {
                 services.AddComponent<PauseMenuController>();
                 services.AddComponent<CrosshairController>();
             }
 
-            if (ApplicationModeService.IsKiosk && PlatformCapabilities.SupportsKioskMode)
+            if (ApplicationModeService.IsKiosk && BCaTPlatform.AllowsKioskMode)
                 services.AddComponent<Kiosk.KioskController>();
 
             services.AddComponent<Access.SubtitleService>();

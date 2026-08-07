@@ -55,27 +55,60 @@ namespace BCaT.Production.Shell
             return canvas;
         }
 
-        /// <summary>Menus require an EventSystem with the Input System UI module.</summary>
+        /// <summary>
+        /// Menus require an active EventSystem carrying the input module the
+        /// active platform profile specifies.
+        ///
+        /// Deliberately never activates an inactive EventSystem it happens to
+        /// find. An earlier revision did, and because the platform layer
+        /// authors one EventSystem per platform, FindFirstObjectByType(Include)
+        /// could resurrect the *other* platform's EventSystem and then stack a
+        /// second input module on it — a platform leak whose trigger was scene
+        /// serialization order. ScenePlatformBinding owns EventSystem
+        /// activation; this method only fills in a missing module, or creates a
+        /// correctly configured EventSystem when a scene genuinely has none.
+        /// </summary>
         public static void EnsureEventSystem()
         {
+            bool wantsXr = BCaTPlatform.UiInputModule == BCaTUiInputModuleKind.XRUI;
+
             var current = EventSystem.current;
-            if (current != null && current.isActiveAndEnabled)
+            if (current == null || !current.isActiveAndEnabled)
             {
-                if (current.GetComponent<InputSystemUIInputModule>() == null)
-                    current.gameObject.AddComponent<InputSystemUIInputModule>();
+                // Only consider ACTIVE candidates: an inactive EventSystem
+                // belongs to the platform layer, not to us.
+                foreach (var candidate in UnityEngine.Object.FindObjectsByType<EventSystem>(
+                             FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+                {
+                    if (candidate != null && candidate.isActiveAndEnabled)
+                    {
+                        current = candidate;
+                        break;
+                    }
+                }
+            }
+
+            if (current == null)
+            {
+                var created = new GameObject("EventSystem", typeof(EventSystem));
+                if (wantsXr)
+                    created.AddComponent<UnityEngine.XR.Interaction.Toolkit.UI.XRUIInputModule>();
+                else
+                    created.AddComponent<InputSystemUIInputModule>();
+                Debug.Log($"[UiFactory] No active EventSystem in scene " +
+                          $"'{UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}'; " +
+                          $"created one with the {BCaTPlatform.UiInputModule} module.");
                 return;
             }
 
-            var existing = UnityEngine.Object.FindFirstObjectByType<EventSystem>(FindObjectsInactive.Include);
-            if (existing != null)
-            {
-                existing.gameObject.SetActive(true);
-                if (existing.GetComponent<InputSystemUIInputModule>() == null)
-                    existing.gameObject.AddComponent<InputSystemUIInputModule>();
+            bool hasModule = current.GetComponents<BaseInputModule>().Length > 0;
+            if (hasModule)
                 return;
-            }
 
-            new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
+            if (wantsXr)
+                current.gameObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.UI.XRUIInputModule>();
+            else
+                current.gameObject.AddComponent<InputSystemUIInputModule>();
         }
 
         public static RectTransform CreateFullScreenPanel(Transform parent, string name)
