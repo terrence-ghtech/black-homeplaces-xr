@@ -170,6 +170,24 @@ namespace BCaT.Production
 #endif
 
         /// <summary>
+        /// True when the Editor is in "Quest XR (Simulated)" test mode and the
+        /// XR Device Simulator should therefore run. False in players and in
+        /// every other mode — a real headset must not compete with simulated
+        /// devices, and desktop must never have the simulator consuming input.
+        /// </summary>
+        public static bool WantsEditorDeviceSimulator
+        {
+            get
+            {
+#if UNITY_EDITOR
+                return UnityEditor.SessionState.GetString(EditorOverrideKey, "Auto") == "QuestSimulated";
+#else
+                return false;
+#endif
+            }
+        }
+
+        /// <summary>
         /// True when XR Management reports a live XR device. This is the probe
         /// the resolver uses; it is false under Editor Quest simulation, which
         /// is exactly why the Editor override outranks it.
