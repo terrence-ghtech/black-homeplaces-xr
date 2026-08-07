@@ -188,11 +188,14 @@ namespace BCaT.Production
         }
 
         /// <summary>
-        /// The Addressables platform output folder this player's content must
-        /// come from ("Android", "OSX", "Windows"), or null when the running
-        /// platform has no expectation. Lives here because it is a statement
-        /// about the build target, and the build target has exactly one
-        /// authority.
+        /// The Addressables bundle subfolder this player's local content must
+        /// come from, or null when the running platform has no expectation.
+        /// These are BuildTarget names, which is how Addressables names the
+        /// folder under Addressables.RuntimePath — not the shorter platform
+        /// names, a distinction worth being precise about because getting it
+        /// wrong turns the startup check into a false alarm on every build.
+        /// Lives here because it is a statement about the build target, and the
+        /// build target has exactly one authority.
         /// </summary>
         public static string ExpectedAddressablesPlatformFolder
         {
@@ -203,12 +206,21 @@ namespace BCaT.Production
 
                 return Application.platform switch
                 {
-                    RuntimePlatform.OSXPlayer => "OSX",
-                    RuntimePlatform.WindowsPlayer => "Windows",
+                    RuntimePlatform.OSXPlayer => "StandaloneOSX",
+                    RuntimePlatform.WindowsPlayer => "StandaloneWindows64",
                     _ => null,
                 };
             }
         }
+
+        /// <summary>All Addressables bundle subfolder names this project can produce.</summary>
+        public static readonly string[] KnownAddressablesPlatformFolders =
+        {
+            "Android",
+            "StandaloneOSX",
+            "StandaloneWindows64",
+            "WebGL",
+        };
 
         /// <summary>
         /// True when XR Management reports a live XR device. This is the probe

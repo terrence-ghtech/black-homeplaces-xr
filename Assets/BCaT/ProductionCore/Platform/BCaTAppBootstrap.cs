@@ -83,16 +83,35 @@ namespace BCaT.Production
             }
 
             string expected = BCaTPlatform.ExpectedAddressablesPlatformFolder;
+            Debug.Log($"[BCaT] Addressables runtime path: {runtimePath} " +
+                      $"(expecting a '{expected}' bundle folder beneath it).");
 
-            Debug.Log($"[BCaT] Addressables runtime path: {runtimePath} (expecting a '{expected}' " +
-                      "platform folder).");
+            if (expected == null)
+                return;
 
-            if (expected != null && !runtimePath.Contains(expected))
+            // The platform folder is a SUBFOLDER of the runtime path, not part of
+            // it. On Quest the runtime path is a jar: URL inside the APK, which
+            // no file API can enumerate — and the build pipeline already
+            // validates the APK's aa/Android contents far more thoroughly, so
+            // there is nothing useful to add here.
+            if (!System.IO.Directory.Exists(runtimePath))
+                return;
+
+            var present = new System.Collections.Generic.List<string>();
+            foreach (string folder in BCaTPlatform.KnownAddressablesPlatformFolders)
+                if (System.IO.Directory.Exists(System.IO.Path.Combine(runtimePath, folder)))
+                    present.Add(folder);
+
+            if (present.Count == 0)
+                return; // No local bundle folders at all: nothing to mismatch.
+
+            if (!present.Contains(expected))
             {
-                Debug.LogError($"[BCaT] Addressables content mismatch: runtime path '{runtimePath}' " +
-                               $"does not contain the expected '{expected}' platform folder. This " +
-                               "player was built against another platform's Addressables content; " +
-                               "remote scenes will fail to load.");
+                Debug.LogError($"[BCaT] Addressables content mismatch: expected a '{expected}' " +
+                               $"bundle folder under '{runtimePath}' but found only " +
+                               $"[{string.Join(", ", present)}]. This player was built against " +
+                               "another platform's Addressables content; remote scenes will fail " +
+                               "to load.");
             }
         }
 
