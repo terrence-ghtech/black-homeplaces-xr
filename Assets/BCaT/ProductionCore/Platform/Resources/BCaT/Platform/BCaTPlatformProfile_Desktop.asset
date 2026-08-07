@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db51710f65b72424d9cefb90df4545da, type: 3}
+  m_Name: BCaTPlatformProfile_Desktop
+  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.BCaTPlatformProfile
+  platformId: 0
+  displayName: Desktop
+  rigKind: 0
+  locomotion: 0
+  inputProvider: 0
+  promptStyle: 0
+  uiInputModule: 0
+  usesXRPrompts: 0
+  supportsKeyboardMouse: 1
+  showsAppShell: 1
+  allowsKioskMode: 1
+  ownsSwapchain: 0
+  qualityIsFixed: 0
+  qualityTierName: Desktop Standard
+  mediaSourcePolicy: 0
+  prefersInAppPresentation: 0
+  verboseTransitionDiagnostics: 0
+  addressablesProfileName: Default

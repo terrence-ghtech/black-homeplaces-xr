@@ -3,24 +3,19 @@ using UnityEngine;
 namespace BCaT.Production
 {
     /// <summary>
-    /// Central runtime platform and capability service for the three supported
-    /// production targets: Windows 11 x64 desktop, Apple Silicon macOS desktop,
-    /// and Meta Quest. All platform decisions in production code should go
-    /// through this class (or the existing InteractionPromptText.IsXRActive()
-    /// helper, which this class wraps) instead of scattered platform checks.
+    /// Capability facade over <see cref="BCaTPlatform"/>, the single platform
+    /// authority. Retained because a large amount of production code already
+    /// asks here; every member now forwards to the resolver or to the active
+    /// platform profile, so there is exactly one place a platform decision is
+    /// made.
     ///
     /// Deliberately contains no capability definitions for phones, tablets,
     /// WebGL, or non-Quest XR headsets: those targets are out of scope.
     /// </summary>
     public static class PlatformCapabilities
     {
-        /// <summary>True on Windows/macOS player and in the editor.</summary>
-        public static bool IsDesktop =>
-#if UNITY_STANDALONE || UNITY_EDITOR
-            !IsXRActive;
-#else
-            false;
-#endif
+        /// <summary>True when the resolved platform is flat-screen desktop.</summary>
+        public static bool IsDesktop => BCaTPlatform.IsDesktop;
 
         public static bool IsWindows =>
             Application.platform == RuntimePlatform.WindowsPlayer ||
@@ -35,15 +30,14 @@ namespace BCaT.Production
         /// Quest is the only supported Android target, so the Android platform
         /// implies the Quest configuration for this project.
         /// </summary>
-        public static bool IsQuestConfiguration =>
-#if UNITY_ANDROID && !UNITY_EDITOR
-            true;
-#else
-            false;
-#endif
+        public static bool IsQuestConfiguration => BCaTPlatform.IsQuestPlayerBinary;
 
-        /// <summary>True when an XR device is actually initialized and running.</summary>
-        public static bool IsXRActive => InteractionPromptText.IsXRActive();
+        /// <summary>
+        /// True when the resolved platform is Quest/XR. Named for history: this
+        /// is the resolved platform, not a raw device probe. For the raw probe
+        /// use <see cref="BCaTPlatform.ProbeXRDevice"/>.
+        /// </summary>
+        public static bool IsXRActive => BCaTPlatform.IsQuest;
 
         /// <summary>
         /// Whether prompts should use Quest/XR wording. True for the whole life
@@ -52,11 +46,11 @@ namespace BCaT.Production
         /// into headset prompts. Always use this (not <see cref="IsXRActive"/>)
         /// when choosing prompt text.
         /// </summary>
-        public static bool UseXRPrompts => IsQuestConfiguration || IsXRActive;
+        public static bool UseXRPrompts => BCaTPlatform.UseXRPrompts;
 
-        public static bool SupportsKeyboardMouse => !IsQuestConfiguration;
+        public static bool SupportsKeyboardMouse => BCaTPlatform.SupportsKeyboardMouse;
 
-        public static bool SupportsQuestControllers => IsQuestConfiguration;
+        public static bool SupportsQuestControllers => BCaTPlatform.IsQuest;
 
         /// <summary>
         /// Application.OpenURL is supported on all three targets, but on Quest the
@@ -70,14 +64,15 @@ namespace BCaT.Production
         /// On Android/Quest StreamingAssets lives inside the APK and must be
         /// addressed by URL rather than File APIs.
         /// </summary>
-        public static bool SupportsLocalMediaFileChecks => !IsQuestConfiguration;
+        public static bool SupportsLocalMediaFileChecks =>
+            BCaTPlatform.MediaSourcePolicy == BCaTMediaSourcePolicy.FileSystemFirst;
 
         public static bool SupportsLocalMediaPaths => true;
 
         public static bool SupportsRemoteMedia => true;
 
         /// <summary>Kiosk mode is a desktop-only institutional feature.</summary>
-        public static bool SupportsKioskMode => IsDesktop;
+        public static bool SupportsKioskMode => BCaTPlatform.AllowsKioskMode;
 
         public static ApplicationMode ActiveMode => ApplicationModeService.Mode;
 
@@ -92,8 +87,6 @@ namespace BCaT.Production
             }
         }
 
-        public static string Describe() =>
-            $"platform={Application.platform}, desktop={IsDesktop}, quest={IsQuestConfiguration}, " +
-            $"xrActive={IsXRActive}, mode={ActiveMode}, quality={ActiveQualityTier}";
+        public static string Describe() => BCaTPlatform.Describe();
     }
 }

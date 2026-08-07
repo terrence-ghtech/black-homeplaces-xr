@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.XR;
 
 /// <summary>
 /// Single source of truth for the interaction verb shown on exhibit canvases.
@@ -21,39 +20,19 @@ public static class InteractionPromptText
     /// therefore implies XR wording — regardless of whether XR Management has
     /// finished initializing this frame.
     /// </summary>
-    public static bool IsQuestRuntime =>
-#if UNITY_ANDROID && !UNITY_EDITOR
-        true;
-#else
-        false;
-#endif
+    public static bool IsQuestRuntime => BCaT.Production.BCaTPlatform.IsQuestPlayerBinary;
 
-    public static bool IsXRActive()
-    {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        return false;
-#elif UNITY_EDITOR
-        // In the Editor, XR Management can keep an active loader initialized
-        // even while the desktop rig is the intended runtime path. Treat only
-        // an actually active XR device as XR so normal macOS/Windows Play Mode
-        // keeps desktop prompts and keyboard/mouse interaction.
-        return XRSettings.isDeviceActive;
-#elif UNITY_ANDROID
-        // Quest player: always XR. XRSettings/loader state is false for the
-        // first frames after load, which used to leak desktop "Press E"
-        // wording into headset prompts.
-        return true;
-#else
-        if (XRSettings.isDeviceActive)
-            return true;
-
-        var settings = UnityEngine.XR.Management.XRGeneralSettings.Instance;
-        return settings != null
-            && settings.Manager != null
-            && settings.Manager.isInitializationComplete
-            && settings.Manager.activeLoader != null;
-#endif
-    }
+    /// <summary>
+    /// True when the active platform is Quest/XR.
+    ///
+    /// This forwards to <see cref="BCaT.Production.BCaTPlatform"/>, which owns
+    /// the raw build-define and XRSettings probes this method used to perform
+    /// itself. The resolved answer is identical on every shipping
+    /// configuration; routing it through the resolver additionally makes the
+    /// Editor Platform Test Mode effective for the exhibit call sites that ask
+    /// here rather than through PlatformCapabilities.
+    /// </summary>
+    public static bool IsXRActive() => BCaT.Production.BCaTPlatform.IsQuest;
 }
 
 /// <summary>

@@ -22,17 +22,12 @@ public sealed class ScenePlatformRigSelector : MonoBehaviour
         SetActive(xrEventSystem, useXR, sceneName);
     }
 
-    public static bool ShouldUseXR()
-    {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        return false;
-#else
-        if (InteractionPromptText.IsXRActive())
-            return true;
-
-        return false;
-#endif
-    }
+    /// <summary>
+    /// Legacy entry point retained while the scenes migrate to
+    /// ScenePlatformBinding. Forwards to the single platform authority so this
+    /// class can no longer disagree with it.
+    /// </summary>
+    public static bool ShouldUseXR() => BCaT.Production.BCaTPlatform.IsQuest;
 
     private static void SetRigActive(GameObject target, bool active, string sceneName)
     {
