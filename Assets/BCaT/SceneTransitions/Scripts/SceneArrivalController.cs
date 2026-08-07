@@ -222,7 +222,17 @@ public sealed class SceneArrivalController : MonoBehaviour
 
     private static Transform ResolvePlayerRoot()
     {
-        bool useXR = ScenePlatformRigSelector.ShouldUseXR();
+        bool useXR = BCaT.Production.BCaTPlatform.IsQuest;
+
+        // The scene's ScenePlatformBinding published the rig it activated, so
+        // ask it before falling back to scene-wide searches.
+        ScenePlayerRig registered = BCaT.Production.ScenePlayerRigRegistry.Active;
+        if (registered != null && registered.Kind == (useXR ? ScenePlayerRig.RigKind.XR : ScenePlayerRig.RigKind.Desktop))
+        {
+            Debug.Log($"[SceneArrivalController] Scene '{registered.gameObject.scene.name}' resolved player transform '{registered.name}' from the ScenePlayerRigRegistry for platform '{(useXR ? "XR" : "Desktop")}'.");
+            return registered.transform;
+        }
+
         Transform markedRig = ResolveMarkedPlayerRig(useXR);
         if (markedRig != null)
         {

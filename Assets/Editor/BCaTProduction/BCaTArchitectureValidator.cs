@@ -119,7 +119,6 @@ namespace BCaT.EditorTools
             "ApplicationModeService.cs",
             "RuntimeMediaPaths.cs",
             "BlackKitchenQuestTransitionDiagnostics.cs",
-            "ScenePlatformRigSelector.cs",
         };
 
         /// <summary>

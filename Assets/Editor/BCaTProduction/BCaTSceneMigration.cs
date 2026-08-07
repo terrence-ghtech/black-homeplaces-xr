@@ -550,7 +550,9 @@ namespace BCaT.EditorTools
                 else
                 {
                     Note($"removed legacy ScenePlatformRigSelector component from '{Path(go.transform)}'");
-                    Object.DestroyImmediate(go.GetComponent<ScenePlatformRigSelector>());
+                    foreach (MonoBehaviour behaviour in go.GetComponents<MonoBehaviour>())
+                        if (behaviour != null && behaviour.GetType().Name == "ScenePlatformRigSelector")
+                            Object.DestroyImmediate(behaviour);
                 }
             }
         }

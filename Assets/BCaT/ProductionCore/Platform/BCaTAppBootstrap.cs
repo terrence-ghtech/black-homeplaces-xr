@@ -8,7 +8,7 @@ namespace BCaT.Production
     /// <summary>
     /// Application bootstrap: creates the single persistent BCaT_AppServices
     /// object on startup (no scene edits required) hosting the shared services —
-    /// platform rig activation, interaction router, desktop shell (pause menu,
+    /// interaction router, desktop shell (pause menu,
     /// crosshair), kiosk controller, and subtitle service — and applies the
     /// persisted settings. This is the only DontDestroyOnLoad object in the
     /// project; everything else continues to use the established static-state
@@ -29,7 +29,6 @@ namespace BCaT.Production
 
             Debug.Log($"[BCaT] Bootstrap: {PlatformCapabilities.Describe()}");
 
-            services.AddComponent<PlatformRigActivator>();
             services.AddComponent<Interaction.InteractionRouter>();
             services.AddComponent<Interaction.XRInteractionPromptHoverBridge>();
             services.AddComponent<LegacyInteractionPromptSuppressor>();

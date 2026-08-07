@@ -233,7 +233,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
         exitModalOpen = true;
         exitModalChoiceHandled = false;
-        exitModalUsesXR = ScenePlatformRigSelector.ShouldUseXR();
+        exitModalUsesXR = BCaT.Production.BCaTPlatform.IsQuest;
         ConfigureExitReflectionModalForPlatform(exitModalUsesXR);
         EnsureActiveEventSystemForModal(exitModalUsesXR);
         SetDesktopModalControls(false);
