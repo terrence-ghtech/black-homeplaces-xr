@@ -16,13 +16,27 @@ namespace BCaT.Production.Media
     {
         static readonly Dictionary<object, Action> active = new Dictionary<object, Action>();
 
-        public static bool IsAnyMediaPlaying => active.Count > 0;
+        public static bool IsAnyMediaPlaying
+        {
+            get
+            {
+                PurgeDestroyedOwners();
+                return active.Count > 0;
+            }
+        }
 
-        public static int ActiveCount => active.Count;
+        public static int ActiveCount
+        {
+            get
+            {
+                PurgeDestroyedOwners();
+                return active.Count;
+            }
+        }
 
         public static void NotifyStarted(object owner, Action stopAction)
         {
-            if (owner == null) return;
+            if (IsDestroyed(owner)) return;
             active[owner] = stopAction;
         }
 
@@ -35,16 +49,44 @@ namespace BCaT.Production.Media
         /// <summary>Stop all registered media. Defensive: one failure cannot stop the sweep.</summary>
         public static void StopAll()
         {
+            PurgeDestroyedOwners();
             var snapshot = new List<KeyValuePair<object, Action>>(active);
             active.Clear();
             foreach (var pair in snapshot)
             {
+                if (IsDestroyed(pair.Key))
+                    continue;
+
                 try { pair.Value?.Invoke(); }
                 catch (Exception e)
                 {
                     Debug.LogError($"[MediaRegistry] Stopping media owned by '{pair.Key}' failed: {e}");
                 }
             }
+        }
+
+        static void PurgeDestroyedOwners()
+        {
+            if (active.Count == 0)
+                return;
+
+            var stale = new List<object>();
+            foreach (var pair in active)
+            {
+                if (IsDestroyed(pair.Key))
+                    stale.Add(pair.Key);
+            }
+
+            foreach (object owner in stale)
+                active.Remove(owner);
+        }
+
+        static bool IsDestroyed(object owner)
+        {
+            if (owner == null)
+                return true;
+
+            return owner is UnityEngine.Object unityObject && unityObject == null;
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

@@ -34,6 +34,7 @@ namespace BCaT.Production.Interaction
         }
 
         static readonly Dictionary<object, Blocker> blockers = new Dictionary<object, Blocker>();
+        static int suppressedInputFrame = -1;
 
         public static event Action Changed;
 
@@ -52,6 +53,51 @@ namespace BCaT.Production.Interaction
                 Changed?.Invoke();
         }
 
+        public static void PruneDestroyedOwners()
+        {
+            var staleOwners = new List<object>();
+            foreach (var owner in blockers.Keys)
+            {
+                if (owner is UnityEngine.Object unityObject && unityObject == null)
+                    staleOwners.Add(owner);
+            }
+
+            if (staleOwners.Count == 0)
+                return;
+
+            foreach (var owner in staleOwners)
+                blockers.Remove(owner);
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            Debug.Log($"[InteractionState] Pruned {staleOwners.Count} stale destroyed blocker(s).");
+#endif
+            Changed?.Invoke();
+        }
+
+        public static bool TryClose(InteractionBlockReason reason)
+        {
+            PruneDestroyedOwners();
+            var snapshot = new List<KeyValuePair<object, Blocker>>(blockers);
+            foreach (var pair in snapshot)
+            {
+                if ((pair.Value.Reason & reason) == 0 || pair.Value.ForceClose == null)
+                    continue;
+
+                try
+                {
+                    SuppressInputForCurrentFrame();
+                    pair.Value.ForceClose.Invoke();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"[InteractionState] Close of blocker '{pair.Key}' failed: {e}");
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// True when interaction should be suppressed. Includes the scene
         /// transition flag from the existing transition system so callers do not
@@ -59,6 +105,13 @@ namespace BCaT.Production.Interaction
         /// </summary>
         public static bool IsBlocked =>
             blockers.Count > 0 || SceneTransitionState.IsTransitionInProgress;
+
+        public static bool InputSuppressedThisFrame => suppressedInputFrame == Time.frameCount;
+
+        public static void SuppressInputForCurrentFrame()
+        {
+            suppressedInputFrame = Time.frameCount;
+        }
 
         public static InteractionBlockReason ActiveReasons
         {
@@ -102,6 +155,7 @@ namespace BCaT.Production.Interaction
         static void ResetStatics()
         {
             blockers.Clear();
+            suppressedInputFrame = -1;
             Changed = null;
         }
     }

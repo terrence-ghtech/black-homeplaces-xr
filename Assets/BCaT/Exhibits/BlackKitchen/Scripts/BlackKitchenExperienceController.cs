@@ -104,7 +104,10 @@ public class BlackKitchenExperienceController : MonoBehaviour
         UpdateFallRecovery();
 
         if (exitPromptText != null)
-            exitPromptText.text = InteractionPromptText.IsXRActive() ? xrExitPrompt : desktopExitPrompt;
+        {
+            exitPromptText.text = GetExitPrompt(InteractionPromptText.IsXRActive());
+            exitPromptText.enabled = false;
+        }
 
         if (exitReflectionModalCanvas != null && exitReflectionModalCanvas.gameObject.activeSelf)
         {
@@ -125,6 +128,8 @@ public class BlackKitchenExperienceController : MonoBehaviour
         ExitBlackKitchen();
     }
 
+    public string GetExitPrompt(bool xr) => xr ? xrExitPrompt : desktopExitPrompt;
+
     public void ExitBlackKitchen()
     {
         if (exitInProgress || exitModalOpen)
@@ -142,6 +147,13 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
     public void OnXRExitSelect()
     {
+        if (InteractionState.IsBlocked)
+            return;
+
+        BlackKitchenInteractionManager manager = FindAnyObjectByType<BlackKitchenInteractionManager>();
+        if (manager != null && manager.RequestXRExit())
+            return;
+
         ExitBlackKitchen();
     }
 

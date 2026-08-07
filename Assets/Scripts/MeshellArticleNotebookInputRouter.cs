@@ -30,7 +30,7 @@ public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarg
     public bool RequireLineOfSight => true;
     public int Priority => 0;
     public bool IsAvailable => isActiveAndEnabled;
-    public bool AllowDesktopClick => false;
+    public bool AllowDesktopClick => true;
     public bool Exists => this != null;
 
     public Collider[] OwnColliders
@@ -43,7 +43,7 @@ public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarg
         }
     }
 
-    public string GetPrompt(bool xr) => xr ? "Interact to read" : "Press E to read";
+    public string GetPrompt(bool xr) => SharedInteractionPrompt.Format(xr, SharedInteractionVerb.Read, gameObject.name);
 
     public void OnFocusChanged(bool focused) { }
 

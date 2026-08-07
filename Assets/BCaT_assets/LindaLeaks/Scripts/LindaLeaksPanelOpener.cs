@@ -36,18 +36,20 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
     [SerializeField] private bool enableAlbumKeyboardNavigation;
     [SerializeField] private Key previousPhotoKey = Key.Q;
     [SerializeField] private Key nextPhotoKey = Key.R;
+    [SerializeField] private SharedInteractionPromptConfig prompt =
+        new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Open };
 
     private Collider[] ownColliders;
 
     // ---- IInteractionTarget --------------------------------------------
 
-    public Vector3 FocusPoint => transform.position;
+    public Vector3 FocusPoint => ColliderFocusPoint();
     public float MaxDistance => interactionDistance;
     public float MaxViewAngle => 16f;
     public bool RequireLineOfSight => true;
     public int Priority => 0;
     public bool IsAvailable => isActiveAndEnabled;
-    public bool AllowDesktopClick => false;
+    public bool AllowDesktopClick => true;
     public bool Exists => this != null;
 
     public Collider[] OwnColliders
@@ -60,15 +62,45 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
         }
     }
 
+    private Vector3 ColliderFocusPoint()
+    {
+        Collider[] colliders = OwnColliders;
+        if (colliders == null || colliders.Length == 0)
+            return transform.position;
+
+        bool hasBounds = false;
+        Bounds bounds = default;
+        foreach (Collider collider in colliders)
+        {
+            if (collider == null || !collider.enabled || !collider.gameObject.activeInHierarchy)
+                continue;
+
+            if (!hasBounds)
+            {
+                bounds = collider.bounds;
+                hasBounds = true;
+            }
+            else
+            {
+                bounds.Encapsulate(collider.bounds);
+            }
+        }
+
+        return hasBounds ? bounds.center : transform.position;
+    }
+
     public string GetPrompt(bool xr)
     {
-        string action = target switch
+        SharedInteractionVerb verb = target switch
         {
-            PanelTarget.VideoPopup => "watch",
-            PanelTarget.PhotoAlbum => "view photos",
-            _ => "read",
+            PanelTarget.VideoPopup => SharedInteractionVerb.Watch,
+            PanelTarget.PhotoAlbum => SharedInteractionVerb.View,
+            _ => SharedInteractionVerb.Read,
         };
-        return xr ? $"Interact to {action}" : $"Press E to {action}";
+        if (prompt == null)
+            prompt = new SharedInteractionPromptConfig();
+        prompt.verb = verb;
+        return SharedInteractionPrompt.Format(xr, prompt);
     }
 
     public void OnFocusChanged(bool focused) { }
@@ -109,6 +141,12 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
 
     public void Open()
     {
+        if (BCaT.Production.Interaction.InteractionState.IsBlocked)
+        {
+            Debug.Log($"[PanelOpener:{gameObject.name}] Open suppressed (interaction blocked).");
+            return;
+        }
+
         Debug.Log($"[PanelOpener:{gameObject.name}] Open ({target})");
 
         if (target == PanelTarget.VideoPopup)
@@ -133,12 +171,17 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
 
     public void Open(SelectEnterEventArgs args)
     {
-        // XR select entry point: honor the shared blocking rules.
-        if (BCaT.Production.Interaction.InteractionState.IsBlocked)
+        OnXRSelect();
+    }
+
+    public void OnXRSelect()
+    {
+        if (InteractionRouter.Instance != null)
         {
-            Debug.Log($"[PanelOpener:{gameObject.name}] XR open suppressed (interaction blocked).");
+            InteractionRouter.Instance.RequestXRSelect(this);
             return;
         }
+
         Open();
     }
 

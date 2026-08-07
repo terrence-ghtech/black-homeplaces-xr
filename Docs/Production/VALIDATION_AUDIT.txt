@@ -1,4 +1,4 @@
-BCaT production validation audit — 2026-07-29 16:44
+BCaT production validation audit — 2026-08-04 17:12
 
 == Keyboard polling audit ==
 PASS: no production script polls Keyboard.current/Input.GetKey directly.

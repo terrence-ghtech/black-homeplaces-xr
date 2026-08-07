@@ -870,7 +870,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 4515233618455666470}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -907,7 +908,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3384676530549853627}
         m_TargetAssemblyTypeName: LindaLeaksPanelOpener, Assembly-CSharp
-        m_MethodName: Open
+        m_MethodName: OnXRSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

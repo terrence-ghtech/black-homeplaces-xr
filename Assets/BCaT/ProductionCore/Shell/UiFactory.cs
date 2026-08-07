@@ -134,12 +134,24 @@ namespace BCaT.Production.Shell
             TextAlignmentOptions alignment = TextAlignmentOptions.Center)
         {
             var rect = CreateRect(parent, "Label_" + Sanitize(text));
-            rect.sizeDelta = new Vector2(0, size * TextScale * 1.6f);
+            float height = size * TextScale * 1.6f;
+            rect.anchorMin = new Vector2(0f, 0.5f);
+            rect.anchorMax = new Vector2(1f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.sizeDelta = new Vector2(0f, height);
+
+            var layout = rect.gameObject.AddComponent<LayoutElement>();
+            layout.minWidth = 1f;
+            layout.preferredWidth = 560f;
+            layout.minHeight = height;
+            layout.preferredHeight = height;
+
             var label = rect.gameObject.AddComponent<TextMeshProUGUI>();
             label.text = text;
             label.fontSize = size * TextScale;
             label.color = TextColor;
             label.alignment = alignment;
+            label.enableAutoSizing = false;
             label.raycastTarget = false;
             return label;
         }
@@ -148,7 +160,17 @@ namespace BCaT.Production.Shell
             float fontSize = 26f)
         {
             var rect = CreateRect(parent, "Button_" + Sanitize(text));
-            rect.sizeDelta = new Vector2(0, 30f + fontSize * TextScale * 1.4f);
+            float height = 30f + fontSize * TextScale * 1.4f;
+            rect.anchorMin = new Vector2(0f, 0.5f);
+            rect.anchorMax = new Vector2(1f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.sizeDelta = new Vector2(0f, height);
+
+            var layout = rect.gameObject.AddComponent<LayoutElement>();
+            layout.minWidth = 1f;
+            layout.preferredWidth = 560f;
+            layout.minHeight = height;
+            layout.preferredHeight = height;
 
             var image = rect.gameObject.AddComponent<Image>();
             image.color = ButtonColor;
@@ -171,6 +193,8 @@ namespace BCaT.Production.Shell
             labelRect.offsetMin = Vector2.zero;
             labelRect.offsetMax = Vector2.zero;
             label.color = HighContrast ? Color.white : TextColor;
+            label.textWrappingMode = TextWrappingModes.NoWrap;
+            label.overflowMode = TextOverflowModes.Ellipsis;
 
             return button;
         }

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using BCaT.Production.Interaction;
-using TMPro;
+using BCaT.Production.Shell;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 // Single authority for Black Kitchen audio-station selection and prompting.
 // Registered with the central InteractionRouter as an exclusive interaction
@@ -26,14 +25,14 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
 
     private readonly List<BlackKitchenAudioInteractable> stations = new();
     private BlackKitchenAudioInteractable selected;
-    private Canvas promptCanvas;
-    private CanvasGroup promptGroup;
-    private TMP_Text promptLabel;
-    private RectTransform promptRect;
+    private BlackKitchenAudioInteractable xrHoveredStation;
+    private BlackKitchenExperienceController xrHoveredExit;
+    private bool sharedPromptVisible;
+    private string sharedPromptText = string.Empty;
 
     public BlackKitchenAudioInteractable SelectedTarget => selected;
-    public bool PromptVisible => promptGroup != null && promptGroup.alpha > 0.5f;
-    public string PromptText => promptLabel != null ? promptLabel.text : string.Empty;
+    public bool PromptVisible => sharedPromptVisible;
+    public string PromptText => sharedPromptText;
 
     // ---- IExclusiveInteractionZone ----------------------------------------
 
@@ -48,11 +47,22 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
         if (experienceController != null && experienceController.IsExitModalOpen)
         {
             SetSelected(null);
+            xrHoveredExit = null;
             UpdatePrompt();
             return;
         }
 
-        SetSelected(ResolveTarget());
+        bool xr = InteractionPromptText.IsXRActive();
+        if (xr && xrHoveredExit != null)
+        {
+            SetSelected(null);
+            ShowSharedPrompt(xrHoveredExit.GetExitPrompt(xr));
+            if (interactPressed)
+                xrHoveredExit.HandleExitInteract();
+            return;
+        }
+
+        SetSelected(xr && xrHoveredStation != null ? xrHoveredStation : ResolveTarget());
         UpdatePrompt();
 
         if (!interactPressed)
@@ -72,15 +82,18 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
     public void ZoneSuppressPrompts()
     {
         SetSelected(null);
-        if (promptGroup != null)
-            promptGroup.alpha = 0f;
+        HideSharedPrompt();
     }
 
     // -----------------------------------------------------------------------
 
     private void OnEnable() => InteractionRouter.RegisterZone(this);
 
-    private void OnDisable() => InteractionRouter.UnregisterZone(this);
+    private void OnDisable()
+    {
+        InteractionRouter.UnregisterZone(this);
+        HideSharedPrompt();
+    }
 
     private void Start()
     {
@@ -89,7 +102,6 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
         if (experienceController == null)
             experienceController = FindAnyObjectByType<BlackKitchenExperienceController>();
 
-        EnsurePromptUI();
         Debug.Log($"[BlackKitchenInteractionManager] Managing {stations.Count} audio stations.");
     }
 
@@ -100,6 +112,76 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
 
         Debug.Log($"[BlackKitchenInteractionManager] Activating target: {selected.NarrativeId}");
         selected.Toggle();
+    }
+
+    public bool RequestXRSelect(BlackKitchenAudioInteractable target)
+    {
+        if (target == null || InteractionState.IsBlocked)
+            return false;
+
+        EnsureStationRegistered(target);
+        if (!stations.Contains(target))
+            return false;
+
+        SetSelected(target);
+        UpdatePrompt();
+        ActivateSelected();
+        return true;
+    }
+
+    public void RequestXRHover(BlackKitchenAudioInteractable target)
+    {
+        if (target == null)
+            return;
+
+        EnsureStationRegistered(target);
+        xrHoveredStation = target;
+        xrHoveredExit = null;
+        SetSelected(target);
+        UpdatePrompt();
+    }
+
+    public void ClearXRHover(BlackKitchenAudioInteractable target)
+    {
+        if (xrHoveredStation != target)
+            return;
+
+        xrHoveredStation = null;
+        SetSelected(null);
+        UpdatePrompt();
+    }
+
+    public void RequestXRExitHover(BlackKitchenExperienceController controller)
+    {
+        if (controller == null)
+            return;
+
+        xrHoveredExit = controller;
+        xrHoveredStation = null;
+        SetSelected(null);
+        ShowSharedPrompt(controller.GetExitPrompt(InteractionPromptText.IsXRActive()));
+    }
+
+    public void ClearXRExitHover()
+    {
+        xrHoveredExit = null;
+        HideSharedPrompt();
+    }
+
+    public bool RequestXRExit()
+    {
+        if (InteractionState.IsBlocked)
+            return false;
+
+        if (experienceController == null)
+            experienceController = FindAnyObjectByType<BlackKitchenExperienceController>();
+        if (experienceController == null)
+            return false;
+
+        SetSelected(null);
+        UpdatePrompt();
+        experienceController.HandleExitInteract();
+        return true;
     }
 
     private BlackKitchenAudioInteractable ResolveTarget()
@@ -191,99 +273,48 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
 
     private void UpdatePrompt()
     {
-        if (promptGroup == null)
-            return;
-
         if (selected == null)
         {
-            promptGroup.alpha = 0f;
+            HideSharedPrompt();
             return;
         }
 
         bool xr = InteractionPromptText.IsXRActive();
-        string verb = selected.IsPlaying ? "Stop" : "Play";
-        promptLabel.text = xr
-            ? $"Interact to {verb} {selected.DisplayName}"
-            : $"Press E to {verb} {selected.DisplayName}";
-        promptGroup.alpha = 1f;
+        SharedInteractionVerb verb = selected.IsPlaying ? SharedInteractionVerb.Stop : SharedInteractionVerb.Play;
+        string legacyVerb = selected.IsPlaying ? "Stop" : "Play";
+        // Desktop keeps its authored wording; Quest uses the shared
+        // "<Action> — <Station name>" form (no keyboard wording, no "Interact to").
+        ShowSharedPrompt(SharedInteractionPrompt.Format(
+            xr,
+            verb,
+            selected.DisplayName,
+            $"Press E to {legacyVerb} {selected.DisplayName}"));
+    }
 
-        if (xr)
-            PlacePromptInWorld();
+    private void ShowSharedPrompt(string text)
+    {
+        sharedPromptText = text;
+        sharedPromptVisible = !string.IsNullOrWhiteSpace(text);
+        if (sharedPromptVisible)
+            InteractionPromptUi.Show(text);
         else
-            ConfigurePromptForScreen();
+            InteractionPromptUi.Hide();
     }
 
-    private void EnsurePromptUI()
+    private void HideSharedPrompt()
     {
-        if (promptCanvas != null)
+        sharedPromptText = string.Empty;
+        sharedPromptVisible = false;
+        InteractionPromptUi.Hide();
+    }
+
+    private void EnsureStationRegistered(BlackKitchenAudioInteractable target)
+    {
+        if (stations.Contains(target))
             return;
 
-        GameObject canvasObject = new GameObject("BlackKitchenSharedPrompt", typeof(RectTransform), typeof(Canvas), typeof(CanvasGroup));
-        canvasObject.transform.SetParent(transform, false);
-        promptCanvas = canvasObject.GetComponent<Canvas>();
-        promptCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        promptCanvas.sortingOrder = 30000;
-        promptGroup = canvasObject.GetComponent<CanvasGroup>();
-        promptGroup.alpha = 0f;
-        promptGroup.interactable = false;
-        promptGroup.blocksRaycasts = false;
-
-        GameObject bar = new GameObject("PromptBar", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        bar.transform.SetParent(canvasObject.transform, false);
-        promptRect = bar.GetComponent<RectTransform>();
-        promptRect.anchorMin = new Vector2(0.5f, 0f);
-        promptRect.anchorMax = new Vector2(0.5f, 0f);
-        promptRect.pivot = new Vector2(0.5f, 0f);
-        promptRect.anchoredPosition = new Vector2(0f, 64f);
-        promptRect.sizeDelta = new Vector2(480f, 44f);
-        Image barImage = bar.GetComponent<Image>();
-        barImage.color = new Color(0.02f, 0.025f, 0.028f, 0.82f);
-        barImage.raycastTarget = false;
-
-        GameObject textObject = new GameObject("PromptText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-        textObject.transform.SetParent(bar.transform, false);
-        promptLabel = textObject.GetComponent<TMP_Text>();
-        promptLabel.fontSize = 21f;
-        promptLabel.alignment = TextAlignmentOptions.Center;
-        promptLabel.color = new Color(0.93f, 0.91f, 0.86f, 1f);
-        promptLabel.raycastTarget = false;
-        RectTransform textRect = textObject.GetComponent<RectTransform>();
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = Vector2.zero;
-        textRect.offsetMax = Vector2.zero;
+        stations.RemoveAll(station => station == null);
+        stations.AddRange(FindObjectsByType<BlackKitchenAudioInteractable>(FindObjectsSortMode.None));
     }
 
-    private void ConfigurePromptForScreen()
-    {
-        if (promptCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
-            return;
-
-        promptCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        promptCanvas.worldCamera = null;
-        RectTransform canvasRect = promptCanvas.GetComponent<RectTransform>();
-        canvasRect.localScale = Vector3.one;
-        canvasRect.localPosition = Vector3.zero;
-        canvasRect.localRotation = Quaternion.identity;
-    }
-
-    private void PlacePromptInWorld()
-    {
-        Camera cam = Camera.main;
-        if (cam == null || selected == null)
-            return;
-
-        if (promptCanvas.renderMode != RenderMode.WorldSpace)
-        {
-            promptCanvas.renderMode = RenderMode.WorldSpace;
-            promptCanvas.worldCamera = cam;
-            RectTransform canvasRect = promptCanvas.GetComponent<RectTransform>();
-            canvasRect.sizeDelta = new Vector2(480f, 60f);
-            canvasRect.localScale = Vector3.one * 0.0012f;
-        }
-
-        Transform canvasTransform = promptCanvas.transform;
-        canvasTransform.position = selected.FocusPoint + Vector3.up * 0.4f;
-        canvasTransform.rotation = Quaternion.LookRotation(canvasTransform.position - cam.transform.position, Vector3.up);
-    }
 }

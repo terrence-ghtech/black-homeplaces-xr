@@ -63,19 +63,45 @@ namespace BCaT.Production.Interaction
             }
         }
 
+        [Tooltip("Curatorial object name used in the Quest prompt, e.g. 'Security Monitor'. " +
+                 "Falls back to the desktop suffix wording when empty.")]
+        [SerializeField] protected string curatorialName = "";
+
+        [Tooltip("Quest action shown before the curatorial name, e.g. Play/View/Open/Enter.")]
+        [SerializeField] protected SharedInteractionVerb xrVerb = SharedInteractionVerb.Interact;
+
         public virtual string GetPrompt(bool xr)
         {
             if (xr)
-                return string.IsNullOrEmpty(xrPromptOverride)
-                    ? $"Interact {desktopPromptSuffix}".Trim()
-                    : xrPromptOverride;
+            {
+                if (!string.IsNullOrEmpty(xrPromptOverride))
+                    return xrPromptOverride;
+
+                // Quest never shows keyboard wording; build "<Action> — <Name>".
+                if (!string.IsNullOrWhiteSpace(curatorialName))
+                    return SharedInteractionPrompt.Format(true, xrVerb, curatorialName);
+
+                return SharedInteractionPrompt.Format(true, xrVerb, StripLeadingTo(desktopPromptSuffix));
+            }
+
             return $"Press E {desktopPromptSuffix}".Trim();
+        }
+
+        /// <summary>"to listen to the story" -> "the story" for Quest wording.</summary>
+        static string StripLeadingTo(string suffix)
+        {
+            if (string.IsNullOrWhiteSpace(suffix))
+                return string.Empty;
+
+            string trimmed = suffix.Trim();
+            if (trimmed.StartsWith("to ", System.StringComparison.OrdinalIgnoreCase))
+                trimmed = trimmed.Substring(3).Trim();
+            return trimmed;
         }
 
         public virtual void OnFocusChanged(bool focused)
         {
-            if (worldPromptRoot != null)
-                worldPromptRoot.SetActive(focused);
+            WorldInteractionPromptVisual.SetRootVisible(worldPromptRoot, focused);
         }
 
         public abstract void OnInteract(InteractionActivation activation);
@@ -94,8 +120,7 @@ namespace BCaT.Production.Interaction
         protected virtual void OnDisable()
         {
             InteractionRouter.Unregister(this);
-            if (worldPromptRoot != null)
-                worldPromptRoot.SetActive(false);
+            WorldInteractionPromptVisual.SetRootVisible(worldPromptRoot, false);
         }
     }
 }

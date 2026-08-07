@@ -31,6 +31,8 @@ namespace BCaT.Production
 
             services.AddComponent<PlatformRigActivator>();
             services.AddComponent<Interaction.InteractionRouter>();
+            services.AddComponent<Interaction.XRInteractionPromptHoverBridge>();
+            services.AddComponent<LegacyInteractionPromptSuppressor>();
 
             if (!PlatformCapabilities.IsQuestConfiguration)
             {

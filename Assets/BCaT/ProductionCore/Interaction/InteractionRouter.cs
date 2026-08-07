@@ -33,7 +33,9 @@ namespace BCaT.Production.Interaction
         IInteractionInputProvider input;
         Camera cachedCamera;
         float lastDispatchTime = -999f;
+        bool missingCameraLogged;
         readonly RaycastHit[] losHits = new RaycastHit[16];
+        readonly Dictionary<Object, IInteractionTarget> xrHoverTargets = new Dictionary<Object, IInteractionTarget>();
 
         public static void Register(IInteractionTarget target)
         {
@@ -70,6 +72,7 @@ namespace BCaT.Production.Interaction
                 : new DesktopInteractionInputProvider();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+            Debug.Log($"[InteractionRouter] Initialized in scene '{gameObject.scene.name}' with input provider '{input.GetType().Name}' ({PlatformCapabilities.Describe()}).");
         }
 
         void OnDestroy()
@@ -81,6 +84,8 @@ namespace BCaT.Production.Interaction
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             cachedCamera = null;
+            missingCameraLogged = false;
+            xrHoverTargets.Clear();
             SetCurrentTarget(null);
         }
 
@@ -89,7 +94,14 @@ namespace BCaT.Production.Interaction
             get
             {
                 if (cachedCamera == null || !cachedCamera.isActiveAndEnabled)
+                {
                     cachedCamera = Camera.main;
+                    if (cachedCamera != null)
+                    {
+                        missingCameraLogged = false;
+                        Debug.Log($"[InteractionRouter] Scene '{SceneManager.GetActiveScene().name}' active camera assigned: '{Path(cachedCamera.transform)}'.");
+                    }
+                }
                 return cachedCamera;
             }
         }
@@ -100,9 +112,25 @@ namespace BCaT.Production.Interaction
             if (PlatformCapabilities.IsXRActive && input is DesktopInteractionInputProvider)
                 input = new QuestInteractionInputProvider();
 
-            if (InteractionState.IsBlocked)
+            bool interactPressed = input.InteractPressedThisFrame;
+            bool clickPressed = input.ClickPressedThisFrame;
+
+            if (InteractionState.IsBlocked || InteractionState.InputSuppressedThisFrame)
             {
+                if (!InteractionState.InputSuppressedThisFrame &&
+                    interactPressed &&
+                    InteractionState.TryClose(InteractionBlockReason.Media))
+                {
+                    SetCurrentTarget(null);
+                    xrHoverTargets.Clear();
+                    foreach (var zone in zones)
+                        if (zone.ZoneActive)
+                            zone.ZoneSuppressPrompts();
+                    return;
+                }
+
                 SetCurrentTarget(null);
+                xrHoverTargets.Clear();
                 foreach (var zone in zones)
                     if (zone.ZoneActive)
                         zone.ZoneSuppressPrompts();
@@ -118,15 +146,26 @@ namespace BCaT.Production.Interaction
             if (activeZone != null)
             {
                 SetCurrentTarget(null);
-                bool pressed = input.InteractPressedThisFrame && !InCooldown;
+                bool pressed = interactPressed && !InCooldown;
                 if (pressed) lastDispatchTime = Time.unscaledTime;
                 activeZone.ZoneTick(pressed);
+                return;
+            }
+
+            if (PlatformCapabilities.IsQuestConfiguration || PlatformCapabilities.IsXRActive)
+            {
+                SetCurrentTarget(SelectBestXRHoverTarget());
                 return;
             }
 
             var cam = PlayerCamera;
             if (cam == null)
             {
+                if (!missingCameraLogged)
+                {
+                    missingCameraLogged = true;
+                    Debug.LogWarning($"[InteractionRouter] Scene '{SceneManager.GetActiveScene().name}' has no active MainCamera; world interaction selection is disabled.");
+                }
                 SetCurrentTarget(null);
                 return;
             }
@@ -136,13 +175,70 @@ namespace BCaT.Production.Interaction
             if (CurrentTarget == null || InCooldown)
                 return;
 
-            if (input.InteractPressedThisFrame)
+            if (interactPressed)
                 Dispatch(CurrentTarget, InteractionActivation.DesktopInteractKey);
-            else if (input.ClickPressedThisFrame && CurrentTarget.AllowDesktopClick)
+            else if (clickPressed && CurrentTarget.AllowDesktopClick)
                 Dispatch(CurrentTarget, InteractionActivation.DesktopClick);
         }
 
         bool InCooldown => Time.unscaledTime - lastDispatchTime < interactionCooldown;
+
+        public void RequestXRHover(Object hoverSource, IInteractionTarget target)
+        {
+            if (hoverSource == null || target == null)
+                return;
+
+            xrHoverTargets[hoverSource] = target;
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            Debug.Log($"[InteractionRouter] XR hover entered source='{hoverSource.name}' target='{TargetName(target)}'.");
+#endif
+        }
+
+        public void ClearXRHover(Object hoverSource)
+        {
+            if (hoverSource == null)
+                return;
+
+            if (xrHoverTargets.Remove(hoverSource))
+            {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+                Debug.Log($"[InteractionRouter] XR hover exited source='{hoverSource.name}'.");
+#endif
+            }
+        }
+
+        IInteractionTarget SelectBestXRHoverTarget()
+        {
+            if (xrHoverTargets.Count == 0)
+                return null;
+
+            IInteractionTarget best = null;
+            int bestPriority = int.MinValue;
+            var stale = new List<Object>();
+            foreach (var pair in xrHoverTargets)
+            {
+                var target = pair.Value;
+                if (pair.Key == null || target == null || !target.Exists)
+                {
+                    stale.Add(pair.Key);
+                    continue;
+                }
+
+                if (!target.IsAvailable)
+                    continue;
+
+                if (target.Priority >= bestPriority)
+                {
+                    best = target;
+                    bestPriority = target.Priority;
+                }
+            }
+
+            foreach (var key in stale)
+                xrHoverTargets.Remove(key);
+
+            return best;
+        }
 
         IInteractionTarget SelectBestTarget(Camera cam)
         {
@@ -189,8 +285,11 @@ namespace BCaT.Production.Interaction
         }
 
         /// <summary>
-        /// Line-of-sight test using the project's established pattern: triggers
-        /// never block, and colliders belonging to the target itself never block.
+        /// Line-of-sight test using the project's established pattern: foreign
+        /// triggers never block, and colliders belonging to the target itself
+        /// never block. Target trigger volumes still count as a valid hit so an
+        /// exhibit with a trigger interaction shell is not hidden by sibling
+        /// display geometry behind that shell.
         /// </summary>
         bool HasLineOfSight(Vector3 from, IInteractionTarget target)
         {
@@ -199,7 +298,9 @@ namespace BCaT.Production.Interaction
             if (distance < 0.01f) return true;
 
             int count = Physics.RaycastNonAlloc(new Ray(from, to / distance), losHits,
-                distance - 0.05f, lineOfSightMask, QueryTriggerInteraction.Ignore);
+                distance - 0.05f, lineOfSightMask, QueryTriggerInteraction.Collide);
+
+            System.Array.Sort(losHits, 0, count, RaycastHitDistanceComparer.Instance);
 
             var own = target.OwnColliders;
             for (int i = 0; i < count; i++)
@@ -209,10 +310,21 @@ namespace BCaT.Production.Interaction
                 if (own != null)
                     for (int j = 0; j < own.Length; j++)
                         if (own[j] == hit) { isOwn = true; break; }
+                if (isOwn)
+                    return true;
+                if (hit != null && hit.isTrigger)
+                    continue;
                 if (!isOwn)
                     return false;
             }
             return true;
+        }
+
+        sealed class RaycastHitDistanceComparer : IComparer<RaycastHit>
+        {
+            public static readonly RaycastHitDistanceComparer Instance = new RaycastHitDistanceComparer();
+
+            public int Compare(RaycastHit x, RaycastHit y) => x.distance.CompareTo(y.distance);
         }
 
         void SetCurrentTarget(IInteractionTarget target)
@@ -221,19 +333,23 @@ namespace BCaT.Production.Interaction
             {
                 // Refresh the prompt text even without a focus change (dynamic verbs).
                 if (target != null)
-                    Shell.InteractionPromptUi.Show(target.GetPrompt(PlatformCapabilities.IsXRActive));
+                    Shell.InteractionPromptUi.Show(target.GetPrompt(PlatformCapabilities.UseXRPrompts));
                 return;
             }
 
             if (CurrentTarget != null && CurrentTarget.Exists)
+            {
+                Debug.Log($"[InteractionRouter] Scene '{SceneManager.GetActiveScene().name}' focus lost: '{TargetName(CurrentTarget)}'.");
                 CurrentTarget.OnFocusChanged(false);
+            }
 
             CurrentTarget = target;
 
             if (CurrentTarget != null)
             {
                 CurrentTarget.OnFocusChanged(true);
-                Shell.InteractionPromptUi.Show(CurrentTarget.GetPrompt(PlatformCapabilities.IsXRActive));
+                Debug.Log($"[InteractionRouter] Scene '{SceneManager.GetActiveScene().name}' focus gained: '{TargetName(CurrentTarget)}' prompt='{CurrentTarget.GetPrompt(PlatformCapabilities.UseXRPrompts)}'.");
+                Shell.InteractionPromptUi.Show(CurrentTarget.GetPrompt(PlatformCapabilities.UseXRPrompts));
             }
             else
             {
@@ -248,17 +364,40 @@ namespace BCaT.Production.Interaction
         /// </summary>
         public bool RequestXRSelect(IInteractionTarget target)
         {
-            if (target == null || !target.Exists || !target.IsAvailable) return false;
-            if (InteractionState.IsBlocked || InCooldown) return false;
+            InteractionState.PruneDestroyedOwners();
+            if (target == null)
+                return RejectXRSelect("<null>", "target is null");
+            if (!target.Exists)
+                return RejectXRSelect(TargetName(target), "target no longer exists");
+            if (!target.IsAvailable)
+                return RejectXRSelect(TargetName(target), "target is not available");
+            if (InteractionState.IsBlocked)
+                return RejectXRSelect(TargetName(target), $"interaction blocked ({InteractionState.ActiveReasons})");
+            if (InteractionState.InputSuppressedThisFrame)
+                return RejectXRSelect(TargetName(target), "input suppressed this frame");
+            if (InCooldown)
+                return RejectXRSelect(TargetName(target), "router cooldown active");
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            Debug.Log($"[InteractionRouter] XR select accepted for '{TargetName(target)}'.");
+#endif
             Dispatch(target, InteractionActivation.XRSelect);
             return true;
+        }
+
+        bool RejectXRSelect(string targetName, string reason)
+        {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            Debug.LogWarning($"[InteractionRouter] XR select rejected for '{targetName}': {reason}.");
+#endif
+            return false;
         }
 
         /// <summary>Programmatic activation (smoke tests, exhibit directory).</summary>
         public bool RequestProgrammatic(IInteractionTarget target)
         {
             if (target == null || !target.Exists || !target.IsAvailable) return false;
-            if (InteractionState.IsBlocked) return false;
+            if (InteractionState.IsBlocked || InteractionState.InputSuppressedThisFrame) return false;
             Dispatch(target, InteractionActivation.Programmatic);
             return true;
         }
@@ -266,6 +405,7 @@ namespace BCaT.Production.Interaction
         void Dispatch(IInteractionTarget target, InteractionActivation activation)
         {
             lastDispatchTime = Time.unscaledTime;
+            Debug.Log($"[InteractionRouter] Scene '{SceneManager.GetActiveScene().name}' invoking '{TargetName(target)}' via {activation}.");
             try
             {
                 target.OnInteract(activation);
@@ -274,6 +414,28 @@ namespace BCaT.Production.Interaction
             {
                 Debug.LogError($"[InteractionRouter] Target '{target}' threw during OnInteract: {e}");
             }
+        }
+
+        static string TargetName(IInteractionTarget target)
+        {
+            if (target is Component component)
+                return Path(component.transform);
+            return target != null ? target.ToString() : "(null)";
+        }
+
+        static string Path(Transform transform)
+        {
+            if (transform == null)
+                return "(null)";
+
+            string path = transform.name;
+            Transform parent = transform.parent;
+            while (parent != null)
+            {
+                path = parent.name + "/" + path;
+                parent = parent.parent;
+            }
+            return path;
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

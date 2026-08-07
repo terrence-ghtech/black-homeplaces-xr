@@ -72,7 +72,8 @@ public class PrivacyLawExhibitController : MonoBehaviour
     [Header("Platform Prompts")]
     [SerializeField] private TMP_Text promptText;
     [SerializeField] private string desktopPrompt = "Press E to Examine Privacy Exhibit";
-    [SerializeField] private string xrPrompt = "Interact to Examine Privacy Exhibit";
+    [Tooltip("Quest wording for the floating hologram prompt. No keyboard wording.")]
+    [SerializeField] private string xrPrompt = "View — Front Home Privacy Zones";
 
     [Header("Debug")]
     [SerializeField] private bool logStateChanges;
@@ -202,7 +203,7 @@ public class PrivacyLawExhibitController : MonoBehaviour
         public float MaxViewAngle => 0f;  // proximity-based, no camera focus requirement
         public bool RequireLineOfSight => false;
         public int Priority => 0;
-        public bool AllowDesktopClick => false;
+        public bool AllowDesktopClick => true;
         public bool Exists => owner != null;
 
         public bool IsAvailable =>
@@ -219,7 +220,14 @@ public class PrivacyLawExhibitController : MonoBehaviour
             }
         }
 
-        public string GetPrompt(bool xr) => xr ? owner.xrPrompt : owner.desktopPrompt;
+        /// <summary>
+        /// On Quest this exhibit's affordance is its floating hologram prompt
+        /// (one of the two sanctioned world-space exceptions), so the shared
+        /// bottom HUD returns nothing here — an empty prompt hides it and
+        /// prevents a duplicate. Desktop wording is unchanged.
+        /// </summary>
+        public string GetPrompt(bool xr) =>
+            xr ? string.Empty : owner.desktopPrompt;
 
         public void OnFocusChanged(bool focused) { }
 
@@ -272,6 +280,12 @@ public class PrivacyLawExhibitController : MonoBehaviour
 
     public void OpenFromXR()
     {
+        if (routerTarget != null && BCaT.Production.Interaction.InteractionRouter.Instance != null)
+        {
+            BCaT.Production.Interaction.InteractionRouter.Instance.RequestXRSelect(routerTarget);
+            return;
+        }
+
         if (BCaT.Production.Interaction.InteractionState.IsBlocked)
         {
             Debug.Log("[PrivacyLawExhibit] XR open suppressed (interaction blocked).");
@@ -342,8 +356,13 @@ public class PrivacyLawExhibitController : MonoBehaviour
         if (expandedExhibitRoot != null)
             expandedExhibitRoot.SetActive(state == ExhibitState.Open);
 
-        if (interactionPromptRoot != null)
-            interactionPromptRoot.SetActive(state == ExhibitState.Idle);
+        // Front Home Privacy Zones is one of the two sanctioned world-space
+        // prompt systems: its floating hologram prompt is restored on Quest
+        // (and only on Quest) with its original idle-state visibility rule.
+        // This exhibit has no separate canvas, so the hologram prompt IS its
+        // interaction affordance and must not be replaced by the bottom HUD.
+        WorldInteractionPromptVisual.SetSanctionedRootVisible(
+            interactionPromptRoot, state == ExhibitState.Idle);
 
         if (idleHologramRoot != null)
             idleHologramRoot.SetActive(state == ExhibitState.Idle);
@@ -577,7 +596,13 @@ public class PrivacyLawExhibitController : MonoBehaviour
         if (promptText == null)
             return;
 
-        promptText.text = InteractionPromptText.IsXRActive() ? xrPrompt : desktopPrompt;
+        bool xr = InteractionPromptText.IsXRActive();
+        // Sanctioned floating prompt: visible on Quest while the hologram is in
+        // its idle (approachable) state, hidden while the panel is open.
+        WorldInteractionPromptVisual.SetSanctionedText(
+            promptText,
+            xr ? xrPrompt : desktopPrompt,
+            state == ExhibitState.Idle);
     }
 
     private bool IsVisitor(Collider other)

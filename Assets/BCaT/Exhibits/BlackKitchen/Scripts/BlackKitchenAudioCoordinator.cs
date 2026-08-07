@@ -46,6 +46,7 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
     private int playbackGeneration;
     private bool sceneExitInProgress;
     private bool registryLogged;
+    private bool tearingDown;
     private string lastRequestDescription = "none";
 
     public bool HasActiveStory => AnyRegisteredNarrativePlaying();
@@ -76,7 +77,20 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (tearingDown)
+            return;
+
         ValidateExclusivity();
+    }
+
+    private void OnDisable()
+    {
+        CleanupForTeardown();
+    }
+
+    private void OnDestroy()
+    {
+        CleanupForTeardown();
     }
 
     // Scene-wide authority: every AudioSource in this scene is classified. Anything not
@@ -218,7 +232,8 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
         {
             Debug.Log($"[BlackKitchenAudioCoordinator] Toggle stop: '{narrativeId}'");
             StopAllNarrativesImmediate();
-            StartCoroutine(VerifySilenceNextFrame(narrativeId));
+            if (isActiveAndEnabled && !tearingDown)
+                StartCoroutine(VerifySilenceNextFrame(narrativeId));
             return false;
         }
 
@@ -227,6 +242,9 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
 
     private bool StartNarrativeInternal(string narrativeId, AudioSource source, AudioClip clip, float volume, bool restartIfAlreadyPlaying, float fadeIn)
     {
+        if (tearingDown)
+            return false;
+
         if (source == null || clip == null)
         {
             Debug.Log($"[BlackKitchenAudioCoordinator] Request '{narrativeId}' rejected: missing source or clip.");
@@ -288,23 +306,32 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
 
     public void StopAllNarrativesImmediate()
     {
+        string stoppedClipName = activeNarrativeClip != null ? activeNarrativeClip.name : string.Empty;
         CancelPendingNarrativeOperations();
         StopAllRegisteredNarrativeSources(null);
         activeNarrativeSource = null;
         activeNarrativeClip = null;
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
+        if (!string.IsNullOrEmpty(stoppedClipName))
+            BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStopped(stoppedClipName);
+
+        if (sceneExitInProgress || tearingDown || !isActiveAndEnabled)
+        {
+            StopAmbientDuckingRoutine();
+            ApplyDuckingImmediate();
+            return;
+        }
+
         StartAmbientDucking(false);
     }
 
     public void PrepareForSceneExit()
     {
         sceneExitInProgress = true;
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
         StopAllNarrativesImmediate();
 
-        if (duckRoutine != null)
-        {
-            StopCoroutine(duckRoutine);
-            duckRoutine = null;
-        }
+        StopAmbientDuckingRoutine();
 
         foreach (AudioSource source in ambienceSources)
         {
@@ -327,8 +354,32 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
         }
     }
 
+    private void CleanupForTeardown()
+    {
+        if (tearingDown)
+            return;
+
+        tearingDown = true;
+        sceneExitInProgress = true;
+        BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
+        CancelPendingNarrativeOperations();
+        StopAmbientDuckingRoutine();
+        StopAllRegisteredNarrativeSources(null);
+        activeNarrativeSource = null;
+        activeNarrativeClip = null;
+
+        foreach (AudioSource source in ambienceSources)
+        {
+            if (source != null)
+                HardStopSource(source);
+        }
+    }
+
     private IEnumerator PlayNarrativeRoutine(int generation, string narrativeId, AudioSource source, AudioClip clip, float volume, float fadeIn)
     {
+        if (tearingDown)
+            yield break;
+
         StartAmbientDucking(true);
 
         source.clip = clip;
@@ -354,7 +405,7 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
         if (generation != playbackGeneration)
             yield break;
 
-        while (source != null && source.isPlaying)
+        while (!tearingDown && source != null && source.isPlaying)
         {
             if (generation != playbackGeneration)
                 yield break;
@@ -489,10 +540,22 @@ public class BlackKitchenAudioCoordinator : MonoBehaviour
 
     private void StartAmbientDucking(bool duck)
     {
+        if (tearingDown || sceneExitInProgress || !isActiveAndEnabled)
+            return;
+
         if (duckRoutine != null)
             StopCoroutine(duckRoutine);
 
         duckRoutine = StartCoroutine(FadeAmbientDucking(duck));
+    }
+
+    private void StopAmbientDuckingRoutine()
+    {
+        if (duckRoutine == null)
+            return;
+
+        StopCoroutine(duckRoutine);
+        duckRoutine = null;
     }
 
     private IEnumerator FadeAmbientDucking(bool duck)

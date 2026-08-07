@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,23 +15,66 @@ public sealed class SceneArrivalController : MonoBehaviour
     private IEnumerator Start()
     {
         CreateBlackOverlay();
+        BlackKitchenQuestTransitionDiagnostics.Log("Destination bootstrap start",
+            $"Destination scene loaded callback. scene='{gameObject.scene.name}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}', spawn='{SceneTransitionState.DestinationSpawnId}'.");
         yield return null;
 
+        Exception arrivalException = null;
+        IEnumerator arrival = RunArrival();
+        while (true)
+        {
+            object current = null;
+            bool keepGoing = false;
+            try
+            {
+                keepGoing = arrival.MoveNext();
+                if (keepGoing)
+                    current = arrival.Current;
+            }
+            catch (Exception exception)
+            {
+                arrivalException = exception;
+            }
+
+            if (arrivalException != null || !keepGoing)
+                break;
+
+            yield return current;
+        }
+
+        if (arrivalException != null)
+            BlackKitchenQuestTransitionDiagnostics.Error("Transition failed",
+                $"Exception during Black Kitchen initialization/arrival. scene='{gameObject.scene.name}', exception='{arrivalException}'.");
+
+        if (SceneTransitionState.IsTransitionInProgress)
+        {
+            BlackKitchenQuestTransitionDiagnostics.Log("Destination bootstrap complete",
+                $"Transition state cleared. scene='{gameObject.scene.name}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
+            SceneTransitionState.ClearRequest();
+        }
+
+        BlackKitchenQuestTransitionDiagnostics.Log("Fade-from-black start",
+            $"Fade-from-black invoked. scene='{gameObject.scene.name}', overlayAlpha={(fadeGroup != null ? fadeGroup.alpha.ToString("0.00") : "null")}.");
+        yield return FadeFromBlack();
+        BlackKitchenQuestTransitionDiagnostics.Log("Fade-from-black complete",
+            $"Fade overlay removed. scene='{gameObject.scene.name}', cameraCount={Camera.allCamerasCount}.");
+        DestroyOverlay();
+        BlackKitchenQuestTransitionDiagnostics.Log("Transition completed", $"Arrival completed. scene='{gameObject.scene.name}'.");
+    }
+
+    private IEnumerator RunArrival()
+    {
         string spawnId = SceneTransitionState.DestinationSpawnId;
         if (!string.IsNullOrWhiteSpace(spawnId))
         {
             SceneSpawnPoint spawnPoint = FindSpawnPoint(spawnId);
+            BlackKitchenQuestTransitionDiagnostics.Log("Player spawn/reposition",
+                $"Player spawn lookup. scene='{gameObject.scene.name}', spawn='{spawnId}', found='{(spawnPoint != null ? spawnPoint.name : "null")}'.");
             if (spawnPoint != null)
                 yield return PlaceActivePlayerAtRoutine(spawnPoint.transform, desktopSpawnSafetyLift);
             else
                 Debug.LogWarning($"[SceneArrivalController] Spawn point '{spawnId}' was not found in '{gameObject.scene.name}'. Continuing at the scene default player position.");
         }
-
-        if (SceneTransitionState.IsTransitionInProgress)
-            SceneTransitionState.ClearRequest();
-
-        yield return FadeFromBlack();
-        DestroyOverlay();
     }
 
     public static void PlaceActivePlayerAt(Transform target)
@@ -38,6 +82,8 @@ public sealed class SceneArrivalController : MonoBehaviour
         Transform playerRoot = ResolvePlayerRoot();
         if (playerRoot == null || target == null)
         {
+            BlackKitchenQuestTransitionDiagnostics.Warning("Player spawn/reposition",
+                $"Player spawn/reposition skipped. playerRoot='{(playerRoot != null ? playerRoot.name : "null")}', target='{(target != null ? target.name : "null")}'.");
             Debug.LogWarning("[SceneArrivalController] Could not resolve an active player root for teleport.");
             return;
         }
@@ -59,10 +105,14 @@ public sealed class SceneArrivalController : MonoBehaviour
         Transform playerRoot = ResolvePlayerRoot();
         if (playerRoot == null || target == null)
         {
+            BlackKitchenQuestTransitionDiagnostics.Warning("Player spawn/reposition",
+                $"Player spawn/reposition skipped. playerRoot='{(playerRoot != null ? playerRoot.name : "null")}', target='{(target != null ? target.name : "null")}'.");
             Debug.LogWarning("[SceneArrivalController] Could not resolve an active player root for arrival spawn.");
             yield break;
         }
 
+        BlackKitchenQuestTransitionDiagnostics.Log("Player spawn/reposition",
+            $"Player spawn/reposition start. rig='{playerRoot.name}', target='{target.name}', targetPosition='{target.position}'.");
         Debug.Log($"[SceneArrivalController] Scene '{playerRoot.gameObject.scene.name}' teleport started for rig '{playerRoot.name}' to '{target.name}'.");
         PlayerPhysicsState physicsState = new(playerRoot);
         physicsState.DisableForTeleport();
@@ -74,6 +124,8 @@ public sealed class SceneArrivalController : MonoBehaviour
         physicsState.EnablePhysicsAfterTeleport();
         yield return null;
         physicsState.EnableMovementAfterTeleport();
+        BlackKitchenQuestTransitionDiagnostics.Log("Controls restored",
+            $"Player spawn/reposition completed. rig='{playerRoot.name}', rigPosition='{playerRoot.position}'.");
         Debug.Log($"[SceneArrivalController] Scene '{playerRoot.gameObject.scene.name}' teleport completed for rig '{playerRoot.name}'.");
     }
 
@@ -174,6 +226,9 @@ public sealed class SceneArrivalController : MonoBehaviour
         Transform markedRig = ResolveMarkedPlayerRig(useXR);
         if (markedRig != null)
         {
+            Camera rigCamera = markedRig.GetComponentInChildren<Camera>(true);
+            BlackKitchenQuestTransitionDiagnostics.Log("XR camera search and enabled state",
+                $"XR rig/camera state. expectedPlatform='{(useXR ? "XR" : "Desktop")}', rig='{markedRig.name}', rigActive={markedRig.gameObject.activeInHierarchy}, camera='{(rigCamera != null ? rigCamera.name : "null")}', cameraEnabled={(rigCamera != null && rigCamera.enabled)}, cameraActive={(rigCamera != null && rigCamera.gameObject.activeInHierarchy)}.");
             Debug.Log($"[SceneArrivalController] Scene '{markedRig.gameObject.scene.name}' resolved player transform '{markedRig.name}' using ScenePlayerRig for platform '{(useXR ? "XR" : "Desktop")}'.");
             return markedRig;
         }
@@ -272,6 +327,8 @@ public sealed class SceneArrivalController : MonoBehaviour
 
         Image image = imageObject.GetComponent<Image>();
         image.color = Color.black;
+        BlackKitchenQuestTransitionDiagnostics.Log(
+            $"Fade overlay created. scene='{gameObject.scene.name}', overlay='{canvasObject.name}', alpha={fadeGroup.alpha:0.00}.");
     }
 
     private IEnumerator FadeFromBlack()

@@ -60,6 +60,9 @@ namespace BCaT.Production
                 Debug.Log($"[PlatformRigActivator] Scene '{scene.name}': platform=" +
                           $"{(useXR ? "XR" : "Desktop")}, rigs={rigs.Length}, activated={activated}.");
 
+            BlackKitchenQuestTransitionDiagnostics.Log("XR rig activation",
+                $"XR rig activation applied. scene='{scene.name}', useXR={useXR}, rigs={rigs.Length}, activated={activated}.");
+            EnsureQuestCamera(scene, useXR);
             RemoveXRDeviceSimulatorIfPresent(scene, useXR);
         }
 
@@ -118,6 +121,70 @@ namespace BCaT.Production
                 if (found != null) return found;
             }
             return null;
+        }
+
+        static void EnsureQuestCamera(Scene scene, bool useXR)
+        {
+            if (!BlackKitchenQuestTransitionDiagnostics.Enabled || !useXR)
+                return;
+
+            ScenePlayerRig xrRig = null;
+            foreach (var rig in FindObjectsByType<ScenePlayerRig>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (rig != null && rig.gameObject.scene == scene && rig.Kind == ScenePlayerRig.RigKind.XR)
+                {
+                    xrRig = rig;
+                    break;
+                }
+            }
+
+            if (xrRig == null)
+            {
+                BlackKitchenQuestTransitionDiagnostics.Warning("XR rig search", $"No ScenePlayerRig XR marker found in scene '{scene.name}'.");
+                return;
+            }
+
+            Camera[] cameras = xrRig.GetComponentsInChildren<Camera>(true);
+            Camera selected = null;
+            foreach (Camera camera in cameras)
+            {
+                if (camera != null && camera.CompareTag("MainCamera"))
+                {
+                    selected = camera;
+                    break;
+                }
+            }
+
+            if (selected == null && cameras.Length > 0)
+                selected = cameras[0];
+
+            if (selected == null)
+            {
+                BlackKitchenQuestTransitionDiagnostics.Warning("XR camera search and enabled state", $"XR rig '{xrRig.name}' in scene '{scene.name}' has no camera.");
+                return;
+            }
+
+            ActivateWithinRig(xrRig.transform, selected.transform);
+            if (!selected.enabled)
+                selected.enabled = true;
+
+            BlackKitchenQuestTransitionDiagnostics.Log("XR camera search and enabled state",
+                $"Quest camera ensured. scene='{scene.name}', rig='{xrRig.name}', camera='{selected.name}', cameraEnabled={selected.enabled}, cameraActive={selected.gameObject.activeInHierarchy}, cameraTag='{selected.tag}'.");
+        }
+
+        static void ActivateWithinRig(Transform rigRoot, Transform child)
+        {
+            Transform t = child;
+            while (t != null)
+            {
+                if (!t.gameObject.activeSelf)
+                    t.gameObject.SetActive(true);
+
+                if (t == rigRoot)
+                    break;
+
+                t = t.parent;
+            }
         }
     }
 }

@@ -30,11 +30,24 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         LookRaycast       // aim center of screen at this object within range, press E
     }
 
+    enum VideoInteractionState
+    {
+        Closed,
+        Open,
+        Preparing,
+        Playing,
+        Error,
+    }
+
     [Header("Exhibit Info (project-specific data)")]
     [SerializeField] private string title;
+    [SerializeField] private string projectName;
     [SerializeField] private string artistCreator;
     [TextArea]
     [SerializeField] private string description;
+    [SerializeField] private string caption;
+    [SerializeField] private SharedInteractionPromptConfig prompt =
+        new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Watch };
 
     [Header("Optional billboard texts (auto-filled from Exhibit Info if set)")]
     [SerializeField] private TMPro.TMP_Text billboardText;
@@ -74,7 +87,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     [Tooltip("Prompt object shown while the player is inside the proximity trigger.")]
     [SerializeField] private GameObject promptRoot;
 
-    private bool isOpen;
+    private VideoInteractionState videoState = VideoInteractionState.Closed;
     private bool playerInRange;
     private bool playWhenPrepared;
     private bool prepareRequested;
@@ -82,10 +95,22 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     private GameObject loadingIndicator;
     private Collider[] ownColliders;
     private Coroutine prepareWatchdog;
+    private int openedFrame = -1;
+    private bool closeKeyReleasedSinceOpen;
 
     private string LogTag => $"[MediaVideo:{gameObject.name}]";
 
+    /// <summary>
+    /// Platform-correct close instruction for in-popup messages. Quest has no
+    /// keyboard, so it must never be told to press a key.
+    /// </summary>
+    private static string CloseHint =>
+        BCaT.Production.PlatformCapabilities.UseXRPrompts
+            ? "Press the controller trigger to close"
+            : "Press E to close";
+
     private string ExhibitName => string.IsNullOrEmpty(title) ? gameObject.name : title;
+    private bool IsOpen => videoState != VideoInteractionState.Closed;
 
     // ---- IInteractionTarget --------------------------------------------
 
@@ -101,11 +126,24 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     public int Priority => 0;
 
+    /// <summary>
+    /// Desktop keeps the authored proximity gate: a ProximityTrigger exhibit is
+    /// only available while the player stands inside its trigger volume.
+    ///
+    /// On Quest the gate is dropped. XR availability is proven by the
+    /// controller ray actually hovering the exhibit's XR select collider (the
+    /// ray is range-limited to 10 m), and the authored trigger volumes are
+    /// invisible to the XR casters, so keeping the gate made every
+    /// ProximityTrigger video permanently unavailable in headset — the router
+    /// rejected each select with "target is not available".
+    /// </summary>
     public bool IsAvailable =>
-        isActiveAndEnabled && !isOpen &&
-        (desktopActivation != DesktopActivation.ProximityTrigger || playerInRange);
+        isActiveAndEnabled && !IsOpen &&
+        (BCaT.Production.PlatformCapabilities.UseXRPrompts ||
+         desktopActivation != DesktopActivation.ProximityTrigger ||
+         playerInRange);
 
-    public bool AllowDesktopClick => false;
+    public bool AllowDesktopClick => true;
 
     public bool Exists => this != null;
 
@@ -119,8 +157,16 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         }
     }
 
-    public string GetPrompt(bool xr) =>
-        xr ? "Interact to watch" : "Press E to watch";
+    public string GetPrompt(bool xr)
+    {
+        if (prompt == null)
+            prompt = new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Watch };
+
+        prompt.verb = SharedInteractionVerb.Watch;
+        if (string.IsNullOrWhiteSpace(prompt.objectName))
+            prompt.objectName = !string.IsNullOrWhiteSpace(title) ? title : projectName;
+        return SharedInteractionPrompt.Format(xr, prompt);
+    }
 
     public void OnFocusChanged(bool focused)
     {
@@ -149,7 +195,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         // In trigger mode the prompt only appears while the player is in range.
         // In raycast mode the prompt/billboard stays visible until the popup opens.
         if (promptRoot != null && desktopActivation == DesktopActivation.ProximityTrigger)
-            promptRoot.SetActive(false);
+            WorldInteractionPromptVisual.SetRootVisible(promptRoot, false);
 
         ApplyBillboardText();
         ConfigureVideoPlayer();
@@ -183,10 +229,10 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     {
         InteractionRouter.Unregister(this);
 
-        if (!isOpen && videoPlayer == null)
+        if (!IsOpen && videoPlayer == null)
             return;
 
-        isOpen = false;
+        videoState = VideoInteractionState.Closed;
         playWhenPrepared = false;
         InteractionState.Unblock(this);
         MediaPlaybackRegistry.NotifyStopped(this);
@@ -200,7 +246,17 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     {
         // While open this popup is a focused media interface: it owns E/Escape
         // through the central modal input helper (world interaction is blocked).
-        if (isOpen && (FocusedUiInput.InteractPressed || FocusedUiInput.CancelPressed))
+        if (!IsOpen)
+            return;
+
+        if (Time.frameCount > openedFrame && !FocusedUiInput.InteractHeld)
+            closeKeyReleasedSinceOpen = true;
+
+        if (Time.frameCount <= openedFrame)
+            return;
+
+        if (FocusedUiInput.CancelPressed ||
+            (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed))
         {
             Debug.Log($"{LogTag} Close requested from focused-media input");
             ClosePopUp();
@@ -211,7 +267,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     public void OnXRSelect()
     {
         Debug.Log($"{LogTag} XR SelectEntered received");
-        if (isOpen)
+        if (IsOpen)
         {
             // Closing an open popup is always allowed.
             ClosePopUp();
@@ -228,7 +284,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     public void TogglePopUp()
     {
-        if (isOpen)
+        if (IsOpen)
             ClosePopUp();
         else
             OpenPopUp();
@@ -236,7 +292,15 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     public void OpenPopUp()
     {
-        isOpen = true;
+        if (IsOpen)
+        {
+            Debug.Log($"{LogTag} OpenPopUp ignored; already {videoState}");
+            return;
+        }
+
+        videoState = VideoInteractionState.Open;
+        openedFrame = Time.frameCount;
+        closeKeyReleasedSinceOpen = !FocusedUiInput.InteractHeld;
         Debug.Log($"{LogTag} OpenPopUp");
 
         // Close any other open video exhibit so two videos never buffer at once.
@@ -246,8 +310,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         // the kiosk reset a close handle.
         InteractionState.Block(this, InteractionBlockReason.Media, ClosePopUp);
 
-        if (promptRoot != null)
-            promptRoot.SetActive(false);
+        WorldInteractionPromptVisual.SetRootVisible(promptRoot, false);
 
         if (pauseWhileOpen != null)
             pauseWhileOpen.Pause();
@@ -268,7 +331,11 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     public void ClosePopUp()
     {
-        isOpen = false;
+        if (!IsOpen)
+            return;
+
+        InteractionState.SuppressInputForCurrentFrame();
+        videoState = VideoInteractionState.Closed;
         playWhenPrepared = false;
         Debug.Log($"{LogTag} ClosePopUp");
 
@@ -288,8 +355,8 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         if (pauseWhileOpen != null)
             pauseWhileOpen.Play();
 
-        if (promptRoot != null && (playerInRange || desktopActivation == DesktopActivation.LookRaycast))
-            promptRoot.SetActive(true);
+        WorldInteractionPromptVisual.SetRootVisible(promptRoot,
+            playerInRange || desktopActivation == DesktopActivation.LookRaycast);
     }
 
     private void ConfigureVideoPlayer()
@@ -411,13 +478,14 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
             if (loadingIndicator == null)
                 loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
             VideoLoadingIndicator.SetMessage(loadingIndicator,
-                "This media is currently unavailable.\nPress E to close, or try again later.");
+                $"This media is currently unavailable.\n{CloseHint}, or try again later.");
             return;
         }
 
         if (!videoPlayer.isPrepared)
         {
             playWhenPrepared = true;
+            videoState = VideoInteractionState.Preparing;
             Debug.Log($"{LogTag} Not prepared yet; Prepare() and play when ready (url={videoPlayer.url})");
             if (loadingIndicator == null)
                 loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "Loading video…");
@@ -432,6 +500,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         }
 
         Debug.Log($"{LogTag} Play() called (url={videoPlayer.url})");
+        videoState = VideoInteractionState.Playing;
         videoPlayer.Play();
         PlaySeparateAudio();
         NotifyPlaybackStarted();
@@ -479,18 +548,20 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         // "Loading video…" state, and leave the exhibit closeable.
         prepareRequested = false;
         playWhenPrepared = false;
+        if (IsOpen)
+            videoState = VideoInteractionState.Error;
         videoPlayer.Stop();
 
         MediaErrorLog.LogFailure(ExhibitName, videoPlayer.url,
             $"prepare timeout after {prepareTimeoutSeconds:F0}s",
             remoteAttempted: true, recovered: true);
 
-        if (isOpen)
+        if (IsOpen)
         {
             if (loadingIndicator == null)
                 loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
             VideoLoadingIndicator.SetMessage(loadingIndicator,
-                "This exhibit requires an internet connection.\nPress E to close and try again later.");
+                $"This exhibit requires an internet connection.\n{CloseHint} and try again later.");
         }
     }
 
@@ -516,12 +587,13 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         StopPrepareWatchdog();
         VideoLoadingIndicator.Hide(ref loadingIndicator);
 
-        if (!isOpen || !playWhenPrepared)
+        if (!IsOpen || !playWhenPrepared)
             return;
 
         playWhenPrepared = false;
         preparedPlayer.time = 0;
         Debug.Log($"{LogTag} Play() called after prepare");
+        videoState = VideoInteractionState.Playing;
         preparedPlayer.Play();
         PlaySeparateAudio();
         NotifyPlaybackStarted();
@@ -533,15 +605,17 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
             remoteAttempted: true, recovered: true);
         prepareRequested = false;
         playWhenPrepared = false;
+        if (IsOpen)
+            videoState = VideoInteractionState.Error;
         StopPrepareWatchdog();
         MediaPlaybackRegistry.NotifyStopped(this);
 
-        if (isOpen)
+        if (IsOpen)
         {
             if (loadingIndicator == null)
                 loadingIndicator = VideoLoadingIndicator.Show(IndicatorParent(), "");
             VideoLoadingIndicator.SetMessage(loadingIndicator,
-                "The media file could not be loaded.\nPress E to close, or try again later.");
+                $"The media file could not be loaded.\n{CloseHint}, or try again later.");
         }
     }
 
@@ -553,6 +627,8 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
             Debug.Log($"{LogTag} Playback ended; releasing video resources");
             endedPlayer.Stop();
             prepareRequested = false;
+            if (IsOpen)
+                videoState = VideoInteractionState.Open;
             MediaPlaybackRegistry.NotifyStopped(this);
             BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStopped(videoFileName);
         }
@@ -575,8 +651,8 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         Debug.Log($"{LogTag} Player entered trigger");
         playerInRange = true;
 
-        if (!isOpen && promptRoot != null)
-            promptRoot.SetActive(true);
+        if (!IsOpen)
+            WorldInteractionPromptVisual.SetRootVisible(promptRoot, true);
 
 #if !UNITY_WEBGL || UNITY_EDITOR
         PrepareVideoIfNeeded();
@@ -591,10 +667,9 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         Debug.Log($"{LogTag} Player left trigger");
         playerInRange = false;
 
-        if (promptRoot != null)
-            promptRoot.SetActive(false);
+        WorldInteractionPromptVisual.SetRootVisible(promptRoot, false);
 
-        if (!isOpen)
+        if (!IsOpen)
             ReleaseVideoResources(destroyOwnedTexture: false);
     }
 
@@ -603,7 +678,8 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         if (billboardText == null || string.IsNullOrEmpty(title))
             return;
 
-        billboardText.text = $"<b>{title}</b>\n\n{artistCreator}\n\n<i>{description}</i>";
+        string body = string.IsNullOrWhiteSpace(caption) ? description : caption;
+        billboardText.text = $"<b>{title}</b>\n\n{artistCreator}\n\n<i>{body}</i>";
     }
 
     private void ShowPopup()
@@ -664,13 +740,19 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     private void ClearTargetTexture()
     {
         RenderTexture texture = videoPlayer != null ? videoPlayer.targetTexture : null;
-        if (texture == null)
+        if (texture == null || !texture.IsCreated())
             return;
 
         RenderTexture previous = RenderTexture.active;
-        RenderTexture.active = texture;
-        GL.Clear(true, true, Color.clear);
-        RenderTexture.active = previous;
+        try
+        {
+            RenderTexture.active = texture;
+            GL.Clear(true, true, Color.clear);
+        }
+        finally
+        {
+            RenderTexture.active = previous;
+        }
     }
 
     private static void StopAndUnloadIfSafe(AudioSource source)

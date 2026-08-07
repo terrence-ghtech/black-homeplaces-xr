@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,6 +24,9 @@ namespace BCaT.EditorTools
     {
         const string OutputRoot = "Builds";
         const string ProductFileName = "BlackHomeplaces";
+        const string QuestApkFileName = "Black Homeplaces XR - Quest.apk";
+        const string BlackKitchenAddress = "BlackKitchen_MemoryScene";
+        const string BlackKitchenBundlePrefix = "assets/aa/Android/blackkitchen_remote_scenes_all_";
 
         static string[] EnabledScenes =>
             EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
@@ -52,7 +56,7 @@ namespace BCaT.EditorTools
         public static void BuildQuest()
         {
             EditorUserBuildSettings.buildAppBundle = false;
-            var path = Path.Combine(OutputRoot, "Quest", ProductFileName + "-Quest.apk");
+            var path = Path.Combine(OutputRoot, "Quest", QuestApkFileName);
             Run(BuildTarget.Android, path);
         }
 
@@ -70,8 +74,14 @@ namespace BCaT.EditorTools
                         $"Active build target is {EditorUserBuildSettings.activeBuildTarget}; " +
                         $"launch the editor with -buildTarget for {target} before building.");
 
+                if (target == BuildTarget.Android && SkipAddressables)
+                    throw new InvalidOperationException("Quest production builds must rebuild Android Addressables; remove -bcatSkipAddressables.");
+
                 if (!SkipAddressables)
                     BuildAddressablesContent(summary);
+
+                if (target == BuildTarget.Android)
+                    ValidateAndroidAddressablesOutput(summary);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(outputPath)));
 
@@ -89,6 +99,9 @@ namespace BCaT.EditorTools
                 AppendReport(summary, report);
 
                 bool ok = report.summary.result == BuildResult.Succeeded;
+                if (ok && target == BuildTarget.Android)
+                    ValidateQuestApkAddressables(outputPath, summary);
+
                 WriteSummary(target, summary);
                 ExitIfBatch(ok ? 0 : 1);
             }
@@ -119,6 +132,77 @@ namespace BCaT.EditorTools
             summary.AppendLine($"Addressables: OK ({result.Duration:F1}s), " +
                 $"location count {result.LocationCount}.");
         }
+
+        static void ValidateAndroidAddressablesOutput(StringBuilder summary)
+        {
+            string root = Path.Combine("Library", "com.unity.addressables", "aa", "Android");
+            string catalog = Path.Combine(root, "catalog.bin");
+            string hash = Path.Combine(root, "catalog.hash");
+            string settings = Path.Combine(root, "settings.json");
+            string bundleDir = Path.Combine(root, "Android");
+
+            RequireFile(catalog, "Android Addressables catalog");
+            RequireFile(hash, "Android Addressables catalog hash");
+            RequireFile(settings, "Android Addressables settings");
+            if (!Directory.Exists(bundleDir))
+                throw new FileNotFoundException("Android Addressables bundle directory is missing.", bundleDir);
+
+            string catalogText = ReadBinaryAsText(catalog);
+            if (!catalogText.Contains(BlackKitchenAddress))
+                throw new InvalidOperationException($"Android Addressables catalog is missing key '{BlackKitchenAddress}'.");
+
+            string blackKitchenBundle = Directory.GetFiles(bundleDir, "blackkitchen_remote_scenes_all_*.bundle")
+                .FirstOrDefault();
+            if (string.IsNullOrEmpty(blackKitchenBundle))
+                throw new FileNotFoundException("Black Kitchen Android Addressables bundle is missing.", bundleDir);
+
+            summary.AppendLine($"Addressables validation: OK, catalog contains '{BlackKitchenAddress}', bundle '{Path.GetFileName(blackKitchenBundle)}'.");
+        }
+
+        static void ValidateQuestApkAddressables(string apkPath, StringBuilder summary)
+        {
+            RequireFile(apkPath, "Quest APK");
+
+            using ZipArchive archive = ZipFile.OpenRead(apkPath);
+            bool hasCatalog = HasEntry(archive, "assets/aa/catalog.bin");
+            bool hasHash = HasEntry(archive, "assets/aa/catalog.hash");
+            bool hasSettings = HasEntry(archive, "assets/aa/settings.json");
+            bool hasAndroidFolder = archive.Entries.Any(e => e.FullName.StartsWith("assets/aa/Android/", StringComparison.Ordinal));
+            ZipArchiveEntry blackKitchenBundle = archive.Entries.FirstOrDefault(e =>
+                e.FullName.StartsWith(BlackKitchenBundlePrefix, StringComparison.Ordinal) &&
+                e.FullName.EndsWith(".bundle", StringComparison.Ordinal));
+
+            if (!hasCatalog || !hasHash || !hasSettings || !hasAndroidFolder || blackKitchenBundle == null)
+            {
+                throw new InvalidOperationException(
+                    "Quest APK Addressables validation failed: " +
+                    $"catalog={hasCatalog}, hash={hasHash}, settings={hasSettings}, androidFolder={hasAndroidFolder}, " +
+                    $"blackKitchenBundle={blackKitchenBundle != null}.");
+            }
+
+            using Stream catalogStream = archive.GetEntry("assets/aa/catalog.bin").Open();
+            using MemoryStream catalogBytes = new MemoryStream();
+            catalogStream.CopyTo(catalogBytes);
+            string catalogText = Encoding.UTF8.GetString(catalogBytes.ToArray());
+            if (!catalogText.Contains(BlackKitchenAddress))
+                throw new InvalidOperationException($"Quest APK catalog is missing key '{BlackKitchenAddress}'.");
+
+            FileInfo apk = new FileInfo(apkPath);
+            summary.AppendLine($"Quest APK validation: OK, {apk.FullName}, {apk.Length} bytes.");
+            summary.AppendLine($"Quest APK Addressables: catalog/hash/settings present, Android bundle present, key '{BlackKitchenAddress}' present.");
+        }
+
+        static void RequireFile(string path, string label)
+        {
+            if (!File.Exists(path))
+                throw new FileNotFoundException(label + " is missing.", path);
+        }
+
+        static bool HasEntry(ZipArchive archive, string name) =>
+            archive.GetEntry(name) != null;
+
+        static string ReadBinaryAsText(string path) =>
+            Encoding.UTF8.GetString(File.ReadAllBytes(path));
 
         /// <summary>
         /// Restrict the macOS build to Apple Silicon. Uses reflection so the code

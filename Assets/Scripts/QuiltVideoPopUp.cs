@@ -29,8 +29,7 @@ public class QuiltVideoPopUp : MonoBehaviour
         if (popUpPanel != null)
             popUpPanel.SetActive(false);
 
-        if (promptText != null)
-            promptText.SetActive(false);
+        WorldInteractionPromptVisual.SetRootVisible(promptText, false);
 
         if (videoPlayer != null)
         {
@@ -69,8 +68,7 @@ public class QuiltVideoPopUp : MonoBehaviour
 
         VideoExhibitCoordinator.NotifyOpened(this, ClosePopUp);
 
-        if (promptText != null)
-            promptText.SetActive(false);
+        WorldInteractionPromptVisual.SetRootVisible(promptText, false);
 
         if (sewingMachineAudio != null)
             sewingMachineAudio.Pause();
@@ -103,8 +101,8 @@ public class QuiltVideoPopUp : MonoBehaviour
         if (sewingMachineAudio != null)
             sewingMachineAudio.Play();
 
-        if (playerInRange && promptText != null)
-            promptText.SetActive(true);
+        if (playerInRange)
+            WorldInteractionPromptVisual.SetRootVisible(promptText, true);
     }
 
     private void OnDisable()
@@ -135,8 +133,8 @@ public class QuiltVideoPopUp : MonoBehaviour
         {
             playerInRange = true;
 
-            if (!isOpen && promptText != null)
-                promptText.SetActive(true);
+            if (!isOpen)
+                WorldInteractionPromptVisual.SetRootVisible(promptText, true);
 
 #if !UNITY_WEBGL || UNITY_EDITOR
             PrepareVideoIfNeeded();
@@ -150,8 +148,7 @@ public class QuiltVideoPopUp : MonoBehaviour
         {
             playerInRange = false;
 
-            if (promptText != null)
-                promptText.SetActive(false);
+            WorldInteractionPromptVisual.SetRootVisible(promptText, false);
 
             if (!isOpen)
                 ReleaseVideoResources();

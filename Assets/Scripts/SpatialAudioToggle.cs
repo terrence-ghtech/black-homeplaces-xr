@@ -17,6 +17,9 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
     [SerializeField] private Camera playerCamera;
 #pragma warning restore 0414
     [SerializeField] private float interactionDistance = 5f;
+    [SerializeField] private string displayName;
+    [SerializeField] private SharedInteractionPromptConfig prompt =
+        new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Listen };
 
     [Header("Spatial Defaults")]
     [SerializeField] private bool configureSpatialAudio = true;
@@ -36,7 +39,7 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
     public bool RequireLineOfSight => true;
     public int Priority => 0;
     public bool IsAvailable => isActiveAndEnabled && audioSource != null;
-    public bool AllowDesktopClick => false;
+    public bool AllowDesktopClick => true;
     public bool Exists => this != null;
 
     public Collider[] OwnColliders
@@ -52,8 +55,13 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
     public string GetPrompt(bool xr)
     {
         bool playing = audioSource != null && audioSource.isPlaying;
-        string action = playing ? "pause" : "listen";
-        return xr ? $"Interact to {action}" : $"Press E to {action}";
+        SharedInteractionVerb verb = playing ? SharedInteractionVerb.Pause : SharedInteractionVerb.Listen;
+        if (prompt == null)
+            prompt = new SharedInteractionPromptConfig();
+        prompt.verb = verb;
+        if (string.IsNullOrWhiteSpace(prompt.objectName))
+            prompt.objectName = displayName;
+        return SharedInteractionPrompt.Format(xr, prompt);
     }
 
     public void OnFocusChanged(bool focused) { }

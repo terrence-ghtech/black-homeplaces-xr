@@ -10,8 +10,26 @@ using TMPro;
 /// </summary>
 public class InteractableLinkLauncher : MonoBehaviour, IInteractionTarget
 {
+    public enum OpenBehavior
+    {
+        ExternalUrl,
+    }
+
+    [Header("Exhibit Content")]
+    [SerializeField] private string displayName;
+    [SerializeField] private string projectName;
+
     [Header("Link Settings")]
     [SerializeField] private string targetUrl;
+    [SerializeField] private OpenBehavior openBehavior = OpenBehavior.ExternalUrl;
+
+    [Header("Platform Restrictions")]
+    [SerializeField] private bool allowDesktop = true;
+    [SerializeField] private bool allowQuest = true;
+
+    [Header("Prompt")]
+    [SerializeField] private SharedInteractionPromptConfig prompt =
+        new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Open };
 
     [Header("Interaction")]
 #pragma warning disable 0414 // retained for scene-data compatibility; router owns the camera now
@@ -26,14 +44,22 @@ public class InteractableLinkLauncher : MonoBehaviour, IInteractionTarget
 
     // ---- IInteractionTarget --------------------------------------------
 
-    public Vector3 FocusPoint => transform.position;
+    public Vector3 FocusPoint => ColliderFocusPoint();
     public float MaxDistance => interactDistance;
     public float MaxViewAngle => 16f;
     public bool RequireLineOfSight => true;
     public int Priority => 0;
-    public bool IsAvailable => isActiveAndEnabled && !string.IsNullOrWhiteSpace(targetUrl);
-    public bool AllowDesktopClick => false;
+    public bool IsAvailable => isActiveAndEnabled && PlatformAllowed &&
+                               openBehavior == OpenBehavior.ExternalUrl &&
+                               !string.IsNullOrWhiteSpace(targetUrl);
+    public bool AllowDesktopClick => true;
     public bool Exists => this != null;
+
+    bool PlatformAllowed =>
+        (BCaT.Production.PlatformCapabilities.IsQuestConfiguration ||
+         BCaT.Production.PlatformCapabilities.IsXRActive)
+            ? allowQuest
+            : allowDesktop;
 
     public Collider[] OwnColliders
     {
@@ -45,7 +71,45 @@ public class InteractableLinkLauncher : MonoBehaviour, IInteractionTarget
         }
     }
 
-    public string GetPrompt(bool xr) => xr ? "Interact to open" : "Press E to open";
+    Vector3 ColliderFocusPoint()
+    {
+        Collider[] colliders = OwnColliders;
+        if (colliders == null || colliders.Length == 0)
+            return transform.position;
+
+        bool hasBounds = false;
+        Bounds bounds = default;
+        foreach (Collider collider in colliders)
+        {
+            if (collider == null || !collider.enabled || !collider.gameObject.activeInHierarchy)
+                continue;
+
+            if (!hasBounds)
+            {
+                bounds = collider.bounds;
+                hasBounds = true;
+            }
+            else
+            {
+                bounds.Encapsulate(collider.bounds);
+            }
+        }
+
+        return hasBounds ? bounds.center : transform.position;
+    }
+
+    public string GetPrompt(bool xr)
+    {
+        if (prompt == null)
+            prompt = new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Open };
+
+        prompt.verb = SharedInteractionVerb.Open;
+        if (string.IsNullOrWhiteSpace(prompt.objectName))
+            prompt.objectName = !string.IsNullOrWhiteSpace(displayName)
+                ? displayName
+                : projectName;
+        return SharedInteractionPrompt.Format(xr, prompt);
+    }
 
     public void OnFocusChanged(bool focused) { }
 
@@ -61,8 +125,7 @@ public class InteractableLinkLauncher : MonoBehaviour, IInteractionTarget
     {
         if (promptText == null) return;
 
-        // Centralized platform-aware verb: "Press E" on desktop, "Interact" in XR.
-        promptText.text = InteractionPromptText.Verb + " to Open";
+        WorldInteractionPromptVisual.SetText(promptText, GetPrompt(InteractionPromptText.IsXRActive()));
     }
 
     /// <summary>
@@ -71,6 +134,12 @@ public class InteractableLinkLauncher : MonoBehaviour, IInteractionTarget
     /// </summary>
     public void OpenLink()
     {
+        if (InteractionRouter.Instance != null)
+        {
+            InteractionRouter.Instance.RequestXRSelect(this);
+            return;
+        }
+
         if (InteractionState.IsBlocked)
         {
             Debug.Log($"[LinkLauncher:{gameObject.name}] OpenLink suppressed (interaction blocked).");

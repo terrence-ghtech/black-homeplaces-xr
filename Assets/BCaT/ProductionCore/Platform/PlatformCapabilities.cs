@@ -45,6 +45,15 @@ namespace BCaT.Production
         /// <summary>True when an XR device is actually initialized and running.</summary>
         public static bool IsXRActive => InteractionPromptText.IsXRActive();
 
+        /// <summary>
+        /// Whether prompts should use Quest/XR wording. True for the whole life
+        /// of the Quest player, including the first frames before XR Management
+        /// reports an active device — otherwise desktop "Press E" wording leaks
+        /// into headset prompts. Always use this (not <see cref="IsXRActive"/>)
+        /// when choosing prompt text.
+        /// </summary>
+        public static bool UseXRPrompts => IsQuestConfiguration || IsXRActive;
+
         public static bool SupportsKeyboardMouse => !IsQuestConfiguration;
 
         public static bool SupportsQuestControllers => IsQuestConfiguration;

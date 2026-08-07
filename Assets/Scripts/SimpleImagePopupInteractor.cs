@@ -20,19 +20,22 @@ public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
     [SerializeField] private float interactionDistance = 4f;
     [SerializeField] private TMP_Text promptText;
     [SerializeField] private string desktopPrompt = "Press E to view My Grandma's Garden.";
-    [SerializeField] private string xrPrompt = "Interact to view My Grandma's Garden.";
+    [Tooltip("Quest wording. No keyboard wording; names the exhibit.")]
+    [SerializeField] private string xrPrompt = "View — My Grandma's Garden";
+    [SerializeField] private SharedInteractionPromptConfig sharedPrompt =
+        new SharedInteractionPromptConfig { verb = SharedInteractionVerb.View };
 
     private Collider[] ownColliders;
 
     // ---- IInteractionTarget --------------------------------------------
 
-    public Vector3 FocusPoint => transform.position;
+    public Vector3 FocusPoint => ColliderFocusPoint();
     public float MaxDistance => interactionDistance;
     public float MaxViewAngle => 16f;
-    public bool RequireLineOfSight => true;
-    public int Priority => 0;
+    public bool RequireLineOfSight => false;
+    public int Priority => 5;
     public bool IsAvailable => isActiveAndEnabled && popup != null && !popup.IsOpen;
-    public bool AllowDesktopClick => false;
+    public bool AllowDesktopClick => true;
     public bool Exists => this != null;
 
     public Collider[] OwnColliders
@@ -45,7 +48,47 @@ public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
         }
     }
 
-    public string GetPrompt(bool xr) => xr ? xrPrompt : desktopPrompt;
+    private Vector3 ColliderFocusPoint()
+    {
+        Collider[] colliders = OwnColliders;
+        if (colliders == null || colliders.Length == 0)
+            return transform.position;
+
+        bool hasBounds = false;
+        Bounds bounds = default;
+        foreach (Collider collider in colliders)
+        {
+            if (collider == null || !collider.enabled || !collider.gameObject.activeInHierarchy)
+                continue;
+
+            if (!hasBounds)
+            {
+                bounds = collider.bounds;
+                hasBounds = true;
+            }
+            else
+            {
+                bounds.Encapsulate(collider.bounds);
+            }
+        }
+
+        return hasBounds ? bounds.center : transform.position;
+    }
+
+    public string GetPrompt(bool xr)
+    {
+        if (sharedPrompt == null)
+            sharedPrompt = new SharedInteractionPromptConfig { verb = SharedInteractionVerb.View };
+
+        sharedPrompt.verb = SharedInteractionVerb.View;
+        sharedPrompt.desktopPrompt = string.IsNullOrWhiteSpace(sharedPrompt.desktopPrompt)
+            ? desktopPrompt
+            : sharedPrompt.desktopPrompt;
+        sharedPrompt.xrPrompt = string.IsNullOrWhiteSpace(sharedPrompt.xrPrompt)
+            ? xrPrompt
+            : sharedPrompt.xrPrompt;
+        return SharedInteractionPrompt.Format(xr, sharedPrompt);
+    }
 
     public void OnFocusChanged(bool focused) { }
 
@@ -63,6 +106,12 @@ public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
 
     public void OpenFromXR(SelectEnterEventArgs args)
     {
+        if (InteractionRouter.Instance != null)
+        {
+            InteractionRouter.Instance.RequestXRSelect(this);
+            return;
+        }
+
         if (BCaT.Production.Interaction.InteractionState.IsBlocked)
         {
             Debug.Log($"[SimpleImagePopupInteractor:{gameObject.name}] XR open suppressed (interaction blocked).");
@@ -82,6 +131,6 @@ public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
         if (promptText == null)
             return;
 
-        promptText.text = InteractionPromptText.IsXRActive() ? xrPrompt : desktopPrompt;
+        WorldInteractionPromptVisual.SetText(promptText, GetPrompt(InteractionPromptText.IsXRActive()));
     }
 }

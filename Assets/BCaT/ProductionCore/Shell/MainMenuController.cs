@@ -43,8 +43,8 @@ namespace BCaT.Production.Shell
             var panel = UiFactory.CreateCenterPanel(canvas.transform, "Panel", new Vector2(640, 700));
             var column = UiFactory.CreateColumn(panel, "Column", 16f);
 
-            UiFactory.CreateLabel(column, Application.productName, 40f);
-            UiFactory.CreateLabel(column, Application.companyName, 22f);
+            ConfigureSingleLine(UiFactory.CreateLabel(column, Application.productName, 40f));
+            ConfigureSingleLine(UiFactory.CreateLabel(column, Application.companyName, 22f));
 
             var begin = UiFactory.CreateButton(column, "Begin Experience", BeginExperience, 28f);
             UiFactory.CreateButton(column, "Settings", () =>
@@ -82,7 +82,7 @@ namespace BCaT.Production.Shell
             childPanel = canvas.gameObject;
             var panel = UiFactory.CreateCenterPanel(canvas.transform, "Panel", new Vector2(820, 560));
             var column = UiFactory.CreateColumn(panel, "Column", 18f);
-            UiFactory.CreateLabel(column, Application.productName, 30f);
+            ConfigureSingleLine(UiFactory.CreateLabel(column, Application.productName, 30f));
             UiFactory.CreateLabel(column,
                 $"{Application.companyName}\nVersion {Application.version}", 22f);
             UiFactory.CreateLabel(column,
@@ -106,6 +106,15 @@ namespace BCaT.Production.Shell
                 ResetService.MainEntranceSpawnId,
                 SceneManager.GetActiveScene().name);
             SceneManager.LoadSceneAsync(ResetService.LoadingSceneName, LoadSceneMode.Single);
+        }
+
+        static void ConfigureSingleLine(TMPro.TMP_Text label)
+        {
+            if (label == null)
+                return;
+
+            label.textWrappingMode = TMPro.TextWrappingModes.NoWrap;
+            label.overflowMode = TMPro.TextOverflowModes.Ellipsis;
         }
 
         void OnDestroy()
