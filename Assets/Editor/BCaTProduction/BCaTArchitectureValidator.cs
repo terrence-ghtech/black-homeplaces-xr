@@ -695,20 +695,37 @@ namespace BCaT.EditorTools
             {
                 if (go.name != DevOnlyGroupName) continue;
 
-                foreach (Transform t in go.GetComponentsInChildren<Transform>(true))
+                // The stripper destroys the whole marked GameObject, so a marker
+                // on the group (or on any ancestor inside it) covers everything
+                // beneath it. Only an unmarked subtree is a finding.
+                bool groupMarked = HasMarkerAtOrAbove(go.transform, go.transform);
+                if (groupMarked)
+                    continue;
+
+                foreach (Transform child in go.transform)
                 {
-                    bool marked = t.GetComponents<MonoBehaviour>()
-                        .Any(c => c != null && c.GetType().Name == "EditorOnlyObject");
-                    bool isGroupOrEmpty = t == go.transform ||
-                                          t.GetComponents<Component>().Length <= 1;
-                    if (!marked && !isGroupOrEmpty)
-                    {
-                        Add(findings, "BCAT-L004", scene, HierarchyPath(t),
-                            "Object inside a DevOnly group carries no EditorOnlyObject marker; it " +
-                            "would ship in player builds.");
-                    }
+                    if (!HasMarkerAtOrAbove(child, go.transform))
+                        Add(findings, "BCAT-L004", scene, HierarchyPath(child),
+                            "Object inside a DevOnly group is covered by no EditorOnlyObject marker " +
+                            "(on itself, the group, or an ancestor inside the group); it would ship " +
+                            "in player builds.");
                 }
             }
+        }
+
+        static bool HasMarkerAtOrAbove(Transform t, Transform stopAtInclusive)
+        {
+            Transform cursor = t;
+            while (cursor != null)
+            {
+                if (cursor.GetComponents<MonoBehaviour>()
+                    .Any(c => c != null && c.GetType().Name == "EditorOnlyObject"))
+                    return true;
+                if (cursor == stopAtInclusive)
+                    return false;
+                cursor = cursor.parent;
+            }
+            return false;
         }
 
         // ---- BCAT-D003 / BCAT-D004 / BCAT-Q001 / BCAT-Q002 -----------------
