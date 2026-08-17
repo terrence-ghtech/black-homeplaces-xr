@@ -55,6 +55,11 @@ namespace BCaT.Production.Access
             content.anchorMin = new Vector2(0, 1);
             content.anchorMax = new Vector2(1, 1);
             content.pivot = new Vector2(0.5f, 1f);
+            // A fresh RectTransform defaults to 100x100; zero it so the
+            // stretched content matches the viewport width instead of
+            // overhanging (and clipping) 50px on each side.
+            content.sizeDelta = Vector2.zero;
+            content.anchoredPosition = Vector2.zero;
             var layout = content.gameObject.AddComponent<VerticalLayoutGroup>();
             layout.spacing = 6;
             layout.padding = new RectOffset(18, 18, 12, 12);
@@ -67,9 +72,14 @@ namespace BCaT.Production.Access
 
             var scroll = viewport.gameObject.AddComponent<ScrollRect>();
             scroll.content = content;
+            scroll.viewport = viewport;
             scroll.horizontal = false;
             scroll.vertical = true;
-            scroll.scrollSensitivity = 30;
+            // Clamped keeps the list bound to its actual range (no elastic
+            // overscroll). The input module normalizes a wheel notch to 6
+            // units, so sensitivity 8 ≈ 48 scaled px (about 1.5 rows) per notch.
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.scrollSensitivity = 8;
 
             foreach (var (room, entries) in CollectEntries())
             {
@@ -99,10 +109,6 @@ namespace BCaT.Production.Access
                 onClose?.Invoke();
                 closePauseMenu?.Invoke();
                 ResetService.ReturnToMainEntrance();
-            });
-            UiFactory.CreateButton(footer, "Transcripts", () =>
-            {
-                TranscriptViewer.Open(null);
             });
             var close = UiFactory.CreateButton(footer, "Close", () =>
             {

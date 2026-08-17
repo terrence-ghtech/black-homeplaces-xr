@@ -8,7 +8,7 @@ namespace BCaT.Production.Shell
     /// <summary>
     /// Desktop main menu, hosted by the lightweight MainMenuScene (scene 0 of
     /// desktop builds). Builds its UI at runtime through the UiFactory:
-    /// Begin Experience / Settings / Accessibility / Credits / Quit.
+    /// Begin Experience / Settings / Credits / Quit.
     /// In kiosk mode the menu is skipped entirely — the experience begins
     /// immediately and quit is reserved for the administrator chord.
     /// On the Quest configuration the menu scene is bypassed as well (Quest
@@ -51,12 +51,10 @@ namespace BCaT.Production.Shell
             {
                 childPanel = SettingsMenuController.Open(() => childPanel = null);
             });
-            UiFactory.CreateButton(column, "Accessibility", () =>
+            UiFactory.CreateButton(column, "Credits", () =>
             {
-                // Opens the settings panel directly on the accessibility tab.
-                childPanel = SettingsMenuController.Open(() => childPanel = null, initialTab: 99);
+                childPanel = OpenCreditsPanel(() => childPanel = null);
             });
-            UiFactory.CreateButton(column, "Credits", OpenCredits);
             UiFactory.CreateButton(column, "Quit", () =>
             {
                 childPanel = UiFactory.CreateConfirmDialog("Quit the application?", "Quit",
@@ -76,10 +74,10 @@ namespace BCaT.Production.Shell
             }
         }
 
-        void OpenCredits()
+        /// <summary>Shared credits panel, also used by the pause menu.</summary>
+        public static GameObject OpenCreditsPanel(System.Action onClose)
         {
             var canvas = UiFactory.CreateOverlayCanvas("BCaT_Credits", 31000);
-            childPanel = canvas.gameObject;
             var panel = UiFactory.CreateCenterPanel(canvas.transform, "Panel", new Vector2(820, 560));
             var column = UiFactory.CreateColumn(panel, "Column", 18f);
             ConfigureSingleLine(UiFactory.CreateLabel(column, Application.productName, 30f));
@@ -91,9 +89,10 @@ namespace BCaT.Production.Shell
             var close = UiFactory.CreateButton(column, "Close", () =>
             {
                 Destroy(canvas.gameObject);
-                childPanel = null;
+                onClose?.Invoke();
             });
             UiFactory.SelectForKeyboard(close);
+            return canvas.gameObject;
         }
 
         void BeginExperience()

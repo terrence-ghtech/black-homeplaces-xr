@@ -9,12 +9,11 @@ namespace BCaT.Production.Shell
 {
     /// <summary>
     /// The shared settings panel used by both the main menu and the pause menu.
-    /// Builds a tabbed UI (Display / Graphics / Audio / Controls /
-    /// Accessibility) from the runtime UiFactory. Every control writes into
+    /// Builds a vertically navigated UI (Display / Graphics / Audio / Controls)
+    /// from the runtime UiFactory. Every control writes into
     /// SettingsManager.Current, applies immediately, and persists on close.
-    /// In kiosk mode the Display and Graphics tabs are withheld (the
-    /// administrator fixes those), while Audio and Accessibility remain
-    /// visitor-adjustable.
+    /// In kiosk mode the Display, Graphics, and Controls sections are withheld
+    /// (the administrator fixes those), while Audio remains visitor-adjustable.
     /// </summary>
     public static class SettingsMenuController
     {
@@ -36,41 +35,62 @@ namespace BCaT.Production.Shell
             var column = UiFactory.CreateColumn(frame, "Column", 10f);
             UiFactory.CreateLabel(column, "Settings", 34f);
 
-            // Tab strip
-            var tabs = new List<(string name, Action<Transform> build)>();
+            var sections = new List<(string name, Action<Transform> build)>();
             if (!kioskRestricted)
             {
-                tabs.Add(("Display", BuildDisplayTab));
-                tabs.Add(("Graphics", BuildGraphicsTab));
+                sections.Add(("Display", BuildDisplaySection));
+                sections.Add(("Graphics", BuildGraphicsSection));
             }
-            tabs.Add(("Audio", BuildAudioTab));
+            sections.Add(("Audio", BuildAudioSection));
             if (!kioskRestricted)
-                tabs.Add(("Controls", BuildControlsTab));
-            tabs.Add(("Accessibility", BuildAccessibilityTab));
+                sections.Add(("Controls", BuildControlsSection));
 
-            var tabBar = UiFactory.CreateRect(column, "TabBar");
-            tabBar.sizeDelta = new Vector2(0, 64);
-            var tabLayout = tabBar.gameObject.AddComponent<HorizontalLayoutGroup>();
-            tabLayout.spacing = 8;
-            tabLayout.childControlWidth = true;
-            tabLayout.childControlHeight = true;
-            tabLayout.childForceExpandWidth = true;
+            // Body: vertical section selector on the left, section rows on the right.
+            var body = UiFactory.CreateRect(column, "Body");
+            body.sizeDelta = new Vector2(0, 600);
 
-            var content = UiFactory.CreateRect(column, "TabContent");
-            content.sizeDelta = new Vector2(0, 560);
+            var nav = UiFactory.CreateRect(body, "SectionNav");
+            nav.anchorMin = new Vector2(0, 0);
+            nav.anchorMax = new Vector2(0, 1);
+            nav.pivot = new Vector2(0, 0.5f);
+            nav.sizeDelta = new Vector2(230, 0);
+            nav.anchoredPosition = Vector2.zero;
+            var navLayout = nav.gameObject.AddComponent<VerticalLayoutGroup>();
+            navLayout.spacing = 8;
+            navLayout.childAlignment = TextAnchor.UpperCenter;
+            navLayout.childControlWidth = true;
+            navLayout.childControlHeight = true;
+            navLayout.childForceExpandWidth = true;
+            navLayout.childForceExpandHeight = false;
 
-            void ShowTab(int index)
+            var content = UiFactory.CreateRect(body, "SectionContent");
+            content.anchorMin = Vector2.zero;
+            content.anchorMax = Vector2.one;
+            content.offsetMin = new Vector2(254, 0);
+            content.offsetMax = Vector2.zero;
+
+            var navButtons = new List<Button>();
+
+            void ShowSection(int index)
             {
+                index = Mathf.Clamp(index, 0, sections.Count - 1);
                 foreach (Transform child in content)
                     UnityEngine.Object.Destroy(child.gameObject);
-                var tabColumn = UiFactory.CreateColumn(content, "Rows", 10f);
-                tabs[Mathf.Clamp(index, 0, tabs.Count - 1)].build(tabColumn);
+                var rows = UiFactory.CreateColumn(content, "Rows", 10f);
+                sections[index].build(rows);
+
+                for (int i = 0; i < navButtons.Count; i++)
+                {
+                    var colors = navButtons[i].colors;
+                    colors.normalColor = i == index ? UiFactory.ButtonFocusColor : UiFactory.ButtonColor;
+                    navButtons[i].colors = colors;
+                }
             }
 
-            for (int i = 0; i < tabs.Count; i++)
+            for (int i = 0; i < sections.Count; i++)
             {
                 int captured = i;
-                UiFactory.CreateButton(tabBar, tabs[i].name, () => ShowTab(captured), 22f);
+                navButtons.Add(UiFactory.CreateButton(nav, sections[i].name, () => ShowSection(captured), 24f));
             }
 
             var footer = UiFactory.CreateRect(column, "Footer");
@@ -100,7 +120,7 @@ namespace BCaT.Production.Shell
             });
             UiFactory.SelectForKeyboard(closeButton);
 
-            ShowTab(Mathf.Clamp(initialTab, 0, tabs.Count - 1));
+            ShowSection(initialTab);
             return canvas.gameObject;
         }
 
@@ -109,9 +129,9 @@ namespace BCaT.Production.Shell
             SettingsManager.ApplyAll();
         }
 
-        // ---- Tabs ----------------------------------------------------------
+        // ---- Sections --------------------------------------------------------
 
-        static void BuildDisplayTab(Transform parent)
+        static void BuildDisplaySection(Transform parent)
         {
             var d = SettingsManager.Current.display;
 
@@ -142,36 +162,9 @@ namespace BCaT.Production.Shell
                 d.fullscreen = v;
                 ApplyNow();
             });
-
-            if (Display.displays.Length > 1)
-            {
-                var displayLabels = new List<string>();
-                for (int i = 0; i < Display.displays.Length; i++)
-                    displayLabels.Add($"Display {i + 1}");
-                UiFactory.CreateCycler(parent, "Display", displayLabels,
-                    Mathf.Clamp(d.displayIndex, 0, Display.displays.Length - 1), i =>
-                    {
-                        d.displayIndex = i;
-                        ApplyNow();
-                    });
-            }
-
-            UiFactory.CreateToggle(parent, "VSync", d.vSyncCount > 0, v =>
-            {
-                d.vSyncCount = v ? 1 : 0;
-                ApplyNow();
-            });
-
-            var fpsOptions = new List<string> { "Uncapped", "30 FPS", "60 FPS", "120 FPS" };
-            int fpsIndex = d.targetFrameRate switch { 30 => 1, 60 => 2, 120 => 3, _ => 0 };
-            UiFactory.CreateCycler(parent, "Frame-rate limit", fpsOptions, fpsIndex, i =>
-            {
-                d.targetFrameRate = i switch { 1 => 30, 2 => 60, 3 => 120, _ => -1 };
-                ApplyNow();
-            });
         }
 
-        static void BuildGraphicsTab(Transform parent)
+        static void BuildGraphicsSection(Transform parent)
         {
             var g = SettingsManager.Current.graphics;
 
@@ -183,37 +176,9 @@ namespace BCaT.Production.Shell
                 ApplyNow();
             });
 
-            UiFactory.CreateSlider(parent, "Render scale", 0.5f, 1.5f, g.renderScale, v =>
-            {
-                g.renderScale = v;
-                ApplyNow();
-            });
-
             UiFactory.CreateSlider(parent, "Shadow distance", 0.5f, 1.5f, g.shadowDistanceScale, v =>
             {
                 g.shadowDistanceScale = v;
-                ApplyNow();
-            });
-
-            var texOptions = new List<string> { "Full", "Half", "Quarter" };
-            UiFactory.CreateCycler(parent, "Texture quality", texOptions,
-                Mathf.Clamp(SettingsManager.Current.graphics.textureQuality, 0, 2), i =>
-                {
-                    g.textureQuality = i;
-                    ApplyNow();
-                });
-
-            var aaOptions = new List<string> { "Tier default", "Off", "2x MSAA", "4x MSAA" };
-            int aaIndex = g.antiAliasing switch { 1 => 1, 2 => 2, 4 => 3, _ => 0 };
-            UiFactory.CreateCycler(parent, "Anti-aliasing", aaOptions, aaIndex, i =>
-            {
-                g.antiAliasing = i switch { 1 => 1, 2 => 2, 3 => 4, _ => -1 };
-                ApplyNow();
-            });
-
-            UiFactory.CreateToggle(parent, "Ambient effects (post-processing)", g.ambientEffects, v =>
-            {
-                g.ambientEffects = v;
                 ApplyNow();
             });
 
@@ -222,25 +187,15 @@ namespace BCaT.Production.Shell
                 g.terrainDistanceScale = v;
                 ApplyNow();
             });
-
-            UiFactory.CreateSlider(parent, "Vegetation distance", 0.5f, 1.5f, g.vegetationDistanceScale, v =>
-            {
-                g.vegetationDistanceScale = v;
-                ApplyNow();
-            });
         }
 
-        static void BuildAudioTab(Transform parent)
+        static void BuildAudioSection(Transform parent)
         {
             var a = SettingsManager.Current.audio;
-            UiFactory.CreateSlider(parent, "Master", 0f, 1f, a.master, v => { a.master = v; ApplyNow(); });
-            UiFactory.CreateSlider(parent, "Narration", 0f, 1f, a.narration, v => { a.narration = v; ApplyNow(); });
-            UiFactory.CreateSlider(parent, "Ambience", 0f, 1f, a.ambience, v => { a.ambience = v; ApplyNow(); });
-            UiFactory.CreateSlider(parent, "Effects", 0f, 1f, a.effects, v => { a.effects = v; ApplyNow(); });
-            UiFactory.CreateSlider(parent, "Media / video", 0f, 1f, a.media, v => { a.media = v; ApplyNow(); });
+            UiFactory.CreateSlider(parent, "Master volume", 0f, 1f, a.master, v => { a.master = v; ApplyNow(); });
         }
 
-        static void BuildControlsTab(Transform parent)
+        static void BuildControlsSection(Transform parent)
         {
             var c = SettingsManager.Current.controls;
             UiFactory.CreateSlider(parent, "Mouse sensitivity", 0.2f, 3f, c.mouseSensitivity, v =>
@@ -255,46 +210,6 @@ namespace BCaT.Production.Shell
             });
             UiFactory.CreateLabel(parent,
                 "Move: WASD   Look: Mouse   Interact: E   Pause: Esc", 20f);
-        }
-
-        static void BuildAccessibilityTab(Transform parent)
-        {
-            var a = SettingsManager.Current.accessibility;
-
-            UiFactory.CreateToggle(parent, "Subtitles", a.subtitles, v =>
-            {
-                a.subtitles = v;
-                ApplyNow();
-            });
-
-            var sizes = new List<string> { "Normal", "Large", "Extra large" };
-            UiFactory.CreateCycler(parent, "Text size", sizes, Mathf.Clamp(a.textSize, 0, 2), i =>
-            {
-                a.textSize = i;
-                ApplyNow();
-            });
-
-            UiFactory.CreateToggle(parent, "High-contrast interface", a.highContrastUi, v =>
-            {
-                a.highContrastUi = v;
-                ApplyNow();
-            });
-
-            UiFactory.CreateToggle(parent, "Reduced motion", a.reducedMotion, v =>
-            {
-                a.reducedMotion = v;
-                ApplyNow();
-            });
-
-            UiFactory.CreateToggle(parent, "Persistent interaction prompts", a.persistentPrompts, v =>
-            {
-                a.persistentPrompts = v;
-                ApplyNow();
-            });
-
-            UiFactory.CreateLabel(parent,
-                "Text size and contrast apply to menus, prompts, and subtitles.\n" +
-                "Reopen this panel to see it restyled.", 18f);
         }
     }
 }

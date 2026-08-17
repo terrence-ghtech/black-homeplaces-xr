@@ -7,8 +7,8 @@ namespace BCaT.Production.Shell
 {
     /// <summary>
     /// Desktop pause menu (Escape). Suppresses player movement and world
-    /// interaction, unlocks the cursor, and offers Resume / Settings / Return to
-    /// Main Entrance / Reset Position / Exhibit Directory / Quit to Main Menu /
+    /// interaction, unlocks the cursor, and offers Resume / Settings / Exhibit
+    /// Directory / Credits / Return to Main Entrance / Quit to Main Menu /
     /// Quit Application. Media state is intentionally preserved while paused
     /// (audio narration continues; leaving via Return/Quit stops it through the
     /// media registry). Escape is owned by focused exhibit interfaces first —
@@ -77,10 +77,9 @@ namespace BCaT.Production.Shell
             {
                 childPanel = Access.ExhibitDirectoryUi.Open(() => childPanel = null, Close);
             });
-            UiFactory.CreateButton(column, "Reset Position", () =>
+            UiFactory.CreateButton(column, "Credits", () =>
             {
-                Close();
-                ResetService.ResetPosition();
+                childPanel = MainMenuController.OpenCreditsPanel(() => childPanel = null);
             });
             UiFactory.CreateButton(column, "Return to Main Entrance", () =>
             {
