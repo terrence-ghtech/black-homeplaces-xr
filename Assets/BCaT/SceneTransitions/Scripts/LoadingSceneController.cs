@@ -17,6 +17,7 @@ public sealed class LoadingSceneController : MonoBehaviour
     private bool loadStarted;
     private bool failureRecoveryStarted;
     private float lastLoadHeartbeat;
+    private LoadingScreenUi loadingScreen;
 
     private IEnumerator Start()
     {
@@ -25,6 +26,11 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         loadStarted = true;
         Heartbeat();
+
+        // Branded loading presentation, built before the first yield so it is
+        // visible from this scene's very first rendered frame on both
+        // platforms (the platform branch was activated in Awake).
+        loadingScreen = LoadingScreenUi.Create();
 
         // Quest-only safety net. An unhandled exception inside a load coroutine
         // terminates it silently, leaving this loading scene active behind an
@@ -44,6 +50,8 @@ public sealed class LoadingSceneController : MonoBehaviour
             string message = "[LoadingSceneController] No destination scene was requested.";
             SceneTransitionState.CancelTransition(message);
             Debug.LogError(message);
+            if (loadingScreen != null)
+                loadingScreen.SetStatus("No destination was requested.");
             yield break;
         }
 
@@ -280,6 +288,8 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         if (progressText != null)
             progressText.text = "Couldn't load this exhibit.\nCheck your connection — returning to the house…";
+        if (loadingScreen != null)
+            loadingScreen.SetStatus("Couldn't load this exhibit.\nCheck your connection — returning to the house…");
 
         yield return new WaitForSeconds(4f);
 
@@ -314,5 +324,7 @@ public sealed class LoadingSceneController : MonoBehaviour
     {
         if (progressText != null)
             progressText.text = $"{Mathf.RoundToInt(progress * 100f)}%";
+        if (loadingScreen != null)
+            loadingScreen.SetProgress(progress);
     }
 }
