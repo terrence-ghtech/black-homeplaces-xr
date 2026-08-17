@@ -67,8 +67,9 @@ namespace BCaT.EditorTools
             new Entry
             {
                 Path = Root + "RI/MuralExhibit",
-                Verb = "View", Name = "The Breonna Taylor Memorial Mural",
-                Source = "TheBreonnaTaylorMuralPrompt in scene (replaces objectName 'mural')",
+                Verb = "View", Name = "Black Homeplaces Community Mural",
+                Source = "the exhibit's own plaque (LabelBodyText); the earlier Breonna Taylor " +
+                         "name belonged to the downstairs BTMMP workstation, not this mural",
             },
             new Entry
             {

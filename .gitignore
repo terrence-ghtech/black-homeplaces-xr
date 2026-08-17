@@ -106,6 +106,16 @@ Assets/AddressableAssetsData/*/addressables_content_state.bin.meta
 /CCDUpload/
 /GLB_Originals_Backup/
 
+# Device test capture output
+/QuestTestLogs/
+/AdinkraCaptures/
+
+# Machine-local agent settings
+/.claude/
+
+# Unity crash-recovery scene dumps (not project assets)
+/Assets/_Recovery/
+
 # Transient audit output
 webgl-public-optimization-reports/build_artifacts/
 webgl-public-optimization-reports/build/

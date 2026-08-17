@@ -227,7 +227,13 @@ namespace BCaT.Production.Interaction
                 if (!target.IsAvailable)
                     continue;
 
-                if (target.Priority >= bestPriority)
+                // Strictly-greater plus keep-the-current-target on ties:
+                // dictionary enumeration order is arbitrary, so '>=' made
+                // equal-priority neighbors trade the prompt back and forth
+                // with natural hand jitter when both were hovered.
+                if (target.Priority > bestPriority ||
+                    (target.Priority == bestPriority && target == CurrentTarget) ||
+                    best == null)
                 {
                     best = target;
                     bestPriority = target.Priority;

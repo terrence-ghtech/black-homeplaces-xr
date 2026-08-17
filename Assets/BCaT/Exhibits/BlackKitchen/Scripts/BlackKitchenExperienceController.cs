@@ -10,19 +10,31 @@ using UnityEngine.InputSystem.UI;
 #endif
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit.UI;
 
 /// <summary>
 /// Black Kitchen session controller: spawn/fall recovery, the Exit Reflection
-/// audio, the Stay/Exit Now modal, and the return transition. Interaction
-/// input arrives through the shared interaction architecture: the
+/// audio, the three-way exit choice, and the return transition.
+///
+/// Interaction input arrives through the shared interaction architecture: the
 /// BlackKitchenInteractionManager (the router's exclusive zone) forwards the
-/// interact press via <see cref="HandleExitInteract"/>, and the modal's
-/// keyboard shortcuts read the central FocusedUiInput helper. While the modal
-/// is open it registers a Modal interaction blocker so nothing else in the
-/// scene can receive input.
+/// interact press via <see cref="HandleExitInteract"/>. While the choice is open
+/// it registers a Modal interaction blocker so nothing else in the scene can
+/// receive input.
+///
+/// This class owns the exit *decision* only —
+/// <see cref="ChooseListen"/>, <see cref="ChooseLeaveNow"/> and
+/// <see cref="ChooseCancel"/> — and delegates presentation to a platform adapter
+/// (<see cref="IBlackKitchenExitChoiceUi"/>). Desktop keeps its screen-space
+/// overlay with mouse and keyboard; Quest gets a world-anchored gaze-and-trigger
+/// panel. The two UIs are siloed so neither platform's input model constrains the
+/// other, and both terminate at the same three methods here.
+///
+/// Choosing Listen starts the existing reflection audio through the existing
+/// coordinator and returns the player to the kitchen; it never waits for the clip
+/// to finish, and the exit interface stays live so the player can leave at any
+/// point while it plays.
 /// </summary>
-public class BlackKitchenExperienceController : MonoBehaviour
+public class BlackKitchenExperienceController : MonoBehaviour, IBlackKitchenExitChoiceHandler
 {
     [Header("Spawn and Return")]
     [SerializeField] private Transform spawnPoint;
@@ -45,7 +57,6 @@ public class BlackKitchenExperienceController : MonoBehaviour
 #pragma warning restore 0414
     [SerializeField] private TMP_Text exitPromptText;
     [SerializeField] private string desktopExitPrompt = "Press E to Exit Black Kitchen";
-    [SerializeField] private string xrExitPrompt = "Interact to Exit Black Kitchen";
     [SerializeField] private Transform exitInteractionRoot;
 
     [Header("Audio Ducking")]
@@ -60,9 +71,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
     private bool exitReflectionRequested;
     private bool exitModalOpen;
     private bool exitModalChoiceHandled;
-    private bool exitModalUsesXR;
-    private Canvas exitReflectionModalCanvas;
-    private CanvasGroup exitReflectionModalGroup;
+    private IBlackKitchenExitChoiceUi exitChoiceUi;
     private CanvasGroup sceneFadeGroup;
     private const float ExitReflectionStartFadeDuration = 0.05f;
     private Transform fallbackPlayerRoot;
@@ -97,6 +106,8 @@ public class BlackKitchenExperienceController : MonoBehaviour
     {
         InteractionState.Unblock(this);
         BCaT.Production.Media.MediaPlaybackRegistry.NotifyStopped(this);
+        exitChoiceUi?.Dispose();
+        exitChoiceUi = null;
     }
 
     private void Update()
@@ -105,15 +116,12 @@ public class BlackKitchenExperienceController : MonoBehaviour
 
         if (exitPromptText != null)
         {
-            exitPromptText.text = GetExitPrompt(InteractionPromptText.IsXRActive());
+            exitPromptText.text = GetExitPrompt();
             exitPromptText.enabled = false;
         }
 
-        if (exitReflectionModalCanvas != null && exitReflectionModalCanvas.gameObject.activeSelf)
-        {
-            PlaceExitReflectionModal();
-            HandleExitModalKeyboard();
-        }
+        if (exitModalOpen)
+            exitChoiceUi?.Tick();
     }
 
     /// <summary>
@@ -128,33 +136,33 @@ public class BlackKitchenExperienceController : MonoBehaviour
         ExitBlackKitchen();
     }
 
-    public string GetExitPrompt(bool xr) => xr ? xrExitPrompt : desktopExitPrompt;
+    public string GetExitPrompt() => desktopExitPrompt;
 
-    public void ExitBlackKitchen()
+    /// <summary>Compatibility entry point: opens the exit choice.</summary>
+    public void ExitBlackKitchen() => RequestExitChoice();
+
+    /// <summary>
+    /// Present the three-way exit choice. Nothing is started or left here — the
+    /// reflection audio only begins if the user actually chooses Listen, which is
+    /// what makes this a choice before leaving rather than an announcement.
+    /// </summary>
+    public void RequestExitChoice()
     {
         if (exitInProgress || exitModalOpen)
             return;
 
         if (Time.unscaledTime - exitModalCloseTime < ExitModalReopenCooldown)
         {
-            Debug.Log($"[BlackKitchenExperienceController] Exit Reflection reopen suppressed within {ExitModalReopenCooldown:0.00}s of closing.");
+            Debug.Log($"[BlackKitchenExperienceController] Exit choice reopen suppressed within {ExitModalReopenCooldown:0.00}s of closing.");
             return;
         }
 
-        StartExitReflectionIfNeeded();
-        ShowExitReflectionModal();
-    }
+        // Activation confirmation for the Quest exit affordance. Placed after every
+        // guard so it only fires on an accepted activation, and it no-ops on
+        // desktop. The decision flow below is unchanged.
+        BlackKitchenQuestExitHaptics.PulseActivated();
 
-    public void OnXRExitSelect()
-    {
-        if (InteractionState.IsBlocked)
-            return;
-
-        BlackKitchenInteractionManager manager = FindAnyObjectByType<BlackKitchenInteractionManager>();
-        if (manager != null && manager.RequestXRExit())
-            return;
-
-        ExitBlackKitchen();
+        ShowExitChoice();
     }
 
     private void UpdateFallRecovery()
@@ -225,93 +233,117 @@ public class BlackKitchenExperienceController : MonoBehaviour
         return exitReflectionSource.isPlaying;
     }
 
-    private void ShowExitReflectionModal()
+    // ---- Exit choice: shared decisions, siloed platform presentation --------
+
+    /// <summary>
+    /// The platform adapter in use. Desktop keeps the screen-space overlay with
+    /// mouse and keyboard; Quest gets a world-anchored gaze-and-trigger panel.
+    /// Chosen once, lazily, so neither platform's implementation can affect the
+    /// other's.
+    /// </summary>
+    private IBlackKitchenExitChoiceUi ExitChoiceUi
     {
-        EnsureExitReflectionModal();
-        if (exitReflectionModalCanvas == null)
-            return;
-
-        exitModalOpen = true;
-        exitModalChoiceHandled = false;
-        exitModalUsesXR = BCaT.Production.BCaTPlatform.IsQuest;
-        ConfigureExitReflectionModalForPlatform(exitModalUsesXR);
-        EnsureActiveEventSystemForModal(exitModalUsesXR);
-        SetDesktopModalControls(false);
-
-        // Focused modal: block all other interaction; kiosk reset closes via Stay.
-        InteractionState.Block(this, InteractionBlockReason.Modal, SelectStay);
-
-        exitReflectionModalCanvas.gameObject.SetActive(true);
-        exitReflectionModalCanvas.enabled = true;
-        if (exitReflectionModalGroup != null)
+        get
         {
-            exitReflectionModalGroup.alpha = 1f;
-            exitReflectionModalGroup.interactable = true;
-            exitReflectionModalGroup.blocksRaycasts = true;
+            if (exitChoiceUi == null)
+            {
+                exitChoiceUi = BCaT.Production.PlatformCapabilities.IsXRActive
+                    ? new BlackKitchenExitChoiceQuestUi(transform)
+                    : (IBlackKitchenExitChoiceUi)new BlackKitchenExitChoiceDesktopUi(transform);
+                Debug.Log($"[BlackKitchenExperienceController] Exit choice UI: {exitChoiceUi.GetType().Name}.");
+            }
+            return exitChoiceUi;
         }
-
-        PlaceExitReflectionModal();
-        Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' exit modal opened for platform '{(exitModalUsesXR ? "XR" : "Desktop")}'.");
     }
 
-    private void HideExitReflectionModal()
+    private void ShowExitChoice()
+    {
+        exitModalOpen = true;
+        exitModalChoiceHandled = false;
+
+        // Desktop-only: cursor + FirstPersonController handling. Quest keeps its
+        // canonical movement untouched, and the panel is world-anchored (it
+        // re-centres if the wearer walks off) rather than freezing locomotion.
+        if (!BCaT.Production.PlatformCapabilities.IsXRActive)
+            SetDesktopModalControls(false);
+
+        // Focused choice: block other interaction; a kiosk reset resolves as Stay.
+        InteractionState.Block(this, InteractionBlockReason.Modal, ChooseCancel);
+
+        ExitChoiceUi.Show(this, offerListen: !IsExitReflectionPlaying());
+
+        Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' exit choice opened " +
+                  $"(reflectionPlaying={IsExitReflectionPlaying()}).");
+    }
+
+    private void HideExitChoice()
     {
         exitModalOpen = false;
         exitModalCloseTime = Time.unscaledTime;
         InteractionState.Unblock(this);
-
-        if (exitReflectionModalGroup != null)
-        {
-            exitReflectionModalGroup.interactable = false;
-            exitReflectionModalGroup.blocksRaycasts = false;
-        }
-
-        if (exitReflectionModalCanvas != null)
-            exitReflectionModalCanvas.gameObject.SetActive(false);
+        exitChoiceUi?.Hide();
     }
 
-    public void FinishListeningBeforeExit()
+    /// <summary>
+    /// Listen: start the existing reflection audio through the existing
+    /// coordinator and stay in the kitchen. Deliberately does NOT stop audio and
+    /// does NOT wait for it — the exit interface stays live, so the user can
+    /// re-open this choice and leave at any point while it plays.
+    /// </summary>
+    public void ChooseListen()
     {
-        SelectStay();
+        if (exitModalChoiceHandled)
+            return;
+
+        exitModalChoiceHandled = true;
+        Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' Listen selected.");
+        HideExitChoice();
+        StartExitReflectionIfNeeded();
+        exitInProgress = false;
+        if (!BCaT.Production.PlatformCapabilities.IsXRActive)
+            SetDesktopModalControls(true);
     }
 
-    public void SelectStay()
+    /// <summary>Cancel: stay in the kitchen. Leaves any already-playing
+    /// reflection audio alone, since cancelling the exit should change nothing.</summary>
+    public void ChooseCancel()
     {
         if (exitModalChoiceHandled)
             return;
 
         exitModalChoiceHandled = true;
         Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' Stay selected.");
-        HideExitReflectionModal();
-        StopExitReflectionImmediate();
-        exitReflectionRequested = false;
+        HideExitChoice();
         exitInProgress = false;
-        SetDesktopModalControls(true);
+        if (!BCaT.Production.PlatformCapabilities.IsXRActive)
+            SetDesktopModalControls(true);
     }
 
-    public void ExitNow()
-    {
-        SelectExitNow();
-    }
-
-    public void SelectExitNow()
+    /// <summary>Leave now: return to the Main House without waiting for audio.</summary>
+    public void ChooseLeaveNow()
     {
         if (exitInProgress || exitModalChoiceHandled)
             return;
 
         exitModalChoiceHandled = true;
-        Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' Exit Now selected.");
-        if (exitReflectionModalGroup != null)
-        {
-            exitReflectionModalGroup.interactable = false;
-            exitReflectionModalGroup.blocksRaycasts = false;
-        }
-
-        HideExitReflectionModal();
+        Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' Leave Now selected.");
+        HideExitChoice();
         StopExitReflectionImmediate();
-        SetDesktopModalControls(true);
+        if (!BCaT.Production.PlatformCapabilities.IsXRActive)
+            SetDesktopModalControls(true);
         StartCoroutine(ExitToMainHouseRoutine());
     }
+
+    // ---- Compatibility wrappers for existing callers ------------------------
+
+    public void FinishListeningBeforeExit() => ChooseCancel();
+
+    /// <summary>Legacy name kept for the Play Mode validation harness.</summary>
+    public void SelectStay() => ChooseCancel();
+
+    public void ExitNow() => ChooseLeaveNow();
+
+    public void SelectExitNow() => ChooseLeaveNow();
 
     private IEnumerator ExitToMainHouseRoutine()
     {
@@ -414,192 +446,14 @@ public class BlackKitchenExperienceController : MonoBehaviour
         if (sceneFadeGroup != null)
             return;
 
-        GameObject canvasObject = new GameObject("BlackKitchenExitFade", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(CanvasGroup));
-        canvasObject.transform.SetParent(transform, false);
-        Canvas canvas = canvasObject.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 32750;
-
-        sceneFadeGroup = canvasObject.GetComponent<CanvasGroup>();
+        sceneFadeGroup = BCaT.Production.Shell.FadeOverlayBuilder.Create(
+            "BlackKitchenExitFade", 32750, transform);
         sceneFadeGroup.alpha = 0f;
         sceneFadeGroup.blocksRaycasts = false;
-
-        GameObject imageObject = new GameObject("Black", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        imageObject.transform.SetParent(canvasObject.transform, false);
-        RectTransform rect = imageObject.GetComponent<RectTransform>();
-        rect.anchorMin = Vector2.zero;
-        rect.anchorMax = Vector2.one;
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
-
-        Image image = imageObject.GetComponent<Image>();
-        image.color = Color.black;
-    }
-
-    private void EnsureExitReflectionModal()
-    {
-        if (exitReflectionModalCanvas != null)
-            return;
-
-        GameObject canvasObject = new GameObject("ExitReflectionModal", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster), typeof(TrackedDeviceGraphicRaycaster), typeof(CanvasGroup));
-        canvasObject.transform.SetParent(transform, false);
-        exitReflectionModalCanvas = canvasObject.GetComponent<Canvas>();
-        exitReflectionModalCanvas.sortingOrder = 32000;
-
-        RectTransform canvasRect = canvasObject.GetComponent<RectTransform>();
-        canvasRect.sizeDelta = new Vector2(900f, 520f);
-        canvasRect.localScale = Vector3.one * 0.0018f;
-
-        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
-        scaler.dynamicPixelsPerUnit = 1f;
-
-        exitReflectionModalGroup = canvasObject.GetComponent<CanvasGroup>();
-
-        GameObject panel = new GameObject("Panel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        panel.transform.SetParent(canvasObject.transform, false);
-        RectTransform panelRect = panel.GetComponent<RectTransform>();
-        panelRect.anchorMin = Vector2.zero;
-        panelRect.anchorMax = Vector2.one;
-        panelRect.offsetMin = Vector2.zero;
-        panelRect.offsetMax = Vector2.zero;
-        Image panelImage = panel.GetComponent<Image>();
-        panelImage.color = new Color(0.025f, 0.028f, 0.03f, 0.96f);
-
-        TMP_Text title = CreateModalText(panel.transform, "Title", "Leaving the Black Kitchen", 42f, FontStyles.Bold);
-        RectTransform titleRect = title.GetComponent<RectTransform>();
-        titleRect.anchorMin = new Vector2(0f, 1f);
-        titleRect.anchorMax = new Vector2(1f, 1f);
-        titleRect.pivot = new Vector2(0.5f, 1f);
-        titleRect.anchoredPosition = new Vector2(0f, -54f);
-        titleRect.sizeDelta = new Vector2(-96f, 72f);
-
-        TMP_Text body = CreateModalText(panel.transform, "Body", "Exit Reflection has begun playing.\n\nChoose Stay to remain in the Black Kitchen or Exit Now to return to the Main House.\n\nKeyboard: Esc/S = Stay, Enter/E/L = Exit Now", 26f, FontStyles.Normal);
-        RectTransform bodyRect = body.GetComponent<RectTransform>();
-        bodyRect.anchorMin = new Vector2(0f, 0.5f);
-        bodyRect.anchorMax = new Vector2(1f, 0.5f);
-        bodyRect.pivot = new Vector2(0.5f, 0.5f);
-        bodyRect.anchoredPosition = new Vector2(0f, 30f);
-        bodyRect.sizeDelta = new Vector2(-120f, 190f);
-
-        Button stayButton = CreateModalButton(panel.transform, "StayButton", "Stay", new Vector2(-170f, -180f));
-        stayButton.onClick.AddListener(SelectStay);
-
-        Button exitButton = CreateModalButton(panel.transform, "ExitNowButton", "Exit Now", new Vector2(170f, -180f));
-        exitButton.onClick.AddListener(SelectExitNow);
-
-        canvasObject.SetActive(false);
-    }
-
-    private void ConfigureExitReflectionModalForPlatform(bool useXR)
-    {
-        if (exitReflectionModalCanvas == null)
-            return;
-
-        if (useXR)
-        {
-            exitReflectionModalCanvas.renderMode = RenderMode.WorldSpace;
-            exitReflectionModalCanvas.worldCamera = Camera.main;
-            RectTransform canvasRect = exitReflectionModalCanvas.GetComponent<RectTransform>();
-            canvasRect.sizeDelta = new Vector2(900f, 520f);
-            canvasRect.localScale = Vector3.one * 0.0018f;
-        }
-        else
-        {
-            exitReflectionModalCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            exitReflectionModalCanvas.worldCamera = null;
-            RectTransform canvasRect = exitReflectionModalCanvas.GetComponent<RectTransform>();
-            canvasRect.anchorMin = Vector2.zero;
-            canvasRect.anchorMax = Vector2.one;
-            canvasRect.offsetMin = Vector2.zero;
-            canvasRect.offsetMax = Vector2.zero;
-            canvasRect.localScale = Vector3.one;
-            canvasRect.localPosition = Vector3.zero;
-            canvasRect.localRotation = Quaternion.identity;
-        }
-    }
-
-    private static TMP_Text CreateModalText(Transform parent, string name, string value, float fontSize, FontStyles style)
-    {
-        GameObject textObject = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-        textObject.transform.SetParent(parent, false);
-        TMP_Text text = textObject.GetComponent<TMP_Text>();
-        text.text = value;
-        text.fontSize = fontSize;
-        text.fontStyle = style;
-        text.alignment = TextAlignmentOptions.Center;
-        text.color = new Color(0.93f, 0.91f, 0.86f, 1f);
-        text.enableWordWrapping = true;
-        text.raycastTarget = false;
-        return text;
-    }
-
-    private static Button CreateModalButton(Transform parent, string name, string label, Vector2 anchoredPosition)
-    {
-        GameObject buttonObject = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
-        buttonObject.transform.SetParent(parent, false);
-        RectTransform rect = buttonObject.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0.5f, 0f);
-        rect.anchorMax = new Vector2(0.5f, 0f);
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = anchoredPosition;
-        rect.sizeDelta = new Vector2(280f, 72f);
-
-        Image image = buttonObject.GetComponent<Image>();
-        image.color = new Color(0.78f, 0.66f, 0.44f, 1f);
-        image.raycastTarget = true;
-
-        Button button = buttonObject.GetComponent<Button>();
-        ColorBlock colors = button.colors;
-        colors.highlightedColor = new Color(0.92f, 0.8f, 0.55f, 1f);
-        colors.pressedColor = new Color(0.58f, 0.48f, 0.32f, 1f);
-        button.colors = colors;
-
-        TMP_Text text = CreateModalText(buttonObject.transform, "Label", label, 26f, FontStyles.Bold);
-        text.color = new Color(0.04f, 0.035f, 0.03f, 1f);
-        RectTransform textRect = text.GetComponent<RectTransform>();
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = Vector2.zero;
-        textRect.offsetMax = Vector2.zero;
-        return button;
-    }
-
-    private void PlaceExitReflectionModal()
-    {
-        if (exitReflectionModalCanvas == null || exitReflectionModalCanvas.renderMode != RenderMode.WorldSpace)
-            return;
-
-        Camera cam = Camera.main;
-        if (cam == null)
-            return;
-
-        Transform modalTransform = exitReflectionModalCanvas.transform;
-        modalTransform.position = cam.transform.position + cam.transform.forward * 1.8f;
-        modalTransform.rotation = Quaternion.LookRotation(modalTransform.position - cam.transform.position, Vector3.up);
-    }
-
-    private void HandleExitModalKeyboard()
-    {
-        if (!exitModalOpen || exitModalChoiceHandled || exitModalUsesXR)
-            return;
-
-        // Modal shortcuts read the central focused-UI input helper
-        // (Esc/S = Stay, Enter/E/L = Exit Now — unchanged wording in the modal).
-        if (FocusedUiInput.CancelPressed || FocusedUiInput.KeyPressed(Key.S))
-        {
-            SelectStay();
-            return;
-        }
-
-        if (FocusedUiInput.SubmitPressed || FocusedUiInput.InteractPressed || FocusedUiInput.KeyPressed(Key.L))
-            SelectExitNow();
     }
 
     private void SetDesktopModalControls(bool enabled)
     {
-        if (exitModalUsesXR)
-            return;
-
         if (!enabled)
         {
             modalDisabledDesktopControls.Clear();
@@ -655,34 +509,7 @@ public class BlackKitchenExperienceController : MonoBehaviour
         Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' player controls restored.");
     }
 
-    private void EnsureActiveEventSystemForModal(bool useXR)
-    {
-        EventSystem activeEventSystem = EventSystem.current;
-        if (activeEventSystem == null || !activeEventSystem.gameObject.activeInHierarchy)
-            activeEventSystem = FindFirstObjectByType<EventSystem>();
-
-        if (activeEventSystem == null)
-        {
-            GameObject eventSystemObject = new GameObject(useXR ? "XRModalEventSystem" : "DesktopModalEventSystem", typeof(EventSystem));
-            activeEventSystem = eventSystemObject.GetComponent<EventSystem>();
-        }
-
-        int activeEventSystemCount = FindObjectsByType<EventSystem>(FindObjectsInactive.Exclude, FindObjectsSortMode.None).Length;
-        Debug.Log($"[BlackKitchenExperienceController] Scene '{gameObject.scene.name}' active EventSystem count for exit modal: {activeEventSystemCount}, current '{activeEventSystem.gameObject.name}'.");
-
-        if (useXR)
-            return;
-
-        if (activeEventSystem.GetComponent<BaseInputModule>() != null)
-            return;
-
-#if ENABLE_INPUT_SYSTEM
-        InputSystemUIInputModule module = activeEventSystem.gameObject.AddComponent<InputSystemUIInputModule>();
-        module.AssignDefaultActions();
-#else
-        activeEventSystem.gameObject.AddComponent<StandaloneInputModule>();
-#endif
-    }
+    // ---- Exit aiming (restored verbatim; unchanged behaviour) ---------------
 
     public bool IsAimingAtExit()
     {

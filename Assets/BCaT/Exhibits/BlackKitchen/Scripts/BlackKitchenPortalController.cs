@@ -30,28 +30,24 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
     [Tooltip("Behaviour type-name fragments disabled during transition (merged with the built-in defaults at runtime).")]
     [SerializeField] private string[] controlComponentNameFilters =
     {
-        "LocomotionProvider", "ContinuousMoveProvider", "ContinuousTurnProvider", "SnapTurnProvider",
-        "DynamicMoveProvider", "GrabMoveProvider", "GravityProvider", "JumpProvider",
-        "TeleportationProvider", "ActionBasedController", "StarterAssetsInputs", "FirstPersonController", "PlayerInput"
+        "StarterAssetsInputs", "FirstPersonController", "PlayerInput"
     };
 
     // Scene instances may carry an older, shorter serialized filter list; the
-    // runtime merges these defaults back in so newer XRI locomotion providers
-    // are always covered.
+    // runtime merges these defaults back in so desktop controls are always covered.
     private static readonly string[] RequiredControlFilters =
     {
-        "LocomotionProvider", "ContinuousMoveProvider", "ContinuousTurnProvider", "SnapTurnProvider",
-        "DynamicMoveProvider", "GrabMoveProvider", "GravityProvider", "JumpProvider",
-        "TeleportationProvider", "ActionBasedController", "StarterAssetsInputs", "FirstPersonController", "PlayerInput"
+        "StarterAssetsInputs", "FirstPersonController", "PlayerInput"
     };
 
-    [Header("Desktop Prompts")]
+    [Header("Prompts")]
     [SerializeField] private string desktopPrompt = "Press E to Enter Black Kitchen";
-    [Header("Quest Prompts")]
-    [Tooltip("Quest wording for the floating entrance prompt. No keyboard wording.")]
-    [SerializeField] private string xrPrompt = "Enter — Black Kitchen";
-    [SerializeField] private SharedInteractionPromptConfig sharedPrompt =
-        new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Enter };
+
+    [Tooltip("Curatorial name used in the shared Quest prompt, e.g. 'Enter — Black Kitchen'.")]
+    [SerializeField] private string curatorialName = "Black Kitchen";
+
+    [Tooltip("Shared action shown before the curatorial name on Quest.")]
+    [SerializeField] private SharedInteractionVerb xrVerb = SharedInteractionVerb.Enter;
 
     [Header("Debug")]
     [SerializeField] private float desktopInteractionDistance = 4f;
@@ -105,27 +101,17 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
     }
 
     /// <summary>
-    /// Shared bottom-HUD prompt. On Quest the entrance is one of the two
-    /// sanctioned world-space prompt systems, so this returns nothing there:
-    /// the floating entrance prompt is the only affordance and an empty string
-    /// keeps the bottom HUD hidden (no duplicate). Desktop is unchanged.
+    /// Shared bottom-HUD prompt. Desktop keeps its authored wording verbatim;
+    /// Quest goes through the shared formatter so the entrance announces itself
+    /// with the same "&lt;Action&gt; — &lt;Name&gt;" grammar as every other BCaT
+    /// Quest interactable, and never shows a keyboard key the headset lacks.
     /// </summary>
     public string GetPrompt(bool xr) =>
-        xr ? string.Empty : WorldPromptText(false);
+        SharedInteractionPrompt.Format(xr, xrVerb, curatorialName, desktopOverride: desktopPrompt);
 
     /// <summary>Wording for the floating entrance prompt itself.</summary>
-    public string WorldPromptText(bool xr)
-    {
-        if (sharedPrompt == null)
-            sharedPrompt = new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Enter };
-
-        sharedPrompt.verb = SharedInteractionVerb.Enter;
-        if (string.IsNullOrWhiteSpace(sharedPrompt.desktopPrompt))
-            sharedPrompt.desktopPrompt = desktopPrompt;
-        if (string.IsNullOrWhiteSpace(sharedPrompt.xrPrompt))
-            sharedPrompt.xrPrompt = xrPrompt;
-        return SharedInteractionPrompt.Format(xr, sharedPrompt);
-    }
+    public string WorldPromptText() =>
+        GetPrompt(BCaT.Production.PlatformCapabilities.UseXRPrompts);
 
     public void OnFocusChanged(bool focused) { }
 
@@ -147,28 +133,17 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
 
     private void Update()
     {
-        // The Black Kitchen entrance is one of the two sanctioned world-space
-        // prompt systems. On Quest its original floating prompt is restored;
-        // it hides while a transition is running and comes back automatically
-        // if that transition fails (transitionActive is cleared on every
-        // failure path in EnterRoutine).
         if (promptText == null)
             return;
 
-        bool xr = InteractionPromptText.IsXRActive();
         bool visible = !transitionActive && !SceneTransitionState.IsTransitionInProgress;
-        WorldInteractionPromptVisual.SetSanctionedText(promptText, WorldPromptText(xr), visible);
+        WorldInteractionPromptVisual.SetSanctionedText(promptText, WorldPromptText(), visible);
     }
 
     public void EnterBlackKitchen()
     {
-        BlackKitchenQuestTransitionDiagnostics.BeginTransition("Entrance callback received",
-            $"Interaction callback entered. currentScene='{gameObject.scene.name}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}', destination='{memorySceneName}', loadingScene='{loadingSceneName}'.");
-
         if (transitionActive || SceneTransitionState.IsTransitionInProgress || InteractionState.IsBlocked)
         {
-            BlackKitchenQuestTransitionDiagnostics.Warning("Transition failed",
-                $"Transition request rejected. transitionActive={transitionActive}, transitionInProgress={SceneTransitionState.IsTransitionInProgress}, interactionBlocked={InteractionState.IsBlocked}, reasons='{InteractionState.ActiveReasons}', lastTransitionError='{SceneTransitionState.LastError}'.");
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
             Debug.LogWarning($"[BlackKitchenPortalController] Enter blocked: transitionActive={transitionActive}, transitionInProgress={SceneTransitionState.IsTransitionInProgress}, interactionBlocked={InteractionState.IsBlocked}, reasons={InteractionState.ActiveReasons}, lastTransitionError='{SceneTransitionState.LastError}'.");
 #endif
@@ -180,32 +155,16 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
         Debug.Log($"[BlackKitchenPortalController] EnterBlackKitchen accepted. destination='{memorySceneName}', spawn='{SceneTransitionState.BlackKitchenEntrySpawnId}', loadingScene='{loadingSceneName}'.");
 #endif
-        BlackKitchenQuestTransitionDiagnostics.Log("Transition request accepted",
-            $"Transition request accepted. requestedScene='{memorySceneName}', spawn='{SceneTransitionState.BlackKitchenEntrySpawnId}', sourceScene='{gameObject.scene.name}'.");
         StartCoroutine(EnterRoutine());
-    }
-
-    public void OnXRSelect()
-    {
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
-        Debug.Log($"[BlackKitchenPortalController] OnXRSelect received on '{gameObject.name}'. Router present={InteractionRouter.Instance != null}.");
-#endif
-        if (InteractionRouter.Instance != null)
-            InteractionRouter.Instance.RequestXRSelect(this);
-        else
-            EnterBlackKitchen();
     }
 
     private IEnumerator EnterRoutine()
     {
         ResolvePlayerReferences();
-        BlackKitchenQuestTransitionDiagnostics.Log("Input/control lock",
-            $"Player control lock requested. playerRoot='{(playerRoot != null ? playerRoot.name : "null")}', camera='{(playerCamera != null ? playerCamera.name : "null")}'.");
         SetPlayerControls(false);
 
         if (!SceneTransitionState.RequestTransition(memorySceneName, SceneTransitionState.BlackKitchenEntrySpawnId, gameObject.scene.name))
         {
-            BlackKitchenQuestTransitionDiagnostics.Warning("Transition failed", $"Transition state request rejected: {SceneTransitionState.LastError}");
             Debug.LogWarning($"[BlackKitchenPortalController] Transition request blocked: {SceneTransitionState.LastError}");
             SetPlayerControls(true);
             transitionActive = false;
@@ -215,16 +174,12 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
         // Stop any exhibit media before leaving the house.
         BCaT.Production.Media.MediaPlaybackRegistry.StopAll();
 
-        BlackKitchenQuestTransitionDiagnostics.Log("Fade-to-black start", $"Fade-to-black started. overlay='{(transitionOverlay != null ? transitionOverlay.name : "null")}', duration={fadeOutDuration:0.00}.");
         yield return FadeOverlay(1f, fadeOutDuration);
-        BlackKitchenQuestTransitionDiagnostics.Log("Fade-to-black complete", $"Fade-to-black completed. overlayAlpha={(transitionOverlay != null ? transitionOverlay.alpha.ToString("0.00") : "null")}.");
 
         AsyncOperation load = null;
         string loadFailure = null;
         try
         {
-            BlackKitchenQuestTransitionDiagnostics.Log("Scene load start",
-                $"LoadingScene load start. currentScene='{gameObject.scene.name}', loadingScene='{loadingSceneName}', requestedScene='{memorySceneName}'.");
             Debug.Log($"[BlackKitchenPortalController] Scene '{gameObject.scene.name}' loading scene load requested: '{loadingSceneName}' via rig '{(playerRoot != null ? playerRoot.name : "unresolved")}'.");
             load = SceneManager.LoadSceneAsync(loadingSceneName, LoadSceneMode.Single);
         }
@@ -235,7 +190,6 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
 
         if (loadFailure != null)
         {
-            BlackKitchenQuestTransitionDiagnostics.Error("Transition failed", $"LoadingScene load exception. {loadFailure}");
             Debug.LogError(loadFailure);
             SceneTransitionState.CancelTransition(loadFailure);
             InteractionState.ForceCloseAll();
@@ -248,7 +202,6 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
         if (load == null)
         {
             string message = $"[BlackKitchenPortalController] Failed to load '{loadingSceneName}' for Black Kitchen transition.";
-            BlackKitchenQuestTransitionDiagnostics.Error("Transition failed", message);
             Debug.LogError(message);
             SceneTransitionState.CancelTransition(message);
             InteractionState.ForceCloseAll();
@@ -259,12 +212,7 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
         }
 
         while (!load.isDone)
-        {
-            BlackKitchenQuestTransitionDiagnostics.Log("Periodic load progress", $"LoadingScene load progress={load.progress:0.00}, allowSceneActivation={load.allowSceneActivation}.");
             yield return null;
-        }
-
-        BlackKitchenQuestTransitionDiagnostics.Log("Scene activation", $"LoadingScene activation completed. activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
     }
 
     private Collider FocusCollider

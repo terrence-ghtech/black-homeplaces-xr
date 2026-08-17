@@ -132,8 +132,6 @@ public static class BlackKitchenAudioStationBuilder
 
             BlackKitchenAudioInteractable interactable = stationObject.AddComponent<BlackKitchenAudioInteractable>();
             interactable.Configure(definition.NarrativeId, definition.DisplayName, source.clip, source, trigger, focus.transform, coordinator, definition.Volume);
-
-            WireXrSelect(stationObject, interactable);
         }
 
         GameObject managerObject = new GameObject("BlackKitchenInteractionManager");
@@ -206,27 +204,4 @@ public static class BlackKitchenAudioStationBuilder
         }
     }
 
-    private static void WireXrSelect(GameObject target, BlackKitchenAudioInteractable receiver)
-    {
-        System.Type interactableType = System.Type.GetType("UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable, Unity.XR.Interaction.Toolkit");
-        if (interactableType == null)
-        {
-            Debug.LogWarning("[BlackKitchenAudioStationBuilder] XRSimpleInteractable type unavailable; XR selection not wired.");
-            return;
-        }
-
-        Component xrInteractable = target.AddComponent(interactableType);
-        SerializedObject serialized = new SerializedObject(xrInteractable);
-        SerializedProperty colliders = serialized.FindProperty("m_Colliders");
-        Collider collider = target.GetComponent<Collider>();
-        if (colliders != null && collider != null)
-        {
-            colliders.arraySize = 1;
-            colliders.GetArrayElementAtIndex(0).objectReferenceValue = collider;
-        }
-        serialized.ApplyModifiedPropertiesWithoutUndo();
-
-        BlackKitchenXrSelectRelay relay = target.AddComponent<BlackKitchenXrSelectRelay>();
-        relay.Configure(receiver, nameof(BlackKitchenAudioInteractable.OnXRSelect));
-    }
 }

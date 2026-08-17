@@ -170,6 +170,32 @@ namespace BCaT.Production
 #endif
 
         /// <summary>
+        /// Reads an Android system property (adb shell setprop/getprop) on the
+        /// Quest player; returns the empty string everywhere else or on any
+        /// failure. Lives here because this is the platform authority and the
+        /// only place allowed to touch raw platform APIs (BCAT-L005): callers
+        /// like the smoke-test runner need a device-side trigger without
+        /// growing their own UNITY_ANDROID branches.
+        /// </summary>
+        public static string ReadAndroidSystemProperty(string key)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using (var systemProperties = new AndroidJavaClass("android.os.SystemProperties"))
+                    return systemProperties.CallStatic<string>("get", key, "") ?? "";
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[BCaTPlatform] Could not read system property '{key}': {e.Message}");
+                return "";
+            }
+#else
+            return "";
+#endif
+        }
+
+        /// <summary>
         /// True when the Editor is in "Quest XR (Simulated)" test mode and the
         /// XR Device Simulator should therefore run. False in players and in
         /// every other mode — a real headset must not compete with simulated

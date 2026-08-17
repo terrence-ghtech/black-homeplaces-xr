@@ -1,6 +1,6 @@
 # BCaT Architecture Validation
 
-Generated: 2026-08-07 12:06 · mode: report
+Generated: 2026-08-14 09:50 · mode: report
 
 **0 error(s), 0 warning(s).** No error-severity rule is failing; the build gate passes.
 
@@ -20,9 +20,9 @@ Generated: 2026-08-07 12:06 · mode: report
 | BCAT-L006 | Error | PASS | World-interaction keyboard polling is centralized |
 | BCAT-P001 | Error | PASS | Exactly one ScenePlatformBinding per inhabited scene |
 | BCAT-P002 | Error | PASS | Platform branches are authored inactive |
-| BCAT-P003 | Error | PASS | One root Platform group with Desktop/Quest children only |
+| BCAT-P003 | Error | PASS | Declared Platform branches exist |
 | BCAT-P004 | Error | PASS | One EventSystem per scene with exactly one input module |
-| BCAT-P005 | Error | PASS | One rig per kind, both under Platform/ |
+| BCAT-P005 | Error | PASS | One rig per declared platform kind |
 | BCAT-P006 | Error | PASS | One XRInteractionManager, under Platform/Quest |
 | BCAT-Q001 | Error | PASS | Trigger-only interaction targets carry an XR select surface |
 | BCAT-Q002 | Warning | PASS | Both desktop and XR prompts are valid |

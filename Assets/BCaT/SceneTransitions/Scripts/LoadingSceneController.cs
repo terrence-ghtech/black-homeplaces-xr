@@ -25,14 +25,12 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         loadStarted = true;
         Heartbeat();
-        BlackKitchenQuestTransitionDiagnostics.Log("Destination bootstrap start",
-            $"Loading scene bootstrap entered. loadingScene='{gameObject.scene.name}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
 
         // Quest-only safety net. An unhandled exception inside a load coroutine
         // terminates it silently, leaving this loading scene active behind an
         // opaque fade overlay with no failure path ever running. The watchdog
         // notices that no load loop is ticking any more and recovers.
-        if (BlackKitchenQuestTransitionDiagnostics.Enabled)
+        if (BCaT.Production.BCaTPlatform.IsQuest)
             StartCoroutine(LoadStallWatchdog());
 
         // Shared lifecycle: the previous scene is already unloaded (single-mode
@@ -41,13 +39,10 @@ public sealed class LoadingSceneController : MonoBehaviour
         BCaT.Production.Media.MediaPlaybackRegistry.StopAll();
 
         string destinationScene = SceneTransitionState.DestinationSceneName;
-        BlackKitchenQuestTransitionDiagnostics.Log("Destination bootstrap start",
-            $"Transition state read. destination='{destinationScene}', spawn='{SceneTransitionState.DestinationSpawnId}', source='{SceneTransitionState.SourceSceneName}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
         if (string.IsNullOrWhiteSpace(destinationScene))
         {
             string message = "[LoadingSceneController] No destination scene was requested.";
             SceneTransitionState.CancelTransition(message);
-            BlackKitchenQuestTransitionDiagnostics.Error("Transition failed", message);
             Debug.LogError(message);
             yield break;
         }
@@ -80,15 +75,11 @@ public sealed class LoadingSceneController : MonoBehaviour
         try
         {
             string loadingScene = gameObject.scene.name;
-            BlackKitchenQuestTransitionDiagnostics.Log("Scene load start",
-                $"Built-in scene load start. loadingScene='{loadingScene}', requestedScene='{destinationScene}'.");
             Debug.Log($"[LoadingSceneController] Scene '{loadingScene}' destination scene load requested: '{destinationScene}'.");
             loadOperation = SceneManager.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
             if (loadOperation != null)
                 loadOperation.completed += _ =>
                 {
-                    BlackKitchenQuestTransitionDiagnostics.Log("Scene activation",
-                        $"Built-in scene activation completed. requestedScene='{destinationScene}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
                     Debug.Log($"[LoadingSceneController] Scene '{loadingScene}' destination scene load completed: '{destinationScene}'.");
                     // Leaving a remote scene: free its downloaded bundle.
                     AddressableSceneHandleStore.ReleaseIfHeld(exceptScene: destinationScene);
@@ -113,8 +104,6 @@ public sealed class LoadingSceneController : MonoBehaviour
         while (!loadOperation.isDone)
         {
             UpdateProgress(Mathf.Clamp01(loadOperation.progress / 0.9f));
-            BlackKitchenQuestTransitionDiagnostics.Log("Periodic load progress",
-                $"Built-in scene load progress. requestedScene='{destinationScene}', progress={loadOperation.progress:0.00}, allowSceneActivation={loadOperation.allowSceneActivation}.");
             Heartbeat();
             yield return null;
         }
@@ -153,8 +142,6 @@ public sealed class LoadingSceneController : MonoBehaviour
             if (++consecutiveStalls < 2)
                 continue;
 
-            BlackKitchenQuestTransitionDiagnostics.Error("Recovery started",
-                $"Load stall watchdog fired. No load progress for {stalled:0.0}s in scene '{gameObject.scene.name}'. destination='{SceneTransitionState.DestinationSceneName}'.");
             yield return FailAndReturnToMainHouse(SceneTransitionState.DestinationSceneName,
                 $"[LoadingSceneController] Transition stalled with no load progress for {stalled:0}s; recovering to the main house.");
             yield break;
@@ -163,8 +150,6 @@ public sealed class LoadingSceneController : MonoBehaviour
 
     private IEnumerator LoadAddressableScene(string destinationScene)
     {
-        BlackKitchenQuestTransitionDiagnostics.Log("Addressables initialization start",
-            $"Addressables initialization start. requestedScene='{destinationScene}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
         Debug.Log($"[LoadingSceneController] Addressables initialization requested before loading '{destinationScene}'.");
 #endif
@@ -179,10 +164,8 @@ public sealed class LoadingSceneController : MonoBehaviour
         while (initHandle.IsValid() && !initHandle.IsDone)
         {
             UpdateProgress(Mathf.Clamp01(initHandle.PercentComplete * 0.1f));
-            BlackKitchenQuestTransitionDiagnostics.Log("Periodic load progress",
-                $"Addressables initialization progress. requestedScene='{destinationScene}', progress={initHandle.PercentComplete:0.00}.");
             Heartbeat();
-            if (BlackKitchenQuestTransitionDiagnostics.Enabled &&
+            if (BCaT.Production.BCaTPlatform.IsQuest &&
                 Time.realtimeSinceStartup - initStartTime > questAddressablesInitializationTimeout)
             {
                 ReleaseWhenSafe(initHandle, $"Addressables initialization timeout for '{destinationScene}'");
@@ -207,8 +190,6 @@ public sealed class LoadingSceneController : MonoBehaviour
             yield break;
         }
 
-        BlackKitchenQuestTransitionDiagnostics.Log("Addressables initialization complete",
-            $"Addressables initialization completed. requestedScene='{destinationScene}', handleValid={initHandle.IsValid()}.");
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
         Debug.Log($"[LoadingSceneController] Addressables initialization completed before loading '{destinationScene}'.");
 #endif
@@ -219,8 +200,6 @@ public sealed class LoadingSceneController : MonoBehaviour
         string startFailure = null;
         try
         {
-            BlackKitchenQuestTransitionDiagnostics.Log("Scene load start",
-                $"Addressable scene load start. key='{destinationScene}', mode='{LoadSceneMode.Single}'.");
             Debug.Log($"[LoadingSceneController] Remote (Addressables) scene load requested: '{destinationScene}'.");
             handle = Addressables.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
 
@@ -235,19 +214,14 @@ public sealed class LoadingSceneController : MonoBehaviour
             {
                 BCaT.Production.Addressing.AddressablesHandleRegistry.NotifyCompleted(
                     "LoadingSceneController", destinationScene, completedHandle.Status);
-                BlackKitchenQuestTransitionDiagnostics.Log("Scene load handle status",
-                    $"Addressable scene load completed callback. key='{destinationScene}', status='{completedHandle.Status}', error='{completedHandle.OperationException}'.");
                 if (completedHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    BlackKitchenQuestTransitionDiagnostics.Log("Scene activation",
-                        $"Addressable scene activation completed. key='{destinationScene}', activeScene='{BlackKitchenQuestTransitionDiagnostics.ActiveSceneName}'.");
                     Debug.Log($"[LoadingSceneController] Remote scene load completed: '{destinationScene}'.");
                     AddressableSceneHandleStore.Store(destinationScene, completedHandle);
                 }
                 else if (!failureRecoveryStarted)
                 {
-                    BlackKitchenQuestTransitionDiagnostics.Error("Transition failed",
-                        $"Addressable scene load failed callback. key='{destinationScene}', error='{completedHandle.OperationException}'.");
+                    Debug.LogError($"[LoadingSceneController] Addressable scene load failed for '{destinationScene}': {completedHandle.OperationException}");
                 }
             };
         }
@@ -258,7 +232,6 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         if (startFailure != null)
         {
-            BlackKitchenQuestTransitionDiagnostics.Error("Transition failed", startFailure);
             yield return FailAndReturnToMainHouse(destinationScene, startFailure);
             yield break;
         }
@@ -267,10 +240,8 @@ public sealed class LoadingSceneController : MonoBehaviour
         while (handle.IsValid() && !handle.IsDone)
         {
             UpdateProgress(Mathf.Clamp01(handle.PercentComplete));
-            BlackKitchenQuestTransitionDiagnostics.Log("Periodic load progress",
-                $"Addressable scene load progress. key='{destinationScene}', progress={handle.PercentComplete:0.00}, status='{handle.Status}'.");
             Heartbeat();
-            if (BlackKitchenQuestTransitionDiagnostics.Enabled &&
+            if (BCaT.Production.BCaTPlatform.IsQuest &&
                 Time.realtimeSinceStartup - loadStartTime > questAddressablesSceneLoadTimeout)
             {
                 ReleaseWhenSafe(handle, $"Addressable scene load timeout for '{destinationScene}'");
@@ -303,8 +274,6 @@ public sealed class LoadingSceneController : MonoBehaviour
             yield break;
 
         failureRecoveryStarted = true;
-        BlackKitchenQuestTransitionDiagnostics.Error("Recovery started",
-            $"Transition failed safely. requestedScene='{destinationScene}', error='{message}'. Returning to '{SceneTransitionState.MainHouseSceneName}'.");
         Debug.LogError(message);
         SceneTransitionState.CancelTransition(message);
         BCaT.Production.Interaction.InteractionState.ForceCloseAll();
@@ -320,7 +289,6 @@ public sealed class LoadingSceneController : MonoBehaviour
             SceneTransitionState.MainHouseKitchenReturnSpawnId,
             gameObject.scene.name);
         yield return LoadBuiltInScene(SceneTransitionState.MainHouseSceneName);
-        BlackKitchenQuestTransitionDiagnostics.Log("Recovery completed", $"Recovery load requested for '{SceneTransitionState.MainHouseSceneName}'.");
     }
 
     private static void ReleaseWhenSafe<T>(AsyncOperationHandle<T> handle, string reason)
@@ -330,17 +298,13 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         if (handle.IsDone)
         {
-            BlackKitchenQuestTransitionDiagnostics.Log("Recovery started", $"Releasing Addressables handle after failure. reason='{reason}', status='{handle.Status}'.");
             Addressables.Release(handle);
             return;
         }
 
-        BlackKitchenQuestTransitionDiagnostics.Warning("Recovery started",
-            $"Addressables handle still running during failure cleanup. reason='{reason}'. It will be released when it completes.");
+        Debug.LogWarning($"[LoadingSceneController] Addressables handle still running during failure cleanup. reason='{reason}'. It will be released when it completes.");
         handle.Completed += completedHandle =>
         {
-            BlackKitchenQuestTransitionDiagnostics.Log("Recovery completed",
-                $"Late Addressables handle completed after failure cleanup. reason='{reason}', status='{completedHandle.Status}', error='{completedHandle.OperationException}'.");
             if (completedHandle.IsValid())
                 Addressables.Release(completedHandle);
         };

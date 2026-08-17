@@ -1,4 +1,3 @@
-using BCaT.Production.Interaction;
 using UnityEngine;
 
 // One Black Kitchen audio station: a single story with its own trigger, prompt label,
@@ -49,19 +48,6 @@ public class BlackKitchenAudioInteractable : MonoBehaviour
         }
 
         coordinator.RequestNarrative(narrativeId, source, clip, volume, false, fadeIn);
-    }
-
-    public void OnXRSelect()
-    {
-        Debug.Log($"[BlackKitchenAudioInteractable] XR select accepted for '{narrativeId}'.");
-        if (InteractionState.IsBlocked)
-            return;
-
-        BlackKitchenInteractionManager manager = FindAnyObjectByType<BlackKitchenInteractionManager>();
-        if (manager != null && manager.RequestXRSelect(this))
-            return;
-
-        Toggle();
     }
 
     public void Configure(string id, string label, AudioClip storyClip, AudioSource audioSource, Collider trigger, Transform focus, BlackKitchenAudioCoordinator audioCoordinator, float storyVolume)

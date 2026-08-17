@@ -49,6 +49,13 @@ namespace BCaT.Production
 
             services.AddComponent<Access.SubtitleService>();
 
+            if (BCaTPlatform.IsQuest)
+            {
+                // Safety net for controllers that stay invisible after a missed
+                // tracking-acquired event.
+                services.AddComponent<XrControllerVisibilityGuard>();
+            }
+
             AssertAddressablesMatchPlatform();
 
             SceneManager.sceneLoaded += OnSceneLoaded;

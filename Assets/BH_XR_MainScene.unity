@@ -5941,8 +5941,6 @@ GameObject:
   - component: {fileID: 71545260}
   - component: {fileID: 71545264}
   - component: {fileID: 71545263}
-  - component: {fileID: 71545262}
-  - component: {fileID: 71545261}
   m_Layer: 0
   m_Name: KitchenIslandInteractable
   m_TagString: Untagged
@@ -5962,100 +5960,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 767463614}
+  m_Children: []
   m_Father: {fileID: 679474052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &71545261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71545259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daac22aa381da47a986e499839d94195, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BlackKitchenXrSelectRelay
-  receiver: {fileID: 701282360}
-  methodName: OnXRSelect
-  interactable: {fileID: 0}
---- !u!114 &71545262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71545259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
-  m_InteractionManager: {fileID: 0}
-  m_Colliders:
-  - {fileID: 71545264}
-  m_InteractionLayers:
-    m_Bits: 1
-  m_DistanceCalculationMode: 1
-  m_SelectMode: 0
-  m_FocusMode: 1
-  m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
-  m_OverrideGazeTimeToSelect: 0
-  m_GazeTimeToSelect: 0.5
-  m_OverrideTimeToAutoDeselectGaze: 0
-  m_TimeToAutoDeselectGaze: 3
-  m_AllowGazeAssistance: 0
-  m_FirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstFocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastFocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Activated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Deactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_StartingInteractionStrengthFilters: []
-  m_AutoFindParentInteractableInHierarchy: 0
-  m_ParentInteractableObject: {fileID: 0}
 --- !u!54 &71545263
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -24539,7 +24446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3347212145329841299, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: interactionDistance
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3499935651535303221, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_LocalPosition.z
@@ -24659,7 +24566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_Size.x
-      value: 180
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_Size.y
@@ -24667,11 +24574,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_Size.z
-      value: 140
+      value: 88
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_Center.x
-      value: -26.6
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_Center.y
@@ -24679,7 +24586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_Center.z
-      value: -7.2
+      value: -6.6
       objectReference: {fileID: 0}
     - target: {fileID: 6202958654619344340, guid: ac65b22932d074699851b897dabb3f50, type: 3}
       propertyPath: m_IsTrigger
@@ -35528,8 +35435,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.3999996, y: 2.4, z: 2.3999996}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.2, y: 1.6, z: 1}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1001 &411153535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44841,8 +44748,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7, y: 7.4563107, z: 9.659429}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.2, y: 7.4563107, z: 9.659429}
+  m_Center: {x: 0.99, y: 0, z: 0}
 --- !u!1001 &511927723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55903,7 +55810,7 @@ PrefabInstance:
     - target: {fileID: 7160039895490868756, guid: 8d8c099890f1f0b4592ab80e8b09331a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2bd26bfbfc65042748f927b237c2ae3e, type: 2}
+      objectReference: {fileID: 2100000, guid: 9b2c8ee7f3d0b9e4282f5013d650b626, type: 2}
     - target: {fileID: 8293025245917629819, guid: 8d8c099890f1f0b4592ab80e8b09331a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -59980,6 +59887,7 @@ GameObject:
   m_Component:
   - component: {fileID: 701282359}
   - component: {fileID: 701282360}
+  - component: {fileID: 701282361}
   m_Layer: 0
   m_Name: BlackKitchenPortalController
   m_TagString: Untagged
@@ -60022,26 +59930,32 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   playerControlRoots: []
   controlComponentNameFilters:
-  - LocomotionProvider
-  - ContinuousMoveProvider
-  - ContinuousTurnProvider
-  - SnapTurnProvider
-  - TeleportationProvider
-  - ActionBasedController
   - StarterAssetsInputs
   - FirstPersonController
   - PlayerInput
   desktopPrompt: Press E to Enter Black Kitchen
-  xrPrompt: "Enter \u2014 Black Kitchen"
-  sharedPrompt:
-    desktopPrompt: 
-    xrPrompt: 
-    verb: 9
-    objectName: 
+  curatorialName: Black Kitchen
+  xrVerb: 9
   desktopInteractionDistance: 7
   interactionKey: 19
   promptText: {fileID: 0}
   interactionRoot: {fileID: 71545260}
+--- !u!114 &701282361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701282358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86da631f7354942e48f0dcd76013529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.Interaction.XrSelectSurface
+  sourceColliders:
+  - {fileID: 71545264}
+  padding: 0
+  forwardsTo: BlackKitchenPortalController (Enter Black Kitchen)
 --- !u!1001 &701474744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66112,161 +66026,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8544804667876200758, guid: 6ee7ff501548bbd48ac085a1c22904aa, type: 3}
   m_PrefabInstance: {fileID: 766773908}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &767463613
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 767463614}
-  - component: {fileID: 767463617}
-  - component: {fileID: 767463616}
-  - component: {fileID: 767463615}
-  m_Layer: 0
-  m_Name: KitchenIslandInteractable_QuestXRSelect
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &767463614
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767463613}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000011920929, y: 0.5000005, z: -1.0000001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 71545260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &767463615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767463613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004b381bd255b4c7485a1d8b88f4d041, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.Interaction.QuestXrSelectCollider
-  forwardsTo: BlackKitchenPortalController.OnXRSelect
---- !u!114 &767463616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767463613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
-  m_InteractionManager: {fileID: 0}
-  m_Colliders:
-  - {fileID: 767463617}
-  m_InteractionLayers:
-    m_Bits: 1
-  m_DistanceCalculationMode: 1
-  m_SelectMode: 0
-  m_FocusMode: 1
-  m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
-  m_OverrideGazeTimeToSelect: 0
-  m_GazeTimeToSelect: 0.5
-  m_OverrideTimeToAutoDeselectGaze: 0
-  m_TimeToAutoDeselectGaze: 3
-  m_AllowGazeAssistance: 0
-  m_FirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 701282360}
-        m_TargetAssemblyTypeName: BlackKitchenPortalController, Assembly-CSharp
-        m_MethodName: OnXRSelect
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstFocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastFocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Activated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Deactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_StartingInteractionStrengthFilters: []
-  m_AutoFindParentInteractableInHierarchy: 0
-  m_ParentInteractableObject: {fileID: 0}
---- !u!65 &767463617
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767463613}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.99999976, y: 3.0000005, z: 3.999999}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &767775938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66658,7 +66417,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.43328857, y: 0.35, z: 0.4172516}
+  m_Size: {x: 0.95, y: 0.45, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &770897138
 PrefabInstance:
@@ -67430,8 +67189,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.4, y: 1.8, z: 1.2}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!54 &776940178
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104931,6 +104690,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: 78899a072c6b0420bbf557b45b4d7377, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1100825614}
+    - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: 78899a072c6b0420bbf557b45b4d7377, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1100825618}
+    - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: 78899a072c6b0420bbf557b45b4d7377, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1100825617}
+    - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: 78899a072c6b0420bbf557b45b4d7377, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1100825616}
+    - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: 78899a072c6b0420bbf557b45b4d7377, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1100825615}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 78899a072c6b0420bbf557b45b4d7377, type: 3}
 --- !u!4 &1100825607 stripped
 Transform:
@@ -105001,6 +104772,157 @@ LODGroup:
     - renderer: {fileID: 1241334423}
   m_Enabled: 1
   m_GlobalIlluminationLOD: 0
+--- !u!114 &1100825615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100825613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86da631f7354942e48f0dcd76013529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BCaT.Production.Interaction.XrSelectSurface
+  sourceColliders: []
+  padding: 0
+  forwardsTo: SpatialAudioToggle
+--- !u!114 &1100825616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100825613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
+  m_InteractionManager: {fileID: 0}
+  m_Colliders:
+  - {fileID: 1100825618}
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1100825617}
+        m_TargetAssemblyTypeName: SpatialAudioToggle, Assembly-CSharp
+        m_MethodName: OnXRSelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
+--- !u!114 &1100825617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100825613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3a2ad9f7b94c5b8f9e268f68184e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpatialAudioToggle
+  audioSource: {fileID: 1460083811}
+  interactKey: 19
+  playerCamera: {fileID: 0}
+  interactionDistance: 4
+  displayName: Nine Night Soundscape
+  prompt:
+    desktopPrompt: 
+    xrPrompt: "Listen \u2014 Nine Night Soundscape"
+    verb: 5
+    objectName: Nine Night Soundscape
+  configureSpatialAudio: 1
+  spatialBlend: 1
+  rolloffMode: 2
+  minDistance: 3.0142584
+  maxDistance: 4
+  dopplerLevel: 1
+--- !u!65 &1100825618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100825613}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 14.545457, y: 14.545454, z: 14.545455}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1102717495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128089,7 +128011,7 @@ Transform:
   m_GameObject: {fileID: 1338203181}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -136954,7 +136876,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c6874aa1fef6c48578572af25c282d73, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.44
   m_Pitch: 1
   Loop: 1
@@ -138276,8 +138198,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.59228516, y: 0.5737152, z: 0.60331726}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.2, y: 2.4, z: 1.4}
+  m_Center: {x: 1.0196075, y: -0.22155976, z: 0.055236697}
 --- !u!1001 &1475982978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142577,7 +142499,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "<b>BTMMP: Telling the Story of Murals</b>\n\nAlisa Hardy\n\n<i>Interactive
-    StoryMap</i>\n\nExplore the Black Trauma Memorial Mural Project through a working
+    StoryMap</i>\n\nExplore the Breonna Taylor Memorial Mural Project through a working
     artist\u2019s station centered on a photograph of the Breonna Taylor mural in
     Annapolis, Maryland. Open the StoryMap to learn how community murals preserve
     memory, honor Black lives, and transform public space into a site of remembrance,
@@ -171109,9 +171031,9 @@ MonoBehaviour:
   worldPromptText: {fileID: 0}
   prompt:
     desktopPrompt: Press E
-    xrPrompt: "View \u2014 The Breonna Taylor Memorial Mural"
+    xrPrompt: "View \u2014 Black Homeplaces Community Mural"
     verb: 2
-    objectName: The Breonna Taylor Memorial Mural
+    objectName: Black Homeplaces Community Mural
   galleryRoot: {fileID: 735734719}
   galleryCanvas: {fileID: 735734727}
   imageDisplay: {fileID: 77703642}
@@ -171127,77 +171049,77 @@ MonoBehaviour:
   openDistanceFromCamera: 1.75
   items:
   - type: 0
-    displayName: 01 initial wall sketch
+    displayName: Initial Wall Sketch
     caption: 
     image: {fileID: 21300000, guid: 5f392d0415dbb485198f89c52cca29b2, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 02 color maquette
+    displayName: Color Maquette
     caption: 
     image: {fileID: 21300000, guid: a9f548390307b485a932793476803715, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 03 early wall blocking
+    displayName: Early Wall Blocking
     caption: 
     image: {fileID: 21300000, guid: 5ea352f3dfe0d49a1b717f7f03bacdfe, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 04 mid process wall
+    displayName: Mid-Process Wall
     caption: 
     image: {fileID: 21300000, guid: 50c73f4890eb34a5b9605be4829a3358, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 05 participation prompts
+    displayName: Participation Prompts
     caption: 
     image: {fileID: 21300000, guid: da3def3d820d848fcb545b05517c29d3, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 06 workshop materials
+    displayName: Workshop Materials
     caption: 
     image: {fileID: 21300000, guid: 020d1dcc6eeda4cce85a1a815c51009b, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 07 artist with mural
+    displayName: Artist with the Mural
     caption: 
     image: {fileID: 21300000, guid: e1168dd2f304e4f969102536c9c06577, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 08 finished detail mirror
+    displayName: Finished Detail (Mirror)
     caption: 
     image: {fileID: 21300000, guid: fe450f3322a9f4b398a4a20bd42fe36d, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 09 finished detail flowers
+    displayName: Finished Detail (Flowers)
     caption: 
     image: {fileID: 21300000, guid: e39fd9a1325584ca7acd9f8993ca11ab, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 0
-    displayName: 10 finished mural full
+    displayName: The Finished Mural
     caption: 
     image: {fileID: 21300000, guid: 9de4ca636974c45fea8143c1d59f0a4e, type: 3}
     videoFileName: 
     videoUrlOverride: 
     editorPreviewClip: {fileID: 0}
   - type: 1
-    displayName: 11 mural process video
+    displayName: Mural Process Video
     caption: 
     image: {fileID: 0}
     videoFileName: Mural/11_mural_process_video.mp4
@@ -190785,7 +190707,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2087631981
 Transform:
   m_ObjectHideFlags: 0
@@ -200638,6 +200560,10 @@ PrefabInstance:
     - target: {fileID: 7221630432857372816, guid: 5bb49e593d71148b88b4a0730b72b942, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.293
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446148091816987854, guid: 5bb49e593d71148b88b4a0730b72b942, type: 3}
+      propertyPath: promptText
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7446148091816987854, guid: 5bb49e593d71148b88b4a0730b72b942, type: 3}
       propertyPath: playerCamera

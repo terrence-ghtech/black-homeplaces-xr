@@ -173,7 +173,6 @@ public static class BlackKitchenExperienceBuilder
         SetPrivate(controller, "exitPromptText", exitPrompt);
         SetPrivate(controller, "exitInteractionRoot", exit.transform);
         SetPrivate(controller, "audioCoordinator", coordinator);
-        WireXrSelect(exit, controller, nameof(BlackKitchenExperienceController.OnXRExitSelect));
 
         // The five audio stations and the interaction manager share one implementation
         // with the retrofit menu action.
@@ -228,7 +227,6 @@ public static class BlackKitchenExperienceBuilder
         SetPrivate(controller, "returnPoint", returnPoint.transform);
         SetPrivate(controller, "promptText", promptText);
         SetPrivate(controller, "interactionRoot", interactable.transform);
-        WireXrSelect(interactable, controller, nameof(BlackKitchenPortalController.OnXRSelect));
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
@@ -410,30 +408,4 @@ public static class BlackKitchenExperienceBuilder
         }
     }
 
-    private static void WireXrSelect(GameObject target, Object receiver, string methodName)
-    {
-        System.Type interactableType = System.Type.GetType("UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable, Unity.XR.Interaction.Toolkit");
-        if (interactableType == null)
-        {
-            Debug.LogWarning("XRSimpleInteractable type was not available while building Black Kitchen.");
-            return;
-        }
-
-        Component interactable = target.AddComponent(interactableType);
-        if (interactable == null)
-            return;
-
-        SerializedObject so = new SerializedObject(interactable);
-        SerializedProperty colliders = so.FindProperty("m_Colliders");
-        Collider collider = target.GetComponent<Collider>();
-        if (colliders != null && collider != null)
-        {
-            colliders.arraySize = 1;
-            colliders.GetArrayElementAtIndex(0).objectReferenceValue = collider;
-        }
-        so.ApplyModifiedPropertiesWithoutUndo();
-
-        BlackKitchenXrSelectRelay relay = target.AddComponent<BlackKitchenXrSelectRelay>();
-        relay.Configure(receiver as MonoBehaviour, methodName);
-    }
 }

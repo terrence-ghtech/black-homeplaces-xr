@@ -56,7 +56,6 @@ namespace BCaT.EditorTools
 
         const string MeshellRoot = "_SceneContent/ImplementedContributorInstallations/Meshell_Sturgis";
         const string RiRoot = "_SceneContent/ImplementedContributorInstallations/RI";
-        const string PortalRoot = "_SceneContent/ImplementedContributorInstallations/BlackKitchenPortal_ROOT";
         const string LindaLeaksRoot = "_SceneContent/ImplementedContributorInstallations/LindaLeaks_Exhibit";
 
         static readonly Target[] SceneTargets =
@@ -122,16 +121,6 @@ namespace BCaT.EditorTools
                 CuratorialName = "Linda Leaks Video",
                 Note = "Linda Leaks video (vintage camera artifact)",
             },
-            new Target
-            {
-                HostPath = PortalRoot + "/KitchenIslandInteractable",
-                HandlerPath = PortalRoot + "/BlackKitchenPortalController",
-                HandlerType = "BlackKitchenPortalController",
-                Method = "OnXRSelect",
-                MaxExtent = 4.0f,
-                CuratorialName = null, // floating prompt owns the wording
-                Note = "Black Kitchen entrance",
-            },
         };
 
         public static void Run()
@@ -146,7 +135,6 @@ namespace BCaT.EditorTools
             {
                 failures += RepairScene();
                 failures += RepairPrivacyLawPrefab();
-                failures += RepairBlackKitchenInterior();
             }
             catch (Exception e)
             {
@@ -202,127 +190,6 @@ namespace BCaT.EditorTools
 
                 if (!string.IsNullOrEmpty(target.CuratorialName))
                     ApplyCuratorialName(handlerGo, target);
-            }
-
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
-            Report.AppendLine("  scene saved.");
-            return failures;
-        }
-
-        /// <summary>
-        /// The Black Kitchen interior has the same defect as the main house: all
-        /// five audio stations and the exit interface are trigger-only, so the
-        /// Quest ray cannot reach any of them. Each station forwards select
-        /// through a BlackKitchenXrSelectRelay that binds to the
-        /// XRSimpleInteractable on its own GameObject, so each new surface gets
-        /// its own relay configured with the same receiver and method.
-        /// </summary>
-        static int RepairBlackKitchenInterior()
-        {
-            const string ScenePath = "Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity";
-            const string StationsRoot = "BlackKitchenExperience_ROOT/BlackKitchenAudioStations/";
-
-            string[] hostPaths =
-            {
-                StationsRoot + "KitchenConversationInteraction",
-                StationsRoot + "CulturalBackgroundInteraction",
-                StationsRoot + "BirthdayCakeInteraction",
-                StationsRoot + "NieceCakeInteraction",
-                StationsRoot + "RiceAndBeansInteraction",
-                "BlackKitchenExperience_ROOT/ExitInterface",
-            };
-
-            int failures = 0;
-            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-            Report.AppendLine($"--- scene {ScenePath}");
-
-            foreach (string hostPath in hostPaths)
-            {
-                GameObject host = FindByPath(scene, hostPath);
-                if (host == null)
-                {
-                    Report.AppendLine($"  FAIL host not found: {hostPath}");
-                    failures++;
-                    continue;
-                }
-
-                // Read the authored relay so the new surface forwards identically.
-                var sourceRelay = host.GetComponent<BlackKitchenXrSelectRelay>();
-                if (sourceRelay == null)
-                {
-                    Report.AppendLine($"  FAIL no BlackKitchenXrSelectRelay on {hostPath}");
-                    failures++;
-                    continue;
-                }
-
-                var relaySo = new SerializedObject(sourceRelay);
-                var receiver = relaySo.FindProperty("receiver")?.objectReferenceValue as MonoBehaviour;
-                string method = relaySo.FindProperty("methodName")?.stringValue;
-                if (receiver == null || string.IsNullOrEmpty(method))
-                {
-                    Report.AppendLine($"  FAIL relay on {hostPath} has no receiver/method");
-                    failures++;
-                    continue;
-                }
-
-                string childName = host.name + ChildSuffix;
-                Transform existing = host.transform.Find(childName);
-                GameObject child = existing != null ? existing.gameObject : new GameObject(childName);
-                if (existing == null)
-                    child.transform.SetParent(host.transform, false);
-
-                child.layer = 0;
-                child.transform.localRotation = Quaternion.identity;
-                child.transform.localScale = Vector3.one;
-
-                var target = new Target { MaxExtent = 2.0f, Note = hostPath };
-                if (!TryResolveBox(host, host, target, out Vector3 worldCenter, out Vector3 worldSize))
-                {
-                    Report.AppendLine($"  FAIL could not resolve bounds for {hostPath}");
-                    failures++;
-                    continue;
-                }
-
-                child.transform.position = worldCenter;
-
-                var box = child.GetComponent<BoxCollider>();
-                if (box == null)
-                    box = child.AddComponent<BoxCollider>();
-                box.isTrigger = false;
-                Vector3 lossy = child.transform.lossyScale;
-                box.center = Vector3.zero;
-                box.size = new Vector3(
-                    Mathf.Approximately(lossy.x, 0f) ? worldSize.x : worldSize.x / Mathf.Abs(lossy.x),
-                    Mathf.Approximately(lossy.y, 0f) ? worldSize.y : worldSize.y / Mathf.Abs(lossy.y),
-                    Mathf.Approximately(lossy.z, 0f) ? worldSize.z : worldSize.z / Mathf.Abs(lossy.z));
-                box.excludeLayers = ~0;
-                box.includeLayers = 0;
-
-                var interactable = child.GetComponent<XRSimpleInteractable>();
-                if (interactable == null)
-                    interactable = child.AddComponent<XRSimpleInteractable>();
-                interactable.colliders.Clear();
-                interactable.colliders.Add(box);
-
-                var relay = child.GetComponent<BlackKitchenXrSelectRelay>();
-                if (relay == null)
-                    relay = child.AddComponent<BlackKitchenXrSelectRelay>();
-                var newRelaySo = new SerializedObject(relay);
-                newRelaySo.FindProperty("receiver").objectReferenceValue = receiver;
-                newRelaySo.FindProperty("methodName").stringValue = method;
-                newRelaySo.FindProperty("interactable").objectReferenceValue = interactable;
-                newRelaySo.ApplyModifiedPropertiesWithoutUndo();
-                EditorUtility.SetDirty(relay);
-
-                var marker = child.GetComponent<QuestXrSelectCollider>();
-                if (marker == null)
-                    marker = child.AddComponent<QuestXrSelectCollider>();
-                SetPrivateString(marker, "forwardsTo", $"{receiver.GetType().Name}.{method}");
-
-                Report.AppendLine($"  OK {hostPath}");
-                Report.AppendLine($"     surface: {childName} worldCenter={Fmt(worldCenter)} worldSize={Fmt(worldSize)}");
-                Report.AppendLine($"     relay  : {receiver.GetType().Name}.{method}() on '{receiver.name}'");
             }
 
             EditorSceneManager.MarkSceneDirty(scene);

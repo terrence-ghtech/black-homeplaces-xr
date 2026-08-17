@@ -47,7 +47,15 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
     public float MaxDistance => interactionDistance;
     public float MaxViewAngle => 16f;
     public bool RequireLineOfSight => true;
-    public int Priority => 0;
+
+    // One above MediaVideoController (0): small openable artifacts (the Meshell
+    // notebooks, the Linda Leaks albums) always sit inside or beside a much
+    // larger video exhibit's interaction volume, and the router resolves
+    // priority ties by score (desktop) or enumeration order (XR hover) — which
+    // let the big neighbor steal focus from the artifact the visitor is
+    // actually aiming at. Priority dominates both selectors, so 1 makes the
+    // small target win exactly when both are candidates.
+    public int Priority => 1;
     public bool IsAvailable => isActiveAndEnabled;
     public bool AllowDesktopClick => true;
     public bool Exists => this != null;

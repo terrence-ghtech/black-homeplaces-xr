@@ -34,6 +34,18 @@ namespace BCaT.Production.Diagnostics
                         cycles = n;
                 }
             }
+
+            // Quest alternative to the command line / 'unity' intent extra:
+            //   adb shell setprop debug.bcat.smoketest <cycles>
+            // The property persists until reboot — clear it (setprop to 0)
+            // after a run, or every launch will smoke-test.
+            if (cycles <= 0 && Debug.isDebugBuild &&
+                int.TryParse(BCaTPlatform.ReadAndroidSystemProperty("debug.bcat.smoketest"),
+                             out int propertyCycles) && propertyCycles > 0)
+            {
+                cycles = propertyCycles;
+            }
+
             if (cycles <= 0) return;
 
             var go = new GameObject("BCaT_SmokeTest");

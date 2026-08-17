@@ -74,15 +74,45 @@ namespace BCaT.EditorTools
         static readonly string ReportPath = Path.Combine("Docs", "Production", "ARCHITECTURE_VALIDATION.md");
         static readonly string JsonPath = Path.Combine("Docs", "Production", "architecture_validation.json");
 
-        /// <summary>
-        /// Scenes that host a player rig and therefore carry the full platform
-        /// contract.
-        /// </summary>
-        public static readonly string[] InhabitedScenes =
+        public readonly struct ScenePlatformCapability
         {
-            "Assets/BH_XR_MainScene.unity",
-            "Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity",
+            public readonly string Path;
+            public readonly bool Inhabited;
+            public readonly bool SupportsDesktop;
+            public readonly bool SupportsQuest;
+
+            public ScenePlatformCapability(string path, bool inhabited,
+                bool supportsDesktop, bool supportsQuest)
+            {
+                Path = path;
+                Inhabited = inhabited;
+                SupportsDesktop = supportsDesktop;
+                SupportsQuest = supportsQuest;
+            }
+        }
+
+        /// <summary>
+        /// Explicit production-scene platform support. This is intentionally
+        /// data, not an inferred exception: validators ask the scene what
+        /// platforms it currently supports before requiring platform branches,
+        /// rigs, XR prompts, or Quest-only select surfaces.
+        /// </summary>
+        public static readonly ScenePlatformCapability[] ProductionScenes =
+        {
+            new ScenePlatformCapability(
+                "Assets/BH_XR_MainScene.unity",
+                inhabited: true,
+                supportsDesktop: true,
+                supportsQuest: true),
+            new ScenePlatformCapability(
+                "Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity",
+                inhabited: true,
+                supportsDesktop: true,
+                supportsQuest: false),
         };
+
+        public static readonly string[] InhabitedScenes =
+            ProductionScenes.Where(scene => scene.Inhabited).Select(scene => scene.Path).ToArray();
 
         /// <summary>
         /// Scenes that present but are not inhabited: no locomotion, no
@@ -118,7 +148,6 @@ namespace BCaT.EditorTools
             "PlatformInteractionPrompt.cs",
             "ApplicationModeService.cs",
             "RuntimeMediaPaths.cs",
-            "BlackKitchenQuestTransitionDiagnostics.cs",
         };
 
         /// <summary>
@@ -174,9 +203,9 @@ namespace BCaT.EditorTools
         {
             { "BCAT-P001", "Exactly one ScenePlatformBinding per inhabited scene" },
             { "BCAT-P002", "Platform branches are authored inactive" },
-            { "BCAT-P003", "One root Platform group with Desktop/Quest children only" },
+            { "BCAT-P003", "Declared Platform branches exist" },
             { "BCAT-P004", "One EventSystem per scene with exactly one input module" },
-            { "BCAT-P005", "One rig per kind, both under Platform/" },
+            { "BCAT-P005", "One rig per declared platform kind" },
             { "BCAT-P006", "One XRInteractionManager, under Platform/Quest" },
             { "BCAT-L001", "No Quest-only components outside Platform/Quest" },
             { "BCAT-L002", "No Desktop-only components outside Platform/Desktop" },
@@ -226,11 +255,14 @@ namespace BCaT.EditorTools
                 CheckProductionScripts(findings);
                 CheckSceneRegistration(findings);
 
-                foreach (string path in InhabitedScenes)
-                    ValidateScene(path, inhabited: true, findings);
+                foreach (ScenePlatformCapability capability in ProductionScenes)
+                    ValidateScene(capability, findings);
 
                 foreach (string path in PresentationScenes)
-                    ValidateScene(path, inhabited: false, findings);
+                    ValidateScene(new ScenePlatformCapability(path,
+                        inhabited: false,
+                        supportsDesktop: true,
+                        supportsQuest: true), findings);
             }
             finally
             {
@@ -271,8 +303,9 @@ namespace BCaT.EditorTools
 
         // ---- Scene validation ---------------------------------------------
 
-        static void ValidateScene(string scenePath, bool inhabited, List<ValidationFinding> findings)
+        static void ValidateScene(ScenePlatformCapability capability, List<ValidationFinding> findings)
         {
+            string scenePath = capability.Path;
             if (!File.Exists(scenePath))
             {
                 Add(findings, "BCAT-S001", scenePath, "", "Scene file does not exist.");
@@ -291,21 +324,21 @@ namespace BCaT.EditorTools
             Transform questBranch = FindBranch(platformGroup, QuestBranchName, LegacyQuestBranchName);
 
             CheckPlatformGroup(findings, sceneName, roots, platformGroup, legacyGroupName,
-                desktopBranch, questBranch);
+                desktopBranch, questBranch, capability);
             bool hasBinding = all.Any(go => go.GetComponents<MonoBehaviour>()
                 .Any(c => c != null && c.GetType().Name == "ScenePlatformBinding"));
 
-            CheckBinding(findings, sceneName, all, inhabited);
+            CheckBinding(findings, sceneName, all, capability.Inhabited);
             CheckEventSystems(findings, sceneName, all, hasBinding);
-            CheckRigs(findings, sceneName, all, platformGroup, inhabited);
+            CheckRigs(findings, sceneName, all, platformGroup, capability);
             CheckInteractionManagers(findings, sceneName, all, questBranch);
             CheckPlatformLeaks(findings, sceneName, all, desktopBranch, questBranch);
             CheckPlatformGroupContents(findings, sceneName, platformGroup, desktopBranch, questBranch);
             CheckDevOnly(findings, sceneName, all);
-            CheckInteractables(findings, sceneName, all);
+            CheckInteractables(findings, sceneName, all, capability);
             CheckMissingScripts(findings, sceneName, all);
             CheckAudioListeners(findings, sceneName, all, desktopBranch, questBranch);
-            CheckCameras(findings, sceneName, roots, desktopBranch, questBranch, inhabited);
+            CheckCameras(findings, sceneName, roots, desktopBranch, questBranch, capability);
             CheckSpawnPoints(findings, sceneName, all);
         }
 
@@ -349,7 +382,7 @@ namespace BCaT.EditorTools
 
         static void CheckPlatformGroup(List<ValidationFinding> findings, string scene,
             GameObject[] roots, Transform group, bool legacyName,
-            Transform desktopBranch, Transform questBranch)
+            Transform desktopBranch, Transform questBranch, ScenePlatformCapability capability)
         {
             int groupCount = roots.Count(r => r.name == PlatformGroupName || r.name == LegacyPlatformGroupName);
 
@@ -408,10 +441,10 @@ namespace BCaT.EditorTools
                         "authored-active branch runs its Awake/OnEnable on the wrong platform.");
             }
 
-            if (desktopBranch == null)
+            if (capability.SupportsDesktop && desktopBranch == null)
                 Add(findings, "BCAT-P003", scene, group.name,
                     $"Platform group has no '{DesktopBranchName}' branch.");
-            if (questBranch == null)
+            if (capability.SupportsQuest && questBranch == null)
                 Add(findings, "BCAT-P003", scene, group.name,
                     $"Platform group has no '{QuestBranchName}' branch.");
         }
@@ -511,12 +544,12 @@ namespace BCaT.EditorTools
         // ---- BCAT-P005 -----------------------------------------------------
 
         static void CheckRigs(List<ValidationFinding> findings, string scene,
-            List<GameObject> all, Transform platformGroup, bool inhabited)
+            List<GameObject> all, Transform platformGroup, ScenePlatformCapability capability)
         {
             var rigs = all.Select(go => go.GetComponent<ScenePlayerRig>())
                 .Where(r => r != null).ToList();
 
-            if (!inhabited)
+            if (!capability.Inhabited)
             {
                 foreach (var rig in rigs)
                     Add(findings, "BCAT-P005", scene, HierarchyPath(rig.transform),
@@ -525,12 +558,13 @@ namespace BCaT.EditorTools
                 return;
             }
 
-            foreach (ScenePlayerRig.RigKind kind in Enum.GetValues(typeof(ScenePlayerRig.RigKind)))
+            foreach (ScenePlayerRig.RigKind kind in RequiredRigKinds(capability))
             {
                 int count = rigs.Count(r => r.Kind == kind);
                 if (count == 0)
                     Add(findings, "BCAT-P005", scene, "",
-                        $"No ScenePlayerRig of kind {kind}. Inhabited scenes must carry both rigs.");
+                        $"No ScenePlayerRig of kind {kind}. This inhabited scene declares support " +
+                        $"for {RigKindPlatformName(kind)}.");
                 else if (count > 1)
                     Add(findings, "BCAT-P005", scene, "",
                         $"{count} ScenePlayerRig components of kind {kind}; there must be exactly one.");
@@ -544,6 +578,17 @@ namespace BCaT.EditorTools
                         $"{PlatformGroupName}/{DesktopBranchName} or {PlatformGroupName}/{QuestBranchName}.");
             }
         }
+
+        static IEnumerable<ScenePlayerRig.RigKind> RequiredRigKinds(ScenePlatformCapability capability)
+        {
+            if (capability.SupportsDesktop)
+                yield return ScenePlayerRig.RigKind.Desktop;
+            if (capability.SupportsQuest)
+                yield return ScenePlayerRig.RigKind.XR;
+        }
+
+        static string RigKindPlatformName(ScenePlayerRig.RigKind kind) =>
+            kind == ScenePlayerRig.RigKind.XR ? "Quest" : "Desktop";
 
         // ---- BCAT-P006 -----------------------------------------------------
 
@@ -742,17 +787,18 @@ namespace BCaT.EditorTools
 
         // ---- BCAT-D003 / BCAT-D004 / BCAT-Q001 / BCAT-Q002 -----------------
 
-        static void CheckInteractables(List<ValidationFinding> findings, string scene, List<GameObject> all)
+        static void CheckInteractables(List<ValidationFinding> findings, string scene,
+            List<GameObject> all, ScenePlatformCapability capability)
         {
             foreach (GameObject go in all)
             {
                 var interactable = go.GetComponent<XRSimpleInteractable>();
-                if (interactable != null)
+                if (interactable != null && capability.SupportsQuest)
                 {
                     if (!HasDispatchPath(interactable))
                         Add(findings, "BCAT-D003", scene, HierarchyPath(go.transform),
                             "XRSimpleInteractable has no dispatch path: no IInteractionTarget on " +
-                            "itself or an ancestor, no select relay with a receiver, no XrSelectSurface, " +
+                            "itself or an ancestor, no XrSelectSurface, " +
                             "and no persistent selectEntered listener. Selecting it does nothing.");
 
                     if (!HasCasterReachableCollider(interactable))
@@ -766,21 +812,23 @@ namespace BCaT.EditorTools
                 {
                     if (behaviour is not IInteractionTarget target) continue;
 
-                    CheckTargetPrompts(findings, scene, go, target);
-                    CheckTargetXrSurface(findings, scene, go, behaviour);
+                    bool validateQuestInteraction = RequiresQuestInteractionValidation(capability, target);
+                    CheckTargetPrompts(findings, scene, go, target, validateQuestInteraction);
+                    if (validateQuestInteraction)
+                        CheckTargetXrSurface(findings, scene, go, behaviour);
                 }
             }
         }
 
         static void CheckTargetPrompts(List<ValidationFinding> findings, string scene,
-            GameObject go, IInteractionTarget target)
+            GameObject go, IInteractionTarget target, bool validateQuestInteraction)
         {
             string desktop;
             string xr;
             try
             {
                 desktop = target.GetPrompt(false);
-                xr = target.GetPrompt(true);
+                xr = validateQuestInteraction ? target.GetPrompt(true) : null;
             }
             catch (Exception e)
             {
@@ -789,21 +837,19 @@ namespace BCaT.EditorTools
                 return;
             }
 
-            // An empty shared-HUD prompt is correct for the two sanctioned
-            // world-space prompt systems (Black Kitchen entrance, Front Home
-            // Privacy Zones hologram): the floating prompt is the only
-            // affordance there, and an empty HUD string is what prevents a
-            // duplicate. Those targets expose the wording through
-            // WorldPromptText(bool) instead, so accept an empty prompt when that
-            // returns text for the same platform.
+            // An empty shared-HUD prompt is correct for sanctioned world-space
+            // prompt systems: the floating prompt is the only affordance there,
+            // and an empty HUD string prevents a duplicate.
             if (string.IsNullOrWhiteSpace(desktop) && !HasWorldPromptText(target, false))
                 Add(findings, "BCAT-Q002", scene, HierarchyPath(go.transform),
                     "Desktop prompt is empty and no world-space prompt supplies wording.");
-            if (string.IsNullOrWhiteSpace(xr) && !HasWorldPromptText(target, true))
+            if (validateQuestInteraction &&
+                string.IsNullOrWhiteSpace(xr) &&
+                !HasWorldPromptText(target, true))
                 Add(findings, "BCAT-Q002", scene, HierarchyPath(go.transform),
                     "XR prompt is empty and no world-space prompt supplies wording.");
 
-            if (!string.IsNullOrWhiteSpace(xr))
+            if (validateQuestInteraction && !string.IsNullOrWhiteSpace(xr))
             {
                 foreach (string forbidden in new[] { "Press ", "press ", "key", "click", "Click" })
                 {
@@ -818,21 +864,62 @@ namespace BCaT.EditorTools
             }
         }
 
+        static bool RequiresQuestInteractionValidation(ScenePlatformCapability capability,
+            IInteractionTarget target)
+        {
+            if (!capability.SupportsQuest)
+                return false;
+
+            string destination = ResolveDestinationSceneName(target);
+            return string.IsNullOrWhiteSpace(destination) || SceneSupportsQuest(destination);
+        }
+
+        static string ResolveDestinationSceneName(IInteractionTarget target)
+        {
+            Type type = target.GetType();
+            foreach (string fieldName in new[] { "memorySceneName", "destinationSceneName" })
+            {
+                var field = type.GetField(fieldName,
+                    System.Reflection.BindingFlags.Instance |
+                    System.Reflection.BindingFlags.Public |
+                    System.Reflection.BindingFlags.NonPublic);
+                if (field != null && field.FieldType == typeof(string))
+                    return field.GetValue(target) as string;
+            }
+
+            return null;
+        }
+
+        static bool SceneSupportsQuest(string sceneNameOrPath)
+        {
+            string sceneName = Path.GetFileNameWithoutExtension(sceneNameOrPath);
+            foreach (ScenePlatformCapability scene in ProductionScenes)
+            {
+                if (Path.GetFileNameWithoutExtension(scene.Path) == sceneName)
+                    return scene.SupportsQuest;
+            }
+
+            return true;
+        }
+
         /// <summary>
-        /// The project's convention for the two sanctioned world-space prompts:
-        /// the target exposes the wording through WorldPromptText(bool) and
-        /// deliberately returns an empty shared-HUD prompt on that platform.
+        /// The project's convention for sanctioned world-space prompts:
+        /// the target exposes wording through WorldPromptText and deliberately
+        /// returns an empty shared-HUD prompt on that platform.
         /// </summary>
         static bool HasWorldPromptText(IInteractionTarget target, bool xr)
         {
             var method = target.GetType().GetMethod("WorldPromptText",
                 new[] { typeof(bool) });
+            if (method == null)
+                method = target.GetType().GetMethod("WorldPromptText", Type.EmptyTypes);
             if (method == null || method.ReturnType != typeof(string))
                 return false;
 
             try
             {
-                return !string.IsNullOrWhiteSpace(method.Invoke(target, new object[] { xr }) as string);
+                object[] args = method.GetParameters().Length == 0 ? Array.Empty<object>() : new object[] { xr };
+                return !string.IsNullOrWhiteSpace(method.Invoke(target, args) as string);
             }
             catch
             {
@@ -883,9 +970,8 @@ namespace BCaT.EditorTools
 
         /// <summary>
         /// Whether selecting this interactable can reach anything. Deliberately
-        /// permissive about *how*: a router target, an exclusive-zone station
-        /// reached through a select relay, an XrSelectSurface, or a persistent
-        /// UnityEvent listener are all valid dispatch paths in this project.
+        /// permissive about *how*: a router target, an XrSelectSurface, or a
+        /// persistent UnityEvent listener are all valid dispatch paths in this project.
         /// </summary>
         static bool HasDispatchPath(XRSimpleInteractable interactable)
         {
@@ -896,24 +982,15 @@ namespace BCaT.EditorTools
             {
                 if (behaviour == null) continue;
                 string typeName = behaviour.GetType().Name;
-                if (typeName != "BlackKitchenXrSelectRelay" && typeName != "XrSelectSurface")
+                if (typeName != "XrSelectSurface")
                     continue;
 
-                if (typeName == "XrSelectSurface") return true;
-
-                // A relay dispatches through its receiver (router target,
-                // exclusive-zone station, or SendMessage), so any receiver counts.
-                var field = behaviour.GetType().GetField("receiver",
-                    System.Reflection.BindingFlags.Instance |
-                    System.Reflection.BindingFlags.NonPublic |
-                    System.Reflection.BindingFlags.Public);
-                if (field?.GetValue(behaviour) as UnityEngine.Object != null) return true;
+                return true;
             }
 
-            // A surface on a child (the legacy *_QuestXRSelect twin) forwards up.
+            // A surface on a child forwards up.
             if (interactable.GetComponentsInChildren<MonoBehaviour>(true).Any(c => c != null &&
-                    (c.GetType().Name == "XrSelectSurface" ||
-                     c.GetType().Name == "BlackKitchenXrSelectRelay")))
+                    c.GetType().Name == "XrSelectSurface"))
                 return true;
 
             return interactable.selectEntered.GetPersistentEventCount() > 0;
@@ -967,7 +1044,8 @@ namespace BCaT.EditorTools
         // ---- BCAT-S003 / BCAT-S004 -----------------------------------------
 
         static void CheckCameras(List<ValidationFinding> findings, string scene,
-            GameObject[] roots, Transform desktopBranch, Transform questBranch, bool inhabited)
+            GameObject[] roots, Transform desktopBranch, Transform questBranch,
+            ScenePlatformCapability capability)
         {
             foreach ((Transform branch, string label) in new[]
                      {
@@ -976,6 +1054,8 @@ namespace BCaT.EditorTools
                      })
             {
                 if (branch == null) continue;
+                if (label == DesktopBranchName && !capability.SupportsDesktop) continue;
+                if (label == QuestBranchName && !capability.SupportsQuest) continue;
 
                 Camera[] cameras = branch.GetComponentsInChildren<Camera>(true);
                 if (!cameras.Any(c => c != null && c.CompareTag("MainCamera")))
@@ -984,7 +1064,7 @@ namespace BCaT.EditorTools
                         "Camera.main would be null or resolve to another branch.");
             }
 
-            if (inhabited)
+            if (capability.Inhabited || !capability.SupportsQuest)
                 return;
 
             // Presentation scenes: a head-locked camera in a headset is a

@@ -24,9 +24,8 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
     [SerializeField] private BlackKitchenExperienceController experienceController;
 
     private readonly List<BlackKitchenAudioInteractable> stations = new();
+    private InputAction questInteractAction;
     private BlackKitchenAudioInteractable selected;
-    private BlackKitchenAudioInteractable xrHoveredStation;
-    private BlackKitchenExperienceController xrHoveredExit;
     private bool sharedPromptVisible;
     private string sharedPromptText = string.Empty;
 
@@ -47,28 +46,29 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
         if (experienceController != null && experienceController.IsExitModalOpen)
         {
             SetSelected(null);
-            xrHoveredExit = null;
             UpdatePrompt();
             return;
         }
 
-        bool xr = InteractionPromptText.IsXRActive();
-        if (xr && xrHoveredExit != null)
-        {
-            SetSelected(null);
-            ShowSharedPrompt(xrHoveredExit.GetExitPrompt(xr));
-            if (interactPressed)
-                xrHoveredExit.HandleExitInteract();
-            return;
-        }
-
-        SetSelected(xr && xrHoveredStation != null ? xrHoveredStation : ResolveTarget());
+        SetSelected(ResolveTarget());
         UpdatePrompt();
 
-        if (!interactPressed)
+        // On Quest the router's shared per-frame signal always reports nothing:
+        // QuestInteractionInputProvider.InteractPressedThisFrame is hardcoded
+        // false because Quest activation is normally event-driven through XRI
+        // select events. This zone has no XRI interactors, so it reads the
+        // controller trigger itself and treats it exactly as the desktop
+        // interact key. Everything downstream — station selection, the shared
+        // prompt, ActivateSelected() and Toggle() — is the existing path.
+        bool pressed = interactPressed || QuestTriggerPressedThisFrame();
+
+        if (!pressed)
             return;
 
         // The exit interface owns the interaction while the player aims at it.
+        // Both platforms now have their own exit-choice presentation, so this is
+        // no longer gated to desktop: on Quest the trigger opens the world-space
+        // gaze panel rather than the keyboard-only modal it used to open.
         if (experienceController != null && experienceController.IsAimingAtExit())
         {
             experienceController.HandleExitInteract();
@@ -79,6 +79,48 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
             ActivateSelected();
     }
 
+    /// <summary>
+    /// Quest trigger, standing in for the desktop interact key. Bound to either
+    /// controller's trigger with a directly serialized action, so nothing global
+    /// changes and no XRI interactor, interaction manager or input asset is
+    /// involved. WasPressedThisFrame gives exactly one activation per deliberate
+    /// press, so the existing toggle/replay behaviour is preserved and holding
+    /// the trigger cannot retrigger.
+    /// </summary>
+    private bool QuestTriggerPressedThisFrame()
+    {
+        EnsureQuestInteractAction();
+        return questInteractAction != null && questInteractAction.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Created lazily: XR can finish initializing after this component enables,
+    /// so the platform is re-checked rather than sampled once in OnEnable.
+    /// Never created on desktop, which therefore reads no controller input.
+    /// </summary>
+    private void EnsureQuestInteractAction()
+    {
+        if (questInteractAction != null || !BCaT.Production.PlatformCapabilities.IsXRActive)
+            return;
+
+        questInteractAction = new InputAction("BlackKitchenQuestInteract", InputActionType.Button);
+        questInteractAction.AddBinding("<XRController>{LeftHand}/{TriggerButton}");
+        questInteractAction.AddBinding("<XRController>{RightHand}/{TriggerButton}");
+        questInteractAction.Enable();
+        Debug.Log("[BlackKitchenInteractionManager] Quest interact action enabled " +
+                  "(<XRController>{LeftHand|RightHand}/{TriggerButton}).");
+    }
+
+    private void DisposeQuestInteractAction()
+    {
+        if (questInteractAction == null)
+            return;
+
+        questInteractAction.Disable();
+        questInteractAction.Dispose();
+        questInteractAction = null;
+    }
+
     public void ZoneSuppressPrompts()
     {
         SetSelected(null);
@@ -87,12 +129,17 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
 
     // -----------------------------------------------------------------------
 
-    private void OnEnable() => InteractionRouter.RegisterZone(this);
+    private void OnEnable()
+    {
+        InteractionRouter.RegisterZone(this);
+        EnsureQuestInteractAction();
+    }
 
     private void OnDisable()
     {
         InteractionRouter.UnregisterZone(this);
         HideSharedPrompt();
+        DisposeQuestInteractAction();
     }
 
     private void Start()
@@ -112,77 +159,18 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
 
         Debug.Log($"[BlackKitchenInteractionManager] Activating target: {selected.NarrativeId}");
         selected.Toggle();
+
+        // Prompt-hierarchy bookkeeping only: after the visitor has successfully
+        // started a story once, the teaching suffix is dropped. Activation itself
+        // is unchanged.
+        HasActivatedAnyStory = true;
     }
 
-    public bool RequestXRSelect(BlackKitchenAudioInteractable target)
-    {
-        if (target == null || InteractionState.IsBlocked)
-            return false;
-
-        EnsureStationRegistered(target);
-        if (!stations.Contains(target))
-            return false;
-
-        SetSelected(target);
-        UpdatePrompt();
-        ActivateSelected();
-        return true;
-    }
-
-    public void RequestXRHover(BlackKitchenAudioInteractable target)
-    {
-        if (target == null)
-            return;
-
-        EnsureStationRegistered(target);
-        xrHoveredStation = target;
-        xrHoveredExit = null;
-        SetSelected(target);
-        UpdatePrompt();
-    }
-
-    public void ClearXRHover(BlackKitchenAudioInteractable target)
-    {
-        if (xrHoveredStation != target)
-            return;
-
-        xrHoveredStation = null;
-        SetSelected(null);
-        UpdatePrompt();
-    }
-
-    public void RequestXRExitHover(BlackKitchenExperienceController controller)
-    {
-        if (controller == null)
-            return;
-
-        xrHoveredExit = controller;
-        xrHoveredStation = null;
-        SetSelected(null);
-        ShowSharedPrompt(controller.GetExitPrompt(InteractionPromptText.IsXRActive()));
-    }
-
-    public void ClearXRExitHover()
-    {
-        xrHoveredExit = null;
-        HideSharedPrompt();
-    }
-
-    public bool RequestXRExit()
-    {
-        if (InteractionState.IsBlocked)
-            return false;
-
-        if (experienceController == null)
-            experienceController = FindAnyObjectByType<BlackKitchenExperienceController>();
-        if (experienceController == null)
-            return false;
-
-        SetSelected(null);
-        UpdatePrompt();
-        experienceController.HandleExitInteract();
-        return true;
-    }
+    /// <summary>
+    /// True once any story has been activated this session. Read by the Quest
+    /// entry orientation and by the prompt wording below.
+    /// </summary>
+    public bool HasActivatedAnyStory { get; private set; }
 
     private BlackKitchenAudioInteractable ResolveTarget()
     {
@@ -271,24 +259,54 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
             Debug.Log($"[BlackKitchenInteractionManager] Selected target: {selected.NarrativeId}");
     }
 
+    // The shared prompt is one line, so these read as "<label> · <instruction>".
+    // Two-line text would overflow InteractionPromptUi's panel, and that widget is
+    // shared with the Main House.
+    private const string QuestListenSuffix = " · Pull trigger to listen";
+    private const string QuestExitPrompt = "Exit Black Kitchen · Pull trigger to exit";
+
     private void UpdatePrompt()
     {
+        // Priority: exit-choice panel (handled by the router's blocker, which
+        // skips ZoneTick entirely) > exit target > audio discovery > nothing.
+        // Targeting the exit suppresses every audio prompt, so "Play — <story>"
+        // and the exit instruction can never be on screen together.
+        // The exit now teaches itself through the same universal bottom prompt as
+        // every other interaction, on BOTH platforms. Desktop gets the authored
+        // "Press E to Exit Black Kitchen"; Quest keeps its trigger wording. The
+        // floating "Exit Black Kitchen" plaque stays visible either way as
+        // environmental signage — it is not this prompt.
+        if (experienceController != null && experienceController.IsAimingAtExit())
+        {
+            ShowSharedPrompt(BCaT.Production.PlatformCapabilities.IsXRActive
+                ? QuestExitPrompt
+                : experienceController.GetExitPrompt());
+            return;
+        }
+
         if (selected == null)
         {
             HideSharedPrompt();
             return;
         }
 
-        bool xr = InteractionPromptText.IsXRActive();
         SharedInteractionVerb verb = selected.IsPlaying ? SharedInteractionVerb.Stop : SharedInteractionVerb.Play;
         string legacyVerb = selected.IsPlaying ? "Stop" : "Play";
-        // Desktop keeps its authored wording; Quest uses the shared
-        // "<Action> — <Station name>" form (no keyboard wording, no "Interact to").
-        ShowSharedPrompt(SharedInteractionPrompt.Format(
-            xr,
+        // Desktop passes false and therefore still resolves to the authored
+        // "Press E to <verb> <name>" override, unchanged. Quest gets the shared
+        // "<Verb> — <Name>" wording instead of a keyboard key it does not have.
+        string prompt = SharedInteractionPrompt.Format(
+            BCaT.Production.PlatformCapabilities.UseXRPrompts,
             verb,
             selected.DisplayName,
-            $"Press E to {legacyVerb} {selected.DisplayName}"));
+            $"Press E to {legacyVerb} {selected.DisplayName}");
+
+        // Quest only, and only until the visitor has managed it once: spell out
+        // how to activate. Desktop wording is untouched.
+        if (BCaT.Production.PlatformCapabilities.IsXRActive && !HasActivatedAnyStory)
+            prompt += QuestListenSuffix;
+
+        ShowSharedPrompt(prompt);
     }
 
     private void ShowSharedPrompt(string text)
@@ -306,15 +324,6 @@ public class BlackKitchenInteractionManager : MonoBehaviour, IExclusiveInteracti
         sharedPromptText = string.Empty;
         sharedPromptVisible = false;
         InteractionPromptUi.Hide();
-    }
-
-    private void EnsureStationRegistered(BlackKitchenAudioInteractable target)
-    {
-        if (stations.Contains(target))
-            return;
-
-        stations.RemoveAll(station => station == null);
-        stations.AddRange(FindObjectsByType<BlackKitchenAudioInteractable>(FindObjectsSortMode.None));
     }
 
 }
