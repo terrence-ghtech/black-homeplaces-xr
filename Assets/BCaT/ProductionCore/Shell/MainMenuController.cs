@@ -104,6 +104,8 @@ namespace BCaT.Production.Shell
                 ResetService.MainSceneName,
                 ResetService.MainEntranceSpawnId,
                 SceneManager.GetActiveScene().name);
+            Diagnostics.MemTrace.Mark("MAIN_SCENE_REQUESTED_FROM_MENU", // BCAT_MEMTRACE
+                $"dest={ResetService.MainSceneName}");
             SceneManager.LoadSceneAsync(ResetService.LoadingSceneName, LoadSceneMode.Single);
         }
 

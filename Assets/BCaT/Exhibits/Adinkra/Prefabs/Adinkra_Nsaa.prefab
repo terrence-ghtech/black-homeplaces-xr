@@ -2122,8 +2122,8 @@ MonoBehaviour:
   maxViewAngle: 18
   worldPromptText: {fileID: 0}
   prompt:
-    desktopPrompt: Press E to Examine Symbol
-    xrPrompt: "View — Nsaa"
+    desktopPrompt: Press E to open Nsaa
+    xrPrompt: Open Nsaa
     verb: 2
     objectName: Nsaa
   modalRoot: {fileID: 5754471576322435231}

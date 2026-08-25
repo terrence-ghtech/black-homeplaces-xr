@@ -1,6 +1,6 @@
 # BCaT Architecture Validation
 
-Generated: 2026-08-14 09:50 · mode: report
+Generated: 2026-08-25 07:26 · mode: strict
 
 **0 error(s), 0 warning(s).** No error-severity rule is failing; the build gate passes.
 
@@ -25,7 +25,7 @@ Generated: 2026-08-14 09:50 · mode: report
 | BCAT-P005 | Error | PASS | One rig per declared platform kind |
 | BCAT-P006 | Error | PASS | One XRInteractionManager, under Platform/Quest |
 | BCAT-Q001 | Error | PASS | Trigger-only interaction targets carry an XR select surface |
-| BCAT-Q002 | Warning | PASS | Both desktop and XR prompts are valid |
+| BCAT-Q002 | Error | PASS | Both desktop and XR prompts are valid |
 | BCAT-S001 | Error | PASS | Transition destination scenes are loadable |
 | BCAT-S002 | Error | PASS | Transition spawn ids resolve |
 | BCAT-S003 | Error | PASS | Each platform branch has a MainCamera |

@@ -42,9 +42,14 @@ namespace BCaT.Production.Shell
                 return;
             }
 
-            // Focused exhibit interfaces (readers, slideshows, exit modal) own Escape.
+            // Focused exhibit interfaces (readers, slideshows, exit modal) own
+            // Escape, and so does any other menu layer that is already up
+            // (opening onboarding, kiosk reset overlay). The pause menu's own
+            // Menu block is not in play here — when it is open the branch
+            // above handles Escape before this check is reached.
             if (InteractionState.HasReason(InteractionBlockReason.Modal) ||
-                InteractionState.HasReason(InteractionBlockReason.Media))
+                InteractionState.HasReason(InteractionBlockReason.Media) ||
+                InteractionState.HasReason(InteractionBlockReason.Menu))
                 return;
             if (SceneTransitionState.IsTransitionInProgress)
                 return;

@@ -493,12 +493,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChestMuseumLauncher
   targetUrl: https://www.artsteps.com/view/686a8082dc1f3854ff83dc73
-  projectName: the Black Family Museum
+  projectName: The Black Family Museum & Archive
   playerCamera: {fileID: 0}
   interactDistance: 7
   prompt: {fileID: 1366649879247307701}
   promptText: {fileID: 2631797752171022}
-  xrPromptText: Interact
+  xrPromptText: Open The Black Family Museum & Archive
 --- !u!4 &2390708955781442187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1359807540711761377, guid: 11e54bb98a1bf497e95f2f7662f0c9b8, type: 3}

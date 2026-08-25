@@ -2214,8 +2214,8 @@ MonoBehaviour:
   maxViewAngle: 18
   worldPromptText: {fileID: 0}
   prompt:
-    desktopPrompt: Press E to Examine Symbol
-    xrPrompt: "View — Sankofa"
+    desktopPrompt: Press E to open Sankofa
+    xrPrompt: Open Sankofa
     verb: 2
     objectName: Sankofa
   modalRoot: {fileID: 6496988934622883928}

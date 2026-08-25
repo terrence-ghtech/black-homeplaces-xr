@@ -44,6 +44,8 @@ namespace BCaT.Production
                 services.AddComponent<CrosshairController>();
             }
 
+            services.AddComponent<OpeningOnboardingController>();
+
             if (ApplicationModeService.IsKiosk && BCaTPlatform.AllowsKioskMode)
                 services.AddComponent<Kiosk.KioskController>();
 
@@ -128,9 +130,11 @@ namespace BCaT.Production
                 return;
 
             // New scene, new rigs/terrains/cameras: re-apply and re-capture.
+            Diagnostics.MemTrace.Mark("BOOTSTRAP_SCENE_PASS_BEGIN", $"scene={scene.name}"); // BCAT_MEMTRACE
             ResetService.CaptureSceneEntryPose(scene);
             PlayerControlGate.Reapply();
             SettingsManager.ApplyAll();
+            Diagnostics.MemTrace.Mark("BOOTSTRAP_SCENE_PASS_END", $"scene={scene.name}"); // BCAT_MEMTRACE
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

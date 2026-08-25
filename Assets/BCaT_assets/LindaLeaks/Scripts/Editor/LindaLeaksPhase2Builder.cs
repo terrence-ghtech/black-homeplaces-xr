@@ -26,6 +26,7 @@ public static class LindaLeaksPhase2Builder
     private const string UIRoot = Root + "/UI";
     private const string ScenePath = "Assets/BH_XR_MainScene.unity";
     private const string MapHubUrl = "https://maphub.net/Linda_Leaks_Archiving_Project/linda-leaks-housing-co-ops";
+    private const string LindaLeaksWebsiteUrl = "https://www.honoringlindaleaks.com/";
     private const string VideoAssetPath = Root + "/Linda_Leaks_CHOF_720p.mp4";
     private const string CameraModelPath = Root + "/Models/LL_AntiqueCamera.glb";
     private const string AlbumModelPath = Root + "/Models/LL_PhotoAlbum.glb";
@@ -174,6 +175,7 @@ public static class LindaLeaksPhase2Builder
         Button previous = CreateButton("PreviousButton", backdrop.transform, "Previous", new Vector2(-270, -300), new Vector2(180, 52), brass.color, Color.black);
         Button next = CreateButton("NextButton", backdrop.transform, "Next", new Vector2(-60, -300), new Vector2(160, 52), brass.color, Color.black);
         Button close = CreateButton("CloseButton", backdrop.transform, "Close", new Vector2(180, -300), new Vector2(160, 52), brass.color, Color.black);
+        Button website = CreateButton("WebsiteButton", backdrop.transform, "Visit HonoringLindaLeaks.com", new Vector2(390, -300), new Vector2(300, 52), brass.color, Color.black);
 
         LindaLeaksPhotoAlbumController album = artifact.AddComponent<LindaLeaksPhotoAlbumController>();
         SetPrivate(album, "albumRoot", panelRoot);
@@ -184,6 +186,7 @@ public static class LindaLeaksPhase2Builder
         SetPrivate(album, "projectDescriptionText", description);
         SetPrivate(album, "projectDescription", "Archival photographs of cooperative housing, community organizing, and everyday neighborhood life.");
         SetPrivate(album, "photos", BuildPhotoEntries());
+        SetPrivate(album, "externalWebsiteUrl", LindaLeaksWebsiteUrl);
 
         LindaLeaksPanelOpener opener = artifact.AddComponent<LindaLeaksPanelOpener>();
         SetPrivate(opener, "target", 1);
@@ -193,6 +196,7 @@ public static class LindaLeaksPhase2Builder
         AddButtonCall(previous, album, nameof(LindaLeaksPhotoAlbumController.Previous));
         AddButtonCall(next, album, nameof(LindaLeaksPhotoAlbumController.Next));
         AddButtonCall(close, album, nameof(LindaLeaksPhotoAlbumController.CloseAlbum));
+        AddButtonCall(website, album, nameof(LindaLeaksPhotoAlbumController.OpenExternalWebsite));
         AddXRSimpleInteractable(artifact, opener, nameof(LindaLeaksPanelOpener.Open));
 
         BuildPlaque(root.transform, "Plaque_PhotoAlbum", new Vector3(0.5f, 0.16f, 0f),
@@ -541,14 +545,54 @@ public static class LindaLeaksPhase2Builder
             Root + "/Images/LL_CoopHousing_09.jpg"
         };
 
+        (string title, string caption)[] metadata =
+        {
+            (
+                "T Street Collective — Cheryl Boykins & Linda Leaks (1984)",
+                "Cheryl Boykins (left) and Linda Leaks (right) sitting on the steps at 1333 T Street NW, Washington, DC, July 1984."
+            ),
+            (
+                "T Street Collective — Black Women's Self Help Collective Meeting (1983)",
+                "Audrey Sartin (back left), Margaret Carey (back middle), Ajowa Ifateyo (back right), Rosa Brunson (front left), Shepsara Raari (Deborah Berry) (front middle), and Faye Herbert (front right) at a May 1983 Black Women's Self Help Collective meeting at the T Street Collective House. A map of Africa and a photograph of Malcolm X are visible in the background."
+            ),
+            (
+                "T Street Collective — Community Dancing (1983)",
+                "Community celebration following a Black Women's Self Help Collective gathering, August 1983. Pictured are Faye Williams, TiaJuana Malone, Lianne Rozzell, Ajowa Ifateyo, possibly Cheryl Boykins, and S. Marquita Sykes."
+            ),
+            (
+                "Southern Homes & Gardens — Residents Organize for Ownership",
+                "The Southern Homes and Gardens Task Force during its campaign for resident ownership. Residents worked with public officials, organized demonstrations, and advocated for cooperative homeownership with pro bono support from Covington & Burling attorneys."
+            ),
+            (
+                "Southern Homes & Gardens — Community Celebration",
+                "Residents celebrate the successful establishment of Southern Homes and Gardens Cooperative, including Bella Tinus, Yvonne Timmer, Joan Thinar, Phyllis Thompson, James Morse, Thelma Ariett, Sara Atkinson, Mr. Bittles, Angela London, and Donny Simpson."
+            ),
+            (
+                "Ella Jo Baker Cooperative — Groundbreaking Ceremony (2002)",
+                "Groundbreaking ceremony for the Ella Jo Baker Intentional Community Cooperative, featuring Linda Leaks, cooperative members, community partners, Manna Inc., DC officials, and housing advocates."
+            ),
+            (
+                "Ella Jo Baker Cooperative — University Place Home (2003)",
+                "2548 University Place NW following renovation as part of the Ella Jo Baker Intentional Community Cooperative."
+            ),
+            (
+                "Ella Jo Baker Cooperative — Before Rehabilitation",
+                "2521 University Place NW before rehabilitation, with Ajowa Ifateyo standing on the porch. A Department of Housing and Community Development sign is visible in the basement window."
+            ),
+            (
+                "Ella Jo Baker Cooperative — Board Meeting Gathering (2004)",
+                "Linda Leaks, Ajowa Ifateyo, S. Marquita Sykes, Parisa Norouzi, Beverly Cannon, and Robin Williams Ashton gathered around the cooperative's \"red book\" of governance documents, circa 2004."
+            )
+        };
+
         var entries = new List<PhotoEntry>();
         for (int i = 0; i < paths.Length; i++)
         {
             entries.Add(new PhotoEntry
             {
                 sprite = AssetDatabase.LoadAssetAtPath<Sprite>(paths[i]),
-                title = $"Housing Co-op Archive {i + 1:00}",
-                caption = "Archival photograph from the Linda Leaks cooperative housing collection."
+                title = metadata[i].title,
+                caption = metadata[i].caption
             });
         }
 

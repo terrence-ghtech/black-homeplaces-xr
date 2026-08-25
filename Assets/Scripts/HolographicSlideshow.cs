@@ -40,6 +40,9 @@ public class HolographicSlideshow : MonoBehaviour
     [Header("Desktop Positioning")]
     [SerializeField] private bool positionInFrontOfCameraOnOpen;
 
+    [Header("External Link")]
+    [SerializeField] private string externalWebsiteUrl;
+
     private readonly List<Behaviour> disabledWorldInputBehaviours = new List<Behaviour>();
     private int currentIndex;
     private bool isOpen;
@@ -175,6 +178,15 @@ public class HolographicSlideshow : MonoBehaviour
     public void PreviousPhoto()
     {
         Previous();
+    }
+
+    public void OpenExternalWebsite()
+    {
+        if (string.IsNullOrWhiteSpace(externalWebsiteUrl))
+            return;
+
+        Debug.Log($"{LogTag} Opening external link: {externalWebsiteUrl}");
+        Application.OpenURL(externalWebsiteUrl);
     }
 
     private void Refresh()

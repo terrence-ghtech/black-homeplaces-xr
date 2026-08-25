@@ -112,6 +112,14 @@ namespace BCaT.EditorTools
             }
             AssetDatabase.Refresh();
 
+            foreach (string file in Directory.GetFiles(target, "*.mp4", SearchOption.AllDirectories))
+            {
+                string relative = Path.GetRelativePath(target, file).Replace(Path.DirectorySeparatorChar, '/');
+                if (!copied.Contains(relative))
+                    copied.Add(relative);
+            }
+            copied.Sort(System.StringComparer.OrdinalIgnoreCase);
+
             // Record the packaged names in RemoteMediaConfig so runtime path
             // resolution can trust local files on platforms where File.Exists
             // cannot see into the package (Android/Quest).

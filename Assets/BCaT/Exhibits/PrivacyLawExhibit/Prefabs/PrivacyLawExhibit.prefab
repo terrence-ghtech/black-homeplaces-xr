@@ -5609,8 +5609,8 @@ MonoBehaviour:
   ring02RotationSpeed: {x: 0, y: -7, z: 0}
   ring03RotationSpeed: {x: 0, y: 5, z: 0}
   promptText: {fileID: 4058484615337913473}
-  desktopPrompt: Press E to Examine Privacy Exhibit
-  xrPrompt: "View \u2014 Front Home Privacy Zones"
+  desktopPrompt: Press E to open Black Homeplace as a Blueprint for Privacy Law
+  xrPrompt: Open Black Homeplace as a Blueprint for Privacy Law
   logStateChanges: 0
 --- !u!1 &5391252157911078304
 GameObject:

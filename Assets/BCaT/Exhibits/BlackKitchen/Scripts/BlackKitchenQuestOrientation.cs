@@ -21,9 +21,14 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed class BlackKitchenQuestOrientation : MonoBehaviour
 {
+    const string SharedInstructionPanelName = "InstructionPanel";
+
     [Header("Wiring")]
     [Tooltip("Supplies HasActivatedAnyStory. Resolved from the scene when empty.")]
     [SerializeField] private BlackKitchenInteractionManager interactionManager;
+
+    [Tooltip("Authored BlackKitchenEntry spawn. Resolved from the scene when empty.")]
+    [SerializeField] private Transform entrySpawn;
 
     [Header("Copy")]
     [SerializeField] private string title = "Explore the Black Kitchen";
@@ -41,14 +46,22 @@ public sealed class BlackKitchenQuestOrientation : MonoBehaviour
     [Tooltip("Vertical offset from eye height, in metres.")]
     [SerializeField] private float heightOffset = -0.1f;
 
+    [Tooltip("World-space height above the entry floor for the Quest card anchor.")]
+    [SerializeField] private float entryEyeHeight = 1.55f;
+
     [Tooltip("Seconds to fade out over.")]
     [SerializeField] private float fadeSeconds = 0.6f;
 
     Canvas canvas;
     CanvasGroup group;
-    bool placed;
     bool finished;
     float shownAt = -1f;
+
+    void Awake()
+    {
+        if (BCaT.Production.PlatformCapabilities.IsXRActive)
+            SuppressSharedInstructionPanel();
+    }
 
     void Start()
     {
@@ -62,29 +75,21 @@ public sealed class BlackKitchenQuestOrientation : MonoBehaviour
         if (interactionManager == null)
             interactionManager = FindAnyObjectByType<BlackKitchenInteractionManager>();
 
+        if (entrySpawn == null)
+            entrySpawn = ResolveEntrySpawn();
+
         Build();
+        PlaceAtEntry();
+        shownAt = Time.unscaledTime;
+        Debug.Log($"[BlackKitchenQuestOrientation] Shown at {canvas.transform.position} " +
+                  $"using BlackKitchenEntry forward for up to {displaySeconds:0.#}s, " +
+                  "or until the first story activation.");
     }
 
     void Update()
     {
         if (finished || canvas == null)
             return;
-
-        // Wait for a usable head pose before anchoring, so the card is not placed
-        // at the origin on the first frame of the session.
-        if (!placed)
-        {
-            Camera cam = Camera.main;
-            if (cam == null)
-                return;
-
-            Place(cam);
-            placed = true;
-            shownAt = Time.unscaledTime;
-            Debug.Log($"[BlackKitchenQuestOrientation] Shown at {canvas.transform.position} " +
-                      $"for up to {displaySeconds:0.#}s, or until the first story activation.");
-            return;
-        }
 
         bool storyStarted = interactionManager != null && interactionManager.HasActivatedAnyStory;
         bool timedOut = Time.unscaledTime - shownAt >= displaySeconds;
@@ -114,16 +119,39 @@ public sealed class BlackKitchenQuestOrientation : MonoBehaviour
         enabled = false;
     }
 
-    void Place(Camera cam)
+    void SuppressSharedInstructionPanel()
     {
-        Vector3 forward = cam.transform.forward;
+        Transform panel = transform.Find(SharedInstructionPanelName);
+        if (panel == null)
+            return;
+
+        panel.gameObject.SetActive(false);
+        Debug.Log($"[BlackKitchenQuestOrientation] Suppressed shared '{SharedInstructionPanelName}' for Quest before reveal.");
+    }
+
+    static Transform ResolveEntrySpawn()
+    {
+        foreach (SceneSpawnPoint spawn in FindObjectsByType<SceneSpawnPoint>(
+                     FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (spawn != null && spawn.SpawnId == SceneTransitionState.BlackKitchenEntrySpawnId)
+                return spawn.transform;
+        }
+
+        return null;
+    }
+
+    void PlaceAtEntry()
+    {
+        Vector3 origin = entrySpawn != null ? entrySpawn.position : transform.position;
+        Vector3 forward = entrySpawn != null ? entrySpawn.forward : Vector3.forward;
         forward.y = 0f;
         if (forward.sqrMagnitude < 1e-4f)
             forward = Vector3.forward;
         forward.Normalize();
 
         canvas.transform.SetPositionAndRotation(
-            cam.transform.position + forward * placeDistance + Vector3.up * heightOffset,
+            origin + Vector3.up * (entryEyeHeight + heightOffset) + forward * placeDistance,
             Quaternion.LookRotation(forward, Vector3.up));
     }
 

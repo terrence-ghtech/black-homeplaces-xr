@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BCaT.Production.Interaction;
 using BCaT.Production.Media;
+using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,7 +37,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
     [SerializeField] private SharedInteractionPromptConfig prompt =
         new SharedInteractionPromptConfig
         {
-            desktopPrompt = "Press E",
+            desktopPrompt = "Press E to view mural",
             xrPrompt = "Interact"
         };
 
@@ -73,6 +74,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
     private bool closeKeyReleasedSinceOpen;
     private bool previousCursorVisible;
     private CursorLockMode previousCursorLockState;
+    private bool controlsSuspended;
 
     private bool CurrentItemIsVideo =>
         isOpen && items != null && currentIndex >= 0 && currentIndex < items.Count &&
@@ -121,7 +123,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
             prompt = new SharedInteractionPromptConfig();
 
         if (string.IsNullOrWhiteSpace(prompt.desktopPrompt))
-            prompt.desktopPrompt = "Press E";
+            prompt.desktopPrompt = "Press E to view mural";
         if (string.IsNullOrWhiteSpace(prompt.xrPrompt))
             prompt.xrPrompt = "Interact";
 
@@ -159,6 +161,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
             closeButton.onClick.AddListener(CloseGallery);
 
         ConfigureVideoPlayer();
+        ConfigureGalleryLayout();
         HideGallery();
     }
 
@@ -183,6 +186,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
         MediaPlaybackRegistry.NotifyStopped(this);
         InteractionState.Unblock(this);
+        ReleasePlayerControls();
     }
 
     private void Update()
@@ -224,6 +228,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         ShowGallery();
         PositionGalleryInFrontOfCamera();
         CaptureInput();
+        SuspendPlayerControls();
         Refresh();
 
         InteractionState.Block(this, InteractionBlockReason.Modal, CloseGallery);
@@ -242,6 +247,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         InteractionState.Unblock(this);
         HideGallery();
         RestoreInput();
+        ReleasePlayerControls();
     }
 
     public void Next()
@@ -314,6 +320,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         imageDisplay.enabled = sprite != null;
         imageDisplay.sprite = sprite;
         imageDisplay.preserveAspect = true;
+        CenterRectTransform(imageDisplay.rectTransform);
 
         if (imageAspect != null && sprite != null && sprite.texture != null && sprite.texture.height > 0)
             imageAspect.aspectRatio = (float)sprite.texture.width / sprite.texture.height;
@@ -324,7 +331,10 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         if (imageDisplay != null)
             imageDisplay.enabled = false;
         if (videoDisplay != null)
+        {
             videoDisplay.enabled = true;
+            CenterRectTransform(videoDisplay.rectTransform);
+        }
     }
 
     private void ConfigureVideoPlayer()
@@ -334,6 +344,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
         videoPlayer.playOnAwake = false;
         videoPlayer.isLooping = false;
+        videoPlayer.aspectRatio = VideoAspectRatio.FitInside;
         videoPlayer.prepareCompleted += OnVideoPrepared;
         videoPlayer.errorReceived += OnVideoError;
         videoPlayer.loopPointReached += OnVideoEnded;
@@ -362,8 +373,10 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
         EnsureVideoSource(item);
         EnsureRenderTexture();
-        if (videoAspect != null)
-            videoAspect.aspectRatio = 16f / 9f;
+        ApplyKnownVideoAspect();
+
+        if (videoDisplay != null)
+            videoDisplay.enabled = false;
 
         videoPlayer.time = 0;
         playWhenPrepared = true;
@@ -404,7 +417,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
         if (videoPlayer.renderMode == VideoRenderMode.RenderTexture && videoPlayer.targetTexture == null)
         {
-            RenderTexture rt = new(1280, 720, 0)
+            RenderTexture rt = new(1080, 1920, 0)
             {
                 name = gameObject.name + "_MuralVideoRT"
             };
@@ -421,8 +434,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         prepareRequested = false;
         StopPrepareWatchdog();
 
-        if (preparedPlayer.height > 0 && videoAspect != null)
-            videoAspect.aspectRatio = (float)preparedPlayer.width / preparedPlayer.height;
+        ApplyPreparedVideoAspect(preparedPlayer);
 
         if (isOpen && CurrentItemIsVideo && playWhenPrepared)
             PlayPreparedVideo();
@@ -435,6 +447,8 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
         playWhenPrepared = false;
         videoPlayer.time = 0;
+        if (videoDisplay != null)
+            videoDisplay.enabled = true;
         videoPlayer.Play();
         MediaPlaybackRegistry.NotifyStarted(this, CloseGallery);
     }
@@ -617,6 +631,124 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
     {
         Cursor.lockState = previousCursorLockState;
         Cursor.visible = previousCursorVisible;
+    }
+
+    private void SuspendPlayerControls()
+    {
+        if (controlsSuspended)
+            return;
+
+        PlayerControlGate.Suspend(this);
+        controlsSuspended = true;
+    }
+
+    private void ReleasePlayerControls()
+    {
+        if (!controlsSuspended)
+            return;
+
+        PlayerControlGate.Resume(this);
+        controlsSuspended = false;
+    }
+
+    private static void CenterRectTransform(RectTransform rect)
+    {
+        if (rect == null)
+            return;
+
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = Vector2.zero;
+        rect.sizeDelta = new Vector2(-8f, -8f);
+    }
+
+    private void ConfigureGalleryLayout()
+    {
+        // Geometry (media frame and button rects) is authored in the scene —
+        // the approved curator layout. Only text styling is applied here.
+        ConfigureTitleLayout();
+    }
+
+
+
+    private void ConfigureTitleLayout()
+    {
+        if (titleText == null)
+            return;
+
+        titleText.alignment = TextAlignmentOptions.Center;
+        titleText.enableAutoSizing = false;
+        titleText.fontSize = 28f;
+        titleText.fontSizeMax = 28f;
+        titleText.fontSizeMin = 28f;
+        titleText.lineSpacing = -8f;
+        titleText.textWrappingMode = TextWrappingModes.Normal;
+        titleText.overflowMode = TextOverflowModes.Overflow;
+
+        RectTransform rect = titleText.rectTransform;
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(0f, 378f);
+        rect.sizeDelta = new Vector2(720f, 58f);
+    }
+
+    private void ApplyKnownVideoAspect()
+    {
+        if (videoAspect == null || videoPlayer == null)
+            return;
+
+        if (videoPlayer.source == VideoSource.VideoClip && videoPlayer.clip != null &&
+            videoPlayer.clip.height > 0)
+        {
+            videoAspect.aspectRatio = (float)videoPlayer.clip.width / videoPlayer.clip.height;
+            return;
+        }
+
+        RenderTexture texture = videoPlayer.targetTexture;
+        if (texture != null && texture.height > 0)
+            videoAspect.aspectRatio = (float)texture.width / texture.height;
+    }
+
+    private void ApplyPreparedVideoAspect(VideoPlayer preparedPlayer)
+    {
+        if (preparedPlayer == null || preparedPlayer.height == 0)
+            return;
+
+        uint width = preparedPlayer.width;
+        uint height = preparedPlayer.height;
+        if (videoAspect != null)
+            videoAspect.aspectRatio = (float)width / height;
+
+        ResizeOwnedRenderTexture((int)width, (int)height);
+    }
+
+    private void ResizeOwnedRenderTexture(int width, int height)
+    {
+        if (videoPlayer == null || width <= 0 || height <= 0)
+            return;
+
+        RenderTexture current = videoPlayer.targetTexture;
+        if (current != null && current.width == width && current.height == height)
+            return;
+
+        if (ownsTargetTexture && current != null)
+        {
+            videoPlayer.targetTexture = null;
+            current.Release();
+            Destroy(current);
+        }
+
+        RenderTexture rt = new(width, height, 0)
+        {
+            name = gameObject.name + "_MuralVideoRT"
+        };
+        videoPlayer.targetTexture = rt;
+        ownsTargetTexture = true;
+
+        if (videoDisplay != null)
+            videoDisplay.texture = rt;
     }
 
     private Collider FocusCollider

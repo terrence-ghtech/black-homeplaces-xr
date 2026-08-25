@@ -20,15 +20,18 @@ using UnityEngine.UI;
 /// </summary>
 public sealed class LoadingScreenUi : MonoBehaviour
 {
-    const float EllipsisInterval = 0.45f;
+    const string BackgroundResourceName = "BHXR_LoadingBackground_3840x2160";
+    const float BackgroundAspect = 16f / 9f;
 
-    static readonly Color BackdropColor = new Color(0.07f, 0.06f, 0.05f, 1f);
+    static readonly Color BackdropColor = new Color(0.015f, 0.013f, 0.011f, 1f);
+    static readonly Color IvoryText = new Color(0.94f, 0.91f, 0.84f, 1f);
+    static readonly Color Bronze = new Color(0.89f, 0.57f, 0.20f, 1f);
+    static readonly Color TrackColor = new Color(0.32f, 0.27f, 0.20f, 0.62f);
+    static readonly Color FillColor = new Color(1f, 0.72f, 0.34f, 1f);
 
     TextMeshProUGUI loadingLabel;
     TextMeshProUGUI progressLabel;
-    float ellipsisTimer;
-    int ellipsisDots = 3;
-    bool animateEllipsis = true;
+    Image progressFill;
 
     public static LoadingScreenUi Create()
     {
@@ -71,15 +74,14 @@ public sealed class LoadingScreenUi : MonoBehaviour
             contentParent = (RectTransform)canvas.transform;
         }
 
-        var backdrop = UiFactory.CreateFullScreenPanel(contentParent, "Backdrop");
-        backdrop.GetComponent<Image>().color = BackdropColor;
+        CreateBackground(contentParent);
 
         var content = UiFactory.CreateRect(contentParent, "Content");
         content.anchorMin = content.anchorMax = new Vector2(0.5f, 0.5f);
         content.pivot = new Vector2(0.5f, 0.5f);
-        content.sizeDelta = new Vector2(1200f, 420f);
+        content.sizeDelta = new Vector2(1240f, 430f);
         var layout = content.gameObject.AddComponent<VerticalLayoutGroup>();
-        layout.spacing = 18f;
+        layout.spacing = 21f;
         layout.childAlignment = TextAnchor.MiddleCenter;
         layout.childControlWidth = true;
         layout.childControlHeight = false;
@@ -88,51 +90,107 @@ public sealed class LoadingScreenUi : MonoBehaviour
 
         var ui = canvasObject.AddComponent<LoadingScreenUi>();
 
-        UiFactory.CreateLabel(content, "Black Homeplaces: The XR House", 40f);
+        var title = UiFactory.CreateLabel(content, "BLACK HOMEPLACES: THE XR HOUSE", 34f);
+        title.color = IvoryText;
+        title.characterSpacing = 17f;
 
-        ui.loadingLabel = UiFactory.CreateLabel(content, "Loading…", 30f);
-        ui.loadingLabel.color = UiFactory.ButtonFocusColor;
+        var studio = UiFactory.CreateLabel(content, "BCAT LAB", 18f);
+        studio.color = Bronze;
+        studio.characterSpacing = 42f;
 
-        var waitLabel = UiFactory.CreateLabel(content,
-            "Please wait while the next space is prepared.", 22f);
-        waitLabel.color = new Color(
-            waitLabel.color.r, waitLabel.color.g, waitLabel.color.b, 0.85f);
+        ui.loadingLabel = UiFactory.CreateLabel(content, "LOADING EXPERIENCE", 15f);
+        ui.loadingLabel.color = IvoryText;
+        ui.loadingLabel.characterSpacing = 34f;
+
+        ui.progressFill = CreateProgressBar(content);
 
         ui.progressLabel = UiFactory.CreateLabel(content, "", 22f);
-        ui.progressLabel.color = new Color(
-            ui.progressLabel.color.r, ui.progressLabel.color.g, ui.progressLabel.color.b, 0.7f);
+        ui.progressLabel.color = Bronze;
+        ui.progressLabel.characterSpacing = 13f;
+
+        var waitLabel = UiFactory.CreateLabel(content,
+            "PREPARING THE SPACE. PLEASE WAIT.", 15f);
+        waitLabel.color = Bronze;
+        waitLabel.characterSpacing = 38f;
 
         return ui;
+    }
+
+    static void CreateBackground(RectTransform parent)
+    {
+        var backdrop = UiFactory.CreateFullScreenPanel(parent, "Backdrop");
+        backdrop.GetComponent<Image>().color = BackdropColor;
+
+        var frame = UiFactory.CreateRect(backdrop, "BackgroundAspectFillFrame");
+        frame.anchorMin = Vector2.zero;
+        frame.anchorMax = Vector2.one;
+        frame.offsetMin = Vector2.zero;
+        frame.offsetMax = Vector2.zero;
+        frame.gameObject.AddComponent<RectMask2D>();
+
+        var imageRect = UiFactory.CreateRect(frame, "SharedLoadingBackground");
+        imageRect.anchorMin = imageRect.anchorMax = new Vector2(0.5f, 0.5f);
+        imageRect.pivot = new Vector2(0.5f, 0.5f);
+        imageRect.sizeDelta = new Vector2(1920f, 1080f);
+
+        var rawImage = imageRect.gameObject.AddComponent<RawImage>();
+        rawImage.texture = Resources.Load<Texture2D>(BackgroundResourceName);
+        rawImage.color = rawImage.texture == null ? Color.clear : Color.white;
+        rawImage.raycastTarget = false;
+
+        var fitter = imageRect.gameObject.AddComponent<AspectRatioFitter>();
+        fitter.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+        fitter.aspectRatio = BackgroundAspect;
+    }
+
+    static Image CreateProgressBar(RectTransform parent)
+    {
+        var slot = UiFactory.CreateRect(parent, "ProgressBarSlot");
+        var slotLayout = slot.gameObject.AddComponent<LayoutElement>();
+        slotLayout.preferredHeight = 12f;
+        slotLayout.minHeight = 12f;
+
+        var track = UiFactory.CreateRect(slot, "ProgressBar");
+        track.anchorMin = track.anchorMax = new Vector2(0.5f, 0.5f);
+        track.pivot = new Vector2(0.5f, 0.5f);
+        track.sizeDelta = new Vector2(560f, 12f);
+
+        var trackImage = track.gameObject.AddComponent<Image>();
+        trackImage.color = TrackColor;
+        trackImage.raycastTarget = false;
+
+        var fillRect = UiFactory.CreateRect(track, "ProgressFill");
+        fillRect.anchorMin = Vector2.zero;
+        fillRect.anchorMax = Vector2.one;
+        fillRect.offsetMin = Vector2.zero;
+        fillRect.offsetMax = Vector2.zero;
+
+        var fill = fillRect.gameObject.AddComponent<Image>();
+        fill.color = FillColor;
+        fill.raycastTarget = false;
+        fill.type = Image.Type.Filled;
+        fill.fillMethod = Image.FillMethod.Horizontal;
+        fill.fillOrigin = (int)Image.OriginHorizontal.Left;
+        fill.fillAmount = 0f;
+        return fill;
     }
 
     /// <summary>Real load progress in [0,1]; hidden until it becomes meaningful.</summary>
     public void SetProgress(float progress)
     {
+        float clampedProgress = Mathf.Clamp01(progress);
+        if (progressFill != null)
+            progressFill.fillAmount = clampedProgress;
         if (progressLabel != null && progress > 0.01f)
-            progressLabel.text = $"{Mathf.RoundToInt(Mathf.Clamp01(progress) * 100f)}%";
+            progressLabel.text = $"{Mathf.RoundToInt(clampedProgress * 100f)}%";
     }
 
     /// <summary>Replace the loading line (used by the failure-recovery path).</summary>
     public void SetStatus(string message)
     {
-        animateEllipsis = false;
         if (loadingLabel != null)
             loadingLabel.text = message;
         if (progressLabel != null)
             progressLabel.text = string.Empty;
-    }
-
-    void Update()
-    {
-        if (!animateEllipsis || loadingLabel == null)
-            return;
-
-        ellipsisTimer += Time.unscaledDeltaTime;
-        if (ellipsisTimer < EllipsisInterval)
-            return;
-
-        ellipsisTimer = 0f;
-        ellipsisDots = ellipsisDots % 3 + 1;
-        loadingLabel.text = "Loading" + new string('.', ellipsisDots);
     }
 }

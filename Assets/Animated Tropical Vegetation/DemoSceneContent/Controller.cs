@@ -1,29 +1,44 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Controller : MonoBehaviour
 {
-public Camera _camera;
+    public Camera _camera;
+
+    public float rotateSensitivity = 0.2f;
+    public float panSensitivity = 0.02f;
+    public float zoomStep = 5f;
 
     public void Update()
     {
-		if (Input.GetButton("Fire1"))
-		{
-		this.transform.Rotate (0,Input.GetAxis("Mouse X"), 0);
-		}
-		if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
-		{
-		_camera.transform.Translate (Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"), 0);
-		}
-		if (Input.GetAxis("Mouse ScrollWheel") < 0)
-		{
-		_camera.transform.Translate(0,0,-5);
-		}
-		if (Input.GetAxis("Mouse ScrollWheel") > 0)
-		{
-		_camera.transform.Translate(0,0,5);
-		}
-        
+        var mouse = Mouse.current;
+        if (mouse == null)
+            return; 
+
+        Vector2 mouseDelta = mouse.delta.ReadValue();
+
+        bool fire1Held = mouse.leftButton.isPressed || Keyboard.current.leftCtrlKey.isPressed;
+
+        if (fire1Held)
+        {
+            this.transform.Rotate(0f, mouseDelta.x * rotateSensitivity, 0f);
+        }
+
+        if (mouse.rightButton.isPressed || mouse.middleButton.isPressed)
+        {
+            _camera.transform.Translate(mouseDelta.x * panSensitivity, mouseDelta.y * panSensitivity, 0f);
+        }
+
+        float scroll = mouse.scroll.ReadValue().y;
+        if (scroll < 0f)
+        {
+            _camera.transform.Translate(0f, 0f, -zoomStep);
+        }
+        if (scroll > 0f)
+        {
+            _camera.transform.Translate(0f, 0f, zoomStep);
+        }
     }
 }

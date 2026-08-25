@@ -7,13 +7,31 @@ using UnityEngine.UI;
 
 public sealed class SceneArrivalController : MonoBehaviour
 {
+    public static event Action<UnityEngine.SceneManagement.Scene> ArrivalCompleted;
+
     [SerializeField] private float fadeInDuration = 0.7f;
     [SerializeField] private float desktopSpawnSafetyLift = 0.08f;
 
     private CanvasGroup fadeGroup;
+    private bool xrLocomotionHoldActive;
+    private bool holdRevealForTracking;
 
     private IEnumerator Start()
     {
+        // Quest: keep thumbstick locomotion from moving the rig while the
+        // arrival (placement + fade) is still running. Desktop transitions
+        // are unaffected — the gate is only engaged under XR here, and it
+        // suspends locomotion providers without touching head tracking.
+        xrLocomotionHoldActive =
+            BCaT.Production.PlatformCapabilities.IsQuestConfiguration ||
+            BCaT.Production.PlatformCapabilities.IsXRActive;
+        if (xrLocomotionHoldActive)
+            BCaT.Production.Shell.PlayerControlGate.Suspend(this);
+
+        BCaT.Production.Diagnostics.MemTrace.Mark("SCENE_ARRIVAL_BEGIN", $"scene={gameObject.scene.name}"); // BCAT_MEMTRACE
+
+        holdRevealForTracking = ShouldHoldRevealForTracking();
+
         CreateBlackOverlay();
         yield return null;
 
@@ -43,11 +61,40 @@ public sealed class SceneArrivalController : MonoBehaviour
         if (arrivalException != null)
             Debug.LogError($"[SceneArrivalController] Exception during arrival in scene '{gameObject.scene.name}': {arrivalException}");
 
+        // Quest, first entrance arrival only. The body root has already been
+        // placed on the authored MainEntrance spawn point by the arrival above,
+        // while this overlay is fully opaque; this waits for a tracked head and
+        // then aims the player at the house exactly once, before the reveal.
+        if (holdRevealForTracking)
+            yield return BCaT.Production.XrArrivalAlignment.WaitForTrackingAndFaceHouse(ResolvePlayerRoot());
+
         if (SceneTransitionState.IsTransitionInProgress)
             SceneTransitionState.ClearRequest();
 
         yield return FadeFromBlack();
         DestroyOverlay();
+
+        if (xrLocomotionHoldActive)
+        {
+            xrLocomotionHoldActive = false;
+            BCaT.Production.Shell.PlayerControlGate.Resume(this);
+        }
+
+        BCaT.Production.Diagnostics.MemTrace.Mark("SCENE_ARRIVAL_COMPLETE", $"scene={gameObject.scene.name}"); // BCAT_MEMTRACE
+
+        ArrivalCompleted?.Invoke(gameObject.scene);
+    }
+
+    private void OnDestroy()
+    {
+        // Safety: if this controller is torn down mid-arrival (e.g. another
+        // transition unloads the scene), release any locomotion hold so the
+        // rig is never left suspended.
+        if (xrLocomotionHoldActive)
+        {
+            xrLocomotionHoldActive = false;
+            BCaT.Production.Shell.PlayerControlGate.Resume(this);
+        }
     }
 
     private IEnumerator RunArrival()
@@ -113,7 +160,7 @@ public sealed class SceneArrivalController : MonoBehaviour
         if (controller == null)
         {
             Debug.Log($"[SceneArrivalController] Scene '{playerRoot.gameObject.scene.name}' spawn world position '{target.position}'. Rig root before '{playerRoot.position}'. No desktop CharacterController feet alignment used for rig '{playerRoot.name}'.");
-            playerRoot.SetPositionAndRotation(target.position, target.rotation);
+            playerRoot.SetPositionAndRotation(target.position, YawOnly(target.rotation, playerRoot));
             LogCameraPositionAfterTeleport(playerRoot);
             return;
         }
@@ -122,7 +169,7 @@ public sealed class SceneArrivalController : MonoBehaviour
         Vector3 feetBefore = GetControllerFeetPosition(controller);
         Debug.Log($"[SceneArrivalController] Scene '{playerRoot.gameObject.scene.name}' spawn world position '{target.position}'. Rig root before '{rootBefore}'. CharacterController '{controller.name}' center '{controller.center}', height {controller.height:F3}, radius {controller.radius:F3}, feet before '{feetBefore}'.");
 
-        playerRoot.rotation = target.rotation;
+        playerRoot.rotation = YawOnly(target.rotation, playerRoot);
         Physics.SyncTransforms();
 
         Vector3 feetAfterRotation = GetControllerFeetPosition(controller);
@@ -135,6 +182,26 @@ public sealed class SceneArrivalController : MonoBehaviour
         LogBlockingColliders(playerRoot, controller);
         LogCameraPositionAfterTeleport(playerRoot);
         Debug.Log($"[SceneArrivalController] Scene '{playerRoot.gameObject.scene.name}' rig root after '{playerRoot.position}'. CharacterController feet after '{feetAfter}'. Desktop feet target '{desiredFeet}' using safety lift {Mathf.Max(0f, desktopSafetyLift):F3}.");
+    }
+
+    /// <summary>
+    /// A player body is upright by definition: keep the spawn's heading and drop
+    /// any authored pitch or roll, so no arrival can tilt the horizon. Every
+    /// spawn point in the project is already yaw-only, so this is a guard rather
+    /// than a correction — it says so out loud if it ever has to act.
+    /// </summary>
+    private static Quaternion YawOnly(Quaternion rotation, Transform playerRoot)
+    {
+        Vector3 euler = rotation.eulerAngles;
+        float pitch = Mathf.DeltaAngle(euler.x, 0f);
+        float roll = Mathf.DeltaAngle(euler.z, 0f);
+
+        if (Mathf.Abs(pitch) > 0.5f || Mathf.Abs(roll) > 0.5f)
+            Debug.LogWarning($"[SceneArrivalController] Spawn rotation for rig '{playerRoot.name}' had " +
+                             $"pitch {euler.x:0.0} / roll {euler.z:0.0}; using yaw {euler.y:0.0} only so the " +
+                             "body arrives upright.");
+
+        return Quaternion.Euler(0f, euler.y, 0f);
     }
 
     private static CharacterController ResolveDesktopCharacterController(Transform playerRoot)
@@ -291,6 +358,27 @@ public sealed class SceneArrivalController : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// The reveal is held once, for the Quest player's first arrival at the
+    /// main-house entrance. Kitchen returns, Black Kitchen arrivals, later
+    /// transitions and Desktop are all untouched.
+    /// </summary>
+    private bool ShouldHoldRevealForTracking()
+    {
+        if (!BCaT.Production.BCaTPlatform.IsQuest)
+            return false;
+        if (BCaT.Production.XrArrivalAlignment.WaitedThisSession)
+            return false;
+        if (gameObject.scene.name != SceneTransitionState.MainHouseSceneName)
+            return false;
+
+        // The entrance arrival is the one the menu requests; the kitchen return
+        // uses its own spawn id and must keep the pose the player left with.
+        string spawnId = SceneTransitionState.DestinationSpawnId;
+        return string.IsNullOrWhiteSpace(spawnId) ||
+               spawnId == BCaT.Production.Shell.ResetService.MainEntranceSpawnId;
+    }
+
     private void CreateBlackOverlay()
     {
         fadeGroup = BCaT.Production.Shell.FadeOverlayBuilder.Create("SceneArrivalFade", 32760);
@@ -358,6 +446,12 @@ public sealed class SceneArrivalController : MonoBehaviour
         FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
         if (field != null && field.FieldType == typeof(float))
             field.SetValue(target, 0f);
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        ArrivalCompleted = null;
     }
 
     private sealed class PlayerPhysicsState

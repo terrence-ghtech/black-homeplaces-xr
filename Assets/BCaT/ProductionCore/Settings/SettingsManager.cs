@@ -42,6 +42,7 @@ namespace BCaT.Production.Settings
                     var data = new ApplicationSettingsData();
                     JsonUtility.FromJsonOverwrite(json, data);
                     Migrate(data);
+                    SanitizeUnsupported(data);
                     return data;
                 }
             }
@@ -63,6 +64,56 @@ namespace BCaT.Production.Settings
             Debug.Log($"[Settings] Migrating settings schema " +
                       $"{data.schemaVersion} -> {ApplicationSettingsData.CurrentSchemaVersion}.");
             data.schemaVersion = ApplicationSettingsData.CurrentSchemaVersion;
+        }
+
+        /// <summary>
+        /// Fields that are still applied at runtime but no longer have a
+        /// user-facing control are pinned to their defaults on load, so a
+        /// persisted legacy value (e.g. an extreme render scale or text
+        /// scale) can never leave the user stuck with no way back. Fields
+        /// the settings UI still exposes are left untouched.
+        /// </summary>
+        static void SanitizeUnsupported(ApplicationSettingsData data)
+        {
+            var defaults = new ApplicationSettingsData();
+            bool changed = false;
+
+            changed |= data.display.vSyncCount != defaults.display.vSyncCount;
+            data.display.vSyncCount = defaults.display.vSyncCount;
+            changed |= data.display.targetFrameRate != defaults.display.targetFrameRate;
+            data.display.targetFrameRate = defaults.display.targetFrameRate;
+            changed |= data.display.displayIndex != defaults.display.displayIndex;
+            data.display.displayIndex = defaults.display.displayIndex;
+
+            changed |= data.graphics.renderScale != defaults.graphics.renderScale;
+            data.graphics.renderScale = defaults.graphics.renderScale;
+            changed |= data.graphics.textureQuality != defaults.graphics.textureQuality;
+            data.graphics.textureQuality = defaults.graphics.textureQuality;
+            changed |= data.graphics.antiAliasing != defaults.graphics.antiAliasing;
+            data.graphics.antiAliasing = defaults.graphics.antiAliasing;
+            changed |= data.graphics.ambientEffects != defaults.graphics.ambientEffects;
+            data.graphics.ambientEffects = defaults.graphics.ambientEffects;
+            changed |= data.graphics.vegetationDistanceScale != defaults.graphics.vegetationDistanceScale;
+            data.graphics.vegetationDistanceScale = defaults.graphics.vegetationDistanceScale;
+
+            changed |= data.audio.narration != defaults.audio.narration;
+            data.audio.narration = defaults.audio.narration;
+            changed |= data.audio.ambience != defaults.audio.ambience;
+            data.audio.ambience = defaults.audio.ambience;
+            changed |= data.audio.effects != defaults.audio.effects;
+            data.audio.effects = defaults.audio.effects;
+            changed |= data.audio.media != defaults.audio.media;
+            data.audio.media = defaults.audio.media;
+
+            changed |= data.accessibility.textSize != defaults.accessibility.textSize;
+            changed |= data.accessibility.subtitles != defaults.accessibility.subtitles;
+            changed |= data.accessibility.highContrastUi != defaults.accessibility.highContrastUi;
+            changed |= data.accessibility.reducedMotion != defaults.accessibility.reducedMotion;
+            changed |= data.accessibility.persistentPrompts != defaults.accessibility.persistentPrompts;
+            data.accessibility = defaults.accessibility;
+
+            if (changed)
+                Debug.Log("[Settings] Reset persisted values for settings without a user-facing control to defaults.");
         }
 
         static void TryBackupCorruptFile()

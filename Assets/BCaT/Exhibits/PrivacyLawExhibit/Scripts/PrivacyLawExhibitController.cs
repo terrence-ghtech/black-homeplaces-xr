@@ -274,6 +274,10 @@ public class PrivacyLawExhibitController : MonoBehaviour
             return;
 
         playerNearby = false;
+        // On Quest locomotion stays live while the exhibit is open, so the
+        // visitor can leave the trigger with the Modal block still held.
+        // Release exactly the block this exhibit owns (idempotent when idle).
+        BCaT.Production.Interaction.InteractionState.Unblock(this);
         RestoreDesktopInput();
         SetState(ExhibitState.Hidden, false);
     }

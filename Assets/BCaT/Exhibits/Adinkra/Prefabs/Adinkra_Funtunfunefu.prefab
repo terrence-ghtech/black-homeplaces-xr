@@ -1864,8 +1864,8 @@ MonoBehaviour:
   maxViewAngle: 18
   worldPromptText: {fileID: 0}
   prompt:
-    desktopPrompt: Press E to Examine Symbol
-    xrPrompt: "View — Funtunfunefu Denkyemfunefu"
+    desktopPrompt: Press E to open Funtunfunefu Denkyemfunefu
+    xrPrompt: Open Funtunfunefu Denkyemfunefu
     verb: 2
     objectName: Funtunfunefu Denkyemfunefu
   modalRoot: {fileID: 6849831097579519674}

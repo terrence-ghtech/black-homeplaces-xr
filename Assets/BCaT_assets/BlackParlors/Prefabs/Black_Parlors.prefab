@@ -463,9 +463,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableLinkLauncher
   targetUrl: https://storymaps.arcgis.com/stories/5adbdcc2e9624b1ca952e9639d2850cb
-  projectName: When Black Women Adorn the Parlor
+  projectName: Black Parlors
   playerCamera: {fileID: 0}
   interactDistance: 7
   prompt: {fileID: 8506233715552252684}
   promptText: {fileID: 8198835220914607491}
-  xrPromptText: Interact
+  xrPromptText: Open Black Parlors

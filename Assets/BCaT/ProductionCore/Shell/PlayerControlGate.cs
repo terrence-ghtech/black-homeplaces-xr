@@ -13,6 +13,7 @@ namespace BCaT.Production.Shell
     public static class PlayerControlGate
     {
         static readonly HashSet<object> holds = new HashSet<object>();
+        static readonly List<Behaviour> xrSuspendedLocomotion = new List<Behaviour>();
 
         public static bool IsSuspended => holds.Count > 0;
 
@@ -42,7 +43,15 @@ namespace BCaT.Production.Shell
         static void Apply(bool suspended)
         {
             if (PlatformCapabilities.IsQuestConfiguration || PlatformCapabilities.IsXRActive)
-                return; // Quest locomotion is managed by exhibit flows, not the desktop shell.
+            {
+                // Quest: suspend rig locomotion (move/turn/teleport providers)
+                // while leaving head tracking and controller/UI interaction
+                // untouched. Only behaviours this gate disabled are restored,
+                // so exhibit-owned suspension (e.g. onboarding) stays in charge
+                // of anything it disabled itself.
+                ApplyXRLocomotion(suspended);
+                return;
+            }
 
             foreach (var inputs in Object.FindObjectsByType<StarterAssets.StarterAssetsInputs>(
                          FindObjectsInactive.Exclude, FindObjectsSortMode.None))
@@ -68,6 +77,48 @@ namespace BCaT.Production.Shell
             Cursor.visible = suspended;
         }
 
+        static void ApplyXRLocomotion(bool suspended)
+        {
+            if (suspended)
+            {
+                foreach (var behaviour in Object.FindObjectsByType<Behaviour>(
+                             FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+                {
+                    if (behaviour == null || !behaviour.enabled || !IsXRLocomotionBehaviour(behaviour))
+                        continue;
+
+                    behaviour.enabled = false;
+                    xrSuspendedLocomotion.Add(behaviour);
+                }
+                return;
+            }
+
+            foreach (var behaviour in xrSuspendedLocomotion)
+                if (behaviour != null)
+                    behaviour.enabled = true;
+            xrSuspendedLocomotion.Clear();
+        }
+
+        static bool IsXRLocomotionBehaviour(Behaviour behaviour)
+        {
+            // Same provider families the opening onboarding suspends; kept
+            // name-based so XRI package types stay out of this assembly's
+            // compile-time surface.
+            //
+            // GravityProvider is included because it also moves the rig ROOT:
+            // suspending only the input-driven providers left gravity free to
+            // settle or sink the XR Origin away from the authored spawn while
+            // the player was held in place. Head tracking is unaffected either
+            // way -- it moves the camera inside the rig, not the rig.
+            string name = behaviour.GetType().Name;
+            return name.Contains("MoveProvider") ||
+                   name.Contains("TurnProvider") ||
+                   name.Contains("TeleportationProvider") ||
+                   name.Contains("ClimbProvider") ||
+                   name.Contains("JumpProvider") ||
+                   name.Contains("GravityProvider");
+        }
+
         /// <summary>
         /// Re-assert the current state onto a freshly loaded scene's rig
         /// (called by the bootstrap on scene load).
@@ -75,6 +126,10 @@ namespace BCaT.Production.Shell
         public static void Reapply() => Apply(IsSuspended);
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() => holds.Clear();
+        static void ResetStatics()
+        {
+            holds.Clear();
+            xrSuspendedLocomotion.Clear();
+        }
     }
 }

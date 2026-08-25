@@ -31,6 +31,7 @@ public sealed class LoadingSceneController : MonoBehaviour
         // visible from this scene's very first rendered frame on both
         // platforms (the platform branch was activated in Awake).
         loadingScreen = LoadingScreenUi.Create();
+        BCaT.Production.Diagnostics.MemTrace.Mark("LOADING_SCREEN_UI_CREATED"); // BCAT_MEMTRACE
 
         // Quest-only safety net. An unhandled exception inside a load coroutine
         // terminates it silently, leaving this loading scene active behind an
@@ -67,11 +68,16 @@ public sealed class LoadingSceneController : MonoBehaviour
 
         System.GC.Collect();
         yield return null;
+        BCaT.Production.Diagnostics.MemTrace.Mark("UNLOAD_UNUSED_AND_GC_DONE", $"dest={destinationScene}"); // BCAT_MEMTRACE
+        BCaT.Production.Diagnostics.MemTrace.Snapshot("loading-scene-baseline"); // BCAT_MEMTRACE
 
         // Scenes that ship inside the player load through SceneManager exactly
         // as before. Scenes moved to remote Addressables (currently the Black
         // Kitchen on WebGL) download on demand with visible progress.
-        if (Application.CanStreamedLevelBeLoaded(destinationScene))
+        bool builtIn = Application.CanStreamedLevelBeLoaded(destinationScene);
+        BCaT.Production.Diagnostics.MemTrace.Mark("PRE_DESTINATION_LOAD", $"dest={destinationScene} builtIn={builtIn}"); // BCAT_MEMTRACE
+
+        if (builtIn)
             yield return LoadBuiltInScene(destinationScene);
         else
             yield return LoadAddressableScene(destinationScene);
@@ -84,10 +90,14 @@ public sealed class LoadingSceneController : MonoBehaviour
         {
             string loadingScene = gameObject.scene.name;
             Debug.Log($"[LoadingSceneController] Scene '{loadingScene}' destination scene load requested: '{destinationScene}'.");
+            BCaT.Production.Diagnostics.MemTrace.ResetProgress(); // BCAT_MEMTRACE
+            BCaT.Production.Diagnostics.MemTrace.Mark("BUILTIN_LOAD_REQUEST", $"dest={destinationScene} from={loadingScene}"); // BCAT_MEMTRACE
             loadOperation = SceneManager.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
+            BCaT.Production.Diagnostics.MemTrace.Mark("LOADSCENEASYNC_CREATED", $"dest={destinationScene} op={(loadOperation != null ? "ok" : "null")}"); // BCAT_MEMTRACE
             if (loadOperation != null)
                 loadOperation.completed += _ =>
                 {
+                    BCaT.Production.Diagnostics.MemTrace.Mark("LOAD_OPERATION_COMPLETED", $"dest={destinationScene}"); // BCAT_MEMTRACE
                     Debug.Log($"[LoadingSceneController] Scene '{loadingScene}' destination scene load completed: '{destinationScene}'.");
                     // Leaving a remote scene: free its downloaded bundle.
                     AddressableSceneHandleStore.ReleaseIfHeld(exceptScene: destinationScene);
@@ -109,12 +119,33 @@ public sealed class LoadingSceneController : MonoBehaviour
             yield break;
         }
 
+        // BCAT_MEMTRACE: activation is held for one frame ONLY when
+        // debug.bcat.memtrace.holdactivation=1, so the default transition is
+        // byte-for-byte the shipping behavior.
+        if (BCaT.Production.Diagnostics.MemTrace.HoldActivation)
+            loadOperation.allowSceneActivation = false;
+
+        bool activationThresholdLogged = false;
         while (!loadOperation.isDone)
         {
             UpdateProgress(Mathf.Clamp01(loadOperation.progress / 0.9f));
+            BCaT.Production.Diagnostics.MemTrace.Progress("BUILTIN_LOAD_PROGRESS", loadOperation.progress); // BCAT_MEMTRACE
+            if (!activationThresholdLogged && loadOperation.progress >= 0.9f) // BCAT_MEMTRACE
+            {
+                activationThresholdLogged = true;
+                BCaT.Production.Diagnostics.MemTrace.Mark("ACTIVATION_THRESHOLD_REACHED", $"progress={loadOperation.progress:0.000}");
+                if (BCaT.Production.Diagnostics.MemTrace.HoldActivation)
+                {
+                    BCaT.Production.Diagnostics.MemTrace.Snapshot("pre-activation");
+                    BCaT.Production.Diagnostics.MemTrace.Mark("PRE_ACTIVATION_RELEASE");
+                    loadOperation.allowSceneActivation = true;
+                }
+            }
             Heartbeat();
             yield return null;
         }
+
+        BCaT.Production.Diagnostics.MemTrace.Mark("BUILTIN_LOAD_LOOP_EXIT", $"dest={destinationScene}"); // BCAT_MEMTRACE
     }
 
     private void Heartbeat() => lastLoadHeartbeat = Time.realtimeSinceStartup;
@@ -167,6 +198,7 @@ public sealed class LoadingSceneController : MonoBehaviour
         // "Attempting to use an invalid operation handle", which kills this
         // coroutine outright and strands the player behind the fade overlay.
         // Own the handle instead and release it explicitly below.
+        BCaT.Production.Diagnostics.MemTrace.Mark("ADDRESSABLES_INIT_REQUEST", $"dest={destinationScene}"); // BCAT_MEMTRACE
         var initHandle = Addressables.InitializeAsync(false);
         float initStartTime = Time.realtimeSinceStartup;
         while (initHandle.IsValid() && !initHandle.IsDone)
@@ -201,6 +233,8 @@ public sealed class LoadingSceneController : MonoBehaviour
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
         Debug.Log($"[LoadingSceneController] Addressables initialization completed before loading '{destinationScene}'.");
 #endif
+        BCaT.Production.Diagnostics.MemTrace.Mark("ADDRESSABLES_INIT_COMPLETED", $"dest={destinationScene}"); // BCAT_MEMTRACE
+
         if (initHandle.IsValid())
             Addressables.Release(initHandle);
 
@@ -209,6 +243,8 @@ public sealed class LoadingSceneController : MonoBehaviour
         try
         {
             Debug.Log($"[LoadingSceneController] Remote (Addressables) scene load requested: '{destinationScene}'.");
+            BCaT.Production.Diagnostics.MemTrace.ResetProgress(); // BCAT_MEMTRACE
+            BCaT.Production.Diagnostics.MemTrace.Mark("ADDRESSABLE_SCENE_LOAD_REQUEST", $"dest={destinationScene}"); // BCAT_MEMTRACE
             handle = Addressables.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
 
             // The single-mode activation unloads THIS loading scene, destroying
@@ -220,6 +256,8 @@ public sealed class LoadingSceneController : MonoBehaviour
             // stored and the bundle stayed resident for the app's lifetime).
             handle.Completed += completedHandle =>
             {
+                BCaT.Production.Diagnostics.MemTrace.Mark("ADDRESSABLE_SCENE_LOAD_COMPLETED", // BCAT_MEMTRACE
+                    $"dest={destinationScene} status={completedHandle.Status}");
                 BCaT.Production.Addressing.AddressablesHandleRegistry.NotifyCompleted(
                     "LoadingSceneController", destinationScene, completedHandle.Status);
                 if (completedHandle.Status == AsyncOperationStatus.Succeeded)
@@ -248,6 +286,7 @@ public sealed class LoadingSceneController : MonoBehaviour
         while (handle.IsValid() && !handle.IsDone)
         {
             UpdateProgress(Mathf.Clamp01(handle.PercentComplete));
+            BCaT.Production.Diagnostics.MemTrace.Progress("ADDRESSABLE_LOAD_PROGRESS", handle.PercentComplete); // BCAT_MEMTRACE
             Heartbeat();
             if (BCaT.Production.BCaTPlatform.IsQuest &&
                 Time.realtimeSinceStartup - loadStartTime > questAddressablesSceneLoadTimeout)

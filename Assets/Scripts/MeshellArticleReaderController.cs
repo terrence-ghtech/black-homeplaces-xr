@@ -52,15 +52,40 @@ public class MeshellArticleReaderController : MonoBehaviour
     private bool listenersRegistered;
     private CursorLockMode previousLockMode;
     private bool previousCursorVisible;
+    private Transform originalPopupParent;
+    private int originalPopupSiblingIndex;
+    private Vector3 originalPopupLocalPosition;
+    private Quaternion originalPopupLocalRotation;
+    private Vector3 originalPopupLocalScale;
+    private bool originalPopupTransformCaptured;
+    private readonly List<Material> ownedModalMaterials = new List<Material>();
 
     public bool IsOpen => isOpen;
 
     private void Awake()
     {
         RegisterButtonListeners();
+        CaptureOriginalPopupTransform();
+        ConfigureModalOverlayMaterials();
 
         if (!isOpen)
             Hide();
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Material material in ownedModalMaterials)
+        {
+            if (material == null)
+                continue;
+
+            if (Application.isPlaying)
+                Destroy(material);
+            else
+                DestroyImmediate(material);
+        }
+
+        ownedModalMaterials.Clear();
     }
 
     private void RegisterButtonListeners()
@@ -133,6 +158,7 @@ public class MeshellArticleReaderController : MonoBehaviour
         BCaT.Production.Interaction.InteractionState.Unblock(this);
         ClearCurrentSprite();
         Hide();
+        RestorePopupTransform();
         RestoreWorldInput();
         Cursor.lockState = previousLockMode;
         Cursor.visible = previousCursorVisible;
@@ -247,9 +273,10 @@ public class MeshellArticleReaderController : MonoBehaviour
             popupRoot.SetActive(true);
         if (popupCanvas != null)
         {
+            popupCanvas.renderMode = RenderMode.WorldSpace;
             popupCanvas.enabled = true;
             popupCanvas.overrideSorting = true;
-            popupCanvas.sortingOrder = 100;
+            popupCanvas.sortingOrder = 32720;
         }
     }
 
@@ -260,16 +287,98 @@ public class MeshellArticleReaderController : MonoBehaviour
             return;
 
         Transform popupTransform = popupRoot != null ? popupRoot.transform : transform;
+        CaptureOriginalPopupTransform();
+
+        // Place once in front of the current view and leave it world-fixed:
+        // parenting to the camera head-locks the panel in XR and glues it to
+        // the desktop camera. Scale and parent stay authored.
         Vector3 cameraForward = activeCamera.transform.forward;
         popupTransform.position = activeCamera.transform.position + cameraForward * OpenDistanceFromCamera;
+        popupTransform.rotation = Quaternion.LookRotation(
+            (popupTransform.position - activeCamera.transform.position).normalized, Vector3.up);
 
-        Vector3 directionAwayFromCamera =
-            (popupTransform.position - activeCamera.transform.position).normalized;
-
-        popupTransform.rotation =
-            Quaternion.LookRotation(directionAwayFromCamera, Vector3.up);
+        if (popupCanvas != null)
+            popupCanvas.worldCamera = activeCamera;
 
         EnsureCameraRendersUiLayer(activeCamera);
+    }
+
+    private void CaptureOriginalPopupTransform()
+    {
+        if (originalPopupTransformCaptured)
+            return;
+
+        Transform popupTransform = popupRoot != null ? popupRoot.transform : transform;
+        originalPopupParent = popupTransform.parent;
+        originalPopupSiblingIndex = popupTransform.GetSiblingIndex();
+        originalPopupLocalPosition = popupTransform.localPosition;
+        originalPopupLocalRotation = popupTransform.localRotation;
+        originalPopupLocalScale = popupTransform.localScale;
+        originalPopupTransformCaptured = true;
+    }
+
+    private void RestorePopupTransform()
+    {
+        if (!originalPopupTransformCaptured)
+            return;
+
+        Transform popupTransform = popupRoot != null ? popupRoot.transform : transform;
+        popupTransform.SetParent(originalPopupParent, false);
+        if (originalPopupParent != null)
+            popupTransform.SetSiblingIndex(Mathf.Min(originalPopupSiblingIndex, originalPopupParent.childCount - 1));
+        popupTransform.localPosition = originalPopupLocalPosition;
+        popupTransform.localRotation = originalPopupLocalRotation;
+        popupTransform.localScale = originalPopupLocalScale;
+    }
+
+    private void ConfigureModalOverlayMaterials()
+    {
+        if (popupRoot == null)
+            return;
+
+        Shader uiShader = Shader.Find("BCaT/UI/ModalAlwaysOnTop");
+        if (uiShader != null)
+        {
+            Material uiMaterial = new Material(uiShader)
+            {
+                name = "MeshellArticleReader_ModalUIAlwaysOnTop_Runtime"
+            };
+            ownedModalMaterials.Add(uiMaterial);
+
+            foreach (Graphic graphic in popupRoot.GetComponentsInChildren<Graphic>(true))
+            {
+                if (graphic == null || graphic is TMP_Text)
+                    continue;
+
+                graphic.material = uiMaterial;
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{LogTag} Missing shader 'BCaT/UI/ModalAlwaysOnTop'; world geometry may depth-occlude article UI graphics.");
+        }
+
+        Shader textShader = Shader.Find("TextMeshPro/Distance Field Overlay");
+        if (textShader == null)
+        {
+            Debug.LogWarning($"{LogTag} Missing shader 'TextMeshPro/Distance Field Overlay'; world geometry may depth-occlude article text.");
+        }
+
+        foreach (TMP_Text text in popupRoot.GetComponentsInChildren<TMP_Text>(true))
+        {
+            if (text == null || text.fontSharedMaterial == null)
+                continue;
+
+            Material textMaterial = new Material(text.fontSharedMaterial)
+            {
+                name = text.name + "_ModalTextOverlay_Runtime"
+            };
+            if (textShader != null)
+                textMaterial.shader = textShader;
+
+            text.fontSharedMaterial = textMaterial;
+            ownedModalMaterials.Add(textMaterial);
+        }
     }
 
     private Camera FindActiveCamera()

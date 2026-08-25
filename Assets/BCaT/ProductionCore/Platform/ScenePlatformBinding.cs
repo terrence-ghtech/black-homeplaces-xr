@@ -58,6 +58,9 @@ namespace BCaT.Production
 
         void Awake()
         {
+            Diagnostics.MemTrace.Mark("PLATFORM_BINDING_AWAKE_BEGIN", // BCAT_MEMTRACE
+                $"scene={gameObject.scene.name}");
+
             BCaTPlatformId platform = BCaTPlatform.Current;
             BCaTPlatformProfile profile = BCaTPlatform.Profile;
 
@@ -121,6 +124,9 @@ namespace BCaT.Production
                                $"'{ActiveRig.name}' has no camera tagged MainCamera; Camera.main will " +
                                "not resolve to the player.");
             }
+
+            Diagnostics.MemTrace.Mark("PLATFORM_BINDING_AWAKE_END", // BCAT_MEMTRACE
+                $"scene={gameObject.scene.name} branch={wanted.name}");
         }
 
         void OnDestroy() => ScenePlayerRigRegistry.Unregister(gameObject.scene);

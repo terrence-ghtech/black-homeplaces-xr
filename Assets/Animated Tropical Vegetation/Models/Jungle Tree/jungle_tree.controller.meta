@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dc40d46fb33482d49acec2211052fcf3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176776
+  packageName: Animated Tropical Vegetation
+  packageVersion: 1.06
+  assetPath: Assets/Animated Tropical Vegetation/Models/Jungle Tree/jungle_tree.controller
+  uploadId: 963726

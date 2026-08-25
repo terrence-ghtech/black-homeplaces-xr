@@ -1454,8 +1454,8 @@ MonoBehaviour:
   maxViewAngle: 18
   worldPromptText: {fileID: 0}
   prompt:
-    desktopPrompt: Press E to Examine Symbol
-    xrPrompt: "View — Gye Nyame"
+    desktopPrompt: Press E to open Gye Nyame
+    xrPrompt: Open Gye Nyame
     verb: 2
     objectName: Gye Nyame
   modalRoot: {fileID: 6183499529119485813}

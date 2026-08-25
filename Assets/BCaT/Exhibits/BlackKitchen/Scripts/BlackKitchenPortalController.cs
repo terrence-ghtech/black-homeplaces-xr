@@ -61,6 +61,9 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
     private bool transitionActive;
     private Collider[] ownColliders;
     private Collider focusCollider;
+    private float suppressEnterUntil = -1f;
+
+    const float ReturnReentrySuppressSeconds = 0.75f;
 
     // ---- IInteractionTarget --------------------------------------------
 
@@ -124,6 +127,14 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
         if (transitionOverlay != null)
             transitionOverlay.alpha = 0f;
 
+        if (SceneTransitionState.SourceSceneName == SceneTransitionState.BlackKitchenSceneName &&
+            (SceneTransitionState.DestinationSpawnId == SceneTransitionState.MainHouseKitchenReturnQuestSpawnId ||
+             SceneTransitionState.DestinationSpawnId == SceneTransitionState.MainHouseKitchenReturnDesktopSpawnId))
+        {
+            suppressEnterUntil = Time.unscaledTime + ReturnReentrySuppressSeconds;
+            InteractionState.SuppressInputForCurrentFrame();
+        }
+
         ResolveInteractionRoot();
     }
 
@@ -142,6 +153,15 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
 
     public void EnterBlackKitchen()
     {
+        if (Time.unscaledTime < suppressEnterUntil)
+        {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            Debug.Log($"[BlackKitchenPortalController] Enter suppressed immediately after Black Kitchen return " +
+                      $"for {suppressEnterUntil - Time.unscaledTime:0.00}s so a carried-over select cannot re-enter.");
+#endif
+            return;
+        }
+
         if (transitionActive || SceneTransitionState.IsTransitionInProgress || InteractionState.IsBlocked)
         {
 #if DEVELOPMENT_BUILD || UNITY_EDITOR

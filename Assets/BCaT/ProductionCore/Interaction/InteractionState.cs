@@ -129,6 +129,18 @@ namespace BCaT.Production.Interaction
         public static bool HasReason(InteractionBlockReason reason) =>
             (ActiveReasons & reason) != 0;
 
+        public static bool IsOnlyBlockedBy(object owner, InteractionBlockReason reason)
+        {
+            if (owner == null)
+                return false;
+
+            PruneDestroyedOwners();
+            return !SceneTransitionState.IsTransitionInProgress
+                   && blockers.Count == 1
+                   && blockers.TryGetValue(owner, out var blocker)
+                   && (blocker.Reason & reason) != 0;
+        }
+
         /// <summary>
         /// Force-close every blocking interface that registered a close action
         /// (used by the kiosk inactivity reset), then clear all blockers.

@@ -36,6 +36,21 @@ using UnityEngine.UI;
 /// </summary>
 public class BlackKitchenExperienceController : MonoBehaviour, IBlackKitchenExitChoiceHandler
 {
+    private const string BoundaryLeftName = "Boundary_Left";
+    private const string BoundaryRightName = "Boundary_Right";
+    private const string BoundaryFrontName = "Boundary_Front";
+    private const string BoundaryBackName = "Boundary_Back";
+    private const float BoundsHalfWidth = 3.5f;
+    private const float BoundsFrontZ = -5.2f;
+    private const float BoundsBackZ = 3.7f;
+    private const float BoundsCenterZ = -0.75f;
+    private const float BoundsDepth = 8.9f;
+    private const float BoundaryThickness = 0.25f;
+    private const float BoundaryHeight = 3f;
+    private const float BoundaryCenterY = 1.5f;
+    private const float QuestCapsuleHeight = 1.8f;
+    private const float QuestCapsuleRadius = 0.28f;
+
     [Header("Spawn and Return")]
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private string mainHouseSceneName = SceneTransitionState.MainHouseSceneName;
@@ -85,6 +100,8 @@ public class BlackKitchenExperienceController : MonoBehaviour, IBlackKitchenExit
 
     private void Awake()
     {
+        ConfigurePlayerContainment();
+
         if (resetExitReflectionSessionFlagOnStart)
             BlackKitchenSessionState.ResetForTesting();
     }
@@ -231,6 +248,107 @@ public class BlackKitchenExperienceController : MonoBehaviour, IBlackKitchenExit
             return true;
 
         return exitReflectionSource.isPlaying;
+    }
+
+    private void ConfigurePlayerContainment()
+    {
+        RepairBoundary(BoundaryLeftName,
+            new Vector3(-BoundsHalfWidth, BoundaryCenterY, BoundsCenterZ),
+            new Vector3(BoundaryThickness, BoundaryHeight, BoundsDepth));
+        RepairBoundary(BoundaryRightName,
+            new Vector3(BoundsHalfWidth, BoundaryCenterY, BoundsCenterZ),
+            new Vector3(BoundaryThickness, BoundaryHeight, BoundsDepth));
+        RepairBoundary(BoundaryFrontName,
+            new Vector3(0f, BoundaryCenterY, BoundsFrontZ),
+            new Vector3(BoundsHalfWidth * 2f, BoundaryHeight, BoundaryThickness));
+        RepairBoundary(BoundaryBackName,
+            new Vector3(0f, BoundaryCenterY, BoundsBackZ),
+            new Vector3(BoundsHalfWidth * 2f, BoundaryHeight, BoundaryThickness));
+
+        EnsureQuestCharacterController();
+    }
+
+    private void RepairBoundary(string boundaryName, Vector3 localPosition, Vector3 localScale)
+    {
+        Transform boundary = FindDescendant(transform, boundaryName);
+        if (boundary == null)
+        {
+            Debug.LogWarning($"[BlackKitchenExperienceController] Missing player boundary '{boundaryName}'.");
+            return;
+        }
+
+        boundary.gameObject.layer = 0;
+        boundary.localPosition = localPosition;
+        boundary.localRotation = Quaternion.identity;
+        boundary.localScale = localScale;
+
+        foreach (Renderer renderer in boundary.GetComponentsInChildren<Renderer>(true))
+            renderer.enabled = false;
+
+        Collider[] colliders = boundary.GetComponents<Collider>();
+        BoxCollider box = boundary.GetComponent<BoxCollider>();
+        if (box == null)
+            box = boundary.gameObject.AddComponent<BoxCollider>();
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider != null && collider != box)
+                collider.enabled = false;
+        }
+
+        box.enabled = true;
+        box.isTrigger = false;
+        box.center = Vector3.zero;
+        box.size = Vector3.one;
+
+        Debug.Log($"[BlackKitchenExperienceController] Player boundary '{boundaryName}' repaired: " +
+                  $"localPosition={boundary.localPosition} localScale={boundary.localScale} " +
+                  $"layer={LayerMask.LayerToName(boundary.gameObject.layer)} trigger={box.isTrigger}.");
+    }
+
+    private void EnsureQuestCharacterController()
+    {
+        foreach (ScenePlayerRig rig in FindObjectsByType<ScenePlayerRig>(
+                     FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (rig == null || rig.Kind != ScenePlayerRig.RigKind.XR)
+                continue;
+
+            CharacterController controller = rig.GetComponent<CharacterController>();
+            if (controller == null)
+                controller = rig.gameObject.AddComponent<CharacterController>();
+
+            controller.enabled = true;
+            controller.center = new Vector3(0f, QuestCapsuleHeight * 0.5f, 0f);
+            controller.height = QuestCapsuleHeight;
+            controller.radius = QuestCapsuleRadius;
+            controller.slopeLimit = 45f;
+            controller.stepOffset = 0.2f;
+            controller.skinWidth = 0.08f;
+            controller.minMoveDistance = 0.001f;
+            controller.detectCollisions = true;
+
+            Debug.Log($"[BlackKitchenExperienceController] Quest XR CharacterController ready on '{rig.name}': " +
+                      $"center={controller.center} height={controller.height:0.00} " +
+                      $"radius={controller.radius:0.00} detectCollisions={controller.detectCollisions}.");
+            return;
+        }
+
+        Debug.LogWarning("[BlackKitchenExperienceController] No Quest XR rig found for player containment.");
+    }
+
+    private static Transform FindDescendant(Transform root, string descendantName)
+    {
+        if (root == null)
+            return null;
+
+        foreach (Transform child in root.GetComponentsInChildren<Transform>(true))
+        {
+            if (child != null && child.name == descendantName)
+                return child;
+        }
+
+        return null;
     }
 
     // ---- Exit choice: shared decisions, siloed platform presentation --------

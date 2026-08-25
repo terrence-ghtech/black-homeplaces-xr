@@ -103,8 +103,8 @@ MonoBehaviour:
   allowDesktop: 1
   allowQuest: 1
   prompt:
-    desktopPrompt: Press E to Explore Rhythm and Rope
-    xrPrompt: Interact to Explore Rhythm and Rope
+    desktopPrompt: Press E to open Rhythm and Rope
+    xrPrompt: Open Rhythm and Rope
     verb: 1
     objectName: Rhythm and Rope
   playerCamera: {fileID: 0}

@@ -62,7 +62,7 @@ namespace BCaT.Production.Interaction
 
         /// <summary>
         /// Desktop keeps the authored "Press E to &lt;action&gt; &lt;name&gt;" wording.
-        /// Quest/XR uses "&lt;Action&gt; — &lt;Name&gt;" and never mentions a
+        /// Quest/XR uses "&lt;Action&gt; &lt;Name&gt;" and never mentions a
         /// keyboard key, because Quest has no keyboard.
         /// </summary>
         static string Compose(bool xr, SharedInteractionVerb verb, string objectName)
@@ -76,7 +76,7 @@ namespace BCaT.Production.Interaction
             }
 
             string action = XRActionText(verb);
-            return string.IsNullOrEmpty(name) ? action : $"{action} — {name}";
+            return string.IsNullOrEmpty(name) ? action : $"{action} {name}";
         }
 
         static string ActionText(SharedInteractionVerb verb) => verb switch

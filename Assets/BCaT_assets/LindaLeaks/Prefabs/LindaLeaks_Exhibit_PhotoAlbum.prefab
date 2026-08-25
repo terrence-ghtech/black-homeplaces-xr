@@ -250,6 +250,7 @@ RectTransform:
   - {fileID: 8601196928438302784}
   - {fileID: 2895756219862834758}
   - {fileID: 440064215671607098}
+  - {fileID: 910000000000000002}
   - {fileID: 243262907301369079}
   m_Father: {fileID: 1633546967234271894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -804,37 +805,58 @@ MonoBehaviour:
     and everyday neighborhood life.
   photos:
   - sprite: {fileID: 21300000, guid: e51153e6b49064bf1a0110fad38d0f88, type: 3}
-    title: Housing Co-op Archive 01
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: T Street Collective — Cheryl Boykins & Linda Leaks (1984)
+    caption: Cheryl Boykins (left) and Linda Leaks (right) sitting on the steps
+      at 1333 T Street NW, Washington, DC, July 1984.
   - sprite: {fileID: 21300000, guid: 445da8dd22caf4171878975d3a9e6acf, type: 3}
-    title: Housing Co-op Archive 02
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: T Street Collective — Black Women's Self Help Collective Meeting (1983)
+    caption: Audrey Sartin (back left), Margaret Carey (back middle), Ajowa Ifateyo
+      (back right), Rosa Brunson (front left), Shepsara Raari (Deborah Berry) (front
+      middle), and Faye Herbert (front right) at a May 1983 Black Women's Self Help
+      Collective meeting at the T Street Collective House. A map of Africa and a
+      photograph of Malcolm X are visible in the background.
   - sprite: {fileID: 21300000, guid: 77242ffc304434b878b068fbccc6d54f, type: 3}
-    title: Housing Co-op Archive 03
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: T Street Collective — Community Dancing (1983)
+    caption: Community celebration following a Black Women's Self Help Collective
+      gathering, August 1983. Pictured are Faye Williams, TiaJuana Malone, Lianne
+      Rozzell, Ajowa Ifateyo, possibly Cheryl Boykins, and S. Marquita Sykes.
   - sprite: {fileID: 21300000, guid: 49b19f608fdcf4aeda795ee18c81b5b9, type: 3}
-    title: Housing Co-op Archive 04
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: Southern Homes & Gardens — Residents Organize for Ownership
+    caption: The Southern Homes and Gardens Task Force during its campaign for resident
+      ownership. Residents worked with public officials, organized demonstrations,
+      and advocated for cooperative homeownership with pro bono support from Covington
+      & Burling attorneys.
   - sprite: {fileID: 21300000, guid: 2c7f179bbd2534b7a84e6f590aa9063f, type: 3}
-    title: Housing Co-op Archive 05
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: Southern Homes & Gardens — Community Celebration
+    caption: Residents celebrate the successful establishment of Southern Homes and
+      Gardens Cooperative, including Bella Tinus, Yvonne Timmer, Joan Thinar, Phyllis
+      Thompson, James Morse, Thelma Ariett, Sara Atkinson, Mr. Bittles, Angela London,
+      and Donny Simpson.
   - sprite: {fileID: 21300000, guid: d329c7b86fd7b4e2193c9fab4d74e192, type: 3}
-    title: Housing Co-op Archive 06
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: Ella Jo Baker Cooperative — Groundbreaking Ceremony (2002)
+    caption: Groundbreaking ceremony for the Ella Jo Baker Intentional Community Cooperative,
+      featuring Linda Leaks, cooperative members, community partners, Manna Inc.,
+      DC officials, and housing advocates.
   - sprite: {fileID: 21300000, guid: 93610d61e898e4d62823a323a686ebc1, type: 3}
-    title: Housing Co-op Archive 07
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: Ella Jo Baker Cooperative — University Place Home (2003)
+    caption: 2548 University Place NW following renovation as part of the Ella Jo
+      Baker Intentional Community Cooperative.
   - sprite: {fileID: 21300000, guid: 7a631fee961ff47e4a7c11f45ba31104, type: 3}
-    title: Housing Co-op Archive 08
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: Ella Jo Baker Cooperative — Before Rehabilitation
+    caption: 2521 University Place NW before rehabilitation, with Ajowa Ifateyo standing
+      on the porch. A Department of Housing and Community Development sign is visible
+      in the basement window.
   - sprite: {fileID: 21300000, guid: 38ea0cb33b6b04eba8a0af0dd74637c8, type: 3}
-    title: Housing Co-op Archive 09
-    caption: Archival photograph from the Linda Leaks cooperative housing collection.
+    title: Ella Jo Baker Cooperative — Board Meeting Gathering (2004)
+    caption: Linda Leaks, Ajowa Ifateyo, S. Marquita Sykes, Parisa Norouzi, Beverly
+      Cannon, and Robin Williams Ashton gathered around the cooperative's "red book"
+      of governance documents, circa 2004.
   startIndex: 0
   enableKeyboardShortcuts: 0
   useArrowKeysForNavigation: 0
   useEscapeToClose: 0
   positionInFrontOfCameraOnOpen: 1
+  externalWebsiteUrl: https://www.honoringlindaleaks.com/
 --- !u!114 &3384676530549853627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,6 +879,11 @@ MonoBehaviour:
   enableAlbumKeyboardNavigation: 0
   previousPhotoKey: 32
   nextPhotoKey: 34
+  prompt:
+    desktopPrompt: Press E to open Housing Co-op Archive
+    xrPrompt: Open Housing Co-op Archive
+    verb: 1
+    objectName: Housing Co-op Archive
 --- !u!114 &8316277223144411484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,6 +2154,276 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &910000000000000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910000000000000002}
+  - component: {fileID: 910000000000000003}
+  - component: {fileID: 910000000000000004}
+  - component: {fileID: 910000000000000005}
+  m_Layer: 5
+  m_Name: WebsiteButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &910000000000000002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 910000000000000007}
+  m_Father: {fileID: 6614599661261744074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -320}
+  m_SizeDelta: {x: 360, y: 36}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &910000000000000003
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000001}
+  m_CullTransparentMesh: 1
+--- !u!114 &910000000000000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.35, g: 0.85, b: 1, a: 0.12}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &910000000000000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1.2, g: 1.2, b: 1.2, a: 2.5}
+    m_PressedColor: {r: 1.4, g: 1.4, b: 1.4, a: 3.5}
+    m_SelectedColor: {r: 1.2, g: 1.2, b: 1.2, a: 2}
+    m_DisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.3}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 910000000000000004}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3179124813430600998}
+        m_TargetAssemblyTypeName: HolographicSlideshow, Assembly-CSharp
+        m_MethodName: OpenExternalWebsite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &910000000000000006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910000000000000007}
+  - component: {fileID: 910000000000000008}
+  - component: {fileID: 910000000000000009}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &910000000000000007
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 910000000000000002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 360, y: 36}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &910000000000000008
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000006}
+  m_CullTransparentMesh: 1
+--- !u!114 &910000000000000009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910000000000000006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Visit HonoringLindaLeaks.com
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294962060
+  m_fontColor: {r: 0.55, g: 0.92, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 18
+  m_fontSizeBase: 18
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 14
+  m_fontSizeMax: 28
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

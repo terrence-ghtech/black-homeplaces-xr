@@ -492,7 +492,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b3d5c6af7674c89a428509a6af69d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableLinkLauncher
+  displayName: Linda Leaks Housing Co-ops Map
+  projectName: 
   targetUrl: https://maphub.net/Linda_Leaks_Archiving_Project/linda-leaks-housing-co-ops
+  openBehavior: 0
+  allowDesktop: 1
+  allowQuest: 1
+  prompt:
+    desktopPrompt: Press E to open Linda Leaks Housing Co-ops Map
+    xrPrompt: Open Linda Leaks Housing Co-ops Map
+    verb: 1
+    objectName: Linda Leaks Housing Co-ops Map
   playerCamera: {fileID: 0}
   interactDistance: 5
   promptText: {fileID: 0}

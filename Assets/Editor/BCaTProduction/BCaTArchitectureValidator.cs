@@ -1111,16 +1111,28 @@ namespace BCaT.EditorTools
                     byId[spawn.SpawnId] = HierarchyPath(go.transform);
             }
 
-            string expected = scene switch
+            // The main house authors one kitchen return per platform branch, so
+            // BOTH must exist: checking only the id the editor's current platform
+            // resolves would let the other platform's return point go missing
+            // without any build failing.
+            string[] expected = scene switch
             {
-                "BlackKitchen_MemoryScene" => SceneTransitionState.BlackKitchenEntrySpawnId,
-                "BH_XR_MainScene" => SceneTransitionState.MainHouseKitchenReturnSpawnId,
+                "BlackKitchen_MemoryScene" => new[] { SceneTransitionState.BlackKitchenEntrySpawnId },
+                "BH_XR_MainScene" => new[]
+                {
+                    SceneTransitionState.MainHouseKitchenReturnQuestSpawnId,
+                    SceneTransitionState.MainHouseKitchenReturnDesktopSpawnId,
+                },
                 _ => null,
             };
 
-            if (expected != null && !byId.ContainsKey(expected))
-                Add(findings, "BCAT-S002", scene, "",
-                    $"Scene has no SceneSpawnPoint with the transition spawn id '{expected}'.");
+            if (expected == null)
+                return;
+
+            foreach (string id in expected)
+                if (!byId.ContainsKey(id))
+                    Add(findings, "BCAT-S002", scene, "",
+                        $"Scene has no SceneSpawnPoint with the transition spawn id '{id}'.");
         }
 
         // ---- BCAT-S001 -----------------------------------------------------

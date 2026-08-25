@@ -30,6 +30,9 @@ public class LindaLeaksPhotoAlbumController : MonoBehaviour
     [SerializeField] private List<PhotoEntry> photos = new List<PhotoEntry>();
     [SerializeField] private int startIndex;
 
+    [Header("External Link")]
+    [SerializeField] private string externalWebsiteUrl;
+
     private int currentIndex;
 
     private void Start()
@@ -65,6 +68,15 @@ public class LindaLeaksPhotoAlbumController : MonoBehaviour
 
         currentIndex = (currentIndex - 1 + photos.Count) % photos.Count;
         Refresh();
+    }
+
+    public void OpenExternalWebsite()
+    {
+        if (string.IsNullOrWhiteSpace(externalWebsiteUrl))
+            return;
+
+        Debug.Log($"[LindaLeaksPhotoAlbum:{gameObject.name}] Opening external link: {externalWebsiteUrl}");
+        Application.OpenURL(externalWebsiteUrl);
     }
 
     private void Refresh()

@@ -1250,8 +1250,8 @@ MonoBehaviour:
   maxViewAngle: 18
   worldPromptText: {fileID: 0}
   prompt:
-    desktopPrompt: Press E to Examine Symbol
-    xrPrompt: "View — Adinkrahene"
+    desktopPrompt: Press E to open Adinkrahene
+    xrPrompt: Open Adinkrahene
     verb: 2
     objectName: Adinkrahene
   modalRoot: {fileID: 223748593297988713}

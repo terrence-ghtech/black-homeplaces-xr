@@ -375,9 +375,10 @@ namespace BCaT.Production.Interaction
                 return RejectXRSelect("<null>", "target is null");
             if (!target.Exists)
                 return RejectXRSelect(TargetName(target), "target no longer exists");
-            if (!target.IsAvailable)
+            bool closingOwnMedia = InteractionState.IsOnlyBlockedBy(target, InteractionBlockReason.Media);
+            if (!closingOwnMedia && !target.IsAvailable)
                 return RejectXRSelect(TargetName(target), "target is not available");
-            if (InteractionState.IsBlocked)
+            if (!closingOwnMedia && InteractionState.IsBlocked)
                 return RejectXRSelect(TargetName(target), $"interaction blocked ({InteractionState.ActiveReasons})");
             if (InteractionState.InputSuppressedThisFrame)
                 return RejectXRSelect(TargetName(target), "input suppressed this frame");

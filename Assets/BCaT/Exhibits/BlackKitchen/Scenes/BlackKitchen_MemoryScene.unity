@@ -801,8 +801,8 @@ Transform:
   m_GameObject: {fileID: 351737751}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.9848078, z: -0, w: -0.17364809}
-  m_LocalPosition: {x: 0.030000001, y: 1.29, z: 1.91}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.030000001, y: 1.02, z: 1.91}
+  m_LocalScale: {x: 1, y: 0.79, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1976583879}
@@ -864,6 +864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackKitchenQuestOrientation
   interactionManager: {fileID: 1763266578}
+  entrySpawn: {fileID: 0}
   title: Explore the Black Kitchen
   body: 'Walk around to discover stories.
 
@@ -873,6 +874,7 @@ MonoBehaviour:
   displaySeconds: 14
   placeDistance: 2
   heightOffset: -0.1
+  entryEyeHeight: 1.55
   fadeSeconds: 0.6
 --- !u!1 &438422650
 GameObject:
@@ -3246,7 +3248,7 @@ Transform:
   m_GameObject: {fileID: 1579214412}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.13052596, z: -0, w: 0.99144495}
-  m_LocalPosition: {x: 1.14, y: 1.644, z: -1.47}
+  m_LocalPosition: {x: 1.14, y: 1.16, z: -1.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4746,7 +4748,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3100000010}
   m_LocalRotation: {x: -0, y: -0.026177734, z: -0, w: 0.99965733}
-  m_LocalPosition: {x: 0, y: 0, z: -2.22}
+  m_LocalPosition: {x: 0, y: 0, z: -2.8}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.002}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4756,7 +4758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -3, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.2, y: 1.297}
+  m_AnchoredPosition: {x: -0.2, y: 1.08}
   m_SizeDelta: {x: 760, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3100000012
