@@ -1,3 +1,0 @@
-Assets/BH_XR_MainScene.unity — renderers=1982 nullMaterialSlots=5 missingMeshes=0 missingScripts=0
-Assets/BCaT/Exhibits/BlackKitchen/Scenes/BlackKitchen_MemoryScene.unity — renderers=27 nullMaterialSlots=0 missingMeshes=0 missingScripts=0
-Assets/BCaT/SceneTransitions/Scenes/LoadingScene.unity — renderers=0 nullMaterialSlots=0 missingMeshes=0 missingScripts=0
