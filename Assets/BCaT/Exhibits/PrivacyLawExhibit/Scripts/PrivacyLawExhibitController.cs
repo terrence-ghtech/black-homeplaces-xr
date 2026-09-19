@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
+using BCaT.Production.Interaction;
+using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PrivacyLawExhibitController : MonoBehaviour
+public class PrivacyLawExhibitController : MonoBehaviour, IFocusedExhibit
 {
     private enum ExhibitState { Hidden, Idle, Open }
 
@@ -22,6 +23,8 @@ public class PrivacyLawExhibitController : MonoBehaviour
     [SerializeField] private GameObject page02Root;
     [SerializeField] private GameObject page03Root;
     [SerializeField] private ScrollRect page03ScrollRect;
+    [SerializeField] private RectTransform page03ScrollContent;
+    [SerializeField] private TMP_Text page03BodyText;
     [SerializeField] private TMP_Text pageIndicatorText;
     [SerializeField] private int startingPage = 0;
 
@@ -33,6 +36,9 @@ public class PrivacyLawExhibitController : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button closeIconButton;
+    [Header("External Resources")]
+    [SerializeField] private Button ssrnResourceButton;
+    [SerializeField] private string ssrnResourceUrl = "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7444180";
     [SerializeField] private Image[] pageButtonBackgrounds;
     [SerializeField] private Color selectedPageColor = new Color(0.16f, 0.62f, 1f, 0.42f);
     [SerializeField] private Color unselectedPageColor = new Color(0.02f, 0.14f, 0.24f, 0.42f);
@@ -78,17 +84,15 @@ public class PrivacyLawExhibitController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool logStateChanges;
 
-    private readonly List<Behaviour> disabledWorldInputBehaviours = new List<Behaviour>();
     private readonly GameObject[] pages = new GameObject[3];
     private Coroutine fadeRoutine;
     private ExhibitState state = ExhibitState.Hidden;
     private int currentPage;
     private bool playerNearby;
     private bool capturedDesktopInput;
-    private bool previousCursorVisible;
+    private bool controlsSuspended;
     private bool closeKeyReleasedSinceOpen;
     private int openedFrame = -1;
-    private CursorLockMode previousCursorLockState;
     private Vector3 hologramStartLocalPosition;
     private Quaternion blueprintStartLocalRotation;
 
@@ -161,27 +165,49 @@ public class PrivacyLawExhibitController : MonoBehaviour
             blueprintStartLocalRotation = blueprintPanel.localRotation;
 
         WireButtons();
+        if (ssrnResourceButton != null)
+            ssrnResourceButton.onClick.AddListener(OpenSsrnResource);
         SetState(ExhibitState.Hidden, true);
     }
 
     private void OnDestroy()
     {
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         RestoreDesktopInput();
+        ReleasePlayerControls();
         UnwireButtons();
+        if (ssrnResourceButton != null)
+            ssrnResourceButton.onClick.RemoveListener(OpenSsrnResource);
+    }
+
+    public void OpenSsrnResource()
+    {
+        if (string.IsNullOrWhiteSpace(ssrnResourceUrl) ||
+            !BCaT.Production.PlatformCapabilities.SupportsExternalLinks)
+            return;
+
+        BCaT.Production.QuestBrowserHeadTracking.OpenUrl(ssrnResourceUrl);
     }
 
     private void OnDisable()
     {
-        BCaT.Production.Interaction.InteractionRouter.Unregister(routerTarget);
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
-        RestoreDesktopInput();
+        InteractionRouter.Unregister(routerTarget);
+        if (IsOpen)
+            CloseExhibit();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            InteractionState.Unblock(this);
+            RestoreDesktopInput();
+            ReleasePlayerControls();
+        }
     }
 
     private void OnEnable()
     {
         if (routerTarget == null)
             routerTarget = new PrivacyLawInteractionTarget(this);
-        BCaT.Production.Interaction.InteractionRouter.Register(routerTarget);
+        InteractionRouter.Register(routerTarget);
     }
 
     private PrivacyLawInteractionTarget routerTarget;
@@ -191,7 +217,7 @@ public class PrivacyLawExhibitController : MonoBehaviour
     /// ProximityTrigger collider keeps deciding availability (playerNearby);
     /// the router owns input, prompts, and blocking.
     /// </summary>
-    private sealed class PrivacyLawInteractionTarget : BCaT.Production.Interaction.IInteractionTarget
+    private sealed class PrivacyLawInteractionTarget : IInteractionTarget, IFocusedExhibitTarget
     {
         readonly PrivacyLawExhibitController owner;
         Collider[] ownColliders;
@@ -205,6 +231,7 @@ public class PrivacyLawExhibitController : MonoBehaviour
         public int Priority => 0;
         public bool AllowDesktopClick => true;
         public bool Exists => owner != null;
+        public IFocusedExhibit FocusedExhibit => owner;
 
         public bool IsAvailable =>
             owner != null && owner.isActiveAndEnabled &&
@@ -231,8 +258,7 @@ public class PrivacyLawExhibitController : MonoBehaviour
 
         public void OnFocusChanged(bool focused) { }
 
-        public void OnInteract(BCaT.Production.Interaction.InteractionActivation activation) =>
-            owner.OpenExhibit();
+        public void OnInteract(InteractionActivation activation) => owner.RequestFocusedOpen();
     }
 
     private void Update()
@@ -248,11 +274,19 @@ public class PrivacyLawExhibitController : MonoBehaviour
                 !BCaT.Production.Interaction.FocusedUiInput.KeyHeld(interactionKey))
                 closeKeyReleasedSinceOpen = true;
 
-            if (Time.frameCount > openedFrame
-                && (BCaT.Production.Interaction.FocusedUiInput.CancelPressed
-                    || (closeKeyReleasedSinceOpen &&
-                        BCaT.Production.Interaction.FocusedUiInput.KeyPressed(interactionKey))))
+            if (Time.frameCount > openedFrame && FocusedUiInput.CancelPressed)
             {
+                CloseExhibit();
+                return;
+            }
+
+            if (Time.frameCount > openedFrame && closeKeyReleasedSinceOpen &&
+                FocusedUiInput.KeyPressed(interactionKey))
+            {
+                IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+                if (FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                    return;
+
                 CloseExhibit();
             }
         }
@@ -274,31 +308,53 @@ public class PrivacyLawExhibitController : MonoBehaviour
             return;
 
         playerNearby = false;
-        // On Quest locomotion stays live while the exhibit is open, so the
-        // visitor can leave the trigger with the Modal block still held.
-        // Release exactly the block this exhibit owns (idempotent when idle).
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
-        RestoreDesktopInput();
-        SetState(ExhibitState.Hidden, false);
+        CloseExhibit();
     }
 
     public void OpenFromXR()
     {
-        if (routerTarget != null && BCaT.Production.Interaction.InteractionRouter.Instance != null)
+        if (routerTarget != null && InteractionRouter.Instance != null)
         {
-            BCaT.Production.Interaction.InteractionRouter.Instance.RequestXRSelect(routerTarget);
+            InteractionRouter.Instance.RequestXRSelect(routerTarget);
             return;
         }
 
-        if (BCaT.Production.Interaction.InteractionState.IsBlocked)
+        if (InteractionState.IsBlocked)
         {
             Debug.Log("[PrivacyLawExhibit] XR open suppressed (interaction blocked).");
             return;
         }
-        OpenExhibit();
+        RequestFocusedOpen();
     }
 
     public void OpenExhibit()
+    {
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal();
+    }
+
+    void IFocusedExhibit.Close()
+    {
+        CloseExhibit();
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        Debug.LogWarning("[PrivacyLawExhibit] FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal();
+    }
+
+    private void OpenInternal()
     {
         if (!playerNearby && Application.isPlaying)
             return;
@@ -311,19 +367,19 @@ public class PrivacyLawExhibitController : MonoBehaviour
         PositionExpandedViewInFrontOfCamera();
         CaptureDesktopInput();
 
-        // Focused exhibit interface: block background world interaction and
-        // give the kiosk reset a close handle.
-        BCaT.Production.Interaction.InteractionState.Block(this,
-            BCaT.Production.Interaction.InteractionBlockReason.Modal, CloseExhibit);
     }
 
     public void CloseExhibit()
     {
+        bool wasOpen = IsOpen;
+        if (wasOpen)
+            InteractionState.SuppressInputForCurrentFrame();
         currentPage = Mathf.Clamp(startingPage, 0, pages.Length - 1);
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
+        InteractionState.Unblock(this);
         RestoreDesktopInput();
         ResetPage03Scroll();
         SetState(playerNearby ? ExhibitState.Idle : ExhibitState.Hidden, false);
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
     }
 
     public void SelectPage(int pageIndex)
@@ -519,11 +575,7 @@ public class PrivacyLawExhibitController : MonoBehaviour
             return;
 
         capturedDesktopInput = true;
-        previousCursorLockState = Cursor.lockState;
-        previousCursorVisible = Cursor.visible;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        DisableWorldInput();
+        SuspendPlayerControls();
     }
 
     private void RestoreDesktopInput()
@@ -531,60 +583,26 @@ public class PrivacyLawExhibitController : MonoBehaviour
         if (!capturedDesktopInput)
             return;
 
-        RestoreWorldInput();
-        Cursor.lockState = previousCursorLockState;
-        Cursor.visible = previousCursorVisible;
+        ReleasePlayerControls();
         capturedDesktopInput = false;
     }
 
-    private void DisableWorldInput()
+    private void SuspendPlayerControls()
     {
-        disabledWorldInputBehaviours.Clear();
-        foreach (Behaviour behaviour in FindObjectsByType<Behaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-        {
-            if (behaviour == null || !behaviour.enabled || behaviour == this || behaviour.transform.IsChildOf(transform.root))
-                continue;
+        if (controlsSuspended)
+            return;
 
-            if (!ShouldDisableWhileOpen(behaviour))
-                continue;
-
-            behaviour.enabled = false;
-            disabledWorldInputBehaviours.Add(behaviour);
-        }
+        PlayerControlGate.Suspend(this);
+        controlsSuspended = true;
     }
 
-    private bool ShouldDisableWhileOpen(Behaviour behaviour)
+    private void ReleasePlayerControls()
     {
-        string typeName = behaviour.GetType().Name;
-        string fullName = behaviour.GetType().FullName ?? typeName;
+        if (!controlsSuspended)
+            return;
 
-        return typeName == "FirstPersonController"
-            || typeName == "StarterAssetsInputs"
-            || typeName == "SimpleImagePopupInteractor"
-            || typeName == "LindaLeaksPanelOpener"
-            || typeName == "MediaVideoController"
-            || typeName == "MeshellArticleNotebookInputRouter"
-            || typeName == "MeshellArticleNotebookOpener"
-            || typeName == "InteractableLinkLauncher"
-            || typeName == "SpatialAudioToggle"
-            || typeName == "QuiltVideoPopUp"
-            || typeName == "LindaLeaksVideoPopUp"
-            || fullName.Contains("ContinuousMoveProvider")
-            || fullName.Contains("ContinuousTurnProvider")
-            || fullName.Contains("SnapTurnProvider")
-            || fullName.Contains("TeleportationProvider")
-            || fullName.Contains("XRSimpleInteractable");
-    }
-
-    private void RestoreWorldInput()
-    {
-        foreach (Behaviour behaviour in disabledWorldInputBehaviours)
-        {
-            if (behaviour != null)
-                behaviour.enabled = true;
-        }
-
-        disabledWorldInputBehaviours.Clear();
+        PlayerControlGate.Resume(this);
+        controlsSuspended = false;
     }
 
     private void ResetPage03Scroll()
@@ -592,6 +610,36 @@ public class PrivacyLawExhibitController : MonoBehaviour
         if (page03ScrollRect == null)
             return;
 
+        Canvas.ForceUpdateCanvases();
+        if (page03BodyText != null)
+        {
+            page03BodyText.ForceMeshUpdate();
+            RectTransform bodyRect = page03BodyText.rectTransform;
+            float preferredHeight = page03BodyText.preferredHeight;
+            bodyRect.sizeDelta = new Vector2(bodyRect.sizeDelta.x, preferredHeight);
+            if (page03ScrollContent != null)
+            {
+                const float topPadding = 16f;
+                const float bottomPadding = 32f;
+                page03ScrollContent.sizeDelta = new Vector2(page03ScrollContent.sizeDelta.x,
+                    Mathf.Max(page03ScrollRect.viewport.rect.height + 1f,
+                        preferredHeight + topPadding + bottomPadding));
+            }
+        }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(page03ScrollRect.content);
+        page03ScrollRect.verticalNormalizedPosition = 1f;
+        StartCoroutine(ResetPage03ScrollAfterLayout());
+    }
+
+    private IEnumerator ResetPage03ScrollAfterLayout()
+    {
+        yield return null;
+        if (page03ScrollRect == null)
+            yield break;
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(page03ScrollRect.content);
         page03ScrollRect.verticalNormalizedPosition = 1f;
     }
 

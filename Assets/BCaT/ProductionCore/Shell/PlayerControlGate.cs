@@ -13,7 +13,20 @@ namespace BCaT.Production.Shell
     public static class PlayerControlGate
     {
         static readonly HashSet<object> holds = new HashSet<object>();
+        static readonly List<DesktopInputState> desktopSuspendedInputs = new List<DesktopInputState>();
+        static readonly List<StarterAssets.FirstPersonController> desktopSuspendedControllers =
+            new List<StarterAssets.FirstPersonController>();
         static readonly List<Behaviour> xrSuspendedLocomotion = new List<Behaviour>();
+        static bool desktopCursorCaptured;
+        static CursorLockMode desktopPreviousCursorLock;
+        static bool desktopPreviousCursorVisible;
+
+        struct DesktopInputState
+        {
+            public StarterAssets.StarterAssetsInputs Inputs;
+            public bool CursorLocked;
+            public bool CursorInputForLook;
+        }
 
         public static bool IsSuspended => holds.Count > 0;
 
@@ -53,28 +66,71 @@ namespace BCaT.Production.Shell
                 return;
             }
 
-            foreach (var inputs in Object.FindObjectsByType<StarterAssets.StarterAssetsInputs>(
-                         FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            if (suspended)
             {
-                inputs.enabled = !suspended;
-                // Keep the component's own focus handler consistent with us.
-                inputs.cursorLocked = !suspended;
-                inputs.cursorInputForLook = !suspended;
-                if (suspended)
+                if (!desktopCursorCaptured)
                 {
+                    desktopPreviousCursorLock = Cursor.lockState;
+                    desktopPreviousCursorVisible = Cursor.visible;
+                    desktopCursorCaptured = true;
+                }
+
+                foreach (var inputs in Object.FindObjectsByType<StarterAssets.StarterAssetsInputs>(
+                             FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+                {
+                    if (inputs == null || !inputs.enabled)
+                        continue;
+
+                    desktopSuspendedInputs.Add(new DesktopInputState
+                    {
+                        Inputs = inputs,
+                        CursorLocked = inputs.cursorLocked,
+                        CursorInputForLook = inputs.cursorInputForLook,
+                    });
+                    inputs.enabled = false;
+                    inputs.cursorLocked = false;
+                    inputs.cursorInputForLook = false;
                     inputs.move = Vector2.zero;
                     inputs.look = Vector2.zero;
                     inputs.jump = false;
                     inputs.sprint = false;
                 }
+
+                foreach (var controller in Object.FindObjectsByType<StarterAssets.FirstPersonController>(
+                             FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+                {
+                    if (controller == null || !controller.enabled)
+                        continue;
+                    controller.enabled = false;
+                    desktopSuspendedControllers.Add(controller);
+                }
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                return;
             }
 
-            foreach (var fpc in Object.FindObjectsByType<StarterAssets.FirstPersonController>(
-                         FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-                fpc.enabled = !suspended;
+            foreach (DesktopInputState state in desktopSuspendedInputs)
+            {
+                if (state.Inputs == null)
+                    continue;
+                state.Inputs.cursorLocked = state.CursorLocked;
+                state.Inputs.cursorInputForLook = state.CursorInputForLook;
+                state.Inputs.enabled = true;
+            }
+            desktopSuspendedInputs.Clear();
 
-            Cursor.lockState = suspended ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = suspended;
+            foreach (StarterAssets.FirstPersonController controller in desktopSuspendedControllers)
+                if (controller != null)
+                    controller.enabled = true;
+            desktopSuspendedControllers.Clear();
+
+            if (desktopCursorCaptured)
+            {
+                Cursor.lockState = desktopPreviousCursorLock;
+                Cursor.visible = desktopPreviousCursorVisible;
+                desktopCursorCaptured = false;
+            }
         }
 
         static void ApplyXRLocomotion(bool suspended)
@@ -129,7 +185,10 @@ namespace BCaT.Production.Shell
         static void ResetStatics()
         {
             holds.Clear();
+            desktopSuspendedInputs.Clear();
+            desktopSuspendedControllers.Clear();
             xrSuspendedLocomotion.Clear();
+            desktopCursorCaptured = false;
         }
     }
 }

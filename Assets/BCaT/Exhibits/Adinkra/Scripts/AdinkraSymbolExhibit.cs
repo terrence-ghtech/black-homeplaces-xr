@@ -1,6 +1,7 @@
 using BCaT.Production.Interaction;
 using BCaT.Production.Media;
 using BCaT.Production.Settings;
+using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,12 +15,13 @@ using UnityEngine.UI;
 ///
 /// Everything shared is reused rather than re-implemented: InteractionRouter /
 /// IInteractionTarget for world interaction, SharedInteractionPrompt for prompt
-/// wording, InteractionState for modal blocking, MediaPlaybackRegistry so the
+/// wording, FocusedExhibitCoordinator for exclusive focused ownership,
+/// MediaPlaybackRegistry so the
 /// kiosk reset can stop narration, AudioChannelService for the Narration mixer
 /// channel, SubtitleService for captions/transcripts, and the same
 /// Application.OpenURL path as InteractableLinkLauncher for external links.
 /// </summary>
-public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
+public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget, IFocusedExhibit
 {
     [Header("Symbol Content")]
     [Tooltip("Symbol title shown in the modal, e.g. 'Sankofa'.")]
@@ -93,8 +95,7 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
     private bool narrationRegistered;
     private int openedFrame = -1;
     private bool closeKeyReleasedSinceOpen;
-    private bool previousCursorVisible;
-    private CursorLockMode previousCursorLockState;
+    private bool controlsSuspended;
 
     public bool IsOpen => isOpen;
     public string SymbolName => symbolName;
@@ -162,21 +163,15 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
         WorldInteractionPromptVisual.SetText(worldPromptText, GetPrompt(InteractionPromptText.IsXRActive()));
     }
 
-    public void OnInteract(InteractionActivation activation) => OpenModal();
+    public void OnInteract(InteractionActivation activation) => RequestFocusedOpen();
 
     /// <summary>Quest relay entry point (XRSimpleInteractable.selectEntered).</summary>
     public void OnXRSelect()
     {
-        if (isOpen)
-        {
-            CloseModal();
-            return;
-        }
-
         if (InteractionRouter.Instance != null)
             InteractionRouter.Instance.RequestXRSelect(this);
         else
-            OpenModal();
+            RequestFocusedOpen();
     }
 
     // ---- Lifecycle ------------------------------------------------------
@@ -201,13 +196,20 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
         InteractionRouter.Unregister(this);
         if (isOpen)
             CloseModal();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            ReleasePlayerControls();
+        }
     }
 
     private void OnDestroy()
     {
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         StopNarration();
         MediaPlaybackRegistry.NotifyStopped(this);
         InteractionState.Unblock(this);
+        ReleasePlayerControls();
     }
 
     private void Update()
@@ -231,9 +233,18 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
 
         // Documented modal shortcuts for this exhibit: Escape/E close, Enter
         // toggles the narration so the modal is operable without the pointer.
-        if (FocusedUiInput.CancelPressed ||
-            (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed))
+        if (FocusedUiInput.CancelPressed)
         {
+            CloseModal();
+            return;
+        }
+
+        if (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed)
+        {
+            IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+            if (FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                return;
+
             CloseModal();
             return;
         }
@@ -245,6 +256,33 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
     // ---- Modal ----------------------------------------------------------
 
     public void OpenModal()
+    {
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal();
+    }
+
+    void IFocusedExhibit.Close()
+    {
+        CloseModal();
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        Debug.LogWarning($"[Adinkra:{symbolName}] FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal();
+    }
+
+    private void OpenInternal()
     {
         if (isOpen)
             return;
@@ -258,20 +296,23 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
         CaptureInput();
         Refresh();
 
-        InteractionState.Block(this, InteractionBlockReason.Modal, CloseModal);
         Debug.Log($"[Adinkra:{symbolName}] Modal opened.");
     }
 
     public void CloseModal()
     {
         if (!isOpen)
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             return;
+        }
 
         InteractionState.SuppressInputForCurrentFrame();
         isOpen = false;
+        HideModal();
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         StopNarration();
         InteractionState.Unblock(this);
-        HideModal();
         RestoreInput();
     }
 
@@ -355,16 +396,25 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
 
     private void CaptureInput()
     {
-        previousCursorLockState = Cursor.lockState;
-        previousCursorVisible = Cursor.visible;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (controlsSuspended)
+            return;
+
+        PlayerControlGate.Suspend(this);
+        controlsSuspended = true;
     }
 
     private void RestoreInput()
     {
-        Cursor.lockState = previousCursorLockState;
-        Cursor.visible = previousCursorVisible;
+        ReleasePlayerControls();
+    }
+
+    private void ReleasePlayerControls()
+    {
+        if (!controlsSuspended)
+            return;
+
+        PlayerControlGate.Resume(this);
+        controlsSuspended = false;
     }
 
     // ---- Narration ------------------------------------------------------
@@ -460,7 +510,7 @@ public sealed class AdinkraSymbolExhibit : MonoBehaviour, IInteractionTarget
         }
 
         Debug.Log($"[Adinkra:{symbolName}] Opening external link: {websiteUrl}");
-        Application.OpenURL(websiteUrl);
+        BCaT.Production.QuestBrowserHeadTracking.OpenUrl(websiteUrl);
     }
 
     // ---------------------------------------------------------------------

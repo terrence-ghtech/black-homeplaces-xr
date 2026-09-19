@@ -154,6 +154,6 @@ public class InteractableLinkLauncher : MonoBehaviour, IInteractionTarget
             return;
 
         Debug.Log($"[LinkLauncher:{gameObject.name}] Opening external link: {targetUrl}");
-        Application.OpenURL(targetUrl);
+        BCaT.Production.QuestBrowserHeadTracking.OpenUrl(targetUrl);
     }
 }

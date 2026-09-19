@@ -15,6 +15,7 @@ namespace BCaT.Production.Interaction
         Stop,
         Read,
         Enter,
+        Close,
     }
 
     [Serializable]
@@ -88,6 +89,7 @@ namespace BCaT.Production.Interaction
             SharedInteractionVerb.Listen => "listen",
             SharedInteractionVerb.Pause => "pause",
             SharedInteractionVerb.Stop => "stop",
+            SharedInteractionVerb.Close => "close",
             SharedInteractionVerb.Read => "read",
             SharedInteractionVerb.Enter => "enter",
             _ => "interact",
@@ -103,6 +105,7 @@ namespace BCaT.Production.Interaction
             SharedInteractionVerb.Listen => "Listen",
             SharedInteractionVerb.Pause => "Pause",
             SharedInteractionVerb.Stop => "Stop",
+            SharedInteractionVerb.Close => "Close",
             SharedInteractionVerb.Read => "Read",
             SharedInteractionVerb.Enter => "Enter",
             _ => "Interact",

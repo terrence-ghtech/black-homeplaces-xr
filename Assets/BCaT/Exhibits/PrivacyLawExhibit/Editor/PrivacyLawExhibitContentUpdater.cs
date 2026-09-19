@@ -62,6 +62,8 @@ public static class PrivacyLawExhibitContentUpdater
 
         Transform expanded = root.transform.Find("ExpandedExhibit");
         ConfigureExpandedCanvas(expanded);
+        ConfigureBottomLayout(expanded);
+        ConfigureButtonFeedback(root);
         Transform header = expanded.Find("Header");
         ClearChildren(header);
         TMP_Text title1 = CreateText(header, "ExhibitTitle", ExhibitTitleLine1, new Vector2(20f, 22f), new Vector2(760f, 34f), 24, TextAlignmentOptions.Left);
@@ -79,6 +81,10 @@ public static class PrivacyLawExhibitContentUpdater
         {
             SerializedObject so = new SerializedObject(controller);
             so.FindProperty("page03ScrollRect").objectReferenceValue = page03Scroll;
+            so.FindProperty("page03ScrollContent").objectReferenceValue = page03Scroll.content;
+            so.FindProperty("page03BodyText").objectReferenceValue = page03Scroll.content.GetComponentInChildren<TMP_Text>(true);
+            so.FindProperty("ssrnResourceButton").objectReferenceValue = root.transform.Find("ExpandedExhibit/ContentArea/Page_03/SSRNResourceButton").GetComponent<Button>();
+            so.FindProperty("ssrnResourceUrl").stringValue = "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7444180";
             so.FindProperty("expandedCanvas").objectReferenceValue = expanded.GetComponent<Canvas>();
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(controller);
@@ -114,13 +120,25 @@ public static class PrivacyLawExhibitContentUpdater
         }
 
         ScrollRect scroll = CreateScrollArea(page, body);
+        Button resourceButton = CreateResourceButton(page, "SSRNResourceButton", "Read the related SSRN research paper", new Vector2(0f, -260f), new Vector2(800f, 42f));
         scroll.verticalNormalizedPosition = 1f;
         return scroll;
     }
 
+    private static Button CreateResourceButton(Transform parent, string name, string label, Vector2 pos, Vector2 size)
+    {
+        Image image = CreateImage(parent, name, new Vector2(0f, 0f), size, new Color(0.02f, 0.18f, 0.30f, 0.66f));
+        image.rectTransform.anchoredPosition = pos;
+        Button button = image.gameObject.AddComponent<Button>();
+        button.targetGraphic = image;
+        TMP_Text text = CreateText(image.transform, "Label", label, Vector2.zero, size, 16, TextAlignmentOptions.Center);
+        text.color = new Color(0.71f, 0.88f, 1f, 1f);
+        return button;
+    }
+
     private static ScrollRect CreateScrollArea(Transform page, string body)
     {
-        Image viewportImage = CreateImage(page, "Page03TextScroll", new Vector2(0f, -170f), new Vector2(800f, 210f), new Color(0.01f, 0.07f, 0.12f, 0.56f));
+        Image viewportImage = CreateImage(page, "Page03TextScroll", new Vector2(0f, -145f), new Vector2(800f, 190f), new Color(0.01f, 0.07f, 0.12f, 0.56f));
         Mask mask = viewportImage.gameObject.AddComponent<Mask>();
         mask.showMaskGraphic = true;
 
@@ -130,14 +148,18 @@ public static class PrivacyLawExhibitContentUpdater
         contentRect.anchorMin = new Vector2(0f, 1f);
         contentRect.anchorMax = new Vector2(1f, 1f);
         contentRect.pivot = new Vector2(0.5f, 1f);
-        contentRect.anchoredPosition = new Vector2(0f, -8f);
-        contentRect.sizeDelta = new Vector2(-28f, 520f);
+        contentRect.anchoredPosition = Vector2.zero;
+        contentRect.sizeDelta = new Vector2(-28f, 540f);
+        contentRect.pivot = new Vector2(0.5f, 1f);
 
-        TMP_Text paragraph = CreateText(content.transform, "BodyText", body, new Vector2(0f, -230f), new Vector2(748f, 500f), 17, TextAlignmentOptions.TopLeft);
+        TMP_Text paragraph = CreateText(content.transform, "BodyText", body, new Vector2(0f, -16f), new Vector2(-32f, 500f), 17, TextAlignmentOptions.TopLeft);
+        paragraph.rectTransform.anchorMin = new Vector2(0f, 1f);
+        paragraph.rectTransform.anchorMax = new Vector2(1f, 1f);
+        paragraph.rectTransform.pivot = new Vector2(0.5f, 1f);
         paragraph.textWrappingMode = TextWrappingModes.Normal;
         paragraph.lineSpacing = 6f;
 
-        Image scrollbarBg = CreateImage(page, "Page03Scrollbar", new Vector2(414f, -170f), new Vector2(14f, 210f), new Color(0.03f, 0.16f, 0.25f, 0.72f));
+        Image scrollbarBg = CreateImage(page, "Page03Scrollbar", new Vector2(414f, -145f), new Vector2(14f, 190f), new Color(0.03f, 0.16f, 0.25f, 0.72f));
         Scrollbar scrollbar = scrollbarBg.gameObject.AddComponent<Scrollbar>();
         scrollbar.direction = Scrollbar.Direction.BottomToTop;
         Image handle = CreateImage(scrollbarBg.transform, "Handle", Vector2.zero, new Vector2(12f, 60f), new Color(0.43f, 0.78f, 1f, 0.86f));
@@ -155,6 +177,49 @@ public static class PrivacyLawExhibitContentUpdater
         scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
         scroll.verticalNormalizedPosition = 1f;
         return scroll;
+    }
+
+    private static void ConfigureBottomLayout(Transform expanded)
+    {
+        RectTransform expandedRect = expanded.GetComponent<RectTransform>();
+        if (expandedRect != null)
+            expandedRect.sizeDelta = new Vector2(1400f, 860f);
+
+        RectTransform mainPanel = expanded.Find("MainPanel") as RectTransform;
+        if (mainPanel != null)
+            mainPanel.sizeDelta = new Vector2(1360f, 820f);
+
+        // Keep the existing controls as one aligned row; only move the row down.
+        foreach (string name in new[] { "PreviousButton", "PageIndicator", "NextButton", "CloseButton" })
+        {
+            RectTransform control = expanded.Find(name) as RectTransform;
+            if (control != null)
+                control.anchoredPosition = new Vector2(control.anchoredPosition.x, -350f);
+        }
+    }
+
+    private static void ConfigureButtonFeedback(GameObject root)
+    {
+        foreach (string name in new[] { "CloseButton", "PreviousButton", "NextButton", "PageButton_01", "PageButton_02", "PageButton_03" })
+        {
+            Transform buttonTransform = root.transform.Find("ExpandedExhibit/" + (name.StartsWith("PageButton_") ? "PageNavigation/" : string.Empty) + name);
+            Button button = buttonTransform != null ? buttonTransform.GetComponent<Button>() : null;
+            Image image = buttonTransform != null ? buttonTransform.GetComponent<Image>() : null;
+            if (button == null || image == null)
+                continue;
+
+            ColorBlock colors = button.colors;
+            colors.normalColor = image.color;
+            colors.highlightedColor = new Color(0.16f, 0.55f, 0.86f, 0.95f);
+            colors.pressedColor = new Color(0.10f, 0.38f, 0.68f, 1f);
+            colors.selectedColor = colors.highlightedColor;
+            colors.disabledColor = new Color(image.color.r, image.color.g, image.color.b, 0.35f);
+            colors.colorMultiplier = 1f;
+            colors.fadeDuration = 0.08f;
+            button.transition = Selectable.Transition.ColorTint;
+            button.colors = colors;
+            EditorUtility.SetDirty(button);
+        }
     }
 
     private static void ConfigureExpandedCanvas(Transform expanded)

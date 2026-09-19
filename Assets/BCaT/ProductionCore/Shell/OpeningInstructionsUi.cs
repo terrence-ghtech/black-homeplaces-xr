@@ -34,17 +34,17 @@ namespace BCaT.Production.Shell
 
         static readonly InstructionItem[] QuestControls =
         {
-            new InstructionItem("L", "Move", "Use the left thumbstick to move."),
-            new InstructionItem("Head", "Look Around", "Turn your head to look. Use the right thumbstick to turn."),
-            new InstructionItem("Grip", "Interact", "Point at an exhibit with a controller ray, then press grip to select."),
+            new InstructionItem("Nav", "Teleport", "Use the left thumbstick to aim and release to teleport."),
+            new InstructionItem("Head", "Look Around", "Turn your head to look. Use the right thumbstick to snap turn. Press it down to turn 180°."),
+            new InstructionItem("Menu", "World", "Press the Menu button to open the menu at any time. (Except Black Kitchen, where the menu is disabled.)"),
             InstructionItem.Spacer()
         };
 
         static readonly InstructionItem[] QuestGuidance =
         {
-            new InstructionItem("Nav", "Navigation", "Walk through the house with smooth stick movement and natural head look."),
-            new InstructionItem("UI", "Panels", "For menus and panels, point at the UI and press trigger."),
-            new InstructionItem("Audio", "Audio", "Some exhibit audio is spatial, so voices or sounds may change as you get closer.")
+            new InstructionItem("Links", "Start / Select a Game", "When a new browser tab opens, return to the Main Library, select the game."),
+            new InstructionItem("Interact", "Objects", "For menus, panels, and exhibits, point at the UI and press trigger/grip."),
+            new InstructionItem("Audio", "Audio", "Some exhibit audio is spatial, so sounds may change as you get closer.")
         };
 
         public static RectTransform AddTo(Transform parent, bool quest, float fontSize = 20f, float preferredHeight = 500f)

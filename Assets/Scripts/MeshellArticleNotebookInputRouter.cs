@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 /// router's line-of-sight test skips foreign trigger volumes the same way the
 /// original raycast walk did).
 /// </summary>
-public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarget
+public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarget, IFocusedExhibitTarget
 {
     private const string LogTag = "[MeshellNotebookInput]";
 
@@ -21,6 +21,7 @@ public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarg
     [SerializeField] private float interactionDistance = 4f;
 
     private Collider[] ownColliders;
+    private MeshellArticleNotebookOpener opener;
 
     // ---- IInteractionTarget --------------------------------------------
 
@@ -29,9 +30,10 @@ public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarg
     public float MaxViewAngle => 16f;
     public bool RequireLineOfSight => true;
     public int Priority => 0;
-    public bool IsAvailable => isActiveAndEnabled;
+    public bool IsAvailable => isActiveAndEnabled && Opener != null && !Opener.IsOpen;
     public bool AllowDesktopClick => true;
     public bool Exists => this != null;
+    public IFocusedExhibit FocusedExhibit => Opener != null ? Opener.FocusedExhibit : null;
 
     public Collider[] OwnColliders
     {
@@ -49,10 +51,10 @@ public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarg
 
     public void OnInteract(InteractionActivation activation)
     {
-        MeshellArticleNotebookOpener opener = GetComponent<MeshellArticleNotebookOpener>();
-        Debug.Log($"{LogTag} Interaction dispatched to '{gameObject.name}'. Opener present={opener != null}.");
-        if (opener != null)
-            opener.Open();
+        MeshellArticleNotebookOpener targetOpener = Opener;
+        Debug.Log($"{LogTag} Interaction dispatched to '{gameObject.name}'. Opener present={targetOpener != null}.");
+        if (targetOpener != null)
+            targetOpener.Open();
     }
 
     // ---------------------------------------------------------------------
@@ -60,4 +62,14 @@ public class MeshellArticleNotebookInputRouter : MonoBehaviour, IInteractionTarg
     private void OnEnable() => InteractionRouter.Register(this);
 
     private void OnDisable() => InteractionRouter.Unregister(this);
+
+    private MeshellArticleNotebookOpener Opener
+    {
+        get
+        {
+            if (opener == null)
+                opener = GetComponent<MeshellArticleNotebookOpener>();
+            return opener;
+        }
+    }
 }

@@ -564,13 +564,17 @@ public static class ExhibitInteractionPlayModeValidation
         bool accepted = InteractionRouter.Instance.RequestXRSelect(symbol);
         Check(accepted, "router accepted RequestXRSelect for Adinkra 'Sankofa'");
         Check(symbol.IsOpen, "Adinkra 'Sankofa' modal opened from the XR select path (no keyboard used)");
-        Check(InteractionState.HasReason(InteractionBlockReason.Modal),
-            "open Adinkra modal registers the shared Modal interaction blocker");
+        Check(ReferenceEquals(FocusedExhibitCoordinator.Instance?.CurrentExhibit, symbol),
+            "open Adinkra modal becomes the focused exhibit");
+        Check(!InteractionState.HasReason(InteractionBlockReason.Modal),
+            "open Adinkra modal does not register a global Modal blocker");
 
         symbol.CloseModal();
         Check(!symbol.IsOpen, "Adinkra 'Sankofa' modal closed again");
+        Check(FocusedExhibitCoordinator.Instance?.CurrentExhibit == null,
+            "Adinkra close clears the focused exhibit coordinator");
         Check(!InteractionState.HasReason(InteractionBlockReason.Modal),
-            "Modal interaction blocker released after close");
+            "no Modal interaction blocker remains after close");
     }
 
     // ---- Reporting -------------------------------------------------------

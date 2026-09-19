@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+using BCaT.Production.Interaction;
+using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class SimpleImagePopupController : MonoBehaviour
+public class SimpleImagePopupController : MonoBehaviour, IFocusedExhibit
 {
     private const float DefaultOpenDistanceFromCamera = 1.65f;
 
@@ -20,14 +20,12 @@ public class SimpleImagePopupController : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private float openDistanceFromCamera = DefaultOpenDistanceFromCamera;
 
-    private readonly List<Behaviour> disabledBehaviours = new List<Behaviour>();
     private Sprite currentSprite;
     private bool isOpen;
     private bool capturedInput;
-    private bool previousCursorVisible;
+    private bool controlsSuspended;
     private bool closeKeyReleasedSinceOpen;
     private int openedFrame = -1;
-    private CursorLockMode previousCursorLockState;
 
     public bool IsOpen => isOpen;
 
@@ -44,8 +42,21 @@ public class SimpleImagePopupController : MonoBehaviour
 
     private void OnDestroy()
     {
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+        InteractionState.Unblock(this);
+        ReleasePlayerControls();
         ClearCurrentSprite();
+    }
+
+    private void OnDisable()
+    {
+        if (isOpen)
+            Close();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            ReleasePlayerControls();
+        }
     }
 
     private void Update()
@@ -62,14 +73,45 @@ public class SimpleImagePopupController : MonoBehaviour
         if (Time.frameCount <= openedFrame)
             return;
 
-        if (BCaT.Production.Interaction.FocusedUiInput.CancelPressed
-            || (closeKeyReleasedSinceOpen && BCaT.Production.Interaction.FocusedUiInput.InteractPressed))
+        if (FocusedUiInput.CancelPressed)
         {
+            Close();
+            return;
+        }
+
+        if (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed)
+        {
+            IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+            if (FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                return;
+
             Close();
         }
     }
 
     public void Open()
+    {
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal();
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        Debug.LogWarning($"[SimpleImagePopup:{gameObject.name}] FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal();
+    }
+
+    private void OpenInternal()
     {
         if (isOpen)
             return;
@@ -83,21 +125,22 @@ public class SimpleImagePopupController : MonoBehaviour
         PositionPopupInFrontOfCamera();
         CaptureInput();
 
-        // Focused exhibit interface: block background world interaction and
-        // give the kiosk reset a close handle.
-        BCaT.Production.Interaction.InteractionState.Block(this,
-            BCaT.Production.Interaction.InteractionBlockReason.Modal, Close);
     }
 
     public void Close()
     {
         if (!isOpen)
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             return;
+        }
 
+        InteractionState.SuppressInputForCurrentFrame();
         isOpen = false;
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
-        ClearCurrentSprite();
         HidePopup();
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+        InteractionState.Unblock(this);
+        ClearCurrentSprite();
         RestoreInput();
     }
 
@@ -221,11 +264,7 @@ public class SimpleImagePopupController : MonoBehaviour
             return;
 
         capturedInput = true;
-        previousCursorLockState = Cursor.lockState;
-        previousCursorVisible = Cursor.visible;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        DisableWorldInput();
+        SuspendPlayerControls();
     }
 
     private void RestoreInput()
@@ -233,59 +272,25 @@ public class SimpleImagePopupController : MonoBehaviour
         if (!capturedInput)
             return;
 
-        RestoreWorldInput();
-        Cursor.lockState = previousCursorLockState;
-        Cursor.visible = previousCursorVisible;
+        ReleasePlayerControls();
         capturedInput = false;
     }
 
-    private void DisableWorldInput()
+    private void SuspendPlayerControls()
     {
-        disabledBehaviours.Clear();
-        foreach (Behaviour behaviour in FindObjectsByType<Behaviour>(FindObjectsInactive.Exclude))
-        {
-            if (behaviour == null || !behaviour.enabled || behaviour == this || behaviour.transform.IsChildOf(transform))
-                continue;
+        if (controlsSuspended)
+            return;
 
-            if (!ShouldDisableWhileOpen(behaviour))
-                continue;
-
-            behaviour.enabled = false;
-            disabledBehaviours.Add(behaviour);
-        }
+        PlayerControlGate.Suspend(this);
+        controlsSuspended = true;
     }
 
-    private bool ShouldDisableWhileOpen(Behaviour behaviour)
+    private void ReleasePlayerControls()
     {
-        string typeName = behaviour.GetType().Name;
-        string fullName = behaviour.GetType().FullName ?? typeName;
+        if (!controlsSuspended)
+            return;
 
-        return typeName == "FirstPersonController"
-            || typeName == "StarterAssetsInputs"
-            || typeName == "SimpleImagePopupInteractor"
-            || typeName == "LindaLeaksPanelOpener"
-            || typeName == "MediaVideoController"
-            || typeName == "MeshellArticleNotebookInputRouter"
-            || typeName == "MeshellArticleNotebookOpener"
-            || typeName == "InteractableLinkLauncher"
-            || typeName == "SpatialAudioToggle"
-            || typeName == "QuiltVideoPopUp"
-            || typeName == "LindaLeaksVideoPopUp"
-            || fullName.Contains("ContinuousMoveProvider")
-            || fullName.Contains("ContinuousTurnProvider")
-            || fullName.Contains("SnapTurnProvider")
-            || fullName.Contains("TeleportationProvider")
-            || fullName.Contains("XRSimpleInteractable");
-    }
-
-    private void RestoreWorldInput()
-    {
-        foreach (Behaviour behaviour in disabledBehaviours)
-        {
-            if (behaviour != null)
-                behaviour.enabled = true;
-        }
-
-        disabledBehaviours.Clear();
+        PlayerControlGate.Resume(this);
+        controlsSuspended = false;
     }
 }

@@ -275,6 +275,29 @@ namespace BCaT.Production
 #endif
         }
 
+        /// <summary>
+        /// Samples the native OpenXR state for the external-browser tracking
+        /// handoff. Keep loader discovery here, alongside the other raw probes,
+        /// so callers do not introduce a second platform authority.
+        /// </summary>
+        public static bool TryGetOpenXRSessionState(out bool focused, out bool displayRunning,
+            out bool userPresent)
+        {
+            focused = false;
+            displayRunning = false;
+            userPresent = false;
+            var settings = UnityEngine.XR.Management.XRGeneralSettings.Instance;
+            if (settings == null || settings.Manager == null ||
+                !(settings.Manager.activeLoader is UnityEngine.XR.OpenXR.OpenXRLoader loader))
+                return false;
+
+            focused = UnityEngine.XR.OpenXR.OpenXRUtility.IsSessionFocused;
+            var display = loader.GetLoadedSubsystem<XRDisplaySubsystem>();
+            displayRunning = display != null && display.running;
+            userPresent = UnityEngine.XR.OpenXR.OpenXRUtility.IsUserPresent;
+            return true;
+        }
+
         // ---- Resolution ------------------------------------------------------
 
         static BCaTPlatformId Resolve(out BCaTPlatformSource source)

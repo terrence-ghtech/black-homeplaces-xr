@@ -10,7 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// uses the shared InteractionPromptText helper (previously this script read
 /// XRSettings directly and missed the XR-initialization fallback).
 /// </summary>
-public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
+public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget, IFocusedExhibitTarget
 {
     [SerializeField] private SimpleImagePopupController popup;
 #pragma warning disable 0414 // retained for scene-data compatibility; router owns input/camera now
@@ -37,6 +37,7 @@ public class SimpleImagePopupInteractor : MonoBehaviour, IInteractionTarget
     public bool IsAvailable => isActiveAndEnabled && popup != null && !popup.IsOpen;
     public bool AllowDesktopClick => true;
     public bool Exists => this != null;
+    public IFocusedExhibit FocusedExhibit => popup;
 
     public Collider[] OwnColliders
     {

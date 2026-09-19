@@ -1,15 +1,17 @@
 using BCaT.Production.Interaction;
+using BCaT.Production.Media;
 using BCaT.Production.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Look-at-and-interact toggle for a spatialized ambient AudioSource.
+/// Look-at-and-interact toggle for the two spatialized foreground soundscapes
+/// in the production scene (Nine Night and Duppy).
 /// Interaction selection/input is owned by the central InteractionRouter
-/// (no keyboard polling here); the source is routed through the Ambience
-/// audio channel so the settings mixer controls it.
+/// (no keyboard polling here). Their established Ambience mixer routing is
+/// retained, while foreground playback ownership is coordinated separately.
 /// </summary>
-public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
+public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget, IForegroundAudio
 {
     [SerializeField] private AudioSource audioSource;
 #pragma warning disable 0414 // retained for scene-data compatibility; router owns input/camera now
@@ -41,6 +43,7 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
     public bool IsAvailable => isActiveAndEnabled && audioSource != null;
     public bool AllowDesktopClick => true;
     public bool Exists => this != null;
+    public bool IsPlaying => audioSource != null && audioSource.isPlaying;
 
     public Collider[] OwnColliders
     {
@@ -54,14 +57,16 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
 
     public string GetPrompt(bool xr)
     {
-        bool playing = audioSource != null && audioSource.isPlaying;
-        SharedInteractionVerb verb = playing ? SharedInteractionVerb.Pause : SharedInteractionVerb.Listen;
+        SharedInteractionVerb verb = IsPlaying ? SharedInteractionVerb.Stop : SharedInteractionVerb.Play;
         if (prompt == null)
             prompt = new SharedInteractionPromptConfig();
-        prompt.verb = verb;
-        if (string.IsNullOrWhiteSpace(prompt.objectName))
-            prompt.objectName = displayName;
-        return SharedInteractionPrompt.Format(xr, prompt);
+        string objectName = string.IsNullOrWhiteSpace(prompt.objectName)
+            ? displayName
+            : prompt.objectName;
+
+        // The production scene's legacy explicit strings always say "open".
+        // Build this stateful prompt from the real AudioSource state instead.
+        return SharedInteractionPrompt.Format(xr, verb, objectName);
     }
 
     public void OnFocusChanged(bool focused) { }
@@ -75,9 +80,7 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
     private void OnDisable()
     {
         InteractionRouter.Unregister(this);
-        // Do not leave ambience playing on a disabled exhibit.
-        if (audioSource != null && audioSource.isPlaying)
-            audioSource.Stop();
+        Stop();
     }
 
     private void Start()
@@ -102,6 +105,8 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
 
         audioSource.playOnAwake = false;
         audioSource.Stop();
+        MediaPlaybackRegistry.NotifyStopped(this);
+        ForegroundAudioCoordinator.Instance?.NotifyStopped(this);
 
         AudioChannelService.Register(audioSource, AudioChannel.Ambience);
     }
@@ -120,9 +125,33 @@ public class SpatialAudioToggle : MonoBehaviour, IInteractionTarget
         if (audioSource == null)
             return;
 
-        if (audioSource.isPlaying)
-            audioSource.Pause();
+        if (IsPlaying)
+            Stop();
+        else if (ForegroundAudioCoordinator.Instance != null)
+            ForegroundAudioCoordinator.Instance.RequestPlay(this);
         else
-            audioSource.Play();
+        {
+            Debug.LogWarning($"[SpatialAudioToggle:{gameObject.name}] ForegroundAudioCoordinator is unavailable; playing without exclusivity.");
+            Play();
+        }
+    }
+
+    public void Play()
+    {
+        if (audioSource == null || IsPlaying)
+            return;
+
+        audioSource.Play();
+        if (IsPlaying)
+            MediaPlaybackRegistry.NotifyStarted(this, Stop);
+    }
+
+    public void Stop()
+    {
+        if (audioSource != null)
+            audioSource.Stop();
+
+        MediaPlaybackRegistry.NotifyStopped(this);
+        ForegroundAudioCoordinator.Instance?.NotifyStopped(this);
     }
 }

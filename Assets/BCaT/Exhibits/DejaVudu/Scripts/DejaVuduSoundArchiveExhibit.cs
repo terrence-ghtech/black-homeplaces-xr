@@ -7,14 +7,13 @@ using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace BCaT.Exhibits.DejaVudu
 {
-    public sealed class DejaVuduSoundArchiveExhibit : MonoBehaviour, IInteractionTarget
+    public sealed class DejaVuduSoundArchiveExhibit : MonoBehaviour, IInteractionTarget, IFocusedExhibit, IForegroundAudio
     {
         const string ExhibitTitle = "DEJA VUDU SOUND ARCHIVE";
         const string SampleMarker = "SAMPLE LIST:";
@@ -33,14 +32,12 @@ namespace BCaT.Exhibits.DejaVudu
         [Range(0f, 1f)]
         [SerializeField] float baseVolume = 0.85f;
 
-        readonly List<Behaviour> disabledWorldInput = new();
         Collider[] ownColliders;
         GameObject viewerRoot;
         GameObject[] pages;
         Image[] pageButtonBackgrounds;
         ScrollRect activeScroll;
         TMP_Text audioStatusText;
-        TMP_Text audioButtonText;
         RectTransform coverPageRect;
         TMP_Text coverPlaceholderText;
         Button firstButton;
@@ -49,7 +46,7 @@ namespace BCaT.Exhibits.DejaVudu
         AsyncOperationHandle<Texture2D> coverHandle;
         bool playbackRegistered;
         bool inputCaptured;
-        bool previousCursorVisible;
+        bool controlsSuspended;
         bool closeKeyReleasedSinceOpen;
         bool mediaLoadStarted;
         bool audioHandleOwned;
@@ -59,7 +56,6 @@ namespace BCaT.Exhibits.DejaVudu
         bool playWhenAudioReady;
         int openedFrame = -1;
         int currentPage;
-        CursorLockMode previousCursorLockState;
 
         public Vector3 FocusPoint => focusPoint != null ? focusPoint.position : transform.position;
         public float MaxDistance => interactionDistance;
@@ -69,6 +65,7 @@ namespace BCaT.Exhibits.DejaVudu
         public bool IsAvailable => isActiveAndEnabled && viewerRoot == null;
         public bool AllowDesktopClick => true;
         public bool Exists => this != null;
+        public bool IsOpen => viewerRoot != null;
 
         public Collider[] OwnColliders
         {
@@ -80,8 +77,8 @@ namespace BCaT.Exhibits.DejaVudu
             }
         }
 
-        bool IsPlaying => audioSource != null && collageClip != null &&
-                          audioSource.isPlaying && audioSource.clip == collageClip;
+        public bool IsPlaying => audioSource != null && collageClip != null &&
+                                 audioSource.isPlaying && audioSource.clip == collageClip;
 
         public void Configure(TextAsset text, AudioSource source,
             Collider collider, Transform focus)
@@ -110,6 +107,7 @@ namespace BCaT.Exhibits.DejaVudu
         void OnDestroy()
         {
             CloseViewer();
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             StopPlayback("exhibit destroyed");
             MediaPlaybackRegistry.NotifyStopped(this);
             if (audioSource != null)
@@ -132,9 +130,18 @@ namespace BCaT.Exhibits.DejaVudu
             if (Time.frameCount <= openedFrame)
                 return;
 
-            if (FocusedUiInput.CancelPressed ||
-                (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed))
+            if (FocusedUiInput.CancelPressed)
             {
+                CloseViewer();
+                return;
+            }
+
+            if (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed)
+            {
+                IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+                if (FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                    return;
+
                 CloseViewer();
                 return;
             }
@@ -161,14 +168,7 @@ namespace BCaT.Exhibits.DejaVudu
 
         public void OnInteract(InteractionActivation activation)
         {
-            if (IsPlaying)
-            {
-                StopPlayback($"toggled off via {activation}");
-                return;
-            }
-
-            StartPlayback(activation.ToString());
-            OpenViewer();
+            RequestFocusedOpen(activation.ToString());
         }
 
         public void OnXRSelect()
@@ -176,7 +176,42 @@ namespace BCaT.Exhibits.DejaVudu
             if (InteractionRouter.Instance != null)
                 InteractionRouter.Instance.RequestXRSelect(this);
             else
-                OnInteract(InteractionActivation.XRSelect);
+                RequestFocusedOpen(InteractionActivation.XRSelect.ToString());
+        }
+
+        void IFocusedExhibit.Open()
+        {
+            OpenInternal();
+        }
+
+        void IFocusedExhibit.Close()
+        {
+            CloseViewer();
+        }
+
+        void RequestFocusedOpen(string via)
+        {
+            pendingOpenVia = via;
+            if (FocusedExhibitCoordinator.Instance != null)
+            {
+                FocusedExhibitCoordinator.Instance.RequestOpen(this);
+                return;
+            }
+
+            Debug.LogWarning("[DejaVuduSoundArchive] FocusedExhibitCoordinator is unavailable; opening without coordination.");
+            OpenInternal();
+        }
+
+        string pendingOpenVia = "focused exhibit";
+
+        void OpenInternal()
+        {
+            if (IsOpen)
+                return;
+
+            if (!IsPlaying)
+                RequestPlayback(pendingOpenVia);
+            OpenViewer();
         }
 
         void ConfigureAudioSource()
@@ -196,7 +231,7 @@ namespace BCaT.Exhibits.DejaVudu
             AudioChannelService.Register(audioSource, AudioChannel.Media);
         }
 
-        void StartPlayback(string via)
+        void RequestPlayback(string via)
         {
             if (audioSource == null)
             {
@@ -219,7 +254,24 @@ namespace BCaT.Exhibits.DejaVudu
                 return;
             }
 
-            MediaPlaybackRegistry.StopAll();
+            pendingPlaybackVia = via;
+            if (ForegroundAudioCoordinator.Instance != null)
+            {
+                ForegroundAudioCoordinator.Instance.RequestPlay(this);
+                return;
+            }
+
+            Debug.LogWarning("[DejaVuduSoundArchive] ForegroundAudioCoordinator is unavailable; playing without exclusivity.");
+            Play();
+        }
+
+        string pendingPlaybackVia = "foreground audio";
+
+        public void Play()
+        {
+            if (audioSource == null || collageClip == null || IsPlaying)
+                return;
+
             audioSource.clip = collageClip;
             audioSource.time = 0f;
             audioSource.volume = AudioChannelService.ScaledVolume(audioSource, baseVolume);
@@ -227,8 +279,10 @@ namespace BCaT.Exhibits.DejaVudu
             playbackRegistered = true;
             MediaPlaybackRegistry.NotifyStarted(this, StopForMediaRegistry);
             RefreshAudioUi();
-            Debug.Log($"[DejaVuduSoundArchive] Started collage via {via}.");
+            Debug.Log($"[DejaVuduSoundArchive] Started collage via {pendingPlaybackVia}.");
         }
+
+        public void Stop() => StopPlayback("foreground audio stop");
 
         void StopPlayback(string reason)
         {
@@ -238,6 +292,7 @@ namespace BCaT.Exhibits.DejaVudu
 
             playbackRegistered = false;
             MediaPlaybackRegistry.NotifyStopped(this);
+            ForegroundAudioCoordinator.Instance?.NotifyStopped(this);
             RefreshAudioUi();
 
             if (wasRegistered)
@@ -257,20 +312,31 @@ namespace BCaT.Exhibits.DejaVudu
             PositionViewerInFrontOfCamera();
             SelectPage(0);
             CaptureInput();
-            InteractionState.Block(this, InteractionBlockReason.Modal, CloseViewer);
         }
 
         void CloseViewer()
         {
+            playWhenAudioReady = false;
+            StopPlayback("viewer closed");
+
             if (viewerRoot == null)
+            {
+                FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+                InteractionState.Unblock(this);
+                RestoreInput();
+                ReleasePlayerControls();
                 return;
+            }
 
             InteractionState.SuppressInputForCurrentFrame();
+            GameObject closingRoot = viewerRoot;
+            viewerRoot = null;
+            closingRoot.SetActive(false);
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             InteractionState.Unblock(this);
             RestoreInput();
             ClearCoverSprite();
-            Destroy(viewerRoot);
-            viewerRoot = null;
+            Destroy(closingRoot);
             pages = null;
             pageButtonBackgrounds = null;
             activeScroll = null;
@@ -278,7 +344,6 @@ namespace BCaT.Exhibits.DejaVudu
             coverPlaceholderText = null;
             firstButton = null;
             audioStatusText = null;
-            audioButtonText = null;
         }
 
         GameObject BuildViewer()
@@ -352,8 +417,6 @@ namespace BCaT.Exhibits.DejaVudu
             footerLayout.childForceExpandWidth = true;
             footerLayout.childForceExpandHeight = true;
 
-            Button audioButton = Button(footer, "Stop Audio", TogglePlaybackFromViewer, 20f, out _);
-            audioButtonText = audioButton.GetComponentInChildren<TMP_Text>(true);
             Button(footer, "Close", CloseViewer, 20f, out _);
             RefreshAudioUi();
             UiFactory.SelectForKeyboard(firstButton);
@@ -468,14 +531,6 @@ namespace BCaT.Exhibits.DejaVudu
             }
         }
 
-        void TogglePlaybackFromViewer()
-        {
-            if (IsPlaying)
-                StopPlayback("viewer toggle");
-            else
-                StartPlayback("viewer toggle");
-        }
-
         void RefreshAudioUi()
         {
             if (audioStatusText != null)
@@ -491,9 +546,6 @@ namespace BCaT.Exhibits.DejaVudu
                 else
                     audioStatusText.text = "Audio stopped.";
             }
-
-            if (audioButtonText != null)
-                audioButtonText.text = IsPlaying ? "Stop Audio" : "Play Audio";
         }
 
         void BeginAddressableMediaLoad()
@@ -526,7 +578,7 @@ namespace BCaT.Exhibits.DejaVudu
                 if (playWhenAudioReady)
                 {
                     playWhenAudioReady = false;
-                    StartPlayback("addressables ready");
+                    RequestPlayback("addressables ready");
                 }
 
                 return;
@@ -606,11 +658,7 @@ namespace BCaT.Exhibits.DejaVudu
                 return;
 
             inputCaptured = true;
-            previousCursorLockState = Cursor.lockState;
-            previousCursorVisible = Cursor.visible;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            DisableWorldInput();
+            SuspendPlayerControls();
         }
 
         void RestoreInput()
@@ -618,59 +666,26 @@ namespace BCaT.Exhibits.DejaVudu
             if (!inputCaptured)
                 return;
 
-            RestoreWorldInput();
-            Cursor.lockState = previousCursorLockState;
-            Cursor.visible = previousCursorVisible;
+            ReleasePlayerControls();
             inputCaptured = false;
         }
 
-        void DisableWorldInput()
+        void SuspendPlayerControls()
         {
-            disabledWorldInput.Clear();
-            foreach (Behaviour behaviour in FindObjectsByType<Behaviour>(
-                         FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-            {
-                if (behaviour == null || !behaviour.enabled || behaviour == this ||
-                    behaviour.transform.IsChildOf(transform))
-                    continue;
+            if (controlsSuspended)
+                return;
 
-                if (!ShouldDisableWhileOpen(behaviour))
-                    continue;
-
-                behaviour.enabled = false;
-                disabledWorldInput.Add(behaviour);
-            }
+            PlayerControlGate.Suspend(this);
+            controlsSuspended = true;
         }
 
-        static bool ShouldDisableWhileOpen(Behaviour behaviour)
+        void ReleasePlayerControls()
         {
-            string typeName = behaviour.GetType().Name;
-            string fullName = behaviour.GetType().FullName ?? typeName;
+            if (!controlsSuspended)
+                return;
 
-            return typeName == "FirstPersonController"
-                || typeName == "StarterAssetsInputs"
-                || typeName == "SimpleImagePopupInteractor"
-                || typeName == "LindaLeaksPanelOpener"
-                || typeName == "MediaVideoController"
-                || typeName == "MeshellArticleNotebookInputRouter"
-                || typeName == "MeshellArticleNotebookOpener"
-                || typeName == "InteractableLinkLauncher"
-                || typeName == "SpatialAudioToggle"
-                || typeName == "QuiltVideoPopUp"
-                || typeName == "LindaLeaksVideoPopUp"
-                || fullName.Contains("ContinuousMoveProvider")
-                || fullName.Contains("ContinuousTurnProvider")
-                || fullName.Contains("SnapTurnProvider")
-                || fullName.Contains("TeleportationProvider")
-                || fullName.Contains("XRSimpleInteractable");
-        }
-
-        void RestoreWorldInput()
-        {
-            foreach (Behaviour behaviour in disabledWorldInput)
-                if (behaviour != null)
-                    behaviour.enabled = true;
-            disabledWorldInput.Clear();
+            PlayerControlGate.Resume(this);
+            controlsSuspended = false;
         }
 
         static void SplitContent(string fullText, out string description, out string samples)

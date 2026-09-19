@@ -17,12 +17,12 @@ using UnityEngine.Video;
 ///  - WebGL remnant: always URL, Direct audio.
 ///  - Editor: optional VideoClip fallback for quick testing.
 /// Registers with the central InteractionRouter instead of polling the
-/// keyboard; while the popup is open it registers a Media interaction blocker
-/// so background exhibits cannot be triggered, and E/Escape close it through
-/// FocusedUiInput. Playback is tracked by MediaPlaybackRegistry (kiosk resets,
-/// return-to-entrance) and failures are reported through MediaErrorLog.
+/// keyboard. FocusedExhibitCoordinator owns replacement between video popups,
+/// while E/Escape close the current popup through FocusedUiInput. Playback is
+/// tracked by MediaPlaybackRegistry (kiosk resets, return-to-entrance) and
+/// failures are reported through MediaErrorLog.
 /// </summary>
-public class MediaVideoController : MonoBehaviour, IInteractionTarget
+public class MediaVideoController : MonoBehaviour, IInteractionTarget, IFocusedExhibit
 {
     public enum DesktopActivation
     {
@@ -48,6 +48,8 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     [SerializeField] private string caption;
     [SerializeField] private SharedInteractionPromptConfig prompt =
         new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Watch };
+    [Tooltip("For focused video installations that keep the universal prompt visible while open.")]
+    [SerializeField] private bool showClosePromptWhileOpen;
 
     [Header("Optional billboard texts (auto-filled from Exhibit Info if set)")]
     [SerializeField] private TMPro.TMP_Text billboardText;
@@ -110,7 +112,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
             : "Press E to close";
 
     private string ExhibitName => string.IsNullOrEmpty(title) ? gameObject.name : title;
-    private bool IsOpen => videoState != VideoInteractionState.Closed;
+    public bool IsOpen => videoState != VideoInteractionState.Closed;
 
     // ---- IInteractionTarget --------------------------------------------
 
@@ -138,7 +140,7 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     /// rejected each select with "target is not available".
     /// </summary>
     public bool IsAvailable =>
-        isActiveAndEnabled && !IsOpen &&
+        isActiveAndEnabled && (!IsOpen || showClosePromptWhileOpen) &&
         (BCaT.Production.PlatformCapabilities.UseXRPrompts ||
          desktopActivation != DesktopActivation.ProximityTrigger ||
          playerInRange);
@@ -159,6 +161,12 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     public string GetPrompt(bool xr)
     {
+        if (showClosePromptWhileOpen)
+            return SharedInteractionPrompt.Format(
+                xr,
+                IsOpen ? SharedInteractionVerb.Close : SharedInteractionVerb.Play,
+                ExhibitName);
+
         if (prompt == null)
             prompt = new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Watch };
 
@@ -178,7 +186,10 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     public void OnInteract(InteractionActivation activation)
     {
         Debug.Log($"{LogTag} Interaction dispatched ({activation})");
-        TogglePopUp();
+        if (IsOpen)
+            RequestFocusedClose();
+        else
+            RequestFocusedOpen();
     }
 
     // ---------------------------------------------------------------------
@@ -211,6 +222,8 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     private void OnDestroy()
     {
+        InteractionRouter.Instance?.ClearFocusedSessionPrompt(this);
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         ReleaseVideoResources(destroyOwnedTexture: true);
 
         if (videoPlayer != null)
@@ -229,14 +242,19 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     {
         InteractionRouter.Unregister(this);
 
-        if (!IsOpen && videoPlayer == null)
+        if (IsOpen)
+        {
+            ClosePopUp();
             return;
+        }
 
-        videoState = VideoInteractionState.Closed;
-        playWhenPrepared = false;
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+        VideoExhibitCoordinator.NotifyClosed(this);
         InteractionState.Unblock(this);
         MediaPlaybackRegistry.NotifyStopped(this);
-        ReleaseVideoResources(destroyOwnedTexture: false);
+
+        if (videoPlayer != null)
+            ReleaseVideoResources(destroyOwnedTexture: false);
 
         if (separateAudioSource != null)
             StopAndUnloadIfSafe(separateAudioSource);
@@ -244,8 +262,9 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
     private void Update()
     {
-        // While open this popup is a focused media interface: it owns E/Escape
-        // through the central modal input helper (world interaction is blocked).
+        // While open this popup owns its local E/Escape close controls. World
+        // interaction remains available so an intentional selection of another
+        // migrated video can be handed to the focused-exhibit coordinator.
         if (!IsOpen)
             return;
 
@@ -255,9 +274,24 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         if (Time.frameCount <= openedFrame)
             return;
 
-        if (FocusedUiInput.CancelPressed ||
-            (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed))
+        if (FocusedUiInput.CancelPressed)
         {
+            Debug.Log($"{LogTag} Close requested from focused-media input");
+            ClosePopUp();
+            return;
+        }
+
+        if (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed)
+        {
+            // If E is aimed at this video or another migrated exhibit, let the
+            // router deliver that same press to the coordinator. Otherwise a
+            // local close could suppress router dispatch, or close and reopen
+            // this same target in one frame depending on Update order.
+            IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+            if (ReferenceEquals(target, this) ||
+                FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                return;
+
             Debug.Log($"{LogTag} Close requested from focused-media input");
             ClosePopUp();
         }
@@ -267,18 +301,13 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     public void OnXRSelect()
     {
         Debug.Log($"{LogTag} XR SelectEntered received");
-        if (IsOpen)
-        {
-            // Closing an open popup is always allowed.
-            ClosePopUp();
-        }
-        else if (InteractionRouter.Instance != null)
+        if (InteractionRouter.Instance != null)
         {
             InteractionRouter.Instance.RequestXRSelect(this);
         }
         else
         {
-            TogglePopUp();
+            OnInteract(InteractionActivation.XRSelect);
         }
     }
 
@@ -287,10 +316,55 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
         if (IsOpen)
             ClosePopUp();
         else
-            OpenPopUp();
+            RequestFocusedOpen();
     }
 
+    /// <summary>
+    /// Compatibility entry point retained for existing serialized callers.
+    /// Opening always goes through the focused-exhibit coordinator.
+    /// </summary>
     public void OpenPopUp()
+    {
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal();
+    }
+
+    void IFocusedExhibit.Close()
+    {
+        ClosePopUp();
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        // Isolated prefab/test scenes may run without the production bootstrap.
+        // Keep those scenes usable while making the missing service explicit.
+        Debug.LogWarning($"{LogTag} FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal();
+    }
+
+    private void RequestFocusedClose()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestClose(this);
+            return;
+        }
+
+        // Isolated prefab/test scenes may run without the production bootstrap.
+        ClosePopUp();
+    }
+
+    private void OpenInternal()
     {
         if (IsOpen)
         {
@@ -298,17 +372,19 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
             return;
         }
 
+        ForegroundAudioCoordinator.Instance?.StopCurrent();
+
         videoState = VideoInteractionState.Open;
         openedFrame = Time.frameCount;
         closeKeyReleasedSinceOpen = !FocusedUiInput.InteractHeld;
+        if (showClosePromptWhileOpen)
+            InteractionRouter.Instance?.SetFocusedSessionPrompt(this);
         Debug.Log($"{LogTag} OpenPopUp");
 
         // Close any other open video exhibit so two videos never buffer at once.
+        // This remains as a compatibility safety net for legacy video scripts;
+        // FocusedExhibitCoordinator is authoritative for MediaVideoController.
         VideoExhibitCoordinator.NotifyOpened(this, ClosePopUp);
-
-        // Focused media interface: block background world interaction and give
-        // the kiosk reset a close handle.
-        InteractionState.Block(this, InteractionBlockReason.Media, ClosePopUp);
 
         WorldInteractionPromptVisual.SetRootVisible(promptRoot, false);
 
@@ -332,15 +408,24 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
     public void ClosePopUp()
     {
         if (!IsOpen)
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             return;
+        }
 
         InteractionState.SuppressInputForCurrentFrame();
         videoState = VideoInteractionState.Closed;
         playWhenPrepared = false;
+        if (showClosePromptWhileOpen)
+            InteractionRouter.Instance?.ClearFocusedSessionPrompt(this);
+        HidePopup();
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         Debug.Log($"{LogTag} ClosePopUp");
 
         VideoExhibitCoordinator.NotifyClosed(this);
         MediaPlaybackRegistry.NotifyStopped(this);
+        // Compatibility cleanup for a video opened by an older build/path. New
+        // MediaVideoController opens no longer register a Media blocker.
         InteractionState.Unblock(this);
         BCaT.Production.Access.SubtitleService.Instance?.NotifyMediaStopped(videoFileName);
         VideoLoadingIndicator.Hide(ref loadingIndicator);
@@ -349,8 +434,6 @@ public class MediaVideoController : MonoBehaviour, IInteractionTarget
 
         if (separateAudioSource != null)
             StopAndUnloadIfSafe(separateAudioSource);
-
-        HidePopup();
 
         if (pauseWhileOpen != null)
             pauseWhileOpen.Play();

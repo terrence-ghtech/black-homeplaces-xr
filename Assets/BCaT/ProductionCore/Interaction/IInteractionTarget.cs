@@ -63,6 +63,13 @@ namespace BCaT.Production.Interaction
     }
 
     /// <summary>
+    /// Declares that a router target intentionally exists only for flat-screen
+    /// desktop interaction. Build validation must not require an XR select
+    /// surface for targets carrying this marker.
+    /// </summary>
+    public interface IDesktopOnlyInteractionTarget { }
+
+    /// <summary>
     /// An exhibit subsystem that manages its own interaction selection for a
     /// bounded area (the Black Kitchen station manager). While an exclusive zone
     /// is registered and active, the router suppresses its own selection and

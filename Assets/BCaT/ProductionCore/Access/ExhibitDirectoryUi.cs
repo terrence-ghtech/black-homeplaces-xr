@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using BCaT.Production.Interaction;
 using BCaT.Production.Shell;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,28 +7,75 @@ using UnityEngine.UI;
 namespace BCaT.Production.Access
 {
     /// <summary>
-    /// The exhibit directory. Entries are derived from live scene content —
-    /// every registered interaction target plus the Black Kitchen portal —
-    /// grouped by their organizer ancestors in the scene hierarchy, so the
-    /// directory can never drift from reality or present invented exhibits.
-    /// Availability reflects whether the exhibit is currently present and
-    /// active. No floor map is shown: no approved map asset exists, and an
-    /// improvised one could mislead visitors (documented limitation).
+    /// Visitor-facing exhibit directory. The curatorial titles and room names are
+    /// intentionally authored here rather than inferred from scene objects. This
+    /// keeps Unity, prefab, and component identifiers out of the visitor UI.
     /// </summary>
     public static class ExhibitDirectoryUi
     {
-        /// <summary>Friendly names for well-known exhibit controller types.</summary>
-        static readonly Dictionary<string, string> TypeLabels = new Dictionary<string, string>
+        sealed class Room
         {
-            { "BlackKitchenPortalController", "Black Kitchen (portal)" },
-            { "MediaVideoController", "Video exhibit" },
-            { "InteractableLinkLauncher", "External resource" },
-            { "SpatialAudioToggle", "Audio exhibit" },
-            { "HolographicSlideshow", "Slideshow" },
-            { "SimpleImagePopupInteractor", "Image exhibit" },
-            { "MeshellArticleNotebookOpener", "Article notebook" },
-            { "LindaLeaksPanelOpener", "Photo album" },
-            { "PrivacyLawExhibitController", "Privacy Law exhibit" },
+            public readonly string name;
+            public readonly string[] projectTitles;
+
+            public Room(string name, params string[] projectTitles)
+            {
+                this.name = name;
+                this.projectTitles = projectTitles;
+            }
+        }
+
+        // This is curatorial display data, not a runtime inventory. Add or move
+        // projects here when the visitor-facing exhibition plan changes.
+        static readonly Room[] Directory =
+        {
+            new Room("Front Yard",
+                "Black Homeplace as a Blueprint for Privacy Law",
+                "Black Homeplace Project Overview",
+                "Smile: Subject(ed) to Recognition"),
+            new Room("Hallway",
+                "Adinkrahene",
+                "Gye Nyame",
+                "Sankofa",
+                "Nine Night and Good Mourning",
+                "The Black Family Museum & Archive"),
+            new Room("Living Room",
+                "Black Parlors",
+                "Duppy Know Who Fi Frighten",
+                "Deja Vudu Radio",
+                "Rhythm and Rope"),
+            new Room("Sewing Room",
+                "You Don’t Know About Style, My Darling",
+                "In My Sisters Room",
+                "Deja Vudu Radio",
+                "Rhythm and Rope"),
+            new Room("Dining Room",
+                "Funtunfunefu Denkyemfunefu",
+                "Cooperative Hall of Fame",
+                "Linda Leaks housing Co-op map",
+                "Rhythm and Rope"),
+            new Room("Main Kitchen",
+                "Such Lovely Gravy",
+                "Ancestor Critical Fabulation",
+                "My Aunt Pat's House",
+                "Renovated Kitchen",
+                "My Grandma's Recipes",
+                "Homed: Recipes for Survival"),
+            new Room("Upstairs",
+                "And That Is the Truth – You Know What I’m Meaning",
+                "Housing Co-op Archive",
+                "Smile: Subject(ed) to Recognition",
+                "Research Papers",
+                "Home is where the art is",
+                "sugars.flute.loops",
+                "Black Homeplaces Community Mural",
+                "Nsaa"),
+            new Room("Backyard",
+                "The Kingsley Women’s home",
+                "BTMMP: Telling the Story of Murals",
+                "My Grandma’s Garden"),
+            new Room("Black Kitchen",
+                "Explore the Black Kitchen")
         };
 
         public static GameObject Open(Action onClose, Action closePauseMenu = null)
@@ -39,13 +84,13 @@ namespace BCaT.Production.Access
             var panel = UiFactory.CreateCenterPanel(canvas.transform, "Panel", new Vector2(1000, 860));
             var column = UiFactory.CreateColumn(panel, "Column", 10f);
 
-            UiFactory.CreateLabel(column, "Exhibit Directory", 32f);
+            UiFactory.CreateLabel(column, "EXHIBIT DIRECTORY", 32f);
             UiFactory.CreateLabel(column,
                 SceneManager.GetActiveScene().name == SceneTransitionState.BlackKitchenSceneName
                     ? "You are in: the Black Kitchen"
                     : "You are in: the main house", 20f);
 
-            // Scrollable list
+            // Keep the directory usable when its authored contents exceed the panel.
             var viewport = UiFactory.CreateRect(column, "Viewport");
             viewport.sizeDelta = new Vector2(0, 520);
             viewport.gameObject.AddComponent<Image>().color = new Color(0, 0, 0, 0.35f);
@@ -55,14 +100,12 @@ namespace BCaT.Production.Access
             content.anchorMin = new Vector2(0, 1);
             content.anchorMax = new Vector2(1, 1);
             content.pivot = new Vector2(0.5f, 1f);
-            // A fresh RectTransform defaults to 100x100; zero it so the
-            // stretched content matches the viewport width instead of
-            // overhanging (and clipping) 50px on each side.
             content.sizeDelta = Vector2.zero;
             content.anchoredPosition = Vector2.zero;
             var layout = content.gameObject.AddComponent<VerticalLayoutGroup>();
-            layout.spacing = 6;
+            layout.spacing = 10;
             layout.padding = new RectOffset(18, 18, 12, 12);
+            layout.childAlignment = TextAnchor.UpperCenter;
             layout.childControlWidth = true;
             layout.childControlHeight = true;
             layout.childForceExpandWidth = true;
@@ -75,25 +118,10 @@ namespace BCaT.Production.Access
             scroll.viewport = viewport;
             scroll.horizontal = false;
             scroll.vertical = true;
-            // Clamped keeps the list bound to its actual range (no elastic
-            // overscroll). The input module normalizes a wheel notch to 6
-            // units, so sensitivity 8 ≈ 48 scaled px (about 1.5 rows) per notch.
             scroll.movementType = ScrollRect.MovementType.Clamped;
             scroll.scrollSensitivity = 8;
 
-            foreach (var (room, entries) in CollectEntries())
-            {
-                var roomLabel = UiFactory.CreateLabel(content, room, 24f, TMPro.TextAlignmentOptions.Left);
-                roomLabel.fontStyle = TMPro.FontStyles.Bold;
-                foreach (var entry in entries)
-                {
-                    var line = UiFactory.CreateLabel(content,
-                        $"   {entry.name}  —  {(entry.available ? "available" : "currently unavailable")}",
-                        20f, TMPro.TextAlignmentOptions.Left);
-                    if (!entry.available)
-                        line.color = new Color(line.color.r, line.color.g, line.color.b, 0.55f);
-                }
-            }
+            PopulateContent(content);
 
             var footer = UiFactory.CreateRect(column, "Footer");
             footer.sizeDelta = new Vector2(0, 70);
@@ -120,66 +148,42 @@ namespace BCaT.Production.Access
             return canvas.gameObject;
         }
 
-        struct Entry
+        /// <summary>
+        /// Populates an existing scroll-content transform with the curated,
+        /// visitor-facing room and project list. The desktop overlay and Quest
+        /// in-headset menu therefore share one source of truth.
+        /// </summary>
+        public static void PopulateContent(Transform content)
         {
-            public string name;
-            public bool available;
+            if (content == null)
+                return;
+
+            foreach (var room in Directory)
+            {
+                CreateRoomHeading(content, room.name);
+                foreach (var projectTitle in room.projectTitles)
+                    UiFactory.CreateLabel(content, projectTitle, 21f, TMPro.TextAlignmentOptions.Center);
+            }
         }
 
-        static List<(string room, List<Entry> entries)> CollectEntries()
+        static void CreateRoomHeading(Transform parent, string roomName)
         {
-            var byRoom = new SortedDictionary<string, List<Entry>>();
+            var heading = UiFactory.CreateRect(parent, "Room_" + roomName.Replace(" ", string.Empty));
+            float height = 48f * UiFactory.TextScale;
+            heading.sizeDelta = new Vector2(0, height);
+            var layout = heading.gameObject.AddComponent<LayoutElement>();
+            layout.minHeight = height;
+            layout.preferredHeight = height;
+            heading.gameObject.AddComponent<Image>().color = new Color(0.28f, 0.23f, 0.16f, 0.9f);
 
-            // Registered router targets (available) — enumerate through the scene
-            // so inactive/unavailable exhibits are represented too.
-            foreach (var mb in UnityEngine.Object.FindObjectsByType<MonoBehaviour>(
-                         FindObjectsInactive.Include, FindObjectsSortMode.None))
-            {
-                if (mb == null) continue;
-                string typeName = mb.GetType().Name;
-                if (!TypeLabels.TryGetValue(typeName, out string label))
-                    continue;
-
-                string display = $"{CleanName(mb.gameObject.name)} ({label})";
-                string room = RoomOf(mb.transform);
-                bool available = mb.isActiveAndEnabled;
-
-                if (!byRoom.TryGetValue(room, out var list))
-                    byRoom[room] = list = new List<Entry>();
-                list.Add(new Entry { name = display, available = available });
-            }
-
-            var result = new List<(string, List<Entry>)>();
-            foreach (var pair in byRoom)
-            {
-                pair.Value.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.Ordinal));
-                result.Add((pair.Key, pair.Value));
-            }
-            return result;
+            var label = UiFactory.CreateLabel(heading, roomName, 25f, TMPro.TextAlignmentOptions.Center);
+            label.fontStyle = TMPro.FontStyles.Bold;
+            label.color = UiFactory.HighContrast ? Color.white : new Color(1f, 0.9f, 0.55f, 1f);
+            var labelRect = label.rectTransform;
+            labelRect.anchorMin = Vector2.zero;
+            labelRect.anchorMax = Vector2.one;
+            labelRect.offsetMin = Vector2.zero;
+            labelRect.offsetMax = Vector2.zero;
         }
-
-        /// <summary>Location description from organizer ancestors (factual, scene-derived).</summary>
-        static string RoomOf(Transform t)
-        {
-            // Walk up to the child of the content organizers; that object's name
-            // is the authored room/area grouping.
-            Transform current = t;
-            Transform best = null;
-            while (current.parent != null)
-            {
-                string parentName = current.parent.name;
-                if (parentName == "_SceneContent" || parentName == "Home" ||
-                    parentName == "ImplementedContributorInstallations" || parentName == "Environment")
-                {
-                    best = current;
-                    break;
-                }
-                current = current.parent;
-            }
-            return best != null ? CleanName(best.name) : "Main house";
-        }
-
-        static string CleanName(string raw) =>
-            raw.Replace('_', ' ').Replace("  ", " ").Trim();
     }
 }

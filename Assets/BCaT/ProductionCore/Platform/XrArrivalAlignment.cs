@@ -72,6 +72,51 @@ namespace BCaT.Production
 
             waitedThisSession = true;
 
+            if (bodyRoot == null)
+            {
+                Debug.LogWarning("[XrArrivalAlignment] No body root resolved; opening direction not established.");
+                yield break;
+            }
+
+            yield return WaitForTrackingAndFaceAuthoredPose(
+                bodyRoot,
+                bodyRoot.position,
+                bodyRoot.forward,
+                "main-house entrance",
+                captureEstablishedFrame: true);
+        }
+
+        /// <summary>
+        /// Aligns a transition arrival to an authored spawn without modifying
+        /// the tracked camera. Unlike the one-time main-house opening guard,
+        /// this runs for every requested transition so repeated Black Kitchen
+        /// entry/exit cycles cannot inherit the previous scene's physical yaw.
+        /// </summary>
+        public static IEnumerator WaitForTrackingAndFaceSpawn(Transform bodyRoot, Transform spawn)
+        {
+            if (bodyRoot == null || spawn == null)
+            {
+                Debug.LogWarning("[XrArrivalAlignment] No body root/spawn resolved; authored transition " +
+                                 "direction not established.");
+                yield break;
+            }
+
+            yield return WaitForTrackingAndFaceAuthoredPose(
+                bodyRoot,
+                spawn.position,
+                spawn.forward,
+                spawn.name,
+                captureEstablishedFrame: false);
+        }
+
+        static IEnumerator WaitForTrackingAndFaceAuthoredPose(
+            Transform bodyRoot,
+            Vector3 authoredPosition,
+            Vector3 authoredForward,
+            string authoredLabel,
+            bool captureEstablishedFrame)
+        {
+
             float deadline = Time.realtimeSinceStartup + TrackingWaitTimeoutSeconds;
             while (!IsHeadTrackingValid() && Time.realtimeSinceStartup < deadline)
                 yield return null;
@@ -80,14 +125,8 @@ namespace BCaT.Production
             {
                 Debug.LogWarning("[XrArrivalAlignment] HMD tracking was not valid within " +
                                  $"{TrackingWaitTimeoutSeconds:0.#}s; revealing without aiming the player at " +
-                                 "the house rather than holding them behind an opaque screen. Aiming against " +
+                                 $"'{authoredLabel}' rather than holding them behind an opaque screen. Aiming against " +
                                  "an untracked pose would point them somewhere arbitrary.");
-                yield break;
-            }
-
-            if (bodyRoot == null)
-            {
-                Debug.LogWarning("[XrArrivalAlignment] No body root resolved; opening direction not established.");
                 yield break;
             }
 
@@ -99,20 +138,17 @@ namespace BCaT.Production
                 yield break;
             }
 
-            // The body has just been placed on the authored MainEntrance spawn,
-            // whose forward is square to the house facade. That is the direction
-            // the player should be looking when the world appears.
-            Vector3 desiredHouseForward = bodyRoot.forward;
-            desiredHouseForward.y = 0f;
-            if (desiredHouseForward.sqrMagnitude < 0.000001f)
+            Vector3 desiredForward = authoredForward;
+            desiredForward.y = 0f;
+            if (desiredForward.sqrMagnitude < 0.000001f)
             {
-                Debug.LogWarning("[XrArrivalAlignment] The entrance forward is degenerate; opening direction " +
+                Debug.LogWarning($"[XrArrivalAlignment] Authored forward on '{authoredLabel}' is degenerate; " +
+                                 "arrival direction " +
                                  "not established.");
                 yield break;
             }
-            desiredHouseForward.Normalize();
+            desiredForward.Normalize();
 
-            Vector3 entrancePosition = bodyRoot.position;
             float bodyYawBefore = bodyRoot.eulerAngles.y;
             Transform head = origin.Camera.transform;
             float headYawBefore = head.eulerAngles.y;
@@ -121,7 +157,7 @@ namespace BCaT.Production
 
             // 1. Heading: rotate the rig about the camera so the head looks along
             //    the authored entrance forward.
-            bool aimed = origin.MatchOriginUpCameraForward(Vector3.up, desiredHouseForward);
+            bool aimed = origin.MatchOriginUpCameraForward(Vector3.up, desiredForward);
 
             // 2. Centring: move the rig so the TRACKED HEAD lands on the authored
             //    entrance X/Z, keeping the player's real eye height. Together with
@@ -131,25 +167,26 @@ namespace BCaT.Production
             //
             //    XROrigin.MoveCameraToWorldLocation is the obvious helper here and
             //    is deliberately NOT used: it derives its offset from
-            //    OriginInCameraSpacePos (camera-local, so already divided by the
-            //    rig's lossy scale) and rotates it without re-applying that scale,
-            //    so on this 1.44-scaled rig it lands the head ~0.19 m off the
-            //    target and shifts eye height by ~1.19 m. Measured, not assumed.
-            //    A plain world-space translation is exact at any rig scale and
-            //    leaves height alone by construction.
+            //    OriginInCameraSpacePos (camera-local) and can surprise authored
+            //    root placement when the rig has any non-identity ancestor scale.
+            //    The Quest rig is authored at scale 1; this world-space
+            //    translation keeps that invariant and leaves tracked height alone.
             Vector3 headNow = head.position;
-            Vector3 centringDelta = new Vector3(entrancePosition.x - headNow.x, 0f,
-                                                entrancePosition.z - headNow.z);
+            Vector3 centringDelta = new Vector3(authoredPosition.x - headNow.x, 0f,
+                                                authoredPosition.z - headNow.z);
             bodyRoot.position += centringDelta;
             bool centred = true;
 
-            EstablishedHeadPoint = head.position;
-            EstablishedForward = desiredHouseForward;
-            HasEstablishedFrame = true;
+            if (captureEstablishedFrame)
+            {
+                EstablishedHeadPoint = head.position;
+                EstablishedForward = desiredForward;
+                HasEstablishedFrame = true;
+            }
 
-            Debug.Log($"[XrArrivalAlignment] Opening frame established once on '{bodyRoot.name}' behind the " +
-                      $"opaque overlay (aimed={aimed}, centred={centred}): entrance={entrancePosition}, " +
-                      $"forward={desiredHouseForward}; head world {headWorldBefore} yaw {headYawBefore:0.0} -> " +
+            Debug.Log($"[XrArrivalAlignment] Authored arrival '{authoredLabel}' established on '{bodyRoot.name}' " +
+                      $"behind the opaque overlay (aimed={aimed}, centred={centred}): position={authoredPosition}, " +
+                      $"forward={desiredForward}; head world {headWorldBefore} yaw {headYawBefore:0.0} -> " +
                       $"{head.position} yaw {head.eulerAngles.y:0.0}; body yaw {bodyYawBefore:0.0} -> " +
                       $"{bodyRoot.eulerAngles.y:0.0}, body root now {bodyRoot.position}. " +
                       $"Head local pose untouched ({headLocalBefore} -> {head.localPosition}).");

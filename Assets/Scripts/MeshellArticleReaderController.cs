@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using BCaT.Production.Interaction;
+using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [Serializable]
@@ -19,7 +20,7 @@ public class MeshellArticleDocument
 /// The PDFs are DefaultImporter assets, so this reads optimized page images
 /// explicitly assigned in the scene instead of using an external browser.
 /// </summary>
-public class MeshellArticleReaderController : MonoBehaviour
+public class MeshellArticleReaderController : MonoBehaviour, IFocusedExhibit
 {
     private const string LogTag = "[MeshellArticleReader]";
     private const float OpenDistanceFromCamera = 1.75f;
@@ -44,14 +45,13 @@ public class MeshellArticleReaderController : MonoBehaviour
     [Header("Documents")]
     [SerializeField] private List<MeshellArticleDocument> articles = new List<MeshellArticleDocument>();
 
-    private readonly List<Behaviour> disabledBehaviours = new List<Behaviour>();
     private Sprite currentSprite;
     private int currentArticleIndex;
     private int currentPageIndex;
     private bool isOpen;
     private bool listenersRegistered;
-    private CursorLockMode previousLockMode;
-    private bool previousCursorVisible;
+    private bool controlsSuspended;
+    private int requestedArticleIndex;
     private Transform originalPopupParent;
     private int originalPopupSiblingIndex;
     private Vector3 originalPopupLocalPosition;
@@ -74,6 +74,14 @@ public class MeshellArticleReaderController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (isOpen)
+            Close();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            ReleasePlayerControls();
+        }
+
         foreach (Material material in ownedModalMaterials)
         {
             if (material == null)
@@ -86,6 +94,17 @@ public class MeshellArticleReaderController : MonoBehaviour
         }
 
         ownedModalMaterials.Clear();
+    }
+
+    private void OnDisable()
+    {
+        if (isOpen)
+            Close();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            ReleasePlayerControls();
+        }
     }
 
     private void RegisterButtonListeners()
@@ -120,6 +139,29 @@ public class MeshellArticleReaderController : MonoBehaviour
 
     public void OpenArticle(int articleIndex)
     {
+        requestedArticleIndex = articleIndex;
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal(requestedArticleIndex);
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        Debug.LogWarning($"{LogTag} FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal(requestedArticleIndex);
+    }
+
+    private void OpenInternal(int articleIndex)
+    {
         Debug.Log($"{LogTag} OpenArticle called with articleIndex={articleIndex}. Article count={articles.Count}.");
         if (articles.Count == 0)
             return;
@@ -131,19 +173,11 @@ public class MeshellArticleReaderController : MonoBehaviour
         {
             isOpen = true;
             RegisterButtonListeners();
-            previousLockMode = Cursor.lockState;
-            previousCursorVisible = Cursor.visible;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            DisableWorldInput();
+            SuspendPlayerControls();
             Show();
             PositionPopupInFrontOfCamera();
             LogVisibilityState();
 
-            // Focused exhibit interface: block background world interaction and
-            // give the kiosk reset a close handle.
-            BCaT.Production.Interaction.InteractionState.Block(this,
-                BCaT.Production.Interaction.InteractionBlockReason.Modal, Close);
         }
 
         Refresh();
@@ -152,16 +186,19 @@ public class MeshellArticleReaderController : MonoBehaviour
     public void Close()
     {
         if (!isOpen)
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             return;
+        }
 
+        InteractionState.SuppressInputForCurrentFrame();
         isOpen = false;
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
-        ClearCurrentSprite();
         Hide();
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+        InteractionState.Unblock(this);
+        ClearCurrentSprite();
         RestorePopupTransform();
-        RestoreWorldInput();
-        Cursor.lockState = previousLockMode;
-        Cursor.visible = previousCursorVisible;
+        ReleasePlayerControls();
     }
 
     public void PreviousArticle()
@@ -455,48 +492,21 @@ public class MeshellArticleReaderController : MonoBehaviour
             popupCanvas.enabled = false;
     }
 
-    private void DisableWorldInput()
+    private void SuspendPlayerControls()
     {
-        disabledBehaviours.Clear();
-        foreach (Behaviour behaviour in FindObjectsByType<Behaviour>(FindObjectsInactive.Exclude))
-        {
-            if (behaviour == null || !behaviour.enabled || behaviour.transform.IsChildOf(transform))
-                continue;
+        if (controlsSuspended)
+            return;
 
-            if (!ShouldDisableWhileOpen(behaviour))
-                continue;
-
-            behaviour.enabled = false;
-            disabledBehaviours.Add(behaviour);
-        }
+        PlayerControlGate.Suspend(this);
+        controlsSuspended = true;
     }
 
-    private bool ShouldDisableWhileOpen(Behaviour behaviour)
+    private void ReleasePlayerControls()
     {
-        string typeName = behaviour.GetType().Name;
-        string fullName = behaviour.GetType().FullName ?? typeName;
+        if (!controlsSuspended)
+            return;
 
-        return typeName == "FirstPersonController"
-            || typeName == "MeshellArticleNotebookInputRouter"
-            || typeName == "MeshellArticleNotebookOpener"
-            || typeName == "InteractableLinkLauncher"
-            || typeName == "LindaLeaksPanelOpener"
-            || typeName == "MediaVideoController"
-            || fullName.Contains("ContinuousMoveProvider")
-            || fullName.Contains("ContinuousTurnProvider")
-            || fullName.Contains("SnapTurnProvider")
-            || fullName.Contains("TeleportationProvider")
-            || fullName.Contains("XRSimpleInteractable");
-    }
-
-    private void RestoreWorldInput()
-    {
-        foreach (Behaviour behaviour in disabledBehaviours)
-        {
-            if (behaviour != null)
-                behaviour.enabled = true;
-        }
-
-        disabledBehaviours.Clear();
+        PlayerControlGate.Resume(this);
+        controlsSuspended = false;
     }
 }

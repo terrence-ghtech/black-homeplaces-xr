@@ -128,8 +128,7 @@ public class BlackKitchenPortalController : MonoBehaviour, IInteractionTarget
             transitionOverlay.alpha = 0f;
 
         if (SceneTransitionState.SourceSceneName == SceneTransitionState.BlackKitchenSceneName &&
-            (SceneTransitionState.DestinationSpawnId == SceneTransitionState.MainHouseKitchenReturnQuestSpawnId ||
-             SceneTransitionState.DestinationSpawnId == SceneTransitionState.MainHouseKitchenReturnDesktopSpawnId))
+            SceneTransitionState.DestinationSpawnId == SceneTransitionState.MainHouseKitchenReturnSpawnId)
         {
             suppressEnterUntil = Time.unscaledTime + ReturnReentrySuppressSeconds;
             InteractionState.SuppressInputForCurrentFrame();

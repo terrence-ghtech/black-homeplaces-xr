@@ -67,7 +67,11 @@ namespace BCaT.Production.Shell
 
             var root = new GameObject("BCaT_InteractionPrompt",
                 typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(CanvasGroup));
-            Object.DontDestroyOnLoad(root);
+            // Diagnostics exercise the real prompt path from edit-mode batch
+            // tests, where DontDestroyOnLoad is invalid. Runtime persistence is
+            // unchanged.
+            if (Application.isPlaying)
+                Object.DontDestroyOnLoad(root);
             rootRect = root.GetComponent<RectTransform>();
             canvas = root.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;

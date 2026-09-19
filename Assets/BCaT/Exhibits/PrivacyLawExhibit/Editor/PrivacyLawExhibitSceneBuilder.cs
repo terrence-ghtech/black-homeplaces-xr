@@ -93,12 +93,12 @@ public static class PrivacyLawExhibitSceneBuilder
         expanded.AddComponent<GraphicRaycaster>();
         AddComponentIfAvailable(expanded, "UnityEngine.XR.Interaction.Toolkit.UI.TrackedDeviceGraphicRaycaster");
         RectTransform cr = expanded.GetComponent<RectTransform>();
-        cr.sizeDelta = new Vector2(1400f, 760f);
+        cr.sizeDelta = new Vector2(1400f, 860f);
         expanded.transform.localPosition = new Vector3(0f, 1.55f, 0.18f);
         expanded.transform.localRotation = Quaternion.identity;
         expanded.transform.localScale = Vector3.one * 0.00135f;
 
-        Image mainPanel = UiImage(expanded.transform, "MainPanel", new Color(0.01f, 0.06f, 0.12f, 0.86f), new Vector2(0f, 0f), new Vector2(1360f, 720f));
+        Image mainPanel = UiImage(expanded.transform, "MainPanel", new Color(0.01f, 0.06f, 0.12f, 0.86f), new Vector2(0f, 0f), new Vector2(1360f, 820f));
         mainPanel.material = dimPanel;
         RectTransform header = UiGroup(expanded.transform, "Header", new Vector2(275f, 308f), new Vector2(780f, 80f));
         Text(header, "1", new Vector2(-355f, 10f), new Vector2(42f, 42f), 22, TextAlignmentOptions.Center);
@@ -119,10 +119,10 @@ public static class PrivacyLawExhibitSceneBuilder
         GameObject page02 = Page(content.transform, "Page_02", "The Family’s Three-Bedroom Home", figure02, Paragraph2);
         GameObject page03 = Page(content.transform, "Page_03", "The Haze", figure03, Paragraph3 + "\n\n" + Paragraph4 + "\n\n" + Paragraph5);
 
-        Button prev = SmallButton(expanded.transform, "PreviousButton", "<", new Vector2(-185f, -288f), new Vector2(58f, 58f));
-        TMP_Text indicator = Text(expanded.transform, "PageIndicator", new Vector2(0f, -288f), new Vector2(130f, 48f), 26, TextAlignmentOptions.Center);
-        Button next = SmallButton(expanded.transform, "NextButton", ">", new Vector2(185f, -288f), new Vector2(58f, 58f));
-        Button close = SmallButton(expanded.transform, "CloseButton", "Close Exhibit", new Vector2(505f, -288f), new Vector2(210f, 58f));
+        Button prev = SmallButton(expanded.transform, "PreviousButton", "<", new Vector2(-185f, -350f), new Vector2(58f, 58f));
+        TMP_Text indicator = Text(expanded.transform, "PageIndicator", new Vector2(0f, -350f), new Vector2(130f, 48f), 26, TextAlignmentOptions.Center);
+        Button next = SmallButton(expanded.transform, "NextButton", ">", new Vector2(185f, -350f), new Vector2(58f, 58f));
+        Button close = SmallButton(expanded.transform, "CloseButton", "Close Exhibit", new Vector2(505f, -350f), new Vector2(210f, 58f));
         Button closeIcon = SmallButton(expanded.transform, "CloseIconButton", "X", new Vector2(642f, 320f), new Vector2(46f, 46f));
 
         GameObject controllerObject = Child(root.transform, "PrivacyLawExhibitController");
@@ -233,9 +233,24 @@ public static class PrivacyLawExhibitSceneBuilder
         Image img = UiImage(parent, name, new Color(0.02f, 0.18f, 0.30f, 0.66f), pos, size);
         Button button = img.gameObject.AddComponent<Button>();
         button.targetGraphic = img;
+        ConfigureButtonFeedback(button, img.color);
         if (!string.IsNullOrEmpty(text))
             Text(img.transform, text, Vector2.zero, size, 24, TextAlignmentOptions.Center);
         return button;
+    }
+
+    private static void ConfigureButtonFeedback(Button button, Color normalColor)
+    {
+        ColorBlock colors = button.colors;
+        colors.normalColor = normalColor;
+        colors.highlightedColor = new Color(0.16f, 0.55f, 0.86f, 0.95f);
+        colors.pressedColor = new Color(0.10f, 0.38f, 0.68f, 1f);
+        colors.selectedColor = colors.highlightedColor;
+        colors.disabledColor = new Color(normalColor.r, normalColor.g, normalColor.b, 0.35f);
+        colors.colorMultiplier = 1f;
+        colors.fadeDuration = 0.08f;
+        button.transition = Selectable.Transition.ColorTint;
+        button.colors = colors;
     }
 
     private static TMP_Text Text(Transform parent, string text, Vector2 pos, Vector2 size, int fontSize, TextAlignmentOptions align)

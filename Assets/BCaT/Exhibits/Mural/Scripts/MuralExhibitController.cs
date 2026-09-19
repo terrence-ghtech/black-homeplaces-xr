@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
+public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget, IFocusedExhibit
 {
     public enum GalleryItemType
     {
@@ -72,8 +72,6 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
     private int currentIndex;
     private int openedFrame = -1;
     private bool closeKeyReleasedSinceOpen;
-    private bool previousCursorVisible;
-    private CursorLockMode previousCursorLockState;
     private bool controlsSuspended;
 
     private bool CurrentItemIsVideo =>
@@ -135,20 +133,14 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         WorldInteractionPromptVisual.SetText(worldPromptText, GetPrompt(InteractionPromptText.IsXRActive()));
     }
 
-    public void OnInteract(InteractionActivation activation) => OpenGallery();
+    public void OnInteract(InteractionActivation activation) => RequestFocusedOpen();
 
     public void OnXRSelect()
     {
-        if (isOpen)
-        {
-            CloseGallery();
-            return;
-        }
-
         if (InteractionRouter.Instance != null)
             InteractionRouter.Instance.RequestXRSelect(this);
         else
-            OpenGallery();
+            RequestFocusedOpen();
     }
 
     private void Awake()
@@ -172,10 +164,16 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         InteractionRouter.Unregister(this);
         if (isOpen)
             CloseGallery();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            ReleasePlayerControls();
+        }
     }
 
     private void OnDestroy()
     {
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         ReleaseVideoResources(true);
         if (videoPlayer != null)
         {
@@ -202,9 +200,18 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         if (Time.frameCount <= openedFrame)
             return;
 
-        if (FocusedUiInput.CancelPressed ||
-            (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed))
+        if (FocusedUiInput.CancelPressed)
         {
+            CloseGallery();
+            return;
+        }
+
+        if (closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed)
+        {
+            IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+            if (FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                return;
+
             CloseGallery();
             return;
         }
@@ -217,6 +224,33 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
     public void OpenGallery()
     {
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal();
+    }
+
+    void IFocusedExhibit.Close()
+    {
+        CloseGallery();
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        Debug.LogWarning("[MuralExhibit] FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal();
+    }
+
+    private void OpenInternal()
+    {
         if (isOpen)
             return;
 
@@ -227,26 +261,27 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
 
         ShowGallery();
         PositionGalleryInFrontOfCamera();
-        CaptureInput();
         SuspendPlayerControls();
         Refresh();
 
-        InteractionState.Block(this, InteractionBlockReason.Modal, CloseGallery);
     }
 
     public void CloseGallery()
     {
         if (!isOpen)
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             return;
+        }
 
         InteractionState.SuppressInputForCurrentFrame();
         isOpen = false;
+        HideGallery();
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
         StopCurrentVideo();
         ReleaseVideoResources(false);
         MediaPlaybackRegistry.NotifyStopped(this);
         InteractionState.Unblock(this);
-        HideGallery();
-        RestoreInput();
         ReleasePlayerControls();
     }
 
@@ -445,6 +480,7 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
         if (videoPlayer == null)
             return;
 
+        ForegroundAudioCoordinator.Instance?.StopCurrent();
         playWhenPrepared = false;
         videoPlayer.time = 0;
         if (videoDisplay != null)
@@ -617,20 +653,6 @@ public sealed class MuralExhibitController : MonoBehaviour, IInteractionTarget
                 return camera;
 
         return null;
-    }
-
-    private void CaptureInput()
-    {
-        previousCursorLockState = Cursor.lockState;
-        previousCursorVisible = Cursor.visible;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    private void RestoreInput()
-    {
-        Cursor.lockState = previousCursorLockState;
-        Cursor.visible = previousCursorVisible;
     }
 
     private void SuspendPlayerControls()

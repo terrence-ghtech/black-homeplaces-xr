@@ -870,6 +870,9 @@ namespace BCaT.EditorTools
             if (!capability.SupportsQuest)
                 return false;
 
+            if (target is IDesktopOnlyInteractionTarget)
+                return false;
+
             string destination = ResolveDestinationSceneName(target);
             return string.IsNullOrWhiteSpace(destination) || SceneSupportsQuest(destination);
         }
@@ -1111,18 +1114,10 @@ namespace BCaT.EditorTools
                     byId[spawn.SpawnId] = HierarchyPath(go.transform);
             }
 
-            // The main house authors one kitchen return per platform branch, so
-            // BOTH must exist: checking only the id the editor's current platform
-            // resolves would let the other platform's return point go missing
-            // without any build failing.
             string[] expected = scene switch
             {
                 "BlackKitchen_MemoryScene" => new[] { SceneTransitionState.BlackKitchenEntrySpawnId },
-                "BH_XR_MainScene" => new[]
-                {
-                    SceneTransitionState.MainHouseKitchenReturnQuestSpawnId,
-                    SceneTransitionState.MainHouseKitchenReturnDesktopSpawnId,
-                },
+                "BH_XR_MainScene" => new[] { SceneTransitionState.MainHouseKitchenReturnSpawnId },
                 _ => null,
             };
 

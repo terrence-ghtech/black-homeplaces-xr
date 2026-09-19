@@ -26,7 +26,7 @@ namespace BCaT.Production.Shell
             Settings.SettingsManager.Current.accessibility.highContrastUi;
 
         public static Color PanelColor =>
-            HighContrast ? new Color(0f, 0f, 0f, 0.97f) : new Color(0.07f, 0.06f, 0.05f, 0.92f);
+            HighContrast ? Color.black : new Color(0.07f, 0.06f, 0.05f, 1f);
 
         public static Color ButtonColor =>
             HighContrast ? new Color(0.05f, 0.05f, 0.05f, 1f) : new Color(0.18f, 0.15f, 0.12f, 0.95f);

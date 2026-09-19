@@ -104,10 +104,24 @@ public sealed class SceneArrivalController : MonoBehaviour
         {
             SceneSpawnPoint spawnPoint = FindSpawnPoint(spawnId);
             if (spawnPoint != null)
+            {
                 yield return PlaceActivePlayerAtRoutine(spawnPoint.transform, desktopSpawnSafetyLift);
+                if (ShouldAlignXrToAuthoredTransitionSpawn(spawnId))
+                    yield return BCaT.Production.XrArrivalAlignment.WaitForTrackingAndFaceSpawn(
+                        ResolvePlayerRoot(), spawnPoint.transform);
+            }
             else
                 Debug.LogWarning($"[SceneArrivalController] Spawn point '{spawnId}' was not found in '{gameObject.scene.name}'. Continuing at the scene default player position.");
         }
+    }
+
+    private static bool ShouldAlignXrToAuthoredTransitionSpawn(string spawnId)
+    {
+        if (!BCaT.Production.BCaTPlatform.IsQuest)
+            return false;
+
+        return spawnId == SceneTransitionState.BlackKitchenEntrySpawnId ||
+               spawnId == SceneTransitionState.MainHouseKitchenReturnSpawnId;
     }
 
     public static void PlaceActivePlayerAt(Transform target)
@@ -372,8 +386,8 @@ public sealed class SceneArrivalController : MonoBehaviour
         if (gameObject.scene.name != SceneTransitionState.MainHouseSceneName)
             return false;
 
-        // The entrance arrival is the one the menu requests; the kitchen return
-        // uses its own spawn id and must keep the pose the player left with.
+        // The entrance arrival is the one the menu requests. Black Kitchen
+        // entry/return use their own per-transition authored alignment above.
         string spawnId = SceneTransitionState.DestinationSpawnId;
         return string.IsNullOrWhiteSpace(spawnId) ||
                spawnId == BCaT.Production.Shell.ResetService.MainEntranceSpawnId;

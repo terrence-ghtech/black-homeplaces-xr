@@ -1855,6 +1855,10 @@ PrefabInstance:
       propertyPath: GroundLayers.m_Bits
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: JumpHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Name
       value: DesktopRig
@@ -2645,8 +2649,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -93, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.84, y: 1.297}
-  m_SizeDelta: {x: 760, y: 300}
+  m_AnchoredPosition: {x: -2.84, y: 1.2952}
+  m_SizeDelta: {x: 760, y: 350.0007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1166285146
 Canvas:
@@ -3005,8 +3009,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 740, y: 280}
+  m_AnchoredPosition: {x: 0, y: -2.4}
+  m_SizeDelta: {x: 740, y: 349.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1394359015
 MonoBehaviour:
@@ -4251,9 +4255,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Credits\nClarisa James \u2014 Educator; Founder, DIVAS for Social Justice\nIn
-    conversation, 2025\nThis work is presented as a living collaboration rather than
-    a memorial or archive."
+  m_text: "Black Kitchens as Spaces of Cultural Memory and Resilience\n\nYuhanxiao
+    (Maggie) Ma, in conversation with Clarisa James \u2014 Educator; Founder, DIVAS
+    for Social Justice, 2025. \n\n3D Kitchen with oral history\n\nThis kitchen island
+    functions not only as an archive, but as a symbolic centerpiece of Black domestic
+    life\u2014a place of gathering, making, and memory. An intimate, intergenerational
+    space of storytelling, tradition, and cultural preservation."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

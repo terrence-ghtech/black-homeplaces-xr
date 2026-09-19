@@ -771,6 +771,7 @@ MonoBehaviour:
     xrPrompt: 
     verb: 3
     objectName: 
+  showClosePromptWhileOpen: 1
   billboardText: {fileID: 0}
   popupRoot: {fileID: 1692993011084390161}
   popupCanvas: {fileID: 3323364426220538405}

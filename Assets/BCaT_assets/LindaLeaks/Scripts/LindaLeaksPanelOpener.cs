@@ -11,7 +11,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// The artifact itself is the interaction target and the interaction hint
 /// lives on the accompanying plaque (no floating prompt).
 /// </summary>
-public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
+public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget, IFocusedExhibitTarget
 {
     private enum PanelTarget
     {
@@ -40,6 +40,10 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
         new SharedInteractionPromptConfig { verb = SharedInteractionVerb.Open };
 
     private Collider[] ownColliders;
+    // The router and this focused-album shortcut both read E in Update.  Record
+    // the opening frame so the router's press cannot immediately toggle the
+    // album back closed later in that same frame.
+    private int albumOpenedByRouterFrame = -1;
 
     // ---- IInteractionTarget --------------------------------------------
 
@@ -56,9 +60,15 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
     // actually aiming at. Priority dominates both selectors, so 1 makes the
     // small target win exactly when both are candidates.
     public int Priority => 1;
-    public bool IsAvailable => isActiveAndEnabled;
+    public bool IsAvailable => isActiveAndEnabled && !TargetIsOpen;
     public bool AllowDesktopClick => true;
     public bool Exists => this != null;
+    public IFocusedExhibit FocusedExhibit => target switch
+    {
+        PanelTarget.VideoPopup => videoPopUp,
+        PanelTarget.PhotoAlbum => photoAlbum,
+        _ => meshellArticleReader != null ? meshellArticleReader.FocusedExhibit : null,
+    };
 
     public Collider[] OwnColliders
     {
@@ -129,6 +139,9 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
 
         if (FocusedUiInput.KeyPressed(interactionKey))
         {
+            if (Time.frameCount == albumOpenedByRouterFrame)
+                return;
+
             if (advanceAlbumWithInteractionKey)
                 photoAlbum.AdvanceOrCloseAtEnd();
             else
@@ -203,11 +216,14 @@ public class LindaLeaksPanelOpener : MonoBehaviour, IInteractionTarget
 
         if (target == PanelTarget.PhotoAlbum && photoAlbum != null)
         {
-            photoAlbum.ToggleAlbum();
+            photoAlbum.OpenAlbum();
+            albumOpenedByRouterFrame = Time.frameCount;
             return;
         }
 
         if (meshellArticleReader != null)
             meshellArticleReader.Open();
     }
+
+    private bool TargetIsOpen => FocusedExhibit != null && FocusedExhibit.IsOpen;
 }

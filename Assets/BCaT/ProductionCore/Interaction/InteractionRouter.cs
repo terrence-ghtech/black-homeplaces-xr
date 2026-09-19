@@ -31,6 +31,7 @@ namespace BCaT.Production.Interaction
         public IInteractionTarget CurrentTarget { get; private set; }
 
         IInteractionInputProvider input;
+        IInteractionTarget focusedSessionPromptTarget;
         Camera cachedCamera;
         float lastDispatchTime = -999f;
         bool missingCameraLogged;
@@ -48,6 +49,28 @@ namespace BCaT.Production.Interaction
             registry.Remove(target);
             if (Instance != null && ReferenceEquals(Instance.CurrentTarget, target))
                 Instance.SetCurrentTarget(null);
+            if (Instance != null && ReferenceEquals(Instance.focusedSessionPromptTarget, target))
+                Instance.ClearFocusedSessionPrompt(target);
+        }
+
+        /// <summary>
+        /// Supplies the fallback prompt for an already-open focused experience.
+        /// World focus still wins, so looking at another exhibit continues to
+        /// advertise and perform replacement rather than toggling this target.
+        /// </summary>
+        public void SetFocusedSessionPrompt(IInteractionTarget target)
+        {
+            focusedSessionPromptTarget = target;
+            RefreshVisiblePrompt();
+        }
+
+        public void ClearFocusedSessionPrompt(IInteractionTarget target)
+        {
+            if (!ReferenceEquals(focusedSessionPromptTarget, target))
+                return;
+
+            focusedSessionPromptTarget = null;
+            RefreshVisiblePrompt();
         }
 
         public static void RegisterZone(IExclusiveInteractionZone zone)
@@ -86,6 +109,7 @@ namespace BCaT.Production.Interaction
             cachedCamera = null;
             missingCameraLogged = false;
             xrHoverTargets.Clear();
+            focusedSessionPromptTarget = null;
             SetCurrentTarget(null);
         }
 
@@ -122,7 +146,6 @@ namespace BCaT.Production.Interaction
                     InteractionState.TryClose(InteractionBlockReason.Media))
                 {
                     SetCurrentTarget(null);
-                    xrHoverTargets.Clear();
                     foreach (var zone in zones)
                         if (zone.ZoneActive)
                             zone.ZoneSuppressPrompts();
@@ -130,7 +153,6 @@ namespace BCaT.Production.Interaction
                 }
 
                 SetCurrentTarget(null);
-                xrHoverTargets.Clear();
                 foreach (var zone in zones)
                     if (zone.ZoneActive)
                         zone.ZoneSuppressPrompts();
@@ -337,9 +359,7 @@ namespace BCaT.Production.Interaction
         {
             if (ReferenceEquals(CurrentTarget, target))
             {
-                // Refresh the prompt text even without a focus change (dynamic verbs).
-                if (target != null)
-                    Shell.InteractionPromptUi.Show(target.GetPrompt(PlatformCapabilities.UseXRPrompts));
+                RefreshVisiblePrompt();
                 return;
             }
 
@@ -355,12 +375,40 @@ namespace BCaT.Production.Interaction
             {
                 CurrentTarget.OnFocusChanged(true);
                 Debug.Log($"[InteractionRouter] Scene '{SceneManager.GetActiveScene().name}' focus gained: '{TargetName(CurrentTarget)}' prompt='{CurrentTarget.GetPrompt(PlatformCapabilities.UseXRPrompts)}'.");
-                Shell.InteractionPromptUi.Show(CurrentTarget.GetPrompt(PlatformCapabilities.UseXRPrompts));
+                RefreshCurrentPrompt();
             }
             else
             {
-                Shell.InteractionPromptUi.Hide();
+                RefreshVisiblePrompt();
             }
+        }
+
+        void RefreshCurrentPrompt()
+        {
+            if (CurrentTarget == null || !CurrentTarget.Exists)
+                return;
+
+            Shell.InteractionPromptUi.Show(
+                CurrentTarget.GetPrompt(PlatformCapabilities.UseXRPrompts));
+        }
+
+        void RefreshVisiblePrompt()
+        {
+            if (CurrentTarget != null && CurrentTarget.Exists)
+            {
+                RefreshCurrentPrompt();
+                return;
+            }
+
+            if (!InteractionState.IsBlocked &&
+                focusedSessionPromptTarget != null && focusedSessionPromptTarget.Exists)
+            {
+                Shell.InteractionPromptUi.Show(
+                    focusedSessionPromptTarget.GetPrompt(PlatformCapabilities.UseXRPrompts));
+                return;
+            }
+
+            Shell.InteractionPromptUi.Hide();
         }
 
         /// <summary>
@@ -420,6 +468,18 @@ namespace BCaT.Production.Interaction
             catch (System.Exception e)
             {
                 Debug.LogError($"[InteractionRouter] Target '{target}' threw during OnInteract: {e}");
+            }
+
+            // Reflect the action that would happen on the next press in this
+            // same frame. Toggle targets remain selected and change their verb;
+            // focused exhibits become unavailable while open, so their prompt
+            // is hidden instead of continuing to advertise an inert "Open".
+            if (ReferenceEquals(CurrentTarget, target))
+            {
+                if (target.Exists && target.IsAvailable)
+                    RefreshCurrentPrompt();
+                else
+                    SetCurrentTarget(null);
             }
         }
 

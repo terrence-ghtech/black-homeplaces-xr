@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using BCaT.Production.Interaction;
+using BCaT.Production.Shell;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,7 +14,7 @@ using UnityEngine.UI;
 /// close buttons are XR-ray clickable (canvas needs TrackedDeviceGraphicRaycaster).
 /// Uses the PhotoEntry type (sprite/title/caption).
 /// </summary>
-public class HolographicSlideshow : MonoBehaviour
+public class HolographicSlideshow : MonoBehaviour, IFocusedExhibit
 {
     private const float OpenDistanceFromCamera = 1.75f;
 
@@ -43,14 +45,12 @@ public class HolographicSlideshow : MonoBehaviour
     [Header("External Link")]
     [SerializeField] private string externalWebsiteUrl;
 
-    private readonly List<Behaviour> disabledWorldInputBehaviours = new List<Behaviour>();
     private int currentIndex;
     private bool isOpen;
     private bool capturedDesktopInput;
-    private bool previousCursorVisible;
+    private bool controlsSuspended;
     private bool closeKeyReleasedSinceOpen;
     private int openedFrame = -1;
-    private CursorLockMode previousCursorLockState;
 
     private string LogTag => $"[Slideshow:{gameObject.name}]";
 
@@ -62,7 +62,20 @@ public class HolographicSlideshow : MonoBehaviour
 
     private void OnDestroy()
     {
-        BCaT.Production.Interaction.InteractionState.Unblock(this);
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+        InteractionState.Unblock(this);
+        ReleasePlayerControls();
+    }
+
+    private void OnDisable()
+    {
+        if (isOpen)
+            CloseAlbum();
+        else
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
+            ReleasePlayerControls();
+        }
     }
 
     private void Update()
@@ -76,10 +89,18 @@ public class HolographicSlideshow : MonoBehaviour
         if (Time.frameCount > openedFrame && !BCaT.Production.Interaction.FocusedUiInput.InteractHeld)
             closeKeyReleasedSinceOpen = true;
 
-        if (Time.frameCount > openedFrame
-            && (BCaT.Production.Interaction.FocusedUiInput.CancelPressed
-                || (closeKeyReleasedSinceOpen && BCaT.Production.Interaction.FocusedUiInput.InteractPressed)))
+        if (Time.frameCount > openedFrame && FocusedUiInput.CancelPressed)
         {
+            CloseAlbum();
+            return;
+        }
+
+        if (Time.frameCount > openedFrame && closeKeyReleasedSinceOpen && FocusedUiInput.InteractPressed)
+        {
+            IInteractionTarget target = InteractionRouter.Instance?.CurrentTarget;
+            if (FocusedExhibitCoordinator.Instance?.IsReplacementTarget(target, this) == true)
+                return;
+
             CloseAlbum();
             return;
         }
@@ -99,13 +120,46 @@ public class HolographicSlideshow : MonoBehaviour
     public void OnXRSelect()
     {
         Debug.Log($"{LogTag} XR SelectEntered received");
-        if (isOpen)
-            CloseAlbum();
-        else
-            OpenAlbum();
+        LindaLeaksPanelOpener target = GetComponentInChildren<LindaLeaksPanelOpener>(true);
+        if (target == null)
+            target = GetComponentInParent<LindaLeaksPanelOpener>(true);
+        if (target != null && InteractionRouter.Instance != null)
+        {
+            InteractionRouter.Instance.RequestXRSelect(target);
+            return;
+        }
+
+        RequestFocusedOpen();
     }
 
     public void OpenAlbum()
+    {
+        RequestFocusedOpen();
+    }
+
+    void IFocusedExhibit.Open()
+    {
+        OpenInternal();
+    }
+
+    void IFocusedExhibit.Close()
+    {
+        CloseAlbum();
+    }
+
+    private void RequestFocusedOpen()
+    {
+        if (FocusedExhibitCoordinator.Instance != null)
+        {
+            FocusedExhibitCoordinator.Instance.RequestOpen(this);
+            return;
+        }
+
+        Debug.LogWarning($"{LogTag} FocusedExhibitCoordinator is unavailable; opening without coordination.");
+        OpenInternal();
+    }
+
+    private void OpenInternal()
     {
         if (isOpen)
             return;
@@ -117,19 +171,20 @@ public class HolographicSlideshow : MonoBehaviour
         Refresh();
         CaptureDesktopInput();
 
-        // Focused exhibit interface: block background world interaction and
-        // give the kiosk reset a close handle.
-        BCaT.Production.Interaction.InteractionState.Block(this,
-            BCaT.Production.Interaction.InteractionBlockReason.Modal, CloseAlbum);
     }
 
     public void CloseAlbum()
     {
         if (!isOpen)
+        {
+            FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
             return;
+        }
 
         Debug.Log($"{LogTag} CloseAlbum");
+        InteractionState.SuppressInputForCurrentFrame();
         HideAlbum();
+        FocusedExhibitCoordinator.Instance?.NotifyClosed(this);
     }
 
     public void ToggleAlbum()
@@ -186,7 +241,7 @@ public class HolographicSlideshow : MonoBehaviour
             return;
 
         Debug.Log($"{LogTag} Opening external link: {externalWebsiteUrl}");
-        Application.OpenURL(externalWebsiteUrl);
+        BCaT.Production.QuestBrowserHeadTracking.OpenUrl(externalWebsiteUrl);
     }
 
     private void Refresh()
@@ -299,11 +354,7 @@ public class HolographicSlideshow : MonoBehaviour
             return;
 
         capturedDesktopInput = true;
-        previousCursorLockState = Cursor.lockState;
-        previousCursorVisible = Cursor.visible;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        DisableWorldInput();
+        SuspendPlayerControls();
     }
 
     private void RestoreDesktopInput()
@@ -311,57 +362,25 @@ public class HolographicSlideshow : MonoBehaviour
         if (!capturedDesktopInput)
             return;
 
-        RestoreWorldInput();
-        Cursor.lockState = previousCursorLockState;
-        Cursor.visible = previousCursorVisible;
+        ReleasePlayerControls();
         capturedDesktopInput = false;
     }
 
-    private void DisableWorldInput()
+    private void SuspendPlayerControls()
     {
-        disabledWorldInputBehaviours.Clear();
-        foreach (Behaviour behaviour in FindObjectsByType<Behaviour>(FindObjectsInactive.Exclude))
-        {
-            if (behaviour == null || !behaviour.enabled || behaviour == this)
-                continue;
+        if (controlsSuspended)
+            return;
 
-            if (!ShouldDisableWhileAlbumOpen(behaviour))
-                continue;
-
-            behaviour.enabled = false;
-            disabledWorldInputBehaviours.Add(behaviour);
-        }
+        PlayerControlGate.Suspend(this);
+        controlsSuspended = true;
     }
 
-    private bool ShouldDisableWhileAlbumOpen(Behaviour behaviour)
+    private void ReleasePlayerControls()
     {
-        string typeName = behaviour.GetType().Name;
-        string fullName = behaviour.GetType().FullName ?? typeName;
+        if (!controlsSuspended)
+            return;
 
-        return typeName == "FirstPersonController"
-            || typeName == "StarterAssetsInputs"
-            || typeName == "LindaLeaksPanelOpener"
-            || typeName == "MediaVideoController"
-            || typeName == "MeshellArticleNotebookInputRouter"
-            || typeName == "MeshellArticleNotebookOpener"
-            || typeName == "InteractableLinkLauncher"
-            || typeName == "SpatialAudioToggle"
-            || typeName == "QuiltVideoPopUp"
-            || typeName == "LindaLeaksVideoPopUp"
-            || fullName.Contains("ContinuousMoveProvider")
-            || fullName.Contains("ContinuousTurnProvider")
-            || fullName.Contains("SnapTurnProvider")
-            || fullName.Contains("TeleportationProvider");
-    }
-
-    private void RestoreWorldInput()
-    {
-        foreach (Behaviour behaviour in disabledWorldInputBehaviours)
-        {
-            if (behaviour != null)
-                behaviour.enabled = true;
-        }
-
-        disabledWorldInputBehaviours.Clear();
+        PlayerControlGate.Resume(this);
+        controlsSuspended = false;
     }
 }

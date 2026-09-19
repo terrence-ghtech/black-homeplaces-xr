@@ -8,8 +8,9 @@ namespace BCaT.Production.Shell
     /// <summary>
     /// Desktop pause menu (Escape). Suppresses player movement and world
     /// interaction, unlocks the cursor, and offers Resume / Settings / Exhibit
-    /// Directory / Credits / Return to Main Entrance / Quit to Main Menu /
-    /// Quit Application. Media state is intentionally preserved while paused
+    /// Directory / About Black Homeplaces / Credits / Return to Main Entrance /
+    /// Quit to Main Menu / Quit Application. Media state is intentionally
+    /// preserved while paused
     /// (audio narration continues; leaving via Return/Quit stops it through the
     /// media registry). Escape is owned by focused exhibit interfaces first —
     /// the pause menu only opens when no modal blocker is active.
@@ -49,7 +50,8 @@ namespace BCaT.Production.Shell
             // above handles Escape before this check is reached.
             if (InteractionState.HasReason(InteractionBlockReason.Modal) ||
                 InteractionState.HasReason(InteractionBlockReason.Media) ||
-                InteractionState.HasReason(InteractionBlockReason.Menu))
+                InteractionState.HasReason(InteractionBlockReason.Menu) ||
+                FocusedExhibitCoordinator.Instance?.CurrentExhibit != null)
                 return;
             if (SceneTransitionState.IsTransitionInProgress)
                 return;
@@ -68,8 +70,8 @@ namespace BCaT.Production.Shell
             var canvas = UiFactory.CreateOverlayCanvas("BCaT_PauseMenu", 30500);
             menuRoot = canvas.gameObject;
 
-            var panel = UiFactory.CreateCenterPanel(canvas.transform, "Panel", new Vector2(560, 720));
-            var column = UiFactory.CreateColumn(panel, "Column", 14f);
+            var panel = UiFactory.CreateCenterPanel(canvas.transform, "Panel", new Vector2(560, 820));
+            var column = UiFactory.CreateColumn(panel, "Column", 10f);
 
             UiFactory.CreateLabel(column, Application.productName, 30f);
 
@@ -81,6 +83,10 @@ namespace BCaT.Production.Shell
             UiFactory.CreateButton(column, "Exhibit Directory", () =>
             {
                 childPanel = Access.ExhibitDirectoryUi.Open(() => childPanel = null, Close);
+            });
+            UiFactory.CreateButton(column, "About Black Homeplaces", () =>
+            {
+                childPanel = AboutBlackHomeplacesUi.Open(() => childPanel = null);
             });
             UiFactory.CreateButton(column, "Credits", () =>
             {

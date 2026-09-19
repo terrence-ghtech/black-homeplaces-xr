@@ -30,6 +30,8 @@ namespace BCaT.Production
             Debug.Log($"[BCaT] Bootstrap: {PlatformCapabilities.Describe()}");
 
             services.AddComponent<Interaction.InteractionRouter>();
+            services.AddComponent<Interaction.FocusedExhibitCoordinator>();
+            services.AddComponent<Media.ForegroundAudioCoordinator>();
             services.AddComponent<Interaction.XRInteractionPromptHoverBridge>();
             services.AddComponent<LegacyInteractionPromptSuppressor>();
 
@@ -53,9 +55,11 @@ namespace BCaT.Production
 
             if (BCaTPlatform.IsQuest)
             {
+                services.AddComponent<Shell.QuestInHeadsetMenuController>();
                 // Safety net for controllers that stay invisible after a missed
                 // tracking-acquired event.
                 services.AddComponent<XrControllerVisibilityGuard>();
+                services.AddComponent<QuestBrowserHeadTracking>();
             }
 
             AssertAddressablesMatchPlatform();

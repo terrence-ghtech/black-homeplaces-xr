@@ -117,7 +117,9 @@ namespace BCaT.Production.Shell
                 return;
             }
 
-            // 1) Stop media and close all blocking interfaces.
+            // 1) Close the focused exhibit, then stop media and close all
+            // remaining application/global blocking interfaces.
+            FocusedExhibitCoordinator.Instance?.CloseCurrent();
             MediaPlaybackRegistry.StopAll();
             InteractionState.ForceCloseAll();
             PrepareExhibitAudioForExit();
